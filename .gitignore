@@ -1,0 +1,9 @@
+# Ignore paths that contain user-generated content.
+node_modules
+.sass-cache
+.idea
+.DS_Store
+trunk/web/slice
+trunk/web/stats
+trunk/web/sites/default/private
+temp/
