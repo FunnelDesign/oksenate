@@ -1,0 +1,30 @@
+# gitlab ci/cd for Drupal 8
+variables:
+  GIT_STRATEGY: none
+  #CHANGEBLE variables for each host
+  REMOTE_HOST_USER: "senate"
+  REMOTE_HOST : "funnelstaging.com"
+  REMOTE_DIRECTORY : "~/public_html"
+  REMOTE_COMPOSER_DIRECTORY: "~/senate/trunk"
+  #END CHANGEABLE variables
+
+deploy:
+  stage: deploy
+  tags:
+    - funnelstaging
+  only:
+    - develop #triggered branch
+  script:
+    #check branch name, pull only the same branch as triggerd, otherwise stop with error!
+    - echo "Remote branch name:"
+    - ssh $REMOTE_HOST_USER@$REMOTE_HOST "php -v"
+    - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && git rev-parse --abbrev-ref HEAD"
+    - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && git rev-parse --abbrev-ref HEAD | grep -E '^$CI_BUILD_REF_NAME$'" && echo "Valid branch " || { echo "INVALID Branch, should be $CI_BUILD_REF_NAME" ; exit 1; }
+    #START REMOTE OPERATIONS
+    - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && chmod u+w $REMOTE_DIRECTORY/sites/default"
+    - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && git pull $CI_BUILD_REPO $CI_BUILD_REF_NAME"
+    - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_COMPOSER_DIRECTORY && composer install"
+    #OPTIONAL -  remove # on next row to enable drush clear ALL cache
+    #- ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && drush cr"
+    #OR CLEAR ONLY css-js - remove # on next row
+    #- ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && drush cc css-js"
