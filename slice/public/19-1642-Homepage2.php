@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = 'name'; ?>
+<?php $title = '19-1642-Homepage2'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="front">
 <div class="page-wr">
