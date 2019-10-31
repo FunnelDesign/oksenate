@@ -1,0 +1,49 @@
+//color
+$color-black: #000;
+$color-white: #fff;
+
+$color-link: $color-black;
+$color-link-hover: $color-white;
+
+//fonts
+$Gotham: GothamPro;
+
+//grid vars
+//widths
+$width-xsmall: 90%;
+//xs < $bp-small
+$bp-small: 768px;
+$width-small: 730px;
+//$bp-middle > sm >= $bp-small
+$bp-middle: 992px;
+$width-middle: 970px;
+//$bp-large > md >= $bp-middle
+$bp-large: 1200px;
+$width-large: 1170px;
+
+$bp-xl: 1600px;
+//$width-xl: 1560px;
+
+$bp-xxl: 2560px;
+
+//offsets
+$container-padding-left: 0;
+$container-padding-right: 0;
+
+$container-fluid-padding-left: 0;
+$container-fluid-padding-right: 0;
+
+$row-margin-left: 0;
+$row-margin-right: 0;
+
+$col-padding-left: 0;
+$col-padding-right: 0;
+
+$row-form-left: -10px;
+$row-form-right: -10px;
+
+$col-form-padding-left: 10px;
+$col-form-padding-right: 10px;
+
+@import "mixins.scss";
+

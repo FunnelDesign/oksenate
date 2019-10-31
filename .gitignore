@@ -7,3 +7,17 @@ trunk/web/slice
 trunk/web/stats
 trunk/web/sites/default/private
 temp/
+
+*.css.map
+npm-debug.log
+trunk/slice
+trunk/slice-mobile
+trunk/robots.txt
+trunk_commerce/robots.txt
+.DS_Store
+trunk/.htaccess
+package-lock.json
+trunk/sites/default/files
+trunk_commerce/sites/default/files
+trunk/sites/default/settings.php
+trunk_commerce/sites/default/settings.php
