@@ -1,6 +1,12 @@
 //color
 $color-black: #000;
 $color-white: #fff;
+$color-gray: #808080;
+
+$color-red: #b3292e;
+$color-blue: #253857;
+$color-dark-blue: #121e32;
+
 
 $color-link: $color-black;
 $color-link-hover: $color-white;
@@ -15,11 +21,11 @@ $width-xsmall: 90%;
 $bp-small: 768px;
 $width-small: 730px;
 //$bp-middle > sm >= $bp-small
-$bp-middle: 992px;
-$width-middle: 970px;
+$bp-middle: 972px;
+$width-middle: 950px;
 //$bp-large > md >= $bp-middle
 $bp-large: 1200px;
-$width-large: 1170px;
+$width-large: 950px;
 
 $bp-xl: 1600px;
 //$width-xl: 1560px;
