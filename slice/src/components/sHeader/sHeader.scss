@@ -33,7 +33,7 @@
   }
 
 
-  &__btn-nav {
+  &__btn-mobile {
     position: absolute;
     right: 5%;
     bottom: 2px;
@@ -95,10 +95,6 @@
     width: 100%;
     border-top: 2px solid $border-color;
     border-bottom: 2px solid $border-color;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .3s;
-    backface-visibility: hidden;
     text-align: center;
     list-style: none;
 
@@ -333,21 +329,30 @@
     }
   }
 
-  &__nav {
+  &__navWrap {
 
-    //@media (min-width: $bp-small) {
-    //  position: absolute;
-    //  right: 0;
-    //  top: 50%;
-    //  transform: translate(0, -50%);
-    //}
+    @media (max-width: $bp-small - 1) {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s;
+      backface-visibility: hidden;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      width: 100%;
+      margin: 0 !important;
+    }
   }
 
   &_mobile-active {
 
-    #{$this}__menu-wrap > ul.menu {
-      opacity: 1;
-      visibility: visible;
+    #{$this}__navWrap {
+
+      @media (max-width: $bp-small - 1) {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 }
