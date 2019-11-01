@@ -1,5 +1,5 @@
-<footer id="site-footer" class="site-footer">
-  <div class="container">
-
+<footer class="sFooter">
+  <div class="bContainer">
+      footer
   </div>
 </footer>

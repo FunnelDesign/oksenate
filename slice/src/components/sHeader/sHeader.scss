@@ -3,6 +3,7 @@
   line-height: 1.2;
   background: $color-blue;
   $this: &;
+  z-index: 100;
 
   &__top {
     background: $color-blue;

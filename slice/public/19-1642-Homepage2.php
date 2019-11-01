@@ -6,16 +6,28 @@
 <div class="pageWr">
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
-    <div class="pMain">
 
-      <div class="bContainer">
+    <section class="section section_inner-v-centered sHero">
+      <div class="section__bg-wrap">
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-1.jpg')"></div>
+      </div>
+      <div class="section__v-inner">
+        <div class="bContainer">
 
-        <div class="some">
-          fcghjfgjh
-
+          <div class="sHero__img">
+            <img src="../dist/images/logo.png" alt="">
+          </div>
+          <div class="sHero__title">
+            <h1>Oklahoma Strong</h1>
+          </div>
+          
+          <div class="sHero__desc">
+            <p>Serving Oklahoma for the creation of laws and budgets. </p>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
+
   </div>
   <?php include 'tpl/blocks/sFooter.inc'; ?>
 </div>
