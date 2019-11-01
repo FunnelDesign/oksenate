@@ -6,22 +6,18 @@
     flex-direction: column;
   }
 
-  //&_inner-v-centered used with &__inner ↓
-
   &__v-inner {
-    padding: 35px 0;
+    @include padding(35px 0, $md: 50px 0);
+    @include min-height($sm: 500px, $md: 600px);
 
-    @media (min-width: $bp-small) {
-      padding: 35px 0;
+    @include sm {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      min-height: 300px;
     }
 
-    @media (min-width: $bp-middle) {
-      min-height: 395px;
-      padding: 50px 0;
+    &_a {
+      @include min-height($sm: 400px, $md: 500px);
     }
   }
 

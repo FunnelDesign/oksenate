@@ -1,7 +1,30 @@
 .sHero {
 
+  .bContainer {
+    text-align: center;
+    color: $color-white;
+  }
+
   &__img {
     max-width: 88px;
+    margin: 0 auto 20px;
+  }
+
+  &__title {
+    position: relative;
+
+    h1 {
+      font-family: $RobotoCondensed-Regular;
+      @include font-size(65px);
+      @include margin(0 0 20px);
+      color: $color-white;
+      text-align: center;
+      line-height: 1.2;
+    }
+  }
+  
+  &__desc {
+    @include cr-last-child();
   }
 
 }
