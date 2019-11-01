@@ -1,0 +1,12 @@
+.logo {
+  transition: opacity .3s;
+  backface-visibility: hidden;
+
+  &:hover {
+    opacity: .5;
+  }
+
+  img {
+
+  }
+}

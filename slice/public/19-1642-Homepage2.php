@@ -3,12 +3,12 @@
 <?php $title = '19-1642-Homepage2'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="front">
-<div class="page-wr">
-  <?php include 'tpl/blocks/site-header.inc'; ?>
-  <div class="page-in">
-    <div class="p-main">
+<div class="pageWr">
+  <?php include 'tpl/blocks/sHeader.inc'; ?>
+  <div class="pageIn">
+    <div class="pMain">
 
-      <div class="AmContainer">
+      <div class="bContainer">
 
         <div class="some">
           fcghjfgjh
@@ -17,7 +17,7 @@
       </div>
     </div>
   </div>
-  <?php include 'tpl/blocks/site-footer.inc'; ?>
+  <?php include 'tpl/blocks/sFooter.inc'; ?>
 </div>
 </body>
 </html>

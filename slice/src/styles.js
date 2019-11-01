@@ -3,8 +3,10 @@ import './common/normalize.scss';
 import './common/global.scss';
 import './common/grid.scss';
 
-import './components/AmContainer/AmContainer.scss'
-import './components/SHeader/SHeader.scss'
+import './components/pMain/pMain.scss'
+import './components/bContainer/bContainer.scss'
+import './components/sHeader/sHeader.scss'
+import './components/logo/logo.scss'
 
 
 

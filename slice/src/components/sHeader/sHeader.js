@@ -1,8 +1,8 @@
 import {checkInit} from "../helper";
 
-window.SHeader = class {
+window.sHeader = class {
 	constructor(props = {}) {
-		this.name = props.name || `s-header`;
+		this.name = props.name || `sHeader`;
 		this.selector = props.selector || `.${this.name}`;
 
 		checkInit(this.selector, this.name, (item) => {
@@ -19,7 +19,7 @@ window.SHeader = class {
 	}
 };
 
-export default SHeader;
+export default sHeader;
 
 
 
