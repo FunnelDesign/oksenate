@@ -6,7 +6,17 @@
     opacity: .5;
   }
 
-  img {
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    color: $color-white;
+    font-size: 18px;
+  }
 
+  img {
+    max-width: 55px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
   }
 }

@@ -7,6 +7,7 @@ import './components/pMain/pMain.scss'
 import './components/bContainer/bContainer.scss'
 import './components/sHeader/sHeader.scss'
 import './components/logo/logo.scss'
+import './components/navLinks/navLinks.scss'
 
 
 

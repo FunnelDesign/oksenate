@@ -1,3 +1,28 @@
 .sHeader {
+  position: relative;
+  line-height: 1.2;
+  background: $color-blue;
 
+  &__top {
+    background: $color-blue;
+    border-bottom: $border-color;
+
+    .bContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+    }
+  }
+
+  &__bottom {
+    background: $color-dark-blue;
+
+    .bContainer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+    }
+  }
 }
