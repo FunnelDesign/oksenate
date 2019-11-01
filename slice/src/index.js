@@ -1,6 +1,6 @@
 import './styles'
 
-import Some from './components/some/some'
+import SHeader from './components/SHeader/SHeader'
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	function init() {
-    new Some();
+    new SHeader();
 	}
 
 });

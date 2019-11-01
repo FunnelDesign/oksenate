@@ -7,6 +7,7 @@
   <?php include 'tpl/blocks/site-header.inc'; ?>
   <div class="page-in">
     <div class="p-main">
+
       <div class="AmContainer">
 
         <div class="some">
