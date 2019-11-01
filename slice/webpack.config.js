@@ -33,7 +33,8 @@ module.exports = (env, argv) => {
 			}
 		}),
 		new CopyPlugin([
-			{from: './src/images', to: './images'}
+			{from: './src/images', to: './images'},
+			{from: './public/vendor', to: './vendor'}
 		])
 	];
 
