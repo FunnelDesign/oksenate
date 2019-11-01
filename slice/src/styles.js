@@ -8,6 +8,7 @@ import './components/bContainer/bContainer.scss'
 import './components/sHeader/sHeader.scss'
 import './components/logo/logo.scss'
 import './components/navLinks/navLinks.scss'
+import './components/bSeacrh/bSearch.scss'
 
 
 

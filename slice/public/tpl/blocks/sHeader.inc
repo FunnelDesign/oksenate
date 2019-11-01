@@ -72,6 +72,9 @@
           </div>
         </nav>
 
+        <div class="bSearch">
+          <a href="#" class="bSearch__btn"></a>
+        </div>
 
       </div>
     </div>

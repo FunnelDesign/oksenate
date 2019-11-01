@@ -1,0 +1,14 @@
+.bSearch {
+
+  &__btn {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background: url('search-btn-img.png') no-repeat;
+    background-size: contain;
+
+    &:hover {
+      opacity: .5;
+    }
+  }
+}
