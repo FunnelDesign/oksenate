@@ -20,6 +20,16 @@
       color: $color-white;
       text-align: center;
       line-height: 1.2;
+
+      span {
+        position: relative;
+
+        &:before {
+          @include pseudo-block($bottom: 0, $left: 0);
+          border-bottom: 4px solid $color-red;
+          width: 135px;
+        }
+      }
     }
   }
   

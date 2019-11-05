@@ -18,13 +18,24 @@
             <img src="../dist/images/logo.png" alt="">
           </div>
           <div class="sHero__title">
-            <h1>Oklahoma Strong</h1>
+            <h1>Oklahoma <span>Strong</span></h1>
           </div>
           
           <div class="sHero__desc">
             <p>Serving Oklahoma for the creation of laws and budgets. </p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="section sFinder">
+      <div class="sFinder__bg">
+        <span></span>
+      </div>
+
+      <div class="bContainer">
+
+
       </div>
     </section>
 
