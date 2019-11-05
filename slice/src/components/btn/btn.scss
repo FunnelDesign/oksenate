@@ -20,4 +20,18 @@
     background: $color-blue;
   }
 
+  &_a {
+    border: 1px solid $color-red;
+    background: $color-white;
+    color: $color-red;
+    font-size: 10px;
+    font-family: $RobotoCondensed-Bold;
+    padding: 7px 10px;
+
+    &:hover {
+      background: $color-red;
+      color: $color-white;
+    }
+  }
+
 }

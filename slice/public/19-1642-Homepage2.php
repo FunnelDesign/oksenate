@@ -78,13 +78,100 @@
         <div class="bTiles">
           <div class="bTiles__items">
 
-            <div class="bTiles__item">
+            <a href="#" class="bTiles__item">
+              <span class="bTiles__ico">
+                <img src="../dist/images/tmp/tiles-ico-img-1.png" srcset="../dist/images/tmp/tiles-ico-img-1-2x.png 2x" alt="">
+              </span>
+              <span class="bTiles__title">
+                Track a Bill
+              </span>
+            </a>
 
-            </div>
-            <div class="bTiles__item">
+            <a href="#" class="bTiles__item">
+              <span class="bTiles__ico">
+                 <img src="../dist/images/tmp/tiles-ico-img-2.png" srcset="../dist/images/tmp/tiles-ico-img-2-2x.png 2x" alt="">
+              </span>
+              <span class="bTiles__title">
+               Live Proceedings
+              </span>
+            </a>
 
+            <a href="#" class="bTiles__item">
+              <span class="bTiles__ico">
+                <img src="../dist/images/tmp/tiles-ico-img-3.png" srcset="../dist/images/tmp/tiles-ico-img-3-2x.png 2x" alt="">
+              </span>
+              <span class="bTiles__title">
+                Calendar of Events
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section_inner-v-centered">
+      <div class="section__bg-wrap">
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-2.jpg')"></div>
+      </div>
+      <div class="section__v-inner">
+        <div class="bContainer">
+          <div class="bTitle bTitle_a">
+            <h2>48 Strong and Committed.</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section_ind_b">
+      <div class="section__bg-wrap">
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-3.jpg')"></div>
+      </div>
+      <div class="bContainer">
+        <div class="bEvent">
+          <h3>This Week at the Senate</h3>
+          <div class="bEvent__slider">
+            <div class="bEvent__slider-items">
+              <?php
+              $event_items = [
+                [' Monday, October 28, 2019', '19-28', 'Study on Reducing Poverty by Increasing Home Ownership and Entrepreneurship Opportunities'],
+                [' Monday, October 28, 2019', ' ', 'Joint Meeting of the Senate Business, Commerce and Tourism Committee and the House Tourism Committee'],
+
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+
+
+              ]
+              ?>
+              <?php foreach ($event_items as $element): ?>
+
+                <div class="bEvent__slider-item">
+
+                  <div class="bEvent__header">
+                    <?php print $element[0]; ?>
+                  </div>
+                  <div class="bEvent__body">
+                    <div class="bEvent__time">
+                      <?php print $element[1]; ?>
+                    </div>
+                    <div class="bEvent__text">
+
+                      <p>
+                        <?php print $element[2]; ?>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="bEvent__btnWrap">
+                    <a href="#" class="btn btn_a">get more information</a>
+                  </div>
+                </div>
+
+              <?php endforeach; ?>
             </div>
-            <div class="bTiles__item">
+
+            <div class="bEvent__slider-nav">
 
             </div>
           </div>

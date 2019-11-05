@@ -1,5 +1,7 @@
 $fonts:
-RobotoCondensed-Regular;
+RobotoCondensed-Regular,
+RobotoCondensed-Bold,
+RobotoCondensed-Light;
 
 @each $font in $fonts {
   @font-face {

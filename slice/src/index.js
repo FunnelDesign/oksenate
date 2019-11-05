@@ -1,6 +1,7 @@
 import './styles'
 
 import SHeader from './components/SHeader/SHeader'
+import bEvent from './components/bEvent/bEvent'
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function init() {
     new SHeader();
+    new bEvent();
 	}
 
 });
