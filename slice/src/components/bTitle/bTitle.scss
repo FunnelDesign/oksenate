@@ -1,0 +1,15 @@
+.bTitle {
+
+  &_a {
+
+    h2 {
+      font-family: $RobotoCondensed-Regular;
+      line-height: 1.2;
+      color: $color-white;
+      @include font-size(65px);
+      margin: 0;
+      text-align: center;
+      text-shadow: 0 2px 0 rgba(35, 43, 51, 0.63);
+    }
+  }
+}

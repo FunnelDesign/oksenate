@@ -14,7 +14,7 @@ const config = {
 	srcScssCommon: './src/common/',
 	src: './src/',
 	dist: './dist/',
-	trunk: '../trunk/dist/',
+	trunk: '../trunk/web/themes/custom/senate/dist/',
 	filenameJS: './js/index.js',
 	filenameMinJS: './js/index.min.js',
 	filenameCSS: './css/styles.css',
@@ -33,7 +33,8 @@ module.exports = (env, argv) => {
 			}
 		}),
 		new CopyPlugin([
-			{from: './src/images', to: './images'}
+			{from: './src/images', to: './images'},
+			{from: './src/vendor', to: './vendor'}
 		])
 	];
 

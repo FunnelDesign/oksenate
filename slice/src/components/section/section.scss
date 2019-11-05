@@ -1,0 +1,55 @@
+.section {
+  position: relative;
+
+  &_inner-v-centered {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__v-inner {
+    @include padding(35px 0, $md: 50px 0);
+    @include min-height($sm: 500px, $md: 600px);
+
+    @include sm {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &_a {
+      @include min-height($sm: 400px, $md: 500px);
+    }
+  }
+
+  &__bg-wrap, &__bg {
+    @include stretch-block();
+    z-index: -1;
+  }
+
+  &__bg-wrap {
+    overflow: hidden;
+  }
+
+  &__bg {
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+
+  &_bg-color {
+
+    &_a {
+      background: $color-dark-blue;
+    }
+  }
+
+  &_ind {
+
+    &_a {
+      padding: 90px 0 50px;
+    }
+
+    &_b {
+      padding: 77px 0 85px;
+    }
+  }
+}

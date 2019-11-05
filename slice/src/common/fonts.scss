@@ -1,9 +1,7 @@
-$fonts: RobotoCondensed-Regular,
+$fonts:
+RobotoCondensed-Regular,
 RobotoCondensed-Bold,
-RobotoCondensed-BoldItalic,
-RobotoCondensed-Italic,
-RobotoCondensed-Light,
-RobotoCondensed-LightItalic;
+RobotoCondensed-Light;
 
 @each $font in $fonts {
   @font-face {
@@ -14,4 +12,5 @@ RobotoCondensed-LightItalic;
     font-style: normal;
   }
 }
+
 

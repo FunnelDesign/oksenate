@@ -1,0 +1,41 @@
+.clearfix {
+  *zoom: 1;
+
+  &:before,
+  &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+.rteleft {
+  text-align: left;
+}
+
+.rtecenter {
+  text-align: center;
+}
+
+.rteright {
+  text-align: right;
+}
+
+.mobile-only {
+
+  @media (min-width: $bp-small) {
+    display: none !important;
+  }
+}
+
+.desktop-only {
+  display: none !important;
+
+  @media (min-width: $bp-small) {
+    display: block!important;
+  }
+}
