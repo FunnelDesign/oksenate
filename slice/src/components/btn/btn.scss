@@ -1,0 +1,23 @@
+.btn, .form-submit  {
+  color: $color-white;
+  transition: .3s;
+  font-family: $RobotoCondensed-Regular;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  z-index: 1;
+  text-align: center;
+  border: none;
+  background: $color-red;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 5px !important;
+  padding: 11px 26px;
+  text-transform: uppercase;
+
+  &:hover {
+    background: $color-blue;
+  }
+
+}

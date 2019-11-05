@@ -35,10 +35,17 @@
     background-position: 50% 50%;
   }
 
+  &_bg-color {
+
+    &_a {
+      background: $color-dark-blue;
+    }
+  }
+
   &_ind {
 
     &_a {
-
+      padding: 90px 0 50px;
     }
   }
 }

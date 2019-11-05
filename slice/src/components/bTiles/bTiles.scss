@@ -1,0 +1,17 @@
+.bTiles {
+  $this: &;
+
+  &__items  {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__item {
+    width: 194px;
+    min-height: 155px;
+    background: $color-blue-3;
+    border: 1px solid $color-blue-2;
+  }
+}
