@@ -1,4 +1,27 @@
 .sFooter {
   margin-top: auto;
   position: relative;
+  background: $color-blue;
+  padding-bottom: 108px;
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    border-bottom: 2px solid $border-color;
+  }
+
+  &__bottom {
+    display: flex;
+  }
+
+  &__col {
+    flex: 1;
+    padding: 0 40px;
+    margin: 23px 0;
+  }
+
+
+
 }
