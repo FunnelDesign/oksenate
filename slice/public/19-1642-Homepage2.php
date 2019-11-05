@@ -179,6 +179,77 @@
       </div>
     </section>
 
+    <section class="section section_inner-v-centered s-lead">
+      <div class="section__bg-wrap">
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-4.jpg')"></div>
+      </div>
+      <div class="section__v-inner">
+        <div class="bContainer">
+
+          <div class="bCols bCols_item_2 bCols_v-cent">
+            <div class="bCols__col">
+
+              <div class="senators">
+
+                <div class="senators__items">
+                  <span class="senators__item">
+                  <span class="senators__imgWrap">
+                      <span class="senators__img" style="background-image: url('../dist/images/tmp/senators-img-1.jpg')"></span>
+                    </span>
+                      
+                    <span class="senators__name">
+                      Sen. Greg Treat
+                    </span>
+                    <span class="senators__position">
+                      President Pro Tempore
+                    </span>
+
+                  </span>
+
+                  <a href="#" class="senators__item">
+                    <span class="senators__imgWrap">
+                      <span class="senators__img" style="background-image: url('../dist/images/tmp/senators-img-2.jpg')"></span>
+                    </span>
+
+                    <span class="senators__name">
+                      Sen. Kim David
+                    </span>
+                    <span class="senators__position">
+                      Majority Floor Leader
+                    </span>
+
+                  </a>
+
+                </div>
+
+              </div>
+
+            </div>
+            <div class="bCols__col">
+
+              <div class="sLead__col">
+
+                <div class="sLead__img">
+                  <img src="../dist/images/tmp/lead-img-tmp-1.png" srcset="../dist/images/tmp/lead-img-tmp-1-2x.png 2x" alt="">
+                </div>
+                <div class="bTitle bTitle_line sLead__bTitle">
+                  <h2>Oklahoma
+                   <span>Leadership</span></h2>
+                </div>
+                <div class="sLead__btnWrap">
+                  <a href="#" class="btn">meet your oklahoma senators</a>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
 
 
   </div>
