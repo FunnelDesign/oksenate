@@ -64,6 +64,7 @@
               </div>
               <div class="form-actions">
                 <input type="submit" class="form-submit" value="search">
+                <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
               </div>
             </div>
           </div>

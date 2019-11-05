@@ -12,4 +12,11 @@
   .form-item {
     margin: 0;
   }
+
+  select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+    padding-right: 115px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 }
