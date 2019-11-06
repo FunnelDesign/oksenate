@@ -5,6 +5,7 @@
   padding-bottom: 108px;
   color: $color-white;
   line-height: 1.2;
+  $this: &;
 
   a[href^="tel"], a[href^="mailto"] {
     color: $color-white;
@@ -12,6 +13,7 @@
 
   a[href^="mailto"] {
     text-decoration: underline;
+    font-family: $FreightTextProLight-Regular;
 
     &:hover {
       text-decoration: none;
@@ -48,6 +50,7 @@
   &__address {
     text-align: center;
     margin-bottom: 20px;
+    font-family: $FreightTextProLight-Regular;
 
     &:before {
       content: '';
@@ -88,6 +91,19 @@
           text-decoration: underline;
         }
       }
+    }
+  }
+
+  &__info {
+
+    #{$this}__img {
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-family: $RobotoCondensed-Light;
+      font-size: 24px;
+      margin: 0 0 10px;
     }
   }
 

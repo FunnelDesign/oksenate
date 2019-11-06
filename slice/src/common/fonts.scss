@@ -1,7 +1,20 @@
 $fonts:
 RobotoCondensed-Regular,
 RobotoCondensed-Bold,
-RobotoCondensed-Light;
+RobotoCondensed-Light,
+RobotoCondensed-LightItalic,
+FreightTextProBold-Regular,
+FreightTextProMedium-Italic,
+FreightTextProBook-Italic,
+FreightTextProBook-Regular,
+FreightTextProBlack-Regular,
+FreightTextProSemibold-Italic,
+FreightTextProLight-Italic,
+FreightTextProBlack-Italic,
+FreightTextProLight-Regular,
+FreightTextProBold-Italic,
+FreightTextProMedium-Regular,
+FreightTextProSemibold-Regular;
 
 @each $font in $fonts {
   @font-face {
@@ -12,5 +25,3 @@ RobotoCondensed-Light;
     font-style: normal;
   }
 }
-
-

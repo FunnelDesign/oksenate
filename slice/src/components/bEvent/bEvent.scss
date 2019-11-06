@@ -55,6 +55,7 @@
     color: $color-blue;
     font-size: 14px;
     margin-bottom: 20px;
+    font-family: $FreightTextProBold-Regular;
   }
 
   &__body {
@@ -65,11 +66,13 @@
     color: $color-blue;
     font-size: 18px;
     margin-bottom: 5px;
+    font-family: $FreightTextProMedium-Regular;
   }
 
   &__text {
     font-size: 24px;
     color: $main-text;
+    font-family: $FreightTextProLight-Regular;
   }
 
   &__btnWrap {

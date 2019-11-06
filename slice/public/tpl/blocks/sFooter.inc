@@ -46,14 +46,17 @@
       </div>
 
       <div class="sFooter__col">
-        <div class="sFooter__img">
-          <img src="../dist/images/tmp/find-senator-img-1.png" srcset="../dist/images/tmp/find-senator-img-1-2x.png 2x"  alt="">
-        </div>
-        
-        <h3>Find My Senator</h3>
 
-        <div class="sFooter__btnWr">
-          <a href="#" class="btn">find your senator here</a>
+        <div class="sFooter__info">
+          <div class="sFooter__img">
+            <img src="../dist/images/tmp/find-senator-img-1.png" srcset="../dist/images/tmp/find-senator-img-1-2x.png 2x"  alt="">
+          </div>
+
+          <h3>Find My Senator</h3>
+
+          <div class="sFooter__btnWr">
+            <a href="#" class="btn">find your senator here</a>
+          </div>
         </div>
 
       </div>

@@ -14,7 +14,7 @@
     position: relative;
 
     h1 {
-      font-family: $RobotoCondensed-Regular;
+      font-family: $FreightTextProBook-Italic;
       @include font-size(65px);
       @include margin(0 0 20px);
       color: $color-white;
@@ -35,6 +35,7 @@
   
   &__desc {
     @include cr-last-child();
+    font-family: $FreightTextProMedium-Regular;
   }
 
 }
