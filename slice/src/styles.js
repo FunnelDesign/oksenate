@@ -24,4 +24,5 @@ import './components/bEvent/bEvent.scss'
 import './components/sLead/sLead.scss'
 import './components/bCols/bCols.scss'
 import './components/senators/senators.scss'
+import './components/bMessage/bMessage.scss'
 
