@@ -17,7 +17,7 @@
           <div class="sHero__img">
             <img src="../dist/images/logo.png" alt="">
           </div>
-          <div class="sHero__title">
+          <div class="bTitle bTitle_b bTitle_line">
             <h1>Oklahoma <span>Strong</span></h1>
           </div>
           
@@ -232,7 +232,7 @@
                 <div class="sLead__img">
                   <img src="../dist/images/tmp/lead-img-tmp-1.png" srcset="../dist/images/tmp/lead-img-tmp-1-2x.png 2x" alt="">
                 </div>
-                <div class="bTitle bTitle_line sLead__bTitle">
+                <div class="bTitle bTitle_b bTitle_line bTitle_line_a sLead__bTitle">
                   <h2>Oklahoma
                    <span>Leadership</span></h2>
                 </div>
