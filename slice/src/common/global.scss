@@ -58,11 +58,11 @@ ul, ol {
 
 a {
   color: $color-link;
-  text-decoration: none;
+  text-decoration: underline;
   transition: all .3s;
 
   &:hover {
-    color: $color-link-hover;
+    text-decoration: none;
   }
 
   & > svg {

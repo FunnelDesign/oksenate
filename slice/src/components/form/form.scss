@@ -19,7 +19,7 @@ select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textare
   border: 1px solid $border-color-1;
   line-height: 1.2;
   width: 100%;
-  font-family: $RobotoCondensed-Regular;;
+  font-family: $FreightTextProBook-Regular;
   color: $color-gray-2;
   @include input-placeholder($color-gray-2);
   padding: 15px 20px;

@@ -3,7 +3,7 @@
   &_a {
 
     h2 {
-      font-family: $RobotoCondensed-Regular;
+      font-family: $FreightTextProSemibold-Regular;
       line-height: 1.2;
       color: $color-white;
       @include font-size(65px);
@@ -17,7 +17,7 @@
 
     h1, h2, h3 {
 
-      font-family: $RobotoCondensed-Regular;
+      font-family: $FreightTextProBook-Italic;
       @include font-size(65px);
       @include margin(0 0 20px);
       color: $color-white;
