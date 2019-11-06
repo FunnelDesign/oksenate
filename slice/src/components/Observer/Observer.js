@@ -1,19 +1,31 @@
 window.Observer = class {
-	constructor(props) {
-		this.attrCloseParent = 'data-close-parent';
+	constructor() {
 		this.init();
 	}
 
 	init() {
-		$(document).on('click', (e) => {
-			const $target = $(e.target);
-			const attr = $target.attr(this.attrCloseParent);
+		$(document).on('click touch', (e) => {
+			let event = e.target.dataset.ev;
+			if (!event) return;
 
-			if(attr) {
-				e.preventDefault();
-				$target.closest(attr).hide();
-			}
+			let sel = e.target.dataset.sel;
+			if (!sel || !this[event]) return;
+
+			e.preventDefault();
+			this[event]($(e.target), sel);
 		});
+	}
+
+	hide($target, sel) {
+		$target.closest(`.${sel}`).hide();
+	}
+
+	toggleClass($target, sel) {
+		$target.closest(`.${sel}`).toggleClass(`${sel}_active`);
+	}
+
+	toggle($target, sel) {
+		$(`.${sel}`).toggle();
 	}
 };
 

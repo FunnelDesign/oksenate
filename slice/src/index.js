@@ -1,6 +1,5 @@
 import './styles'
 
-import SHeader from './components/SHeader/SHeader'
 import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
 
@@ -17,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		init();
 	}
 
+	new Observer();
+
 	function init() {
-		new Observer();
-    new SHeader();
     new bEvent();
 	}
 

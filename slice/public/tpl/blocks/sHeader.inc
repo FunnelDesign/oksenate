@@ -1,7 +1,7 @@
 <header class="sHeader">
 
    <div class="bMessage">
-     <a href="#" data-close-parent=".bMessage" class="bMessage__close"></a>
+     <a href="#" data-ev="hide" data-sel="bMessage" class="bMessage__close"></a>
      <div class="bContainer">
         <p>In order to provide equal access and equal opportunity to people with diverse abilities, this site has been
           designed with full accessibility in mind. <a href="#">Click here to view.</a>
@@ -33,7 +33,7 @@
 
     <div class="sHeader__bottom">
       <div class="bContainer">
-        <a href="#" class="sHeader__btn-mobile"></a>
+        <a href="#" data-ev="toggleClass" data-sel="sHeader"  class="sHeader__btn-mobile"></a>
 
         <div class="sHeader__navWrap">
 
