@@ -20,8 +20,8 @@
     <div class="sFooter__bottom">
       <div class="sFooter__col">
         <div class="sFooter__address">
-          Oklahoma Senate
-          2300 N Lincoln Blvd.,
+          Oklahoma Senate <br>
+          2300 N Lincoln Blvd.,<br>
           Oklahoma City, OK 73105
         </div>
 
@@ -31,23 +31,31 @@
 
       <div class="sFooter__col">
 
-        <ul class="menu">
-          <li><a href="#">Senators</a></li>
-          <li><a href="#">Legislation & Bills</a></li>
-          <li><a href="#">Education</a></li>
-          <li><a href="#">Committees</a></li>
-          <li><a href="#">Calendar</a></li>
-          <li><a href="#">Press & Media</a></li>
-          <li><a href="#">Contacts</a></li>
-        </ul>
+        <div class="sFooter__nav">
+          <ul class="menu">
+            <li><a href="#">Senators</a></li>
+            <li><a href="#">Legislation & Bills</a></li>
+            <li><a href="#">Education</a></li>
+            <li><a href="#">Committees</a></li>
+            <li><a href="#">Calendar</a></li>
+            <li><a href="#">Press & Media</a></li>
+            <li><a href="#">Contacts</a></li>
+          </ul>
+        </div>
 
       </div>
 
       <div class="sFooter__col">
         <div class="sFooter__img">
-          <img src="../dist/images/tmp/finder-ico-img-1.png" srcset="../dist/images/tmp/finder-ico-img-1-2x.png 2x"  alt="">
+          <img src="../dist/images/tmp/find-senator-img-1.png" srcset="../dist/images/tmp/find-senator-img-1-2x.png 2x"  alt="">
         </div>
-        <div class="btn">find your senator here</div>
+        
+        <h3>Find My Senator</h3>
+
+        <div class="sFooter__btnWr">
+          <a href="#" class="btn">find your senator here</a>
+        </div>
+
       </div>
     </div>
 

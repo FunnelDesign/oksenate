@@ -5,7 +5,7 @@ import bEvent from './components/bEvent/bEvent'
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	if (window.Drupal && window.Drupal.behaviors) {
+	if (window.Drupal?.behaviors) {
 		Drupal.behaviors.projectName = {
 			attach: () => {
 				init();

@@ -123,7 +123,8 @@ module.exports = (env, argv) => {
 					use: {
 						loader: 'babel-loader?optional[]=runtime',
 						options: {
-							presets: ['@babel/preset-env']
+							presets: ['@babel/preset-env'],
+							plugins: ["@babel/plugin-proposal-optional-chaining"]
 						}
 					}
 				},
