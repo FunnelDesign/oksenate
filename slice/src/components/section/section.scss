@@ -8,7 +8,7 @@
 
   &__v-inner {
     @include padding(35px 0, $md: 50px 0);
-    @include min-height($sm: 500px, $md: 600px);
+    @include min-height($sm: 500px, $md: 588px);
 
     @include sm {
       display: flex;
@@ -17,7 +17,12 @@
     }
 
     &_a {
-      @include min-height($sm: 400px, $md: 500px);
+      @include min-height($sm: 400px, $md: 496px);
+      padding-bottom: 123px;
+    }
+
+    &_b {
+      @include min-height($sm: 500px, $md: 612px);
     }
   }
 
@@ -49,7 +54,7 @@
     }
 
     &_b {
-      padding: 77px 0 85px;
+      padding: 90px 0 76px;
     }
   }
 }

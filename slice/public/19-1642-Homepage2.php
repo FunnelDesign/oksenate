@@ -11,7 +11,7 @@
       <div class="section__bg-wrap">
         <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-1.jpg')"></div>
       </div>
-      <div class="section__v-inner">
+      <div class="section__v-inner section__v-inner_a">
         <div class="bContainer">
 
           <div class="sHero__img">
@@ -183,7 +183,7 @@
       <div class="section__bg-wrap">
         <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-4.jpg')"></div>
       </div>
-      <div class="section__v-inner">
+      <div class="section__v-inner section__v-inner_b">
         <div class="bContainer">
 
           <div class="bCols bCols_item_2 bCols_v-cent">

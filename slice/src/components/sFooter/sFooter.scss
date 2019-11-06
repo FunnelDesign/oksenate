@@ -24,7 +24,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 0;
+    padding: 30px 0;
     border-bottom: 2px solid $border-color;
   }
 
@@ -49,8 +49,10 @@
 
   &__address {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     font-family: $FreightTextProLight-Regular;
+    line-height: 1.5;
+    padding-top: 25px;
 
     &:before {
       content: '';
@@ -64,8 +66,8 @@
   }
 
   &__nav {
-    padding-right: 40px;
-    padding-top: 14px;
+    padding-right: 55px;
+    padding-top: 22px;
 
     ul {
       padding: 0;
@@ -97,15 +99,14 @@
   &__info {
 
     #{$this}__img {
+      margin-right: 25px;
       margin-bottom: 10px;
     }
 
     h3 {
       font-family: $RobotoCondensed-Light;
       font-size: 24px;
-      margin: 0 0 10px;
+      margin: 0 0 15px;
     }
   }
-
-
 }
