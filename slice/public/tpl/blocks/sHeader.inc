@@ -98,7 +98,19 @@
         </div>
 
         <div class="bSearch">
-          <a href="#" class="bSearch__btn"></a>
+          <a href="#" data-ev="toggleClass" data-sel="bSearch" class="bSearch__btn"></a>
+
+          <div class="bSearch__form">
+            <div class="form f-search">
+              <div class="form-item">
+                <input type="text" class="form-text" placeholder="search here"/>
+              </div>
+              <div class="form-actions">
+                <input type="submit" class="form-submit" value="search">
+                <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>

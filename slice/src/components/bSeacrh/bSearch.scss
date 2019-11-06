@@ -1,4 +1,5 @@
 .bSearch {
+  $this: &;
 
   &__btn {
     width: 20px;
@@ -9,6 +10,23 @@
 
     &:hover {
       opacity: .5;
+    }
+  }
+
+  &__form {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    transform: translate(0, -100%);
+    transition: transform .3s;
+    z-index: -1;
+    width: 292px;
+  }
+
+  &_active {
+
+    #{$this}__form {
+      transform: translate(0, 0);
     }
   }
 }
