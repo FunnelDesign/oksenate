@@ -111,7 +111,7 @@
 
     <section class="section section_inner-v-centered">
       <div class="section__bg-wrap">
-        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-2.jpg')"></div>
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-2-m.jpg')"></div>
       </div>
       <div class="section__v-inner">
         <div class="bContainer">
