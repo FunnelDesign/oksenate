@@ -16,7 +16,6 @@
   &_line {
 
     h1, h2, h3 {
-
       font-family: $FreightTextProBook-Italic;
       @include font-size(65px);
       @include margin(0 0 20px);
