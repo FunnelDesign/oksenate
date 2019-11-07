@@ -1,5 +1,6 @@
 .section {
   position: relative;
+  $this: &;
 
   &_inner-v-centered {
     display: flex;
@@ -35,6 +36,14 @@
   &__bg {
     background-size: cover;
     background-position: 50% 50%;
+
+    &_mobile {
+      @include display($sm: none);
+
+      & + #{$this}__bg {
+        @include display(none, block);
+      }
+    }
   }
 
   &_bg-color {
