@@ -352,6 +352,7 @@
     @include xs-only {
       overflow-y: auto;
       height: calc(100vh - 84px);
+      z-index: 1;
     }
   }
 
@@ -391,16 +392,6 @@
 
       @include xs-only {
         background: $color-blue;
-      }
-    }
-
-    #{$this}__bSearch {
-
-      @include xs-only {
-
-        .bSearch__form {
-          transform: translate(0, -100%);
-        }
       }
     }
   }

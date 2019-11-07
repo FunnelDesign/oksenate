@@ -152,10 +152,16 @@ textarea {
 
 .ajax-progress {
   position: absolute;
-  top: 0;
-  left: 100%;
-  @include margin-left(7px, 15px);
-  margin-left: 15px;
+  top: -27px;
+  right: 0;
+  margin-left: 0;
+
+  @include sm {
+    top: 0;
+    right: auto;
+    left: 100%;
+    margin-left: 15px;
+  }
 
   .throbber {
     border-radius: 50%;

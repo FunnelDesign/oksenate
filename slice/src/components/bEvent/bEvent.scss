@@ -32,6 +32,13 @@
       display: flex;
       justify-content: center;
     }
+
+    .slick-list {
+
+      @include xs-only {
+        overflow: visible;
+      }
+    }
   }
 
   &__slider-item {
@@ -41,7 +48,7 @@
     border-radius: 5px;
     text-align: center;
     line-height: 1.2;
-    @include margin(0, 0 25px);
+    @include margin(0 7px, 0 25px);
     min-height: 280px;
     height: auto;
     display: flex !important;

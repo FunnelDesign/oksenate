@@ -120,6 +120,10 @@
     #{$this}__img {
       margin-right: 25px;
       margin-bottom: 10px;
+
+      img {
+        @include max-width(70px, none);
+      }
     }
 
     h3 {

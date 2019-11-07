@@ -8,11 +8,27 @@ window.Observer = class {
 			let event = e.target.dataset.ev;
 			if (!event) return;
 
-			let sel = e.target.dataset.sel;
-			if (!sel || !this[event]) return;
+			let events = {
+				evs: e.target.dataset.ev.split(';'),
+				items: []
+			};
 
-			e.preventDefault();
-			this[event]($(e.target), sel);
+			events.evs.forEach((evItem, i) => {
+				let [ev, sel] = evItem.split(':');
+
+				events.items[i] = {
+					ev,
+					sel
+				}
+			});
+
+			events.items.forEach(({ev, sel}) => {
+				if (!sel || !this[ev]) return;
+
+				e.preventDefault();
+				this[ev]($(e.target), sel);
+			});
+
 		});
 	}
 
@@ -22,6 +38,14 @@ window.Observer = class {
 
 	toggleClass($target, sel) {
 		$target.closest(`.${sel}`).toggleClass(`${sel}_active`);
+	}
+
+	removeClass($target, sel) {
+		$target.closest(`.${sel}`).removeClass(`${sel}_active`);
+	}
+
+	removeSiblingClass($target, sel) {
+		$target.siblings(`.${sel}`).removeClass(`${sel}_active`);
 	}
 
 	toggle($target, sel) {
