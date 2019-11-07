@@ -58,9 +58,12 @@
     }
 
     &:last-child {
-      padding: 0;
       border: none;
       margin-bottom: 0;
+
+      @include xs-only {
+        padding: 0;
+      }
     }
 
     h3 {
