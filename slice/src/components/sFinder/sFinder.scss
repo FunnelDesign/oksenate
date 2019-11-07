@@ -46,7 +46,7 @@
   }
 
   &__col {
-    padding: 7px 75px 20px;
+    @include padding(7px 44px 20px, 7px 44px 20px, 7px 75px 20px);
     flex: 1;
     border-right: 1px solid $border-color-1;
     text-align: center;

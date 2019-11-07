@@ -13,11 +13,13 @@
   &__items {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin: 0 -10px -25px;
   }
 
   &__item {
     margin: 0 10px 25px;
+    @include width(172px, 172px, 196px);
     width: 196px;
     text-align: center;
   }

@@ -2,7 +2,7 @@
   margin-top: auto;
   position: relative;
   background: $color-blue;
-  padding-bottom: 108px;
+  @include padding-bottom(30px, 50px, 108px);
   color: $color-white;
   line-height: 1.2;
   $this: &;
@@ -66,7 +66,7 @@
   }
 
   &__nav {
-    padding-right: 55px;
+    @include padding-right($md: 55px);
     padding-top: 22px;
 
     ul {

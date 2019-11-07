@@ -21,6 +21,10 @@
     transition: transform .3s;
     z-index: -1;
     width: 292px;
+
+    .ajax-progress {
+      display: none;
+    }
   }
 
   &_active {

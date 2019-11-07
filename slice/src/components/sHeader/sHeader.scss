@@ -120,6 +120,11 @@
       margin-left: -13px;
       margin-right: -13px;
     }
+
+    @include sm-only {
+      display: flex;
+      justify-content: space-between;
+    }
   }
 
   #{$fist-li} {
@@ -179,7 +184,7 @@
     @media (min-width: $bp-small) {
       color: $color-white;
       display: inline-block;
-      font-size: 13px;
+      font-size: 14px;
       padding: 4px 0 4px;
       border-bottom: 4px solid transparent;
     }
@@ -345,6 +350,10 @@
       right: 0;
       width: 100%;
       margin: 0 !important;
+    }
+
+    @include sm-only {
+      flex: 1;
     }
   }
 

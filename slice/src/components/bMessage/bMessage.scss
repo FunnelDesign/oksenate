@@ -5,10 +5,11 @@
   font-size: 12px;
   text-align: center;
   position: relative;
+  line-height: 1.4;
 
   .bContainer {
     @include cr-last-child;
-    padding: 23px 0;
+    padding: 23px 30px;
 
     a {
       color: $color-white;
@@ -19,7 +20,7 @@
 
   &__close {
     position: absolute;
-    right: 30px;
+    @include right(10px, 20px, 30px);
     top: 50%;
     width: 30px;
     height: 30px;

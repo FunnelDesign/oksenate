@@ -70,9 +70,11 @@
   }
 
   &__text {
-    font-size: 24px;
+    @include font-size(18px,20px,24px);
     color: $main-text;
     font-family: $FreightTextProLight-Regular;
+    @include cr-last-child;
+    margin-bottom: 16px;
   }
 
   &__btnWrap {
