@@ -14,7 +14,7 @@
       <div class="section__v-inner section__v-inner_a">
         <div class="bContainer">
 
-          <div class="sHero__img">
+          <div class="sHero__img desktop-only">
             <img src="../dist/images/logo.png" alt="">
           </div>
           <div class="bTitle bTitle_b bTitle_line">
@@ -187,6 +187,7 @@
         <div class="bContainer">
 
           <div class="bCols bCols_item_2 bCols_v-cent">
+
             <div class="bCols__col">
 
               <div class="senators">

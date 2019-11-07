@@ -1,8 +1,8 @@
 .sHeader {
+  $this: &;
   position: relative;
   line-height: 1.2;
   background: $color-blue;
-  $this: &;
   z-index: 100;
 
   &__top {
@@ -26,9 +26,12 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 22px 0;
       position: relative;
-      @include margin(0 -8px, 0 -16px);
+      @include padding(14px 5%, 22px 0);
+
+      @include xs-only {
+        max-width: none;
+      }
 
       @include md {
         justify-content: center;
@@ -36,6 +39,14 @@
 
       & > * {
         @include margin(0 8px, 0 16px);
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
   }
@@ -81,29 +92,16 @@
 
   #{$fist-ul} {
     margin: 0;
-    position: absolute;
-    top: 100%;
-    left: 0;
     background: $color-dark-blue;
     padding: 5px 0;
     width: 100%;
-    border-top: 2px solid $border-color;
-    border-bottom: 2px solid $border-color;
-    text-align: center;
     list-style: none;
 
     @media (min-width: $bp-small) {
-      position: static;
       background: transparent;
-      top: auto;
-      left: auto;
       padding: 0;
       width: auto;
       border: none;
-      opacity: 1;
-      visibility: visible;
-      transition: opacity 0s;
-      text-align: left;
       margin-left: -3px;
       margin-right: -3px;
     }
@@ -122,11 +120,12 @@
   #{$fist-li} {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 5%;
     position: relative;
     line-height: 1.2;
 
     @media (min-width: $bp-small) {
+      padding: 0;
       display: inline-block;
       vertical-align: middle;
       margin: 0 3px;
@@ -152,8 +151,7 @@
   #{$fist-li--active}, #{$fist-li--hover} {
 
     & > a {
-      color: $color-white;
-      background: $color-red;
+      color: #ce5155;
 
       @media (min-width: $bp-small) {
         color: $color-white;
@@ -168,7 +166,7 @@
     text-decoration: none;
     display: block;
     padding: 8px;
-    font-size: 14px;
+    font-size: 16px;
     transition: color .3s, background .3s, border .3s;
     font-family: $RobotoCondensed-Regular;
     position: relative;
@@ -187,7 +185,9 @@
   }
 
   #{$second-ul} {
+    padding: 0 0 0 20px;
     margin: 5px 0;
+    text-align: left;
 
     @media (min-width: $bp-small) {
       padding: 20px 0 0 0;
@@ -247,8 +247,7 @@
   #{$second-li--active}, #{$second-li--hover} {
 
     & > a {
-      color: $color-white;
-      background: $color-red;
+      color: #ce5155;
 
       @media (min-width: $bp-small) {
         color: $color-white;
@@ -261,12 +260,13 @@
     text-decoration: none;
     display: block;
     padding: 5px;
-    text-align: center;
+    text-align: left;
     border: none;
-    font-size: 11px;
+    font-size: 14px;
     color: $color-white;
 
     @media (min-width: $bp-small) {
+      text-align: center;
       padding: 10px 5px;
       font-size: 12px;
       color: $color-white;
@@ -276,6 +276,7 @@
 
   #{$third-ul} {
     margin: 5px 0;
+    padding: 0 0 0 20px;
 
     @media (min-width: $bp-small) {
       padding: 0;
@@ -302,8 +303,7 @@
   #{$third-li--active}, #{$third-li--hover} {
 
     & > a {
-      color: $color-white;
-      background: $color-red;
+      color: #ce5155;
 
       @media (min-width: $bp-small) {
         color: $color-white;
@@ -316,12 +316,13 @@
     text-decoration: none;
     display: block;
     padding: 5px;
-    text-align: center;
+    text-align: left;
     border: none;
     font-size: 10px;
     color: $color-white;
 
     @media (min-width: $bp-small) {
+      text-align: center;
       padding: 10px 5px;
       font-size: 12px;
       color: $color-white;
@@ -346,6 +347,11 @@
 
     @include sm-only {
       flex: 1;
+    }
+
+    @include xs-only {
+      overflow-y: auto;
+      height: calc(100vh - 84px);
     }
   }
 
@@ -378,6 +384,23 @@
 
       span {
         display: none;
+      }
+    }
+
+    #{$this}__bottom {
+
+      @include xs-only {
+        background: $color-blue;
+      }
+    }
+
+    #{$this}__bSearch {
+
+      @include xs-only {
+
+        .bSearch__form {
+          transform: translate(0, -100%);
+        }
       }
     }
   }

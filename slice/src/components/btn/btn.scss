@@ -11,9 +11,9 @@
   background: $color-red;
   cursor: pointer;
   display: inline-block;
-  font-size: 14px;
+  @include font-size(12px, 14px);
+  @include padding(10px 15px, 11px 26px);
   border-radius: 5px !important;
-  padding: 11px 26px;
   text-transform: uppercase;
 
   &:hover {

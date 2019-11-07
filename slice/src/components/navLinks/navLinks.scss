@@ -1,14 +1,20 @@
 .navLinks {
   display: flex;
   align-items: center;
+  justify-content: center;
   line-height: 1.2;
+
+  @include xs-only {
+    background: $color-blue;
+    padding: 7px 0;
+  }
 
   &__link {
     text-decoration: none;
-    padding: 15px 22px;
+    @include padding(15px 10px, 15px 22px);
     display: inline-block;
     color: $color-white;
-    font-size: 14px;
+    font-size: 12px;
     border-left: 1px solid $border-color;
     border-radius: 5px;
     font-family: $RobotoCondensed-LightItalic;

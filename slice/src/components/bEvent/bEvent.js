@@ -33,6 +33,7 @@ window.bEvent = class {
 			responsive: [{
 				breakpoint: 768,
 				settings: {
+					arrows: false,
 					swipe: true,
 					autoplay: false,
 					infinite: false,

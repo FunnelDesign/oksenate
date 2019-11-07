@@ -4,17 +4,17 @@
     position: relative;
     text-align: center;
     font-family: $RobotoCondensed-Light;
-    @include font-size(32px);
+    @include font-size(24px, 32px);
     color: #1f2f4b;
-    margin: 0 0 53px;
+    @include margin(0 0 35px, 0 0 53px);
 
     &:before {
       content: '';
-      width: 47px;
-      height: 45px;
+      @include width(31px, 47px);
+      @include height(30px, 45px);
       display: inline-block;
       vertical-align: middle;
-      background: url('event-title-ico-1.png');
+      background: url('event-title-ico-1.png') no-repeat;
       background-size: contain;
       margin-right: 10px;
     }
@@ -26,7 +26,7 @@
 
   &__slider-items {
     max-width: 920px;
-    margin: 0 auto 20px;
+    @include margin(0 auto -10px, 0 auto 20px);
 
     .slick-track {
       display: flex;
@@ -41,7 +41,7 @@
     border-radius: 5px;
     text-align: center;
     line-height: 1.2;
-    margin: 0 25px;
+    @include margin(0, 0 25px);
     min-height: 280px;
     height: auto;
     display: flex !important;
@@ -70,7 +70,7 @@
   }
 
   &__text {
-    @include font-size(18px,20px,24px);
+    @include font-size(18px, 20px, 24px);
     color: $main-text;
     font-family: $FreightTextProLight-Regular;
     @include cr-last-child;

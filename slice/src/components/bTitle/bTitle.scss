@@ -6,7 +6,7 @@
       font-family: $FreightTextProSemibold-Regular;
       line-height: 1.2;
       color: $color-white;
-      @include font-size(65px);
+      @include font-size(37px, 65px);
       margin: 0;
       text-align: center;
       text-shadow: 0 2px 0 rgba(35, 43, 51, 0.63);
@@ -15,11 +15,11 @@
 
   &_b {
     @include cr-last-child;
-    margin-bottom: 20px;
+    @include margin-bottom(16px, 20px);
 
     h1, h2, h3 {
       font-family: $FreightTextProBook-Italic;
-      @include font-size(65px);
+      @include font-size(37px, 65px);
       @include margin(0 0 20px);
       color: $color-white;
       text-align: center;

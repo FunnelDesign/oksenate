@@ -20,10 +20,13 @@
       &_#{$i} {
 
         & > #{$this}__col {
+          margin-bottom: 25px;
+          @include cr-last-item;
 
           @include sm {
             max-width: (100% / $i);
             min-width: (100% / $i);
+            margin-bottom: 0;
           }
         }
       }

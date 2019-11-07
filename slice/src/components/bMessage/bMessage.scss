@@ -2,19 +2,18 @@
   background: $color-red;
   color: $color-white;
   font-family: $Roboto-Regular;
-  font-size: 12px;
+  @include font-size(10px, 12px);
   text-align: center;
   position: relative;
   line-height: 1.4;
 
   .bContainer {
     @include cr-last-child;
-    padding: 23px 30px;
+    @include padding(10px 20px, 23px 30px);
 
     a {
       color: $color-white;
       font-family: $Roboto-Regular;
-      font-size: 12px;
     }
   }
 

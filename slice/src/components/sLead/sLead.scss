@@ -10,7 +10,7 @@
 
   &__bTitle {
     @include cr-last-child;
-    margin-bottom: 42px;
+    @include margin-bottom(20px, 42px);
   }
 
 }

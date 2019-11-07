@@ -106,7 +106,7 @@
 
         </div>
 
-        <div class="bSearch">
+        <div class="bSearch sHeader__bSearch">
           <a href="#" data-ev="toggleClass" data-sel="bSearch" class="bSearch__btn"></a>
 
           <div class="bSearch__form">
