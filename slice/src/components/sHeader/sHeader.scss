@@ -19,54 +19,46 @@
 
   &__bottom {
     background: $color-dark-blue;
+    display: flex;
+    justify-content: center;
 
     .bContainer {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       padding: 22px 0;
       position: relative;
+      @include margin(0 -8px, 0 -16px);
+
+      @include md {
+        justify-content: center;
+      }
 
       & > * {
-        margin-left: 16px;
-        margin-right: 16px;
+        @include margin(0 8px, 0 16px);
       }
     }
   }
 
-
   &__btn-mobile {
-    position: absolute;
-    right: 5%;
-    bottom: 2px;
-    width: 43px;
-    height: 43px;
-    transition: opacity .3s;
-    padding: 0;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 10px 4px;
+    @include display(flex, none);
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1;
 
-    @media (min-width: $bp-small) {
-      display: none;
-    }
-
-    &:after, &:before {
-      @include pseudo-block($right: 5px, $left: 5px);
-      border-radius: 5px;
+    &:after, &:before, span {
+      content: '';
+      display: block;
       background: $color-white;
-      height: 6px;
+      height: 2px;
       transition: background .3s;
+      pointer-events: none;
     }
 
-    &:before {
-      top: 13px
-    }
-
-    &:after {
-      bottom: 13px
-    }
-
-    &:hover {
-      opacity: .5;
-    }
   }
 
   $fist-ul: "&__menu-wrap > ul.menu";
@@ -364,6 +356,28 @@
       @media (max-width: $bp-small - 1) {
         opacity: 1;
         visibility: visible;
+      }
+    }
+
+    #{$this}__btn-mobile {
+
+      &:after, &:before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 27px;
+      }
+
+      &:after {
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+
+      &:before {
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+
+      span {
+        display: none;
       }
     }
   }

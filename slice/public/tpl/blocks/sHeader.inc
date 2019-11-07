@@ -33,7 +33,16 @@
 
     <div class="sHeader__bottom">
       <div class="bContainer">
-        <a href="#" data-ev="toggleClass" data-sel="sHeader"  class="sHeader__btn-mobile"></a>
+        <a href="#" data-ev="toggleClass" data-sel="sHeader"  class="sHeader__btn-mobile">
+          <span></span>
+        </a>
+
+        <div class="logo sHeader__logo mobile-only">
+          <a href="#">
+            <img src="../dist/images/logo.png" alt="logo">
+            Oklahoma Senate
+          </a>
+        </div>
 
         <div class="sHeader__navWrap">
 
