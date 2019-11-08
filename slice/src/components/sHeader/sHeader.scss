@@ -5,6 +5,13 @@
   background: $color-blue;
   z-index: 100;
 
+  &_fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
   &__top {
     background: $color-blue;
     border-bottom: 1px solid $border-color;
