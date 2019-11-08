@@ -33,7 +33,7 @@
 
     <div class="sHeader__bottom">
       <div class="bContainer">
-        <a href="#" data-ev="toggleClass:sHeader;removeSiblingClass:bSearch" class="sHeader__btn-mobile">
+        <a href="#" data-ev="toggleClass:sHeader:mobileMenu;removeClass:sHeader:searchOpen" class="sHeader__btn-mobile">
           <span></span>
         </a>
 
@@ -106,10 +106,10 @@
 
         </div>
 
-        <div class="bSearch sHeader__bSearch">
-          <a href="#" data-ev="toggleClass:bSearch;removeClass:sHeader" class="bSearch__btn"></a>
+        <div class="sHeader__search">
+          <a href="#" data-ev="toggleClass:sHeader:searchOpen;removeClass:sHeader:mobileMenu" class="sHeader__searchBtn"></a>
 
-          <div class="bSearch__form">
+          <div class="sHeader__searchForm">
             <div class="form f-search">
               <div class="form-item">
                 <input type="text" class="form-text" placeholder="search here"/>

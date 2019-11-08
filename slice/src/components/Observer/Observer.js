@@ -14,19 +14,20 @@ window.Observer = class {
 			};
 
 			events.evs.forEach((evItem, i) => {
-				let [ev, sel] = evItem.split(':');
+				let [ev, sel, clName] = evItem.split(':');
 
 				events.items[i] = {
 					ev,
-					sel
+					sel,
+					clName
 				}
 			});
 
-			events.items.forEach(({ev, sel}) => {
+			events.items.forEach(({ev, sel, clName}) => {
 				if (!sel || !this[ev]) return;
 
 				e.preventDefault();
-				this[ev]($(e.target), sel);
+				this[ev]($(e.target), sel, clName);
 			});
 
 		});
@@ -36,16 +37,12 @@ window.Observer = class {
 		$target.closest(`.${sel}`).hide();
 	}
 
-	toggleClass($target, sel) {
-		$target.closest(`.${sel}`).toggleClass(`${sel}_active`);
+	toggleClass($target, sel, clName) {
+		$target.closest(`.${sel}`).toggleClass(`${sel}_${clName}`);
 	}
 
-	removeClass($target, sel) {
-		$target.closest(`.${sel}`).removeClass(`${sel}_active`);
-	}
-
-	removeSiblingClass($target, sel) {
-		$target.siblings(`.${sel}`).removeClass(`${sel}_active`);
+	removeClass($target, sel, clName) {
+		$target.closest(`.${sel}`).removeClass(`${sel}_${clName}`);
 	}
 
 	toggle($target, sel) {
