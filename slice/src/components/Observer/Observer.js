@@ -1,3 +1,5 @@
+import CustomEv from './CustomEv'
+
 window.Observer = class {
 	constructor() {
 		this.init();
@@ -27,22 +29,23 @@ window.Observer = class {
 				if (!sel || !this[ev]) return;
 
 				e.preventDefault();
-				this[ev]($(e.target), sel, clName);
+				this[ev]($(e.target), sel, clName, ev);
 			});
-
 		});
+
+		new CustomEv;
 	}
 
-	hide($target, sel) {
-		$target.closest(`.${sel}`).hide();
+	hide($target, sel, clName, ev) {
+		$target.closest(`.${sel}`).hide().trigger(`ev.${ev}`);
 	}
 
-	toggleClass($target, sel, clName) {
-		$target.closest(`.${sel}`).toggleClass(`${sel}_${clName}`);
+	toggleClass($target, sel, clName, ev) {
+		$target.closest(`.${sel}`).toggleClass(`${sel}_${clName}`).trigger(`ev.${ev}.${clName}`);
 	}
 
-	removeClass($target, sel, clName) {
-		$target.closest(`.${sel}`).removeClass(`${sel}_${clName}`);
+	removeClass($target, sel, clName, ev) {
+		$target.closest(`.${sel}`).removeClass(`${sel}_${clName}`).trigger(`ev.${ev}.${clName}`);
 	}
 
 	toggle($target, sel) {
