@@ -3,6 +3,7 @@
   color: $color-white;
   font-family: $Roboto-Regular;
   @include font-size(10px, 12px);
+  @include display(none, $sm: block);
   text-align: center;
   position: relative;
   line-height: 1.4;

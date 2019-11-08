@@ -1,6 +1,6 @@
 <header class="sHeader">
 
-   <div class="bMessage">
+   <div class="bMessage" id="accessibility">
      <a href="#" data-ev="hide:bMessage" class="bMessage__close"></a>
      <div class="bContainer">
         <p>In order to provide equal access and equal opportunity to people with diverse abilities, this site has been

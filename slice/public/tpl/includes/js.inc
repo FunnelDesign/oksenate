@@ -1,4 +1,5 @@
 <script type="text/javascript" src="common/js/lib/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="../dist/vendor/jquery.cookie/jquery.cookie.js"></script>
 <script type="text/javascript" src="../dist/vendor/device/device.js"></script>
 <script type="text/javascript" src="../dist/vendor/slick/slick.min.js"></script>
 
