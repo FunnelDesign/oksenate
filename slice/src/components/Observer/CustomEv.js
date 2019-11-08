@@ -17,21 +17,21 @@ class CustomEv {
 			$('body').removeClass(`${clName}-open`);
 		});
 
-		var ro = new ResizeObserver( entries => {
-			for (let entry of entries) {
-				const cr = entry.contentRect;
-				console.log('Element:', entry.target);
-				console.log(`Element size: ${cr.width}px x ${cr.height}px`);
-				console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
-
-				if ($elm.hasClass(`sHeader_fixed`)) {
-					$('.pageWr').css('padding-top', `${cr.height}px`)
-				}
-			}
-		});
+		// var ro = new ResizeObserver( entries => {
+		// 	for (let entry of entries) {
+		// 		const cr = entry.contentRect;
+		// 		console.log('Element:', entry.target);
+		// 		console.log(`Element size: ${cr.width}px x ${cr.height}px`);
+		// 		console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
+		//
+		// 		if ($elm.hasClass(`sHeader_fixed`)) {
+		// 			$('.pageWr').css('padding-top', `${cr.height}px`)
+		// 		}
+		// 	}
+		// });
 
 // Observe one or multiple elements
-		ro.observe($elm[0]);
+/*		ro.observe($elm[0]);*/
 	}
 
 	addAccessibilityCookie() {
