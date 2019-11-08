@@ -1,0 +1,14 @@
+global-styling:
+  version: 0.0.1
+  css:
+    theme:
+      dist/css/styles.min.css: {}
+  js:
+      dist/js/index.min.js: {}
+
+  dependencies:
+    - core/jquery
+    - core/drupal.ajax
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
