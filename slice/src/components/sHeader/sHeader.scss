@@ -26,11 +26,10 @@
 
   &__bottom {
     background: $color-dark-blue;
-    display: flex;
-    justify-content: center;
+    text-align: center;
 
     .bContainer {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: space-between;
       position: relative;
