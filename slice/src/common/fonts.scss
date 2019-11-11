@@ -1,9 +1,21 @@
-$fonts: RobotoCondensed-Regular,
+$fonts:
+Roboto-Regular,
+RobotoCondensed-Regular,
 RobotoCondensed-Bold,
-RobotoCondensed-BoldItalic,
-RobotoCondensed-Italic,
 RobotoCondensed-Light,
-RobotoCondensed-LightItalic;
+RobotoCondensed-LightItalic,
+FreightTextProBold-Regular,
+FreightTextProMedium-Italic,
+FreightTextProBook-Italic,
+FreightTextProBook-Regular,
+FreightTextProBlack-Regular,
+FreightTextProSemibold-Italic,
+FreightTextProLight-Italic,
+FreightTextProBlack-Italic,
+FreightTextProLight-Regular,
+FreightTextProBold-Italic,
+FreightTextProMedium-Regular,
+FreightTextProSemibold-Regular;
 
 @each $font in $fonts {
   @font-face {
@@ -14,4 +26,3 @@ RobotoCondensed-LightItalic;
     font-style: normal;
   }
 }
-

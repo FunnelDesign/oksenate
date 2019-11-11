@@ -1,0 +1,251 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the senate theme.
+ */
+use Drupal\image\Entity\ImageStyle;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function coastal_preprocess_html(array &$vars) {
+
+}
+
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+function coastal_preprocess_page(array &$vars) {
+  $node = !empty($vars["node"]) ? $vars["node"] : '';
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function senate_preprocess_node(array &$vars) {
+  $node = $vars['node'];
+  $view_mode = !empty($vars["view_mode"]) ? $vars["view_mode"] : '';
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function senate_preprocess_field(array &$vars, $hook) {
+  global $base_path;
+
+  $view_mode = !empty($vars["element"]["#view_mode"]) ? $vars["element"]["#view_mode"] : '';
+  $disable_quick_edit_field_types = [
+    'image',
+    'link',
+    'field_collection',
+    'entity_reference_revisions'
+  ];
+
+  if (in_array($vars['field_type'], $disable_quick_edit_field_types)) {
+
+    if (isset($vars['attributes']['data-quickedit-field-id'])) {
+      unset($vars['attributes']['data-quickedit-field-id']);
+    }
+  }
+
+  if ($vars['field_type'] == 'image') {
+    if (!empty($vars['items'][0]['content']['#item']->entity)) {
+      if (!empty($vars["items"][0]["content"]["#image_style"])) {
+        $style = $vars["items"][0]["content"]["#image_style"];
+        $img_file_uri = $vars['items'][0]['content']['#item']->entity->getFileUri();
+        $vars['image_url'] = ImageStyle::load($style)->buildUrl($img_file_uri);
+      }
+      else {
+        $vars['image_url'] = $vars['items'][0]['content']['#item']->entity->url();
+      }
+    }
+  }
+
+  switch ($vars['element']['#field_name']) {
+    case 'field_home_finder_left_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
+        $vars['items'][$key]['wrappers'] = 'sFinder__btn-wrap';
+      }
+      break;
+    case 'field_home_leadership_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
+        $vars['items'][$key]['wrappers'] = 'sLead__btnWrap';
+      }
+      break;
+    case 'field_footer_find_senator_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
+        $vars['items'][$key]['wrappers'] = 'sFooter__btnWr';
+      }
+      break;
+    case 'field_footer_find_senator_image':
+    case 'field_home_leadership_logo_image':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $image_url = $vars['items'][$key]['content']['#item']->entity->url();
+        $vars['items'][$key]['content']['image_url'] = $image_url;
+      }
+
+      if (!empty($vars['items'])) {
+        $image_srcset = '';
+        $image_src = $vars['items'][0]['content']['image_url'];
+        if (!empty($vars['items'][1])) {
+          $image_srcset = 'srcset="' . $vars['items'][1]['content']['image_url'] . ' 2x"';
+        }
+        $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' alt="">';
+        $vars['img_src'] =  Markup::create($image_html); //prepared image for render
+      }
+
+      break;
+    case 'field_home_tiles_paragraph':
+      $vars['elements'] = array();
+      $style = 'rockdevels_defaults_imagemagick';
+
+      $elements = _rows_from_paragraphs($vars, array(
+        'field_paragraph_tiles_image',
+        'field_paragraph_tiles_link',
+      ));
+
+      foreach ($elements as $key => $row) {
+        $img_markup = '';
+        if (!empty($row['field_paragraph_tiles_image'][0]['uri'])) {
+          $image_srcset = '';
+          $image_src = ImageStyle::load($style)
+            ->buildUrl($row['field_paragraph_tiles_image'][0]['uri']);
+          if (!empty($row['field_paragraph_tiles_image'][1]['uri'])) {
+            $image_srcset = ' srcset="' . ImageStyle::load($style)
+                ->buildUrl($row['field_paragraph_tiles_image'][1]['uri']) . ' 2x"';
+          }
+
+          $img_src = '<span class="bTiles__ico"><img src="' . $image_src . '"  ' . $image_srcset . ' alt=""></span>';
+          $img_markup = Markup::create($img_src); //prepared image for render
+        }
+
+        $link_title_text = !empty($row['field_paragraph_tiles_link'][0]['title']) ? $row['field_paragraph_tiles_link'][0]['title'] : '';
+        $link_title = "<span class=\"bTiles__title\">" . $link_title_text . "</span>";
+
+        $markup = Markup::create($img_markup . $link_title); //prepared content for render
+
+        $url = Url::fromUri($row['field_paragraph_tiles_link'][0]['uri']);
+        $options = ['class' => ['bTiles__item',], 'target' => ['_blank']];
+        $url->setOption('attributes', $options);
+
+        $vars['elements'][$key]['element'] = Link::fromTextAndUrl($markup, $url);
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_field_alter().
+ */
+function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) {
+  $element = $vars['element'];
+  $suggestions[] = 'field__' . $element['#field_name'] . '__' . $element['#view_mode'];
+
+  switch ($vars['element']['#field_name']) {
+    case 'field_block_navigation_links':
+      $suggestions[] = 'field__no_wrappers';
+      break;
+
+    case 'field_home_top_bg_image':
+      $suggestions[] = 'field__bg_image';
+      $suggestions[] = 'field_home_section_image';
+      break;
+
+    case 'field_home_finder_left_link':
+    case 'field_footer_find_senator_link':
+    case 'field_home_leadership_link':
+      $suggestions[] = 'field__with_custom_wrapper';
+      break;
+
+    case 'field_footer_find_senator_image':
+    case 'field_home_leadership_logo_image':
+      $suggestions[] = 'field__src_srcset_images';
+      break;
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  if ($form_id == 'search_block_form') {
+    $form['keys']['#attributes']['placeholder'] = t('search here');
+  }
+
+}
+
+/**
+ * Creates a simple text rows array from a paragraphs, to be used in a
+ * field_preprocess function.
+ *
+ * @param $vars
+ * An array of variables to pass to the theme template.
+ * @param $field_array
+ * Array of fields to be turned into rows in the field collection.
+ * @return array
+ */
+function _rows_from_paragraphs(&$vars, $field_array) {
+  $rows = array();
+  if (!empty($vars['element']['items'])) {
+    $items = $vars['element']['items'];
+  }
+  elseif (!empty($vars['items'])) {
+    $items = $vars['items'];
+  }
+  else {
+    $items = array();
+  }
+
+  foreach ($items as $key => $item) {
+    if (!empty($item['content']) && !empty($item['content']['#paragraph'])) {
+      $entity = $item['content']['#paragraph'];
+
+      try {
+        $row = array();
+
+        foreach ($field_array as $field_name) {
+          if ($entity->hasField($field_name)) {
+            $field = $entity->get($field_name);
+            $field_type = $field->getFieldDefinition()->getType();
+
+            switch ($field_type) {
+              case 'image':
+                foreach ($field as $key => $item) {
+                  if (!empty($item->entity)) {
+                    $img_url = $item->entity->url();
+                    $row[$field_name][$key]['value'] = $img_url;
+                    $row[$field_name][$key]['uri'] = $item->entity->getFileUri();
+                  }
+                }
+                break;
+              default:
+                $row[$field_name] = $field->getValue();
+            }
+          }
+        }
+        $rows[] = $row;
+      } catch (Exception $exc) {
+        \Drupal::logger('error')
+          ->error('See ' . __FUNCTION__ . '() <pre>' . $exc->getTraceAsString() . '</pre>');
+      }
+    }
+  }
+
+  return $rows;
+}

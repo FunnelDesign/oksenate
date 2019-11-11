@@ -1,0 +1,22 @@
+.f-search {
+  position: relative;
+
+  .form-actions {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translate(0, -50%);
+    margin: 0;
+  }
+
+  .form-item {
+    margin: 0;
+  }
+
+  select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+    padding-right: 115px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

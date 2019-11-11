@@ -64,6 +64,11 @@
 
 @mixin display($media-arg...) {$prop: display; @include media-prop($media-arg,$prop);}
 @mixin padding($media-arg...) {$prop: padding; @include media-prop($media-arg,$prop);}
+@mixin padding-left($media-arg...) {$prop: padding-left; @include media-prop($media-arg,$prop);}
+@mixin padding-right($media-arg...) {$prop: padding-right; @include media-prop($media-arg,$prop);}
+@mixin padding-top($media-arg...) {$prop: padding-top; @include media-prop($media-arg,$prop);}
+@mixin padding-bottom($media-arg...) {$prop: padding-bottom; @include media-prop($media-arg,$prop);}
+
 @mixin width($media-arg...) {$prop: width; @include media-prop($media-arg,$prop);}
 @mixin min-width($media-arg...) {$prop: min-width; @include media-prop($media-arg,$prop);}
 @mixin max-width($media-arg...) {$prop: max-width; @include media-prop($media-arg,$prop);}

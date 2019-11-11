@@ -1,0 +1,16 @@
+.sLead {
+
+  &__col {
+    text-align: center;
+  }
+
+  &__img {
+    margin-bottom: 10px;
+  }
+
+  &__bTitle {
+    @include cr-last-child;
+    @include margin-bottom(20px, 42px);
+  }
+
+}

@@ -1,10 +1,12 @@
 import './styles'
 
-import SHeader from './components/SHeader/SHeader'
+import bEvent from './components/bEvent/bEvent'
+import Observer from "./components/Observer/Observer";
+const $ = jQuery;
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	if (window.Drupal && window.Drupal.behaviors) {
+	if (window.Drupal?.behaviors) {
 		Drupal.behaviors.projectName = {
 			attach: () => {
 				init();
@@ -15,8 +17,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		init();
 	}
 
+	new Observer();
+
 	function init() {
-    new SHeader();
+    new bEvent();
 	}
 
 });

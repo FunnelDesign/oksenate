@@ -1,0 +1,97 @@
+.sFinder {
+  $sFinder-ind: 48px;
+  position: relative;
+  margin: -#{$sFinder-ind} 0;
+  z-index: 1;
+
+  &__bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: #{$sFinder-ind};
+    bottom: #{$sFinder-ind};
+    z-index: -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &:before, &:after, span {
+      content: '';
+      display: block;
+      flex: 1;
+      width: 100%;
+    }
+
+    &:before {
+      background: $color-red;
+    }
+
+    span {
+      background: $color-white;
+    }
+
+    &:after {
+      background: $color-blue;
+    }
+  }
+
+  &__in {
+    @include padding(14px, 35px 0);
+    background: $color-white;
+    border: 1px solid $border-color-1;
+    border-radius: 5px;
+    min-height: 320px;
+    @include display($sm: flex);
+  }
+
+  &__col {
+    @include padding(0 0 25px, 7px 44px 20px, 7px 44px 20px, 7px 75px 20px);
+    @include margin-bottom(0 0 25px, 0);
+    flex: 1;
+    border-bottom: 1px solid $border-color-1;
+    text-align: center;
+
+    @include sm {
+      border-bottom: none;
+      border-right: 1px solid $border-color-1;
+    }
+
+    &:last-child {
+      border: none;
+      margin-bottom: 0;
+
+      @include xs-only {
+        padding: 0;
+      }
+    }
+
+    h3 {
+      font-family: $RobotoCondensed-Light;
+      color: $color-dark-blue-1;
+      margin: 0 0 4px;
+      @include font-size(24px, 32px);
+    }
+  }
+
+  &__ico {
+    height: 80px;
+    max-width: 100px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    img {
+      max-height: 100%;
+      height: auto;
+    }
+  }
+
+  &__desc {
+    @include cr-last-child;
+    @include margin-bottom(16px, 24px);
+    @include font-size(12px, 14px);
+    color: $color-gray-3;
+  }
+}

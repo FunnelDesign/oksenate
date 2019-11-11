@@ -1,0 +1,22 @@
+.sHero {
+
+  .bContainer {
+    text-align: center;
+    color: $color-white;
+  }
+
+  &__img {
+    max-width: 88px;
+    margin: 0 auto 3px;
+  }
+
+  &__bTitle {
+    margin-bottom: 25px;
+  }
+
+  &__desc {
+    @include cr-last-child();
+    font-family: $FreightTextProMedium-Regular;
+  }
+
+}

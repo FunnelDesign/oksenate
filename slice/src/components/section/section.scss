@@ -1,0 +1,66 @@
+.section {
+  position: relative;
+  $this: &;
+
+  &_inner-v-centered {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__v-inner {
+    @include padding(35px 0, $md: 50px 0);
+    @include min-height($sm: 500px, $md: 588px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &_a {
+      @include min-height(310px, 400px, 496px);
+      @include padding-bottom(60px, 123px);
+    }
+
+    &_b {
+      @include min-height($sm: 500px, $md: 612px);
+    }
+  }
+
+  &__bg-wrap, &__bg {
+    @include stretch-block();
+    z-index: -1;
+  }
+
+  &__bg-wrap {
+    overflow: hidden;
+  }
+
+  &__bg {
+    background-size: cover;
+    background-position: 50% 50%;
+
+    &_mobile {
+      @include display($sm: none);
+
+      & + #{$this}__bg {
+        @include display(none, block);
+      }
+    }
+  }
+
+  &_bg-color {
+
+    &_a {
+      background: $color-dark-blue;
+    }
+  }
+
+  &_ind {
+
+    &_a {
+      padding: 90px 0 50px;
+    }
+
+    &_b {
+      @include padding(40px 0 30px, 60px 0 50px, 90px 0 76px);
+    }
+  }
+}

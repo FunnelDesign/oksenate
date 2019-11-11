@@ -1,0 +1,28 @@
+.logo {
+  transition: opacity .3s;
+  backface-visibility: hidden;
+
+  &:hover {
+    opacity: .5;
+  }
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    color: $color-white;
+    font-size: 18px;
+    font-family: $FreightTextProMedium-Regular;
+    text-decoration: none;
+
+    @include mq-down(370px) {
+      font-size: 14px;
+    }
+  }
+
+  img {
+    max-width: 55px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+}

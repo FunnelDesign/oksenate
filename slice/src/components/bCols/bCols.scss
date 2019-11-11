@@ -1,0 +1,35 @@
+.bCols {
+  $this: &;
+
+  @include sm {
+    display: flex;
+  }
+
+  &_ind {
+
+  }
+
+  &_v-cent {
+    align-items: center;
+  }
+
+  &_item {
+
+    @for $i from 1 through 6 {
+
+      &_#{$i} {
+
+        & > #{$this}__col {
+          margin-bottom: 25px;
+          @include cr-last-item;
+
+          @include sm {
+            max-width: (100% / $i);
+            min-width: (100% / $i);
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}

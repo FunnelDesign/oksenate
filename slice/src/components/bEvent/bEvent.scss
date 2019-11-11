@@ -1,0 +1,184 @@
+.bEvent {
+
+  h3 {
+    position: relative;
+    text-align: center;
+    font-family: $RobotoCondensed-Light;
+    @include font-size(24px, 32px);
+    color: #1f2f4b;
+    @include margin(0 0 35px, 0 0 53px);
+
+    &:before {
+      content: '';
+      @include width(31px, 47px);
+      @include height(30px, 45px);
+      display: inline-block;
+      vertical-align: middle;
+      background: url('event-title-ico-1.png') no-repeat;
+      background-size: contain;
+      margin-right: 10px;
+    }
+  }
+
+  &__slider {
+
+  }
+
+  &__slider-items {
+    max-width: 920px;
+    @include margin(0 auto -10px, 0 auto 20px);
+
+    .slick-track {
+      display: flex;
+      justify-content: center;
+    }
+
+    .slick-list {
+
+      @include xs-only {
+        overflow: visible;
+      }
+    }
+  }
+
+  &__slider-item {
+    padding: 7px 15px 42px;
+    background: $color-white;
+    border: 2px solid $color-gray-1;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 1.2;
+    @include margin(0 7px, 0 25px);
+    min-height: 280px;
+    height: auto;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__header {
+    padding: 13px 0 17px;
+    border-bottom: 1px solid $color-gray-1;
+    color: $color-blue;
+    font-size: 14px;
+    margin-bottom: 20px;
+    font-family: $FreightTextProBold-Regular;
+  }
+
+  &__body {
+
+  }
+
+  &__time {
+    color: $color-blue;
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-family: $FreightTextProMedium-Regular;
+  }
+
+  &__text {
+    @include font-size(18px, 20px, 24px);
+    color: $main-text;
+    font-family: $FreightTextProLight-Regular;
+    @include cr-last-child;
+    margin-bottom: 16px;
+  }
+
+  &__btnWrap {
+
+  }
+
+  .slick-arrow {
+    @include text-hide();
+  }
+
+  .slick-arrow {
+    top: 50%;
+    right: -15px;
+    left: auto;
+    transform: translate(0, -50%) rotate(180deg);
+    position: absolute;
+    z-index: 10;
+    cursor: pointer;
+    background: none;
+    width: 30px;
+    height: 30px;
+    transition: background .3s;
+    border-radius: 0;
+    backface-visibility: hidden;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+
+    &:hover {
+
+      &:before {
+        opacity: .5;
+      }
+    }
+
+    &:before {
+      @include pseudo-block($left: 50%, $top: 50%);
+      background: url('slider-arrow-1.png') no-repeat;
+      width: 8px;
+      height: 14px;
+      background-size: 100% 100%;
+      transition: opacity .3s;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      backface-visibility: hidden;
+    }
+  }
+
+  .slick-prev {
+    transform: translate(0, -50%);
+    left: -15px;
+    right: auto;
+  }
+
+  &__slider-nav {
+    text-align: center;
+  }
+
+  .slick-dots {
+    padding: 0;
+    margin: 0 -2px;
+    list-style: none;
+    position: relative;
+    z-index: 1;
+
+    li {
+      margin: 0 2px 0;
+      display: inline-block;
+      padding: 0;
+      position: relative;
+      cursor: pointer;
+      vertical-align: middle;
+
+      &:hover, &.slick-active {
+
+        button {
+          background-color: #33496c;
+          outline: none !important;
+        }
+      }
+    }
+
+    button {
+      @include text-hide();
+      @include width(10px, 12px);
+      @include height(10px, 12px);
+      background: $color-white;
+      transition: background .3s, border .3s;
+      display: block;
+      padding: 0;
+      cursor: pointer;
+      color: transparent;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #33496c;
+      border-radius: 50%;
+    }
+  }
+}
