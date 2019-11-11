@@ -1,4 +1,5 @@
 import CustomEv from './CustomEv'
+const $ = jQuery;
 
 window.Observer = class {
 	constructor() {

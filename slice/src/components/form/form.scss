@@ -43,6 +43,10 @@ textarea {
 
 .form {
 
+  input[type="search"] {
+    box-sizing: border-box;
+  }
+
   .form-item {
     margin-bottom: 10px;
     margin-top: 0;

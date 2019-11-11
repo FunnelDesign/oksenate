@@ -2,6 +2,7 @@ import './styles'
 
 import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
+const $ = jQuery;
 
 document.addEventListener('DOMContentLoaded', () => {
 
