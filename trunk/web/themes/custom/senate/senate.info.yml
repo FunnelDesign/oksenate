@@ -14,6 +14,7 @@ regions:
   main_menu: Main Menu
   header_navigation: Header Navigation
   header_navigation_mobile: Header Navigation Mobile
+  search: Search
   tabs: Tabs
 #  content_top: Content Top
   content: Content

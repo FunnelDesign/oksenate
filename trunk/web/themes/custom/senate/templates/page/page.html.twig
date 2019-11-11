@@ -49,34 +49,22 @@
 
     <header class="sHeader">
 
-        <div class="bMessage">
-            <a href="#" data-ev="hide" data-sel="bMessage" class="bMessage__close"></a>
-            <div class="bContainer">
-                <p>In order to provide equal access and equal opportunity to people with diverse abilities, this site
-                    has been
-                    designed with full accessibility in mind. <a href="#">Click here to view.</a>
-                </p>
-            </div>
-        </div>
-
+        {#<div class="bMessage" id="accessibility">#}
+        {#<a href="#" data-ev="hide:bMessage" class="bMessage__close"></a>#}
+        {#<div class="bContainer">#}
+        {#<p>In order to provide equal access and equal opportunity to people with diverse abilities, this site#}
+        {#has been#}
+        {#designed with full accessibility in mind. <a href="#">Click here to view.</a>#}
+        {#</p>#}
+        {#</div>#}
+        {#</div>#}
         <div class="sHeader__top desktop-only">
             <div class="bContainer">
                 <div class="logo sHeader__logo">
-                    <a href="#">
-                        <img src="../dist/images/logo.png" alt="logo">
-                        Oklahoma Senate
-                    </a>
+                    {{ page.logo }}
                 </div>
                 <div class="navLinks">
-                    <a href="" class="navLinks__link navLinks__link_live">
-                        Live Proceedings
-                    </a>
-                    <a href="" class="navLinks__link">
-                        Find My Senator
-                    </a>
-                    <a href="" class="navLinks__link">
-                        Track a Bill
-                    </a>
+                    {{ page.header_navigation }}
                 </div>
             </div>
         </div>
@@ -84,113 +72,48 @@
 
         <div class="sHeader__bottom">
             <div class="bContainer">
-                <a href="#" data-ev="toggleClass" data-sel="sHeader" class="sHeader__btn-mobile"></a>
+                <a href="#" data-ev="toggleClass:sHeader:mobileMenu;removeClass:sHeader:searchOpen" class="sHeader__btn-mobile">
+                    <span></span>
+                </a>
+
+                <div class="logo sHeader__logo mobile-only">
+                    {{ page.logo }}
+                </div>
 
                 <div class="sHeader__navWrap">
 
                     {{ page.main_menu }}
 
                     <div class="navLinks mobile-only">
-                        <a href="" class="navLinks__link navLinks__link_live">
-                            Live Proceedings
-                        </a>
-                        <a href="" class="navLinks__link">
-                            Find My Senator
-                        </a>
-                        <a href="" class="navLinks__link">
-                            Track a Bill
-                        </a>
+                        {{ page.header_navigation_mobile }}
                     </div>
 
                 </div>
-
-                <div class="bSearch">
-                    <a href="#" data-ev="toggleClass" data-sel="bSearch" class="bSearch__btn"></a>
-
-                    <div class="bSearch__form">
-                        <div class="form f-search">
-                            <div class="form-item">
-                                <input type="text" class="form-text" placeholder="search here"/>
-                            </div>
-                            <div class="form-actions">
-                                <input type="submit" class="form-submit" value="search">
-                                <div class="ajax-progress ajax-progress-throbber">
-                                    <div class="throbber">&nbsp;</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {{ page.search }}
 
             </div>
         </div>
     </header>
+
+    {{ page.tabs }}
+
     <div class="pageIn">
         {{ page.content }}
     </div>
+
     <footer class="sFooter">
         <div class="bContainer">
             <div class="sFooter__top">
                 <div class="logo sFooter__logo">
-                    <a href="#">
-                        <img src="../dist/images/logo.png" alt="logo">
-                        Oklahoma Senate
-                    </a>
+                    {{ page.logo }}
                 </div>
                 <div class="navLinks">
-                    <a href="" class="navLinks__link navLinks__link_live">
-                        Live Proceedings
-                    </a>
-                    <a href="" class="navLinks__link">
-                        Track a Bill
-                    </a>
+                    {{ page.footer_navigation }}
                 </div>
             </div>
 
             <div class="sFooter__bottom">
-                <div class="sFooter__col">
-                    <div class="sFooter__address">
-                        Oklahoma Senate <br>
-                        2300 N Lincoln Blvd.,<br>
-                        Oklahoma City, OK 73105
-                    </div>
-
-                    <a href="mailto:email@oksenate.gov">email@oksenate.gov</a>
-
-                </div>
-
-                <div class="sFooter__col">
-
-                    <div class="sFooter__nav">
-                        <ul class="menu">
-                            <li><a href="#">Senators</a></li>
-                            <li><a href="#">Legislation & Bills</a></li>
-                            <li><a href="#">Education</a></li>
-                            <li><a href="#">Committees</a></li>
-                            <li><a href="#">Calendar</a></li>
-                            <li><a href="#">Press & Media</a></li>
-                            <li><a href="#">Contacts</a></li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div class="sFooter__col">
-
-                    <div class="sFooter__info">
-                        <div class="sFooter__img">
-                            <img src="../dist/images/tmp/find-senator-img-1.png"
-                                 srcset="../dist/images/tmp/find-senator-img-1-2x.png 2x" alt="">
-                        </div>
-
-                        <h3>Find My Senator</h3>
-
-                        <div class="sFooter__btnWr">
-                            <a href="#" class="btn">find your senator here</a>
-                        </div>
-                    </div>
-
-                </div>
+                {{ page.footer }}
             </div>
 
         </div>
