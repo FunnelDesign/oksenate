@@ -1,4 +1,5 @@
 import {checkInit} from "../helper";
+const $ = jQuery;
 
 window.sHeader = class {
 	constructor(props = {}) {

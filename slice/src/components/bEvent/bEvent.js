@@ -1,4 +1,5 @@
 import {checkInit} from "../helper";
+const $ = jQuery;
 
 window.bEvent = class {
 	constructor(props = {}) {

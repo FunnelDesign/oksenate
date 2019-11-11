@@ -1,3 +1,5 @@
+const $ = jQuery;
+
 class CustomEv {
 
 	constructor() {

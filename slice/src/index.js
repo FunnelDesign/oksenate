@@ -3,6 +3,7 @@ import './styles'
 import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
 
+
 document.addEventListener('DOMContentLoaded', () => {
 
 	if (window.Drupal?.behaviors) {
