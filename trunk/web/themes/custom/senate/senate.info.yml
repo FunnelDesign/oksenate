@@ -10,7 +10,7 @@ base theme: classy
 #Using Classy as a base theme https://www.drupal.org/theme-guide/8/classy
 
 regions:
-#  top_logo: Top Logo
+  logo: Logo
   main_menu: Main Menu
   header_navigation: Header Navigation
   header_navigation_mobile: Header Navigation Mobile
@@ -19,7 +19,6 @@ regions:
   content: Content
 #  content_bottom: Content Bottom
 
-#  footer_top: Footer Top
   footer_navigation: Footer Navigation
   footer: Footer
 #  footer_social: Footer Social

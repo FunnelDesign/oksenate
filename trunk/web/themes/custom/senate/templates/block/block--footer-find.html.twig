@@ -32,7 +32,16 @@
  */
 #}
 <div class="sFooter__col">
-    <div class="sFooter__nav">
-        {{ content }}
+
+    <div class="sFooter__info">
+        <div class="sFooter__img">
+            {{ content.field_footer_find_senator_image }}
+        </div>
+        {{ content.body }}
+
+        <div class="sFooter__btnWr">
+            {{ content.field_footer_find_senator_link }}
+        </div>
     </div>
+
 </div>

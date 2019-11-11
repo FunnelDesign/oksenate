@@ -73,7 +73,29 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars['items'][$key]['wrappers'] = 'sFinder__btn-wrap';
       }
       break;
-    case 'field_home_finder_left_image':
+    case 'field_footer_find_senator_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
+        $vars['items'][$key]['wrappers'] = 'sFooter__btnWr';
+      }
+      break;
+    case 'field_footer_find_senator_image':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $image_url = $vars['items'][$key]['content']['#item']->entity->url();
+        $vars['items'][$key]['content']['image_url'] = $image_url;
+      }
+
+      if (!empty($vars['items'])) {
+        $image_srcset = '';
+        $image_src = $vars['items'][0]['content']['image_url'];
+        if (!empty($vars['items'][1])) {
+          $image_srcset = 'srcset="' . $vars['items'][1]['content']['image_url'] . ' 2x"';
+        }
+        $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' alt="">';
+        $vars['img_src'] =  Markup::create($image_html); //prepared image for render
+      }
 
       break;
     case 'field_home_tiles_paragraph':
@@ -87,23 +109,23 @@ function senate_preprocess_field(array &$vars, $hook) {
 
       foreach ($elements as $key => $row) {
         $img_markup = '';
-        if (!empty($row['field_paragraph_tiles_image'][0]['uri'])){
+        if (!empty($row['field_paragraph_tiles_image'][0]['uri'])) {
           $image_srcset = '';
           $image_src = ImageStyle::load($style)
             ->buildUrl($row['field_paragraph_tiles_image'][0]['uri']);
-          if (!empty($row['field_paragraph_tiles_image'][1]['uri'])){
-            $image_srcset = ' srcset="' .  ImageStyle::load($style)
-              ->buildUrl($row['field_paragraph_tiles_image'][1]['uri']) . '"';
+          if (!empty($row['field_paragraph_tiles_image'][1]['uri'])) {
+            $image_srcset = ' srcset="' . ImageStyle::load($style)
+                ->buildUrl($row['field_paragraph_tiles_image'][1]['uri']) . ' 2x"';
           }
 
-          $img_src = '<span class="bTiles__ico"><img src="' . $image_src . '"  '. $image_srcset .' alt=""></span>';
+          $img_src = '<span class="bTiles__ico"><img src="' . $image_src . '"  ' . $image_srcset . ' alt=""></span>';
           $img_markup = Markup::create($img_src); //prepared image for render
         }
 
-        $link_title_text = !empty( $row['field_paragraph_tiles_link'][0]['title']) ?  $row['field_paragraph_tiles_link'][0]['title'] : '';
+        $link_title_text = !empty($row['field_paragraph_tiles_link'][0]['title']) ? $row['field_paragraph_tiles_link'][0]['title'] : '';
         $link_title = "<span class=\"bTiles__title\">" . $link_title_text . "</span>";
 
-        $markup = Markup::create($img_markup  . $link_title); //prepared content for render
+        $markup = Markup::create($img_markup . $link_title); //prepared content for render
 
         $url = Url::fromUri($row['field_paragraph_tiles_link'][0]['uri']);
         $options = ['class' => ['bTiles__item',], 'target' => ['_blank']];
@@ -133,6 +155,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
       break;
 
     case 'field_home_finder_left_link':
+    case 'field_footer_find_senator_link':
       $suggestions[] = 'field__with_custom_wrapper';
       break;
   }
