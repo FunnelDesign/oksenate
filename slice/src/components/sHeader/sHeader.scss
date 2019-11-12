@@ -25,8 +25,12 @@
   }
 
   &__bottom {
-    background: $color-dark-blue;
+    background: $color-blue;
     text-align: center;
+
+    @include sm {
+      background: $color-dark-blue;
+    }
 
     .bContainer {
       display: inline-flex;
@@ -391,13 +395,6 @@
 
       span {
         display: none;
-      }
-    }
-
-    #{$this}__bottom {
-
-      @include xs-only {
-        background: $color-blue;
       }
     }
   }

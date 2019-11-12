@@ -62,7 +62,7 @@
       @include pseudo-block($bottom: 0, $left: 50%);
       width: 90%;
       transform: translate(-50%, 0);
-      border: 2px solid $color-red;
+      border-bottom: 2px solid $color-red;
     }
   }
 
