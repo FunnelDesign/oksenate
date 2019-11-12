@@ -15,12 +15,23 @@
     display: inline-block;
     color: $color-white;
     @include font-size(12px, 14px);
-    border-left: 1px solid $border-color;
+    //border-left: 1px solid $border-color;
     border-radius: 5px;
     font-family: $RobotoCondensed-LightItalic;
+    position: relative;
+
+    &:before {
+      @include pseudo-block($top: 0, $left: 0);
+      border-left: 1px solid $border-color;
+      height: 100%;
+    }
 
     &:first-child {
       border: none;
+
+      &:before {
+        display: none;
+      }
     }
 
     &:hover {

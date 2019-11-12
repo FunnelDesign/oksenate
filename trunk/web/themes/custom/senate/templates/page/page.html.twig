@@ -54,16 +54,15 @@
                 <div class="logo sHeader__logo">
                     {{ page.logo }}
                 </div>
-                <div class="navLinks">
-                    {{ page.header_navigation }}
-                </div>
+                {{ page.header_navigation }}
             </div>
         </div>
         {{ page.header }}
 
         <div class="sHeader__bottom">
             <div class="bContainer">
-                <a href="#" data-ev="toggleClass:sHeader:mobileMenu;removeClass:sHeader:searchOpen" class="sHeader__btn-mobile">
+                <a href="#" data-ev="toggleClass:sHeader:mobileMenu;removeClass:sHeader:searchOpen"
+                   class="sHeader__btn-mobile">
                     <span></span>
                 </a>
 
@@ -72,13 +71,7 @@
                 </div>
 
                 <div class="sHeader__navWrap">
-
                     {{ page.main_menu }}
-
-                    <div class="navLinks mobile-only">
-                        {{ page.header_navigation_mobile }}
-                    </div>
-
                 </div>
                 {{ page.search }}
 
@@ -98,15 +91,12 @@
                 <div class="logo sFooter__logo">
                     {{ page.logo }}
                 </div>
-                <div class="navLinks">
-                    {{ page.footer_navigation }}
-                </div>
+                {{ page.footer_navigation }}
             </div>
 
             <div class="sFooter__bottom">
                 {{ page.footer }}
             </div>
-
         </div>
     </footer>
 </div>
