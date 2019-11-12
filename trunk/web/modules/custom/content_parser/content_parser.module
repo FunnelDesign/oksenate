@@ -283,7 +283,7 @@ function _reference_create($type, $data) {
 /**
  * Find img tag in html, download files and change src attribute.
  */
-function parser_download_images(&$doc, $base_url, $path = 'public://images') {
+function parser_download_images(&$doc, $base_url, $path = 'public://') {
   return _parser_download_files($doc, 'img', 'src', $base_url, $path);
 }
 
