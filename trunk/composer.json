@@ -85,9 +85,6 @@
             "drupal/core": "-p2"
         },
         "installer-paths": {
-            "web/modules/custom/{$name}": [
-                "drupal/content_parser"
-            ],
             "web/core": ["type:drupal-core"],
             "web/libraries/{$name}": ["type:drupal-library"],
             "web/modules/contrib/{$name}": ["type:drupal-module"],
