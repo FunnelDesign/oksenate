@@ -100,6 +100,8 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_footer_find_senator_image':
     case 'field_home_leadership_logo_image':
+    case 'field_home_finder_left_image':
+    case 'field_home_finder_right_image':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -181,6 +183,8 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
 
     case 'field_footer_find_senator_image':
     case 'field_home_leadership_logo_image':
+    case 'field_home_finder_right_image':
+    case 'field_home_finder_left_image':
       $suggestions[] = 'field__src_srcset_images';
       break;
   }
