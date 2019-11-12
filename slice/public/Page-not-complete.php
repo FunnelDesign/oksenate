@@ -19,6 +19,8 @@
             <h1>Page Not Complete</h1>
           </div>
 
+          .section
+
       </div>
     </section>
 
