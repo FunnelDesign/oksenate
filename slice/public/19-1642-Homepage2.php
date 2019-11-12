@@ -135,13 +135,19 @@
             <div class="bEvent__slider-items">
               <?php
               $event_items = [
-                [' Monday, October 28, 2019', '19-28', 'Study on Reducing Poverty by Increasing Home Ownership and Entrepreneurship Opportunities'],
-                [' Monday, October 28, 2019', ' ', 'Joint Meeting of the Senate Business, Commerce and Tourism Committee and the House Tourism Committee'],
-
-                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
-                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
-                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
-                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+                ['slider-tmp-img-1-a.jpg'],
+                ['slider-tmp-img-2-a.jpg'],
+                ['slider-tmp-img-1-a.jpg'],
+                ['slider-tmp-img-2-a.jpg'],
+                ['slider-tmp-img-1-a.jpg'],
+                ['slider-tmp-img-2-a.jpg']
+//                [' Monday, October 28, 2019', '19-28', 'Study on Reducing Poverty by Increasing Home Ownership and Entrepreneurship Opportunities'],
+//                [' Monday, October 28, 2019', ' ', 'Joint Meeting of the Senate Business, Commerce and Tourism Committee and the House Tourism Committee'],
+//
+//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
 
 
               ]
@@ -150,24 +156,27 @@
 
                 <div class="bEvent__slider-item">
 
-                  <div class="bEvent__header">
-                    <?php print $element[0]; ?>
-                  </div>
-                  <div class="bEvent__body">
-                    <div class="bEvent__time">
-                      <?php print $element[1]; ?>
-                    </div>
-                    <div class="bEvent__text">
+                    <img src="../dist/images/<?php print $element[0]; ?>" alt="">
 
-                      <p>
-                        <?php print $element[2]; ?>
-                      </p>
-                    </div>
-                  </div>
 
-                  <div class="bEvent__btnWrap">
-                    <a href="#" class="btn btn_a">get more information</a>
-                  </div>
+<!--                  <div class="bEvent__header">-->
+<!--                    --><?php //print $element[0]; ?>
+<!--                  </div>-->
+<!--                  <div class="bEvent__body">-->
+<!--                    <div class="bEvent__time">-->
+<!--                      --><?php //print $element[1]; ?>
+<!--                    </div>-->
+<!--                    <div class="bEvent__text">-->
+<!---->
+<!--                      <p>-->
+<!--                        --><?php //print $element[2]; ?>
+<!--                      </p>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!---->
+<!--                  <div class="bEvent__btnWrap">-->
+<!--                    <a href="#" class="btn btn_a">get more information</a>-->
+<!--                  </div>-->
                 </div>
 
               <?php endforeach; ?>
