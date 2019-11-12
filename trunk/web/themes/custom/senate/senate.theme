@@ -181,6 +181,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_home_section_image':
     case 'field_home_slider_bg_image':
     case 'field_basic_top_image':
+    case 'field_home_top_bg_mob_image':
       $suggestions[] = 'field__bg_image';
       break;
 
