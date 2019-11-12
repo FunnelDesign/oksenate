@@ -37,7 +37,7 @@
         "drupal/migration_tools": "^2.1",
         "drupal/paragraphs": "^1.10",
         "drupal/redirect": "^1.4",
-        "drupal/search_api_page": "^1.0",
+        "drupal/search_api_page": "^1.0@beta",
         "drupal/token": "^1.5",
         "drupal/webform": "^5.5",
         "drush/drush": "^9.0.0",
