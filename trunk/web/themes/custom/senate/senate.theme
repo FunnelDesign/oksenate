@@ -30,6 +30,16 @@ function coastal_preprocess_page(array &$vars) {
 function senate_preprocess_node(array &$vars) {
   $node = $vars['node'];
   $view_mode = !empty($vars["view_mode"]) ? $vars["view_mode"] : '';
+
+  if (!empty($node)) {
+
+    switch ($node->bundle()) {
+
+      case 'homepage':
+        $vars['search'] = _senate_get_block('searchapi_find_legislation');
+        break;
+    }
+  }
 }
 
 /**
@@ -103,7 +113,7 @@ function senate_preprocess_field(array &$vars, $hook) {
           $image_srcset = 'srcset="' . $vars['items'][1]['content']['image_url'] . ' 2x"';
         }
         $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' alt="">';
-        $vars['img_src'] =  Markup::create($image_html); //prepared image for render
+        $vars['img_src'] = Markup::create($image_html); //prepared image for render
       }
 
       break;
@@ -187,6 +197,9 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   if ($form_id == 'search_block_form') {
     $form['keys']['#attributes']['placeholder'] = t('search here');
   }
+  if ($form_id == 'search_api_page_block_form_find_legislation') {
+    $form['keys']['#attributes']['placeholder'] = t('Enter Bill Number');
+  }
 
 }
 
@@ -248,4 +261,20 @@ function _rows_from_paragraphs(&$vars, $field_array) {
   }
 
   return $rows;
+}
+
+/**
+ * Get block.
+ */
+function _senate_get_block($bid) {
+  $render = '';
+  $block = \Drupal\block\Entity\Block::load($bid);
+
+  if (!empty($block)) {
+    $render = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+  }
+
+  return $render;
 }
