@@ -167,12 +167,15 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
 
   switch ($vars['element']['#field_name']) {
     case 'field_block_navigation_links':
+    case 'field_home_leadership_name_txt':
+    case 'field_home_leadership_post_txt':
       $suggestions[] = 'field__no_wrappers';
       break;
 
     case 'field_home_top_bg_image':
+    case 'field_home_leadership_bg_image':
+    case 'field_home_section_image':
       $suggestions[] = 'field__bg_image';
-      $suggestions[] = 'field_home_section_image';
       break;
 
     case 'field_home_finder_left_link':
