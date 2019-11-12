@@ -17,6 +17,7 @@
     ],
     "require": {
         "php": ">=7.0.8",
+        "adubovskoy/phpquery": "^1.0",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
         "drupal-composer/drupal-scaffold": "^2.5",
@@ -32,7 +33,6 @@
         "drupal/imagemagick": "^2.6",
         "drupal/link_attributes": "^1.9",
         "drupal/migrate_source_csv": "^3.1",
-        "drupal/migrate_source_xls": "^1.2",
         "drupal/migrate_tools": "^4.4",
         "drupal/migration_tools": "^2.1",
         "drupal/paragraphs": "^1.10",
@@ -42,6 +42,7 @@
         "drupal/webform": "^5.5",
         "drush/drush": "^9.0.0",
         "oomphinc/composer-installers-extender": "^1.1",
+        "pguardiario/phpuri": "^1.0",
         "querypath/querypath": "dev-master",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
