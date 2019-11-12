@@ -86,7 +86,7 @@
                 </div>
                 <div class="bTitle bTitle_b bTitle_line">
                     {{ title_prefix }}
-                        {{ content.field_home_top_title_text }}
+                    {{ content.field_home_top_title_text }}
                     {{ title_suffix }}
                 </div>
 
@@ -113,7 +113,7 @@
                     <div class="sFinder__desc">
                         {{ content.field_home_finder_left_text }}
                     </div>
-                        {{ content.field_home_finder_left_link }}
+                    {{ content.field_home_finder_left_link }}
                 </div>
                 <div class="sFinder__col">
 
@@ -125,17 +125,9 @@
                     <div class="sFinder__desc">
                         {{ content.field_home_finder_right_text }}
                     </div>
-                    {#<div class="form f-search">#}
-                        {#<div class="form-item">#}
-                            {#<input type="text" class="form-text" placeholder="Enter Bill Number"/>#}
-                        {#</div>#}
-                        {#<div class="form-actions">#}
-                            {#<input type="submit" class="form-submit" value="search">#}
-                            {#<div class="ajax-progress ajax-progress-throbber">#}
-                                {#<div class="throbber">&nbsp;</div>#}
-                            {#</div>#}
-                        {#</div>#}
-                    {#</div>#}
+
+                    {{ search }}
+
                 </div>
             </div>
         </div>
@@ -162,9 +154,33 @@
     </section>
 
     {#<section class="section section_ind_b">#}
-       {#TODO: add calendar slider#}
+    {#TODO: add calendar slider#}
     {#</section>#}
 
-    {#TODO: add lead section#}
+    <section class="section section_inner-v-centered s-lead">
+        <div class="section__bg-wrap">
+            {{ content.field_home_leadership_image }}
+        </div>
+        <div class="section__v-inner section__v-inner_b">
+            <div class="bContainer">
+                <div class="bCols bCols_item_2 bCols_v-cent">
+                    <div class="bCols__col">
+                        {{ content.field_home_leadership_leader_par }}
+                    </div>
+                    <div class="bCols__col">
+                        <div class="sLead__col">
+                            <div class="sLead__img">
+                                {{ content.field_home_leadership_logo_image }}
+                            </div>
+                            <div class="bTitle bTitle_b bTitle_line bTitle_line_a sLead__bTitle">
+                                {{ content.field_home_leadership_title }}
+                            </div>
+                            {{ content.field_home_leadership_link }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </article>

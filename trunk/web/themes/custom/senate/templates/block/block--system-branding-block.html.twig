@@ -19,6 +19,7 @@
   {% if site_logo %}
     <a href="{{ path('<front>') }}" rel="home">
       <img src="{{ site_logo }}" alt="{{ 'Oklahoma Senate'|t }}" />
+      {{ site_name }}
     </a>
   {% endif %}
 {% endblock %}

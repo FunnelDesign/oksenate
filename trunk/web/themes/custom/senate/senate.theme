@@ -30,6 +30,16 @@ function coastal_preprocess_page(array &$vars) {
 function senate_preprocess_node(array &$vars) {
   $node = $vars['node'];
   $view_mode = !empty($vars["view_mode"]) ? $vars["view_mode"] : '';
+
+  if (!empty($node)) {
+
+    switch ($node->bundle()) {
+
+      case 'homepage':
+        $vars['search'] = _senate_get_block('searchapi_find_legislation');
+        break;
+    }
+  }
 }
 
 /**
@@ -74,6 +84,13 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars['items'][$key]['wrappers'] = 'sFinder__btn-wrap';
       }
       break;
+    case 'field_home_leadership_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
+        $vars['items'][$key]['wrappers'] = 'sLead__btnWrap';
+      }
+      break;
     case 'field_footer_find_senator_link':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
@@ -82,6 +99,9 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_footer_find_senator_image':
+    case 'field_home_leadership_logo_image':
+    case 'field_home_finder_left_image':
+    case 'field_home_finder_right_image':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -95,7 +115,7 @@ function senate_preprocess_field(array &$vars, $hook) {
           $image_srcset = 'srcset="' . $vars['items'][1]['content']['image_url'] . ' 2x"';
         }
         $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' alt="">';
-        $vars['img_src'] =  Markup::create($image_html); //prepared image for render
+        $vars['img_src'] = Markup::create($image_html); //prepared image for render
       }
 
       break;
@@ -157,7 +177,15 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
 
     case 'field_home_finder_left_link':
     case 'field_footer_find_senator_link':
+    case 'field_home_leadership_link':
       $suggestions[] = 'field__with_custom_wrapper';
+      break;
+
+    case 'field_footer_find_senator_image':
+    case 'field_home_leadership_logo_image':
+    case 'field_home_finder_right_image':
+    case 'field_home_finder_left_image':
+      $suggestions[] = 'field__src_srcset_images';
       break;
   }
 }
@@ -172,6 +200,9 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
 function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   if ($form_id == 'search_block_form') {
     $form['keys']['#attributes']['placeholder'] = t('search here');
+  }
+  if ($form_id == 'search_api_page_block_form_find_legislation') {
+    $form['keys']['#attributes']['placeholder'] = t('Enter Bill Number');
   }
 
 }
@@ -234,4 +265,20 @@ function _rows_from_paragraphs(&$vars, $field_array) {
   }
 
   return $rows;
+}
+
+/**
+ * Get block.
+ */
+function _senate_get_block($bid) {
+  $render = '';
+  $block = \Drupal\block\Entity\Block::load($bid);
+
+  if (!empty($block)) {
+    $render = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+  }
+
+  return $render;
 }
