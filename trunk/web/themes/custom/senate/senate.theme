@@ -78,7 +78,6 @@ function senate_preprocess_field(array &$vars, $hook) {
 
   switch ($vars['element']['#field_name']) {
     case 'field_home_slider_bg_image_mob':
-    case 'field_home_top_bg_mob_image':
       $vars['img_classes'] = ['section__bg_mobile'];
       break;
     case 'field_home_finder_left_link':
