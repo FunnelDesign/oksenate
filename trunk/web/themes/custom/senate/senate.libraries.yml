@@ -5,10 +5,10 @@ global-styling:
       dist/css/styles.min.css: {}
       dist/vendor/slick/slick.css: {}
   js:
-      dist/js/index.min.js: {}
       dist/vendor/device/device.js: {}
       dist/vendor/jquery.cookie/jquery.cookie.js: {}
       dist/vendor/slick/slick.min.js: {}
+      dist/js/index.min.js: {}
 
   dependencies:
     - core/jquery
