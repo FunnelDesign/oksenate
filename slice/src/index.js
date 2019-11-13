@@ -7,11 +7,13 @@ const $ = jQuery;
 document.addEventListener('DOMContentLoaded', () => {
 
 	if (window.Drupal?.behaviors) {
-		window.Drupal.behaviors.projectName = {
+		console.log('drupal init');
+
+		Drupal.behaviors.projectName = {
 			attach: function (context, settings) {
 				init();
 			},
-			completedCallback: () => {/*Do nothing. But it's here in case other modules/themes want to override it.*/	}
+			completedCallback: function () {/*Do nothing. But it's here in case other modules/themes want to override it.*/	}
 		}
 	} else {
 		init();
