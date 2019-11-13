@@ -81,7 +81,7 @@ class ContentParser extends ConfigEntityBase {
    *
    * @var string
    */
-  protected $depth;
+  protected $depth = 3;
 
   /**
    * The ContentParser white_list.
@@ -493,6 +493,9 @@ class ContentParser extends ConfigEntityBase {
   public function processUrl($url, $options = [], $callback = null) {
     if (!$this->isAllowedUrl($url)) {
       return;
+    }
+    if(strpos($url, '_bio.aspx')){
+      $url = str_replace('_bio.aspx', '_bio.html', $url);
     }
 
     $headers = isset($options['headers']) ? $options['headers'] : [];
