@@ -2,9 +2,9 @@ import './styles'
 
 import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
+
 const $ = jQuery;
 
-// document.addEventListener('DOMContentLoaded', () => {
 (function ($) {
 
 	if (window.Drupal?.behaviors) {
@@ -19,29 +19,32 @@ const $ = jQuery;
 			}
 		}
 	} else {
-		init();
+		document.addEventListener('DOMContentLoaded', () => {
+			init();
+		});
 	}
 
 	new Observer();
 
 	function init() {
-		console.log(window.Drupal?.behaviors);
+		console.log(window.Drupal?.behaviors, 'new window.Drupal?.behaviors');
 		new bEvent();
 	}
 })(jQuery);
-// });
 
 window.addEventListener('load', () => {
 	$('body').addClass('loaded');
 });
 
 // (function ($) {
+// 	console.log('TEST OLD');
+//
 // 	if (typeof Drupal != 'undefined') {
 //
-// 		console.log('drupal init TEST2222222222');
+// 		console.log('drupal init TEST');
 // 		Drupal.behaviors.projectName = {
 // 			attach: function (context, settings) {
-// 				initTmpQQQQQ();
+// 				initTmp();
 // 			},
 //
 // 			completedCallback: function () {
@@ -50,44 +53,9 @@ window.addEventListener('load', () => {
 // 		}
 // 	}
 //
-// 	$(function () {
-// 		if (typeof Drupal == 'undefined') {
-// 			initTmpQQQQQ();
-// 		}
-// 	});
-//
-// 	function initTmpQQQQQ() {
-// 		console.log(window.Drupal?.behaviors, 'QQQQQQQQQQQQQQQQ');
+// 	function initTmp() {
+// 		console.log(window.Drupal?.behaviors, 'OLD window.Drupal?.behaviors');
+// 		new bEvent();
 // 	}
 //
 // })(jQuery);
-
-(function ($) {
-
-	if (typeof Drupal != 'undefined') {
-
-		console.log('drupal init TEST');
-		Drupal.behaviors.projectName = {
-			attach: function (context, settings) {
-				initTmp();
-			},
-
-			completedCallback: function () {
-				// Do nothing. But it's here in case other modules/themes want to override it.
-			}
-		}
-	}
-
-	$(function () {
-		if (typeof Drupal == 'undefined') {
-			initTmp();
-			new bEvent();
-		}
-	});
-
-	function initTmp() {
-		console.log(window.Drupal?.behaviors, 'TESTSSTTST');
-		new bEvent();
-	}
-
-})(jQuery);
