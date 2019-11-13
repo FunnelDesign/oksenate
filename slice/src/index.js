@@ -10,8 +10,6 @@ window.addEventListener('load', () => {
 });
 
 if (window.Drupal?.behaviors) {
-	console.log('drupal init Test 66');
-
 	Drupal.behaviors.projectName = {
 		attach: (context, settings) => {
 			init();
@@ -27,7 +25,6 @@ if (window.Drupal?.behaviors) {
 new Observer();
 
 function init() {
-	console.log(window.Drupal?.behaviors, 'new window.Drupal?.behaviors');
 	new bEvent();
 }
 
