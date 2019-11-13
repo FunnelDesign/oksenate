@@ -6,11 +6,9 @@ const $ = jQuery;
 
 document.addEventListener('DOMContentLoaded', () => {
 
-	console.log(window.Drupal?.behaviors);
-
 	if (window.Drupal?.behaviors) {
 		Drupal.behaviors.projectName = {
-			attach: () => {
+			attach: function (context, settings) {
 				init();
 			},
 			completedCallback: () => {/*Do nothing. But it's here in case other modules/themes want to override it.*/	}
@@ -22,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	new Observer();
 
 	function init() {
+		console.log(window.Drupal?.behaviors);
     new bEvent();
 	}
 
