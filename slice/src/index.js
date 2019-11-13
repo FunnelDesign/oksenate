@@ -6,6 +6,8 @@ const $ = jQuery;
 
 document.addEventListener('DOMContentLoaded', () => {
 
+	console.log(window.Drupal?.behaviors);
+
 	if (window.Drupal?.behaviors) {
 		Drupal.behaviors.projectName = {
 			attach: () => {
