@@ -5,10 +5,10 @@ import Observer from "./components/Observer/Observer";
 
 const $ = jQuery;
 
-(function () {
+// (function () {
 
 	if (window.Drupal?.behaviors) {
-		console.log('drupal init Test 2');
+		console.log('drupal init Test 3');
 
 		Drupal.behaviors.projectName = {
 			attach: function (context, settings) {
@@ -30,7 +30,7 @@ const $ = jQuery;
 		console.log(window.Drupal?.behaviors, 'new window.Drupal?.behaviors');
 		new bEvent();
 	}
-})();
+// })();
 
 window.addEventListener('load', () => {
 	$('body').addClass('loaded');
