@@ -1,0 +1,21 @@
+.sSen {
+
+  &__head {
+
+  }
+
+  &__byAdd {
+    background: $color-dark-blue-2;
+    padding: 22px 0;
+    text-align: center;
+  }
+
+  &__btnByAdd {
+    display: inline-block;
+    line-height: 1.2;
+    background: $color-blue-3;
+    color: $color-white;
+    @include font-size(18, 24px, 32px);
+
+  }
+}
