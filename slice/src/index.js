@@ -1,32 +1,5 @@
 import './styles'
 
-(function ($) {
-	if (typeof Drupal != 'undefined') {
-
-		console.log('drupal init TEST');
-		Drupal.behaviors.projectName = {
-			attach: function (context, settings) {
-				initTEST();
-			},
-
-			completedCallback: function () {
-				// Do nothing. But it's here in case other modules/themes want to override it.
-			}
-		}
-	}
-
-	$(function () {
-		if (typeof Drupal == 'undefined') {
-			initTEST();
-		}
-	});
-
-	function initTEST() {
-		console.log(window.Drupal?.behaviors, 'TESTSSTTST');
-	}
-
-})(jQuery);
-
 import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
 const $ = jQuery;
@@ -52,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function init() {
 		console.log(window.Drupal?.behaviors);
-    new bEvent();
+		new bEvent();
 	}
 
 });
@@ -60,3 +33,33 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
 	$('body').addClass('loaded');
 });
+
+
+(function ($) {
+	if (typeof Drupal != 'undefined') {
+
+		console.log('drupal init TEST');
+		Drupal.behaviors.projectName = {
+			attach: function (context, settings) {
+				initTmp();
+			},
+
+			completedCallback: function () {
+				// Do nothing. But it's here in case other modules/themes want to override it.
+			}
+		}
+	}
+
+	$(function () {
+		if (typeof Drupal == 'undefined') {
+			initTmp();
+			new bEvent();
+		}
+	});
+
+	function initTmp() {
+		console.log(window.Drupal?.behaviors, 'TESTSSTTST');
+		new bEvent();
+	}
+
+})(jQuery);
