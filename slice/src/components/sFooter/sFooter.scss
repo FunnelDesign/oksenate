@@ -112,6 +112,10 @@
         &:hover {
           text-decoration: underline;
         }
+
+        &.is-active {
+          color: $color-white;
+        }
       }
     }
   }
