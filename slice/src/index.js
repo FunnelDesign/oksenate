@@ -5,6 +5,7 @@ import Observer from "./components/Observer/Observer";
 const $ = jQuery;
 
 // document.addEventListener('DOMContentLoaded', () => {
+(function ($) {
 
 	if (window.Drupal?.behaviors) {
 		console.log('drupal init');
@@ -27,7 +28,7 @@ const $ = jQuery;
 		console.log(window.Drupal?.behaviors);
 		new bEvent();
 	}
-
+})(jQuery);
 // });
 
 window.addEventListener('load', () => {
