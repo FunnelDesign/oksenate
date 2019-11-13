@@ -8,7 +8,7 @@ const $ = jQuery;
 (function () {
 
 	if (window.Drupal?.behaviors) {
-		console.log('drupal init');
+		console.log('drupal init Test 2');
 
 		Drupal.behaviors.projectName = {
 			attach: function (context, settings) {
