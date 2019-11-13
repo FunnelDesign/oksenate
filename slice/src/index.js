@@ -7,7 +7,7 @@ const $ = jQuery;
 document.addEventListener('DOMContentLoaded', () => {
 
 	if (window.Drupal?.behaviors) {
-		Drupal.behaviors.projectName = {
+		window.Drupal.behaviors.projectName = {
 			attach: function (context, settings) {
 				init();
 			},
