@@ -4,6 +4,10 @@
 
   }
 
+  &__res {
+    padding: 50px 0;
+  }
+
   &__byAdd {
     background: $color-dark-blue-2;
     padding: 22px 0;
@@ -16,6 +20,26 @@
     background: $color-blue-3;
     color: $color-white;
     @include font-size(18, 24px, 32px);
+  }
 
+  &__fil {
+    display: flex;
+  }
+
+  &__filCol {
+    flex: 1;
+    padding: 46px 10px 10px;
+    min-height: 250px;
+    background: #dedede;
+    text-align: center;
+    border-right: 1px solid #cecece;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__senShow {
+    text-align: center;
   }
 }

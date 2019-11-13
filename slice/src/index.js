@@ -22,7 +22,9 @@ if (window.Drupal?.behaviors) {
 	});
 }
 
-new Observer();
+document.addEventListener('DOMContentLoaded', () => {
+	new Observer();
+});
 
 function init() {
 	new bEvent();
