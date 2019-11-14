@@ -225,6 +225,12 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
     $form['keys']['#attributes']['placeholder'] = t('Enter Bill Number');
   }
 
+  if ($form_id == 'user_login_form' ) {
+    // Add placeholders.
+    $form['actions']['submit']['#attributes']['class'][] = 'testtest';
+
+  }
+
 }
 
 /**
