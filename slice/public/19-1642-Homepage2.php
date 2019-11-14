@@ -24,7 +24,7 @@
           <div class="sHero__img desktop-only">
             <img src="../dist/images/logo.png" alt="">
           </div>
-          <div class="bTitle bTitle_b bTitle_line">
+          <div class="bTitle bTitle_b bTitle_line sHero__bTitle">
             <h1>Oklahoma <span>Strong</span></h1>
           </div>
           
