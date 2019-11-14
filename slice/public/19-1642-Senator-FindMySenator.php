@@ -54,9 +54,30 @@
           </div>
 
           <div class="sSen__items">
-            <div class="sSen__item">
-              a.
-            </div>
+
+            <?php
+            $sSen__item = array(
+              array("Darryl Wilkerson", "PRESIDENT AND CEO", "team-img-1.jpg"),
+              array("Pete Hennessey", "EXECUTIVE VICE PRESIDENT", "team-img-2.jpg"),
+            )
+            ?>
+            <?php foreach($sSen__item as $key => $element): ?>
+              <div class="sSen__item">
+
+                <a class="team-link" href="#"  data-toggle="modal" data-target="#popup-team-<?php print $key ?>">
+                  <span class="img">
+                    <img src="<?php print "theme/images/tmp/" . $element[2] ?>" alt=""/>
+                  </span>
+                  <span class="title">
+                    <span class="title-inner">
+                      <span class="name"><?php print $element[0] ?></span>
+                      <span class="position"><?php print $element[1] ?></span>
+                    </span>
+                  </span>
+                </a>
+
+              </div>
+            <?php endforeach; ?>
 
           </div>
 
