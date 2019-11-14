@@ -34,15 +34,60 @@
               </div>
             </div>
 
-            <div class="sSen__filLink">
-              <a href="#">see district map</a>
+          </div>
+          <div class="sSen__filCol">
+
+            <div class="sSen__filIco">
+              <img src="../dist/images/filterIco/senator-filter-icons-2.png" srcset="../dist/images/filterIco/senator-filter-icons-2-2x.png 2x"  alt="">
+            </div>
+            <div class="sSen__filTitle">
+              search by county
+            </div>
+            <div class="sSen__opt">
+
             </div>
 
           </div>
-          <div class="sSen__filCol"></div>
-          <div class="sSen__filCol"></div>
-          <div class="sSen__filCol"></div>
-          <div class="sSen__filCol"></div>
+          <div class="sSen__filCol">
+
+            <div class="sSen__filIco">
+              <img src="../dist/images/filterIco/senator-filter-icons-3.png" srcset="../dist/images/filterIco/senator-filter-icons-3-2x.png 2x"  alt="">
+            </div>
+            <div class="sSen__filTitle">
+              search by district
+            </div>
+            <div class="sSen__opt">
+
+            </div>
+
+            <div class="sSen__filLink">
+              <a href="#">see district map</a>
+            </div>
+          </div>
+          <div class="sSen__filCol">
+
+            <div class="sSen__filIco">
+              <img src="../dist/images/filterIco/senator-filter-icons-4.png" srcset="../dist/images/filterIco/senator-filter-icons-4-2x.png 2x"  alt="">
+            </div>
+            <div class="sSen__filTitle">
+              search by committee
+            </div>
+            <div class="sSen__opt">
+
+            </div>
+          </div>
+          <div class="sSen__filCol">
+
+            <div class="sSen__filIco">
+              <img src="../dist/images/filterIco/senator-filter-icons-5.png" srcset="../dist/images/filterIco/senator-filter-icons-5-2x.png 2x"  alt="">
+            </div>
+            <div class="sSen__filTitle">
+              search by party
+            </div>
+            <div class="sSen__opt">
+
+            </div>
+          </div>
         </div>
       </div>
       <div class="sSen__res">
