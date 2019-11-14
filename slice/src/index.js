@@ -28,5 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function init() {
 	new bEvent();
+	initSelect();
+}
+
+function initSelect() {
+	$('select').select2({
+		width: 'full',
+		minimumResultsForSearch: Infinity
+	});
 }
 
