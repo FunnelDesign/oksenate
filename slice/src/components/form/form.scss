@@ -83,7 +83,7 @@ textarea {
       width: auto;
       height: auto;
       margin: -6px 0 0 0;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 1.2;
       color: #ff000c;
       position: absolute;
@@ -91,7 +91,7 @@ textarea {
       transform: translate(0, -50%);
 
       @media (min-width: $bp-small) {
-        font-size: 24px;
+        font-size: 18px;
       }
     }
   }
