@@ -11,31 +11,31 @@
 
       <div class="sSen__head">
         <div class="sSen__byAdd">
-          <a href="#" class="sSen__btnByAdd">Search By Address</a>
+          <a href="#" class="sSen__btnByAdd">search by address</a>
         </div>
         <div class="sSen__fil">
 
           <div class="sSen__filCol">
             <div class="sSen__filIco">
-              <img src="#" alt="">
+              <img src="../dist/images/filterIco/senator-filter-icons-1.png" srcset="../dist/images/filterIco/senator-filter-icons-1-2x.png 2x"  alt="">
             </div>
             <div class="sSen__filTitle">
               search by zip code
             </div>
-            <div class="sSen__filSearch">
-              <div class="form f-search">
-                <form action="/search/node" method="get" id="search-block-form" accept-charset="UTF-8">
-                  <div class="js-form-item form-item js-form-type-search form-type-search js-form-item-keys form-item-keys form-no-label">
-                    <label for="edit-keys" class="visually-hidden">Search</label>
-                    <input title="Enter the terms you wish to search for." placeholder="search here" data-drupal-selector="edit-keys" type="search" id="edit-keys" name="keys" value="" size="15" maxlength="128" class="form-search">
-
-                  </div>
-                  <div data-drupal-selector="edit-actions" class="form-actions js-form-wrapper form-wrapper" id="edit-actions"><input data-drupal-selector="edit-submit" type="submit" id="edit-submit" value="Search" class="button js-form-submit form-submit">
-                  </div>
-
-                </form>
-
+            <div class="sSen__opt">
+              <div class="form f-search f-search_min">
+                <div class="form-item">
+                  <input type="text" class="form-text" placeholder="Enter Zip"/>
+                </div>
+                <div class="form-actions">
+                  <input type="submit" class="form-submit" value=">">
+                  <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
+                </div>
               </div>
+            </div>
+
+            <div class="sSen__filLink">
+              <a href="#">see district map</a>
             </div>
 
           </div>
