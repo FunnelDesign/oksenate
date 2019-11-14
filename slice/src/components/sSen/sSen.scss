@@ -90,8 +90,12 @@
   }
 
   &__opt {
-    max-width: 150px;
+    width: 150px;
     margin: 0 auto 20px;
+
+    .select2-container {
+      width: 100%;
+    }
   }
 
   &__filLink {

@@ -20,13 +20,13 @@
       white-space: nowrap;
       text-align: left;
       font-family: $RobotoCondensed-Light;
-      color: #202020;
+      color: #fff;
       border-radius: 0;
-      padding: 10px  36px 10px 12px;
+      padding: 17px  36px 17px 12px;
       font-size: 14px;
 
       @media (min-width: $bp-small) {
-        font-size: 17px;
+        font-size: 14px;
       }
     }
 
@@ -81,7 +81,7 @@
 }
 
 .select2-dropdown {
-  background-color: #fff;
+  background-color: $color-dark-blue;
   border: 1px solid #314755;
   box-sizing: border-box;
   display: block;
@@ -89,6 +89,7 @@
   left: -100000px;
   width: 100%;
   z-index: 1051;
+  border-radius: 5px;
 }
 
 .select2-results {
@@ -98,14 +99,17 @@
 .select2-results__options {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 5px 0;
 }
 
 .select2-results__option {
-  padding: 11px;
+  color: #fff;
+  padding: 5px 10px;
   user-select: none;
   -webkit-user-select: none;
-  margin: 0;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-family: $RobotoCondensed-Light;
 
   &[aria-selected] {
     cursor: pointer;
@@ -184,11 +188,12 @@
 .select2-container--default {
 
   .select2-selection--single {
-    background-color: transparent;
-    border: 1px solid #305a71;
+    background-color: $color-blue;
+    //border: 1px solid #305a71;
+    border-radius: 5px;
 
     .select2-selection__rendered {
-      color: #305a71;
+      color: #fff;
     }
 
     .select2-selection__clear {
@@ -214,7 +219,7 @@
       b {
         width: 8px;
         height: 8px;
-        border: 1px solid #305a71;
+        border: 1px solid #fff;
         border-top: none;
         border-right: none;
         transform: rotate(-45deg);
@@ -280,7 +285,7 @@
   &.select2-container--open {
 
     .select2-selection--single .select2-selection__arrow b {
-      border: 1px solid #060606;
+      border: 1px solid #fff;
       border-bottom: none;
       border-left: none;
       margin-top: 0;
@@ -381,11 +386,11 @@
   }
 
   .select2-results__option[aria-disabled=true] {
-    color: #999;
+    color: #fff;
   }
 
   .select2-results__option[aria-selected=true] {
-    background-color: #ddd;
+    background-color: $color-blue;
   }
 
   .select2-results__group {
@@ -430,6 +435,6 @@
 }
 
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background-color: #314755;
+  background-color: $color-blue;
   color: white;
 }
