@@ -7,11 +7,11 @@
 
   &__img {
     max-width: 88px;
-    margin: 0 auto 3px;
+    margin: 0 auto 7px;
   }
 
   &__bTitle {
-    margin-bottom: 25px;
+    @include margin-bottom(20px, 27px);
   }
 
   &__desc {

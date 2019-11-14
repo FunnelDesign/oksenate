@@ -1,0 +1,116 @@
+.sSen {
+
+  &__head {
+
+  }
+
+  &__res {
+    padding: 50px 0;
+  }
+
+  &__byAdd {
+    background: $color-dark-blue-2;
+    padding: 22px 0;
+    text-align: center;
+  }
+
+  &__btnByAdd {
+    display: inline-block;
+    line-height: 1.2;
+    background: $color-blue-3;
+    color: $color-white;
+    @include font-size(18, 24px, 32px);
+    font-family: $RobotoCondensed-Light;
+    border: 1px solid #3e5376;
+    border-radius: 5px;
+    text-transform: capitalize;
+    text-decoration: none;
+    padding: 21px 32px;
+    transition: background-color .3s;
+
+    &:hover {
+      background: $color-dark-blue;
+    }
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 40px;
+      height: 55px;
+      background: url('by-address-img-tmp.png') no-repeat;
+      background-size: contain;
+      margin-right: 18px;
+    }
+  }
+
+  &__fil {
+    display: flex;
+    border-top: 1px solid #cecece;
+    border-bottom: 1px solid #cecece;
+  }
+
+  &__filCol {
+    flex: 1;
+    padding: 42px 10px 25px;
+    min-height: 250px;
+    background: #dedede;
+    text-align: center;
+    border-right: 1px solid #cecece;
+    @include cr-last-child;
+    display: flex;
+    flex-direction: column;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__filIco {
+    height: 60px;
+    max-width: 100px;
+    margin: 0 auto 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      max-height: 100%;
+      height: auto;
+    }
+  }
+
+  &__filTitle {
+    font-family: $RobotoCondensed-Regular;
+    font-size: 14px;
+    color: $color-blue;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    @include cr-last-child;
+  }
+
+  &__opt {
+    max-width: 150px;
+    margin: 0 auto 20px;
+  }
+
+  &__filLink {
+    margin-top: auto;
+
+    a {
+      font-family: $RobotoCondensed-Bold;
+      font-size: 10px;
+      color: $color-red;
+      text-transform: uppercase;
+      text-decoration: none;
+
+      &:hover {
+        opacity: .5;
+      }
+    }
+  }
+
+  &__senShow {
+    text-align: center;
+  }
+}

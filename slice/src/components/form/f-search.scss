@@ -1,4 +1,4 @@
-.f-search {
+.f-search, .f-authorization {
   position: relative;
 
   .form-actions {
@@ -18,5 +18,17 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+  }
+
+  &_min {
+
+    .form-submit {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+      padding-right: 50px;
+    }
   }
 }
