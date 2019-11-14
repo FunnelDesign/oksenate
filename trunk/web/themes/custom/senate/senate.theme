@@ -13,14 +13,24 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
  */
-function coastal_preprocess_html(array &$vars) {
+function senate_preprocess_html(array &$vars) {
 
+  if (!empty($vars) && ($vars['root_path'] == 'user')){
+    $vars['attributes']['class'][] = 'page-authorization';
+  }
+
+  if ($node = \Drupal::request()->attributes->get('node')) {
+      switch ($node->bundle()) {
+        case 'user':
+          break;
+      }
+    }
 }
 
 /**
  * Implements hook_preprocess_page() for page.html.twig.
  */
-function coastal_preprocess_page(array &$vars) {
+function senate_preprocess_page(array &$vars) {
   $node = !empty($vars["node"]) ? $vars["node"] : '';
 }
 
