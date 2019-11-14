@@ -32,6 +32,8 @@ function senate_preprocess_html(array &$vars) {
  */
 function senate_preprocess_page(array &$vars) {
   $node = !empty($vars["node"]) ? $vars["node"] : '';
+  $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+
 }
 
 /**
