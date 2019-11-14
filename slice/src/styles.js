@@ -25,4 +25,5 @@ import './components/bCols/bCols.scss'
 import './components/senators/senators.scss'
 import './components/bMessage/bMessage.scss'
 import './components/sSen/sSen.scss'
+import './components/pageIn/pageIn.scss'
 

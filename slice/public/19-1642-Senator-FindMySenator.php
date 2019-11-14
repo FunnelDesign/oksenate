@@ -2,7 +2,7 @@
 <html>
 <?php $title = '19-1642-Senator-FindMySenator'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
-<body class="front">
+<body class="page">
 <div class="pageWr">
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
