@@ -7,6 +7,7 @@ global-styling:
   js:
       dist/vendor/device/device.js: {}
       dist/vendor/jquery.cookie/jquery.cookie.js: {}
+      dist/vendor/select2/select2.full.min.js: {}
       dist/vendor/slick/slick.min.js: {}
       dist/js/index.min.js: {}
 
