@@ -7,7 +7,7 @@
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
-    <div class="section sSen">
+    <section class="section sSen">
 
       <div class="sSen__head">
         <div class="sSen__byAdd">
@@ -188,7 +188,7 @@
       </div>
 
 
-    </div>
+    </section>
 
   </div>
   <?php include 'tpl/blocks/sFooter.inc'; ?>
