@@ -586,7 +586,7 @@ class ContentParser extends ConfigEntityBase {
             continue;
           }
           $pos = strpos($string, ':')+1;
-          $out[] = substr($string, $pos);
+          $out[] = trim(substr($string, $pos));
         }
         $arr = [];
 
