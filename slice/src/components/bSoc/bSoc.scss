@@ -2,12 +2,8 @@
   $self: &;
   display: flex;
   align-items: center;
-  font-size: 14px;
-
-  @media (max-width: $bp-small - 1) {
-    justify-content: center;
-    margin-bottom: 10px;
-  }
+  font-size: 12px;
+  font-family: $RobotoCondensed-Regular;
 
   &__items {
     display: flex;
@@ -15,22 +11,73 @@
   }
 
   &__item {
-    margin-right: 12px;
+    margin-right: 7px;
+    transition: opacity .3s;
 
-    @media (min-width: $bp-small) {
-      margin-right: 28px;
+    &:hover {
+      opacity: .7;
     }
 
     &:last-child {
       margin-right: 0;
     }
+
+    &:nth-child(1) {
+
+      a:before {
+        background: url('facebool-soc-img-1.png') no-repeat;
+        background-size: contain;
+      }
+    }
+
+    &:nth-child(2) {
+
+      a:before {
+        background: url('twitter-soc-img-2.png') no-repeat;
+        background-size: contain;
+      }
+    }
+
+    &:nth-child(3) {
+
+      a:before {
+        background: url('insta-img-soc-3.png') no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+
+  a {
+    color: $color-dark-blue;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 6px 14px 6px 5px;
+    font-family: $RobotoCondensed-Regular;
+    border: 1px solid $color-dark-blue;
+    border-radius: 5px;
+    font-size: 12px;
+    text-decoration: none;
+    min-width: 94px;
+    position: relative;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 25px;
+      height: 25px;
+      //margin-right: 3px;
+    }
   }
 
   &__ico {
-    color: $color-blue;
+    font-size: 25px;
+    display: inline-block;
+    vertical-align: middle;
+    color: $color-dark-blue;
 
     &:hover {
-      color: $color-blue;
+      color: $color-dark-blue;
     }
   }
 }
