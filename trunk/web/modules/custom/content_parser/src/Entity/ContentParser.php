@@ -588,7 +588,21 @@ class ContentParser extends ConfigEntityBase {
           $pos = strpos($string, ':')+1;
           $out[] = trim(substr($string, $pos));
         }
-        $arr = [];
+        $arr = [
+          'type' => 'senator_info',   // paragraph type machine name
+          'field_party' => [   // paragraph's field machine name
+            'value' => 'N/a',                  // body field value// body text format
+          ],
+          'field_education' => [   // paragraph's field machine name
+            'value' => 'N/a',                  // body field value// body text format
+          ],
+          'field_hometown' => [   // paragraph's field machine name
+            'value' => 'N/a',                  // body field value// body text format
+          ],
+          'field_legislative_experience' => [   // paragraph's field machine name
+            'value' => 'N/a',                  // body field value// body text format
+          ],
+        ];
 
         if(count($out) === 4){
           $arr = [
@@ -637,6 +651,7 @@ class ContentParser extends ConfigEntityBase {
           'target_id' => $paragraph->id(),
           'target_revision_id' => $paragraph->getRevisionId(),
         ]);
+
         continue;
       }
 
@@ -658,7 +673,7 @@ class ContentParser extends ConfigEntityBase {
         }
       }
 
-      if ($value) {
+      if ($value && $field_name !== 'field_bio_info') {
         $entity->set($field_name, $value);
       }
     }
