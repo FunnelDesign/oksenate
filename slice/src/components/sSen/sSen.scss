@@ -5,7 +5,7 @@
   }
 
   &__res {
-    padding: 50px 0;
+    padding: 56px 0 56px;
   }
 
   &__byAdd {
@@ -116,6 +116,29 @@
 
   &__senShow {
     text-align: center;
+    overflow: hidden;
+    margin: 0 0 50px;
+
+    h4 {
+      font-family: $RobotoCondensed-Light;
+      font-size: 18px;
+      color: $color-blue;
+      margin: 0;
+      padding: 0 8px;
+      display: inline-block;
+      position: relative;
+
+      &:before, &:after {
+        @include pseudo-block($top: 50%, $left: 100%);
+        border-top: 1px solid #dedede;
+        width: 100vw;
+      }
+
+      &:before {
+        left: auto;
+        right: 100%;
+      }
+    }
   }
 
   &__items {
@@ -144,7 +167,7 @@
   }
 
   &__sImgWrap {
-    padding-bottom: 142%;
+    padding-bottom: 141%;
     position: relative;
     margin-bottom: 10px;
     display: block;
@@ -171,15 +194,21 @@
     text-transform: uppercase;
     color: $color-white;
     display: block;
-    padding: 5px;
-    background: $color-blue;
+    padding: 1px 8px;
+    text-align: right;
+    width: 34px;
+    height: 34px;
+    background: url('s-senators-img-mask-d.png') no-repeat;
+    background-size: contain;
 
     &_r {
-      background: $color-red;
+      background: url('s-senators-img-mask-r.png') no-repeat;
+      background-size: contain;
     }
 
     &_d {
-      background: $color-blue;
+      background: url('s-senators-img-mask-d.png') no-repeat;
+      background-size: contain;
     }
   }
 
@@ -194,6 +223,7 @@
     font-family: $RobotoCondensed-Regular;
     font-size: 14px;
     border-radius: 5px;
+    padding: 2px 0;
     color: $color-white;
   }
 

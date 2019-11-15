@@ -55,7 +55,7 @@
                           </a>
                         </div>
                         <div class="bSoc__item">
-                          <a class="bSoc__ico ss-icon ss-social-circle ss-inst" target="_blank" href="#">
+                          <a class="bSoc__ico ss-icon ss-social-circle ss-instagram" target="_blank" href="#">
                             instagram
                           </a>
                         </div>
