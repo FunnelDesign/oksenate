@@ -4,6 +4,8 @@ import './common/global.scss';
 import './common/grid.scss';
 import './common/helpers.scss';
 
+import './components/select2/select2.scss'
+
 import './components/bTitle/bTitle.scss'
 import './components/form/form.scss'
 import './components/form/f-search.scss'
@@ -24,4 +26,6 @@ import './components/sLead/sLead.scss'
 import './components/bCols/bCols.scss'
 import './components/senators/senators.scss'
 import './components/bMessage/bMessage.scss'
+import './components/sSen/sSen.scss'
+import './components/pageIn/pageIn.scss'
 

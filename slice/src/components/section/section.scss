@@ -31,6 +31,14 @@
 
   &__bg-wrap {
     overflow: hidden;
+
+    &_mobile {
+      @include display($sm: none);
+
+      & + #{$this}__bg-wrap {
+        @include display(none, block);
+      }
+    }
   }
 
   &__bg {

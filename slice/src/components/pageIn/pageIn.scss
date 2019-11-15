@@ -1,0 +1,28 @@
+.pageIn {
+
+  .page-authorization & {
+
+    & > #block-senate-content > article {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+
+      .section {
+        flex: 1;
+        min-height: 100px;
+
+        &.sFinder {
+          flex: 0;
+        }
+      }
+    }
+
+    #user-login-form {
+      margin: 0 auto;
+
+      .form-item {
+        position: relative;
+      }
+    }
+  }
+}

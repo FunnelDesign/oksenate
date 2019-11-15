@@ -13,15 +13,27 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
  */
-function coastal_preprocess_html(array &$vars) {
+function senate_preprocess_html(array &$vars) {
 
+  if (!empty($vars) && ($vars['root_path'] == 'user')){
+    $vars['attributes']['class'][] = 'page-authorization';
+  }
+
+  if ($node = \Drupal::request()->attributes->get('node')) {
+      switch ($node->bundle()) {
+        case 'user':
+          break;
+      }
+    }
 }
 
 /**
  * Implements hook_preprocess_page() for page.html.twig.
  */
-function coastal_preprocess_page(array &$vars) {
+function senate_preprocess_page(array &$vars) {
   $node = !empty($vars["node"]) ? $vars["node"] : '';
+  $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+
 }
 
 /**
@@ -78,7 +90,6 @@ function senate_preprocess_field(array &$vars, $hook) {
 
   switch ($vars['element']['#field_name']) {
     case 'field_home_slider_bg_image_mob':
-    case 'field_home_top_bg_mob_image':
       $vars['img_classes'] = ['section__bg_mobile'];
       break;
     case 'field_home_finder_left_link':
@@ -212,6 +223,12 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   }
   if ($form_id == 'search_api_page_block_form_find_legislation') {
     $form['keys']['#attributes']['placeholder'] = t('Enter Bill Number');
+  }
+
+  if ($form_id == 'user_login_form' ) {
+    // Add placeholders.
+    $form['actions']['submit']['#attributes']['class'][] = 'testtest';
+
   }
 
 }

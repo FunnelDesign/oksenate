@@ -104,12 +104,17 @@
     li {
       padding: 0;
       margin-bottom: 14px;
+      list-style: none;
 
       a {
         text-decoration: none;
 
         &:hover {
           text-decoration: underline;
+        }
+
+        &.is-active {
+          color: $color-white;
         }
       }
     }
