@@ -138,16 +138,20 @@
           <div class="bNews__items">
 
             <div class="bNews__item">
-              <a href="#" class="bNews__title">
-                Time to turn cellphones into paperweights
-              </a>
-              <span class="bNews__date">
-                October 22, 2019
-              </span>
 
-              <span class="bNews__desc">
-                After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science .... 
-                <a href="#" class="bNews__readMore">read more.</a>
+              <span class="bNews__body">
+                <a href="#" class="bNews__title">
+                  Time to turn cellphones into paperweights
+                </a>
+                 <span class="bNews__date">
+                  October 22, 2019
+                </span>
+
+                <span class="bNews__desc">
+                  After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
+                  <a href="#" class="bNews__readMore">read more.</a>
+                </span>
+
               </span>
 
             </div>
@@ -156,11 +160,15 @@
                 <span class="bNews__img" style="background-image: url('../dist/images/tmp/news-tmp-img-1.jpg')"></span>
               </span>
 
-              <a href="#" class="bNews__title">
-                New ruling confirms what we already knew.
-              </a>
-              <span class="bNews__date">
-                October 20, 2019
+              <span class="bNews__body">
+
+                <a href="#" class="bNews__title">
+                  New ruling confirms what we already knew.
+                </a>
+                <span class="bNews__date">
+                  October 20, 2019
+                </span>
+
               </span>
 
 <!--              <span class="bNews__desc">-->
@@ -170,16 +178,19 @@
 
             </div>
             <div class="bNews__item">
-              <a href="#" class="bNews__title">
-                Time to turn cellphones into paperweights
-              </a>
-              <span class="bNews__date">
-                October 22, 2019
-              </span>
+              <span class="bNews__body">
 
-              <span class="bNews__desc">
-                After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
-                <a href="#" class="bNews__readMore">read more.</a>
+                <a href="#" class="bNews__title">
+                  Time to turn cellphones into paperweights
+                </a>
+                <span class="bNews__date">
+                  October 22, 2019
+                </span>
+
+                <span class="bNews__desc">
+                  After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
+                  <a href="#" class="bNews__readMore">read more.</a>
+                </span>
               </span>
             </div>
           </div>
