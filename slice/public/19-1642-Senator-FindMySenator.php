@@ -70,6 +70,18 @@
             </div>
             <div class="sSen__opt">
 
+              <div class="form-item form-type-select">
+                <select class="form-select">
+                  <option>Select District</option>
+                  <option>Cotton</option>
+                  <option>Craig</option>
+                  <option>Creek</option>
+                  <option>Custer</option>
+                  <option>Delaware</option>
+                  <option>Dewey</option>
+                </select>
+              </div>
+
             </div>
 
             <div class="sSen__filLink">
@@ -86,6 +98,18 @@
             </div>
             <div class="sSen__opt">
 
+              <div class="form-item form-type-select">
+                <select class="form-select">
+                  <option>Select Committee</option>
+                  <option>Cotton</option>
+                  <option>Craig</option>
+                  <option>Creek</option>
+                  <option>Custer</option>
+                  <option>Delaware</option>
+                  <option>Dewey</option>
+                </select>
+              </div>
+
             </div>
           </div>
           <div class="sSen__filCol">
@@ -97,6 +121,18 @@
               search by party
             </div>
             <div class="sSen__opt">
+
+              <div class="form-item form-type-select">
+                <select class="form-select">
+                  <option>Select Party</option>
+                  <option>Cotton</option>
+                  <option>Craig</option>
+                  <option>Creek</option>
+                  <option>Custer</option>
+                  <option>Delaware</option>
+                  <option>Dewey</option>
+                </select>
+              </div>
 
             </div>
           </div>
@@ -114,22 +150,31 @@
 
             <?php
             $sSen__item = array(
-              array("Darryl Wilkerson", "PRESIDENT AND CEO", "team-img-1.jpg"),
-              array("Pete Hennessey", "EXECUTIVE VICE PRESIDENT", "team-img-2.jpg"),
+              array("s-sen-img-1.jpg", "r", "4", "Mark Allen"),
+              array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
+              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
+              array("s-sen-img-1.jpg", "r", "4", "Mark Allen"),
+              array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
+              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
+              array("s-sen-img-1.jpg", "r", "4", "Mark Allen"),
+              array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
+              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett")
             )
             ?>
             <?php foreach($sSen__item as $key => $element): ?>
               <div class="sSen__item">
 
-                <a class="team-link" href="#"  data-toggle="modal" data-target="#popup-team-<?php print $key ?>">
-                  <span class="img">
-                    <img src="<?php print "theme/images/tmp/" . $element[2] ?>" alt=""/>
+                <a class="sSen__sLink" href="#">
+                  <span class="sSen__sImgWrap">
+                    <span class="sSen__sImg" style="background-image: url('../dist/images/senImg/<?php print $element[0]; ?>')"></span>
+                    <span class="sSen__sMask sSen__sMask_<?php print $element[1]; ?>"><?php print $element[1]; ?></span>
+                    <span class="sSen__sDis">district <?php print $element[2]; ?></span>
                   </span>
-                  <span class="title">
-                    <span class="title-inner">
-                      <span class="name"><?php print $element[0] ?></span>
-                      <span class="position"><?php print $element[1] ?></span>
-                    </span>
+                  <span class="sSen__sName">
+                    <?php print $element[3]; ?>
                   </span>
                 </a>
 
