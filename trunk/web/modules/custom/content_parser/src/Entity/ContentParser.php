@@ -554,7 +554,9 @@ class ContentParser extends ConfigEntityBase {
       ]);
     }
 
-    parser_download_images($doc, $base_url);
+    $mini = parser_download_images($doc, $base_url);
+
+    $entity->set('field_senator_photo', $mini);
 
     foreach ($this->getCodes() as $field_name => $field) {
       $php_code = $this->getCode($field_name);

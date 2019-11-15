@@ -34,9 +34,9 @@
 <a class="sSen__sLink" href="{{ fields.view_node.content }}">
                   <span class="sSen__sImgWrap">
                     <span class="sSen__sImg"
-                          style="background-image: url('none')"></span>
-                    <span class="sSen__sMask sSen__sMask_d">d</span>
-                    <span class="sSen__sDis">district {{ fields.field_district.content }}</span>
+                          style="background-image: url('{{ fields.field_senator_photo.content }}')"></span>
+                    <span class="sSen__sMask sSen__sMask_{{ fields.field_senators_temporarily_party.content }}">{{ fields.field_senators_temporarily_party.content }}</span>
+                    <span class="sSen__sDis">{{ fields.field_district.content }}</span>
                   </span>
     <span class="sSen__sName">
                         {{ fields.title.content }}
