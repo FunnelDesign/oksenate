@@ -1,5 +1,30 @@
 .bSenBio {
 
+  &__header {
+    @include cr-last-child;
+    margin-bottom: 28px;
+  }
+
+  &__title {
+    @include cr-last-child;
+
+    h1 {
+      font-family: $RobotoCondensed-Light;
+      @include font-size(18px, 24px, 32px);
+      color: $color-dark-blue-1;
+      margin: 0;
+      text-transform: capitalize;
+    }
+
+  }
+
+  &__dis {
+    font-family: $RobotoCondensed-Regular;
+    @include font-size(14px, 16px, 16px);
+    color: $color-dark-blue-1;
+    text-transform: uppercase;
+  }
+
   &__row {
     display: flex;
     margin-left: -20px;
@@ -29,12 +54,6 @@
     @include stretch-block();
     background-size: cover;
     background-position: center;
-  }
-
-  &__header {
-    @include cr-last-child;
-    margin-bottom: 20px;
-
   }
 
   &__soc {

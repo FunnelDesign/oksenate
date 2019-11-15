@@ -284,8 +284,8 @@ function _reference_create($type, $data) {
  * Find img tag in html, download files and change src attribute.
  */
 function parser_download_images(&$doc, $base_url, $path = 'public://senator_bio') {
-//  _content_parser_retrieve_images($doc);
-  return _parser_download_files($doc, 'img', 'src', $base_url, $path);
+  _parser_download_files($doc, 'img', 'src', $base_url, $path);
+  return  _content_parser_retrieve_images($doc);
 }
 
 /**
@@ -305,11 +305,12 @@ function parser_download_links($doc, $extensions, $base_url, $path = 'public://'
 function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'public://senator_bio') {
   foreach ($doc->find($selector) as $element) {
     $file_url = parser_get_absolute_url($base_url, pq($element)->attr($attr));
-    $file_url_info = parse_url($file_url);
-    $local_file_name = ltrim($file_url_info['path'], '/');
-    $local_file_name = str_replace('/', '-', $local_file_name);
-    $file_patch = $path . '/' . $local_file_name;
+    $file_url_info = basename($file_url);
+//    $local_file_name = ltrim($file_url_info['path'], '/');
+//    $local_file_name = str_replace('/', '-', $file_url_info);
+    $file_patch = $path . '/' . $file_url_info;
     $realpath = drupal_realpath($file_patch);
+//    $mini = basename($src);
 
     if (!file_exists(drupal_realpath($file_patch))) {
       try {
@@ -350,8 +351,8 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
 
     $base = file_create_url(file_default_scheme() . '://');
     $base_url_info = parse_url($base);
-    $uri = file_default_scheme() . '://' . str_replace($base_url_info['path'], '', $src);
-
+    $mini = basename($src);
+    $uri = file_default_scheme() . '://senator_bio/' . str_replace($base_url_info['path'], '', $mini);
     $storage = Drupal::entityManager()
       ->getStorage('file');
 
