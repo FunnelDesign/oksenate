@@ -37,7 +37,7 @@
       align-items: center;
       justify-content: space-between;
       position: relative;
-      @include padding(14px 5%, 22px 0);
+      @include padding(14px 5%, 0);
 
       @include xs-only {
         max-width: none;
@@ -114,6 +114,7 @@
       border: none;
       margin-left: -3px;
       margin-right: -3px;
+      display: flex;
     }
 
     @media (min-width: $bp-middle) {
@@ -133,17 +134,19 @@
     padding: 0 5%;
     position: relative;
     line-height: 1.2;
+    text-align: left;
 
     @media (min-width: $bp-small) {
+      text-align: center;
       padding: 0;
       display: inline-block;
       vertical-align: middle;
-      margin: 0 3px;
+      margin: 0;
       line-height: 1;
     }
 
     @media (min-width: $bp-middle) {
-      margin: 0 22px;
+      margin: 0;
     }
   }
 
@@ -166,7 +169,11 @@
       @media (min-width: $bp-small) {
         color: $color-white;
         background: transparent;
-        border-bottom: 4px solid $color-red;
+        //border-bottom: 4px solid $color-red;
+      }
+
+      &:before {
+        opacity: 1;
       }
     }
   }
@@ -184,13 +191,28 @@
     @media (min-width: $bp-small) {
       color: $color-white;
       display: inline-block;
-      font-size: 14px;
-      padding: 4px 0 4px;
-      border-bottom: 4px solid transparent;
+      font-size: 13px;
+     // padding: 4px 0 4px;
+     // border-bottom: 4px solid transparent;
+      z-index: 1;
+      padding: 26px 10px;
+
     }
 
     @media (min-width: $bp-middle) {
       font-size: 14px;
+      padding: 26px 22px;
+    }
+
+    &:before {
+      @include pseudo-block($top: 0, $left: 0);
+      width: 100%;
+      height: 100%;
+      background: linear-gradient( 185deg, rgb(29,43,65) 0%, rgb(49,70,104) 100%);
+      z-index: -1;
+      @include display(none, block);
+      opacity: 0;
+      transition: opacity .3s;
     }
   }
 
@@ -200,7 +222,7 @@
     text-align: left;
 
     @media (min-width: $bp-small) {
-      padding: 22px 0 0 0;
+      padding: 0;
       position: absolute;
       top: 100%;
       left: 50%;

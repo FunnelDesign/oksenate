@@ -25,6 +25,8 @@
     text-transform: uppercase;
   }
 
+
+
   &__row {
     display: flex;
     margin-left: -20px;
@@ -57,9 +59,117 @@
   }
 
   &__soc {
-    padding: 10px 0;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
-    margin-bottom: 10px;
+    padding: 16px 0;
+    border-top: 2px solid #c8c8c8;
+    border-bottom: 2px solid #c8c8c8;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    margin-right: -10px;
+    margin-left: -10px;
+
+    & > * {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  &__socSub {
+    font-family: $Roboto-MediumItalic;
+    font-size: 14px;
+    color: $color-dark-blue;
+  }
+
+  &__infoIt {
+    font-family: $FreightTextProBook-Regular;
+    font-size: 14px;
+    color: $color-dark-blue-1;
+    margin-bottom: 5px;
+    @include cr-last-item;
+
+    strong {
+      font-family: $FreightTextProBold-Regular;
+      font-weight: normal;
+    }
+  }
+
+  &__mediaBtn {
+    padding: 10px;
+    border-radius: 5px;
+    background: $color-blue;
+    font-family: $RobotoCondensed-Regular;
+    font-size: 12px;
+    color: $color-white;
+    text-decoration: none;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 114px;
+
+    &:before {
+      content: '';
+      width: 44px;
+      height: 44px;
+      display: block;
+      margin: 0 auto 10px;
+      background: url('sen-media-btn-1.png') no-repeat;
+      background-size: contain;
+    }
+
+    &:hover {
+      background: $color-dark-blue;
+    }
+  }
+
+  &__con {
+    display: flex;
+    align-items: center;
+    min-height: 114px;
+    border: 2px solid #bfbebe;
+    border-radius: 5px;
+    padding: 20px;
+    font-family: $FreightTextProMedium-Regular;
+    font-size: 12px;
+    color: #414141;
+    line-height: 1.8;
+
+    & > * {
+      padding: 0 10px;
+    }
+
+    .ss-icon {
+      color: $color-red;
+      font-size: 12px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 1px;
+      margin-top: 1px;
+    }
+  }
+
+  &__address {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 18px;
+      height: 26px;
+      background: url('address-img-tmp-1.png') no-repeat;
+      background-size: contain;
+      margin-right: 13px;
+    }
+  }
+
+  &__telMail {
+
+    a {
+      text-decoration: none;
+    }
   }
 }

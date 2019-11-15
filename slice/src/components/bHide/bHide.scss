@@ -1,3 +1,99 @@
 .bHide {
+  $this: &;
+  position: relative;
 
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 38px;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #f0f0f0);
+    transition: background .3s;
+  }
+
+  &__moreWr {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  &__more {
+    display: inline-block;
+    padding: 10px 22px;
+    border: 1px solid $color-red;
+    border-radius: 21px;
+    position: relative;
+    font-family: $RobotoCondensed-Bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: $color-red;
+    text-decoration: none;
+
+    &:before, &:after {
+      @include pseudo-block($top: 50%, $left: 100%);
+      border-bottom: 1px solid $color-red;
+      width: 100vw;
+    }
+
+    &:after {
+      left: auto;
+      right: 100%;
+    }
+  }
+
+  &__cont {
+    max-height: 206px;
+    overflow: hidden;
+  }
+
+  &__moreOpen, &__moreClose {
+    pointer-events: none;
+    position: relative;
+
+    &:after {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 13px;
+      height: 7px;
+      margin-left: 10px;
+      background: url('arrow-png-shore-more.png') no-repeat;
+      background-size: contain;
+      margin-top: -1px;
+    }
+  }
+
+  &__moreOpen {
+
+    &:after {
+      transform: rotate(179deg);
+    }
+  }
+
+  &__moreClose {
+    display: none;
+  }
+
+  &_open {
+
+    &:after {
+      display: none;
+    }
+
+    #{$this}__cont {
+      max-height: none;
+      overflow: visible;
+    }
+
+    #{$this}__moreClose {
+      display: inline-block;
+    }
+
+    #{$this}__moreOpen {
+      display: none;
+    }
+  }
 }

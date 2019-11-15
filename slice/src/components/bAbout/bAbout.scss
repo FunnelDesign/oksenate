@@ -1,4 +1,13 @@
 .bAbout {
+  margin-bottom: 47px;
 
+  &__bMedia {
+    margin-bottom: 50px;
+  }
 
+  &__desc {
+    line-height: 1.6;
+    font-family: $FreightTextProMedium-Regular;
+    color: #404040;
+  }
 }

@@ -45,17 +45,20 @@
 
                       <div class="bSoc__items">
                         <div class="bSoc__item">
-                          <a class="bSoc__ico ss-icon ss-social-circle ss-facebook" target="_blank" href="#">
+                          <a target="_blank" href="#">
+<!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-facebook"></i>-->
                             facebook
                           </a>
                         </div>
                         <div class="bSoc__item">
-                          <a class="bSoc__ico ss-icon ss-social-circle ss-twitter" target="_blank" href="#">
+                          <a target="_blank" href="#">
+<!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-twitter"></i>-->
                             twitter
                           </a>
                         </div>
                         <div class="bSoc__item">
-                          <a class="bSoc__ico ss-icon ss-social-circle ss-instagram" target="_blank" href="#">
+                          <a target="_blank" href="#">
+<!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-instagram"></i>-->
                             instagram
                           </a>
                         </div>
@@ -135,16 +138,20 @@
           <div class="bNews__items">
 
             <div class="bNews__item">
-              <a href="#" class="bNews__title">
-                Time to turn cellphones into paperweights
-              </a>
-              <span class="bNews__date">
-                October 22, 2019
-              </span>
 
-              <span class="bNews__desc">
-                After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science .... 
-                <a href="#" class="bNews__readMore">read more.</a>
+              <span class="bNews__body">
+                <a href="#" class="bNews__title">
+                  Time to turn cellphones into paperweights
+                </a>
+                 <span class="bNews__date">
+                  October 22, 2019
+                </span>
+
+                <span class="bNews__desc">
+                  After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
+                  <a href="#" class="bNews__readMore">read more.</a>
+                </span>
+
               </span>
 
             </div>
@@ -153,11 +160,15 @@
                 <span class="bNews__img" style="background-image: url('../dist/images/tmp/news-tmp-img-1.jpg')"></span>
               </span>
 
-              <a href="#" class="bNews__title">
-                New ruling confirms what we already knew.
-              </a>
-              <span class="bNews__date">
-                October 20, 2019
+              <span class="bNews__body">
+
+                <a href="#" class="bNews__title">
+                  New ruling confirms what we already knew.
+                </a>
+                <span class="bNews__date">
+                  October 20, 2019
+                </span>
+
               </span>
 
 <!--              <span class="bNews__desc">-->
@@ -167,16 +178,19 @@
 
             </div>
             <div class="bNews__item">
-              <a href="#" class="bNews__title">
-                Time to turn cellphones into paperweights
-              </a>
-              <span class="bNews__date">
-                October 22, 2019
-              </span>
+              <span class="bNews__body">
 
-              <span class="bNews__desc">
-                After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
-                <a href="#" class="bNews__readMore">read more.</a>
+                <a href="#" class="bNews__title">
+                  Time to turn cellphones into paperweights
+                </a>
+                <span class="bNews__date">
+                  October 22, 2019
+                </span>
+
+                <span class="bNews__desc">
+                  After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
+                  <a href="#" class="bNews__readMore">read more.</a>
+                </span>
               </span>
             </div>
           </div>
@@ -214,7 +228,7 @@
 
               </div>
               <div class="bHide__moreWr">
-                <a class="bHide__more" href="#">
+                <a class="bHide__more" data-ev="toggleClass:bHide:open" href="#">
                   <span class="bHide__moreOpen">show more</span>
                   <span class="bHide__moreClose">show less</span>
                 </a>
@@ -245,7 +259,7 @@
         </div>
         
         <div class="bDistrict bWrap bWrap_size_a">
-          <h2>District 1  <a href="#"><i class="ss-icon ss-glyphish-filled ss-map"></i>see map </a></h2>
+          <h2>District 1  <a href="#"><i class="ss-icon ss-glyphish-outined ss-map"></i>see map </a></h2>
 
           <div class="bDistrict__table">
             <div class="bDistrict__tr">
