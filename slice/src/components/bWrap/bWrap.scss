@@ -1,0 +1,30 @@
+.bWrap {
+  margin-left: auto;
+  margin-right: auto;
+  @include cr-last-child;
+
+  &_size {
+
+    &_a {
+      max-width: 620px;
+    }
+  }
+
+  &_indent {
+
+    &_a {
+
+    }
+  }
+
+  &_padding {
+
+    &_a {
+
+    }
+  }
+
+  &_centered {
+    text-align: center;
+  }
+}

@@ -1,0 +1,46 @@
+.bSenBio {
+
+  &__row {
+    display: flex;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-bottom: 34px;
+  }
+
+  &__col {
+    flex: 1;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    &:first-child {
+      max-width: 196px;
+      min-width: 196px;
+    }
+  }
+
+  &__imgWrap {
+    padding-bottom: 141%;
+    position: relative;
+  }
+
+  &__img {
+    border-radius: 5px;
+    overflow: hidden;
+    @include stretch-block();
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__header {
+    @include cr-last-child;
+    margin-bottom: 20px;
+
+  }
+
+  &__soc {
+    padding: 10px 0;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    margin-bottom: 10px;
+  }
+}

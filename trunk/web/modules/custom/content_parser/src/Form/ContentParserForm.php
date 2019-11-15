@@ -722,6 +722,17 @@ class ContentParserForm extends EntityForm {
       return;
     }
 
+    $headers = isset($options['headers']) ? $options['headers'] : [];
+    $cookieJar = isset($options['cookieJar']) ? $options['cookieJar'] : [];
+
+    $html = $entity->loadUrl($url, $headers, $cookieJar);
+
+    if (!$html) {
+      return [];
+    }
+
+    $doc = $entity->getPhpQuery($html, $url);
+
     if ($depth < $entity->getDepth() && $doc) {
       foreach ($entity->findUrls($doc, $url) as $url_find) {
         if (!isset($context['results']['processed_urls'][$url_find])) {
