@@ -4,6 +4,8 @@ namespace Drupal\content_parser\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\content_parser\Results;
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Defines the ContentParser entity.
@@ -558,6 +560,7 @@ class ContentParser extends ConfigEntityBase {
 
     $entity->set('field_senator_photo', $mini);
 
+
     foreach ($this->getCodes() as $field_name => $field) {
       $php_code = $this->getCode($field_name);
 
@@ -573,6 +576,69 @@ class ContentParser extends ConfigEntityBase {
       );
 
       $value = [];
+
+      if($field_name == 'field_bio_info'){
+        $mini  = explode('<br>', $result);
+        $out = [];
+        foreach ($mini as $string){
+          $string = trim(strip_tags($string));
+          if(!$string){
+            continue;
+          }
+          $pos = strpos($string, ':')+1;
+          $out[] = substr($string, $pos);
+        }
+        $arr = [];
+
+        if(count($out) === 4){
+          $arr = [
+            'type' => 'senator_info',   // paragraph type machine name
+            'field_party' => [   // paragraph's field machine name
+              'value' => $out[3],                  // body field value// body text format
+            ],
+            'field_education' => [   // paragraph's field machine name
+              'value' => $out[0],                  // body field value// body text format
+            ],
+            'field_hometown' => [   // paragraph's field machine name
+              'value' => $out[2],                  // body field value// body text format
+            ],
+            'field_legislative_experience' => [   // paragraph's field machine name
+              'value' => $out[1],                  // body field value// body text format
+            ],
+          ];
+        }
+        if(count($out) === 5){
+          $arr = [
+            'type' => 'senator_info',   // paragraph type machine name
+            'field_occupation' => [   // paragraph's field machine name
+              'value' => $out[0],                  // body field value// body text format
+            ],
+            'field_party' => [   // paragraph's field machine name
+              'value' => $out[4],                  // body field value// body text format
+            ],
+            'field_education' => [   // paragraph's field machine name
+              'value' => $out[1],                  // body field value// body text format
+            ],
+            'field_hometown' => [   // paragraph's field machine name
+              'value' => $out[3],                  // body field value// body text format
+            ],
+            'field_legislative_experience' => [   // paragraph's field machine name
+              'value' => $out[2],                  // body field value// body text format
+            ],
+          ];
+        }
+
+        $paragraph = Paragraph::create($arr);
+
+        $paragraph->save();
+
+        $entity->set('field_bio_info',
+        [
+          'target_id' => $paragraph->id(),
+          'target_revision_id' => $paragraph->getRevisionId(),
+        ]);
+        continue;
+      }
 
       if ($field['isMulti'] && is_array($result)) {
         foreach ($result as $data) {
@@ -635,7 +701,7 @@ class ContentParser extends ConfigEntityBase {
       return 'Не удалось прочитать страницу';
     }
 
-    $doc = parser_download_images($doc, $base_url);
+//    $doc = parser_download_images($doc, $base_url);
 
     try {
       return eval($check_code);
