@@ -1,11 +1,39 @@
 .bDistrict {
 
+  h2 {
+
+    a {
+      font-family: $RobotoCondensed-Regular;
+      font-size: 14px;
+      color: $color-red;
+      text-decoration: none;
+      display: inline-block;
+      vertical-align: middle;
+      text-transform: uppercase;
+      margin-left: 10px;
+
+      .ss-icon {
+        margin-right: 6px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+
   &__table {
 
   }
 
   &__tr {
     display: flex;
+  }
+  
+  &__th {
+    font-family: $Roboto-Bold;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: $color-blue;
+    padding-bottom: 8px;
   }
 
   &__td, &__th {
@@ -14,6 +42,17 @@
     &:first-child {
       min-width: 220px;
       max-width: 220px;
+    }
+  }
+
+  &__td {
+    font-family: $FreightTextProBook-Regular;
+    font-size: 14px;
+    color: #777777;
+    padding: 2px 0;
+
+    &:nth-child(2) {
+      font-family: $Roboto-Regular;
     }
   }
 }

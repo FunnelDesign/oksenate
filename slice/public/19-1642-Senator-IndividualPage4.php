@@ -259,7 +259,7 @@
         </div>
         
         <div class="bDistrict bWrap bWrap_size_a">
-          <h2>District 1  <a href="#"><i class="ss-icon ss-glyphish-filled ss-map"></i>see map </a></h2>
+          <h2>District 1  <a href="#"><i class="ss-icon ss-glyphish-outined ss-map"></i>see map </a></h2>
 
           <div class="bDistrict__table">
             <div class="bDistrict__tr">
