@@ -106,17 +106,20 @@
 
                                 <div class="bSoc__items">
                                     <div class="bSoc__item">
-                                        <a class="bSoc__ico ss-icon ss-social-circle ss-facebook" target="_blank" href="#">
+                                        <a class="bSoc__ico ss-icon ss-social-circle ss-facebook" target="_blank"
+                                           href="#">
                                             facebook
                                         </a>
                                     </div>
                                     <div class="bSoc__item">
-                                        <a class="bSoc__ico ss-icon ss-social-circle ss-twitter" target="_blank" href="#">
+                                        <a class="bSoc__ico ss-icon ss-social-circle ss-twitter" target="_blank"
+                                           href="#">
                                             twitter
                                         </a>
                                     </div>
                                     <div class="bSoc__item">
-                                        <a class="bSoc__ico ss-icon ss-social-circle ss-instagram" target="_blank" href="#">
+                                        <a class="bSoc__ico ss-icon ss-social-circle ss-instagram" target="_blank"
+                                           href="#">
                                             instagram
                                         </a>
                                     </div>
@@ -125,20 +128,8 @@
                             </div>
 
                         </div>
-
                         <div class="bSenBio__info">
-                            <div class="bSenBio__infoIt">
-                                <strong>Party:</strong> {{ content.field_senators_temporarily_party }}
-                            </div>
-                            <div class="bSenBio__infoIt">
-                                <strong>Education:</strong> University of Oklahoma - Political Science & History
-                            </div>
-                            <div class="bSenBio__infoIt">
-                                <strong>Legislative Experience:</strong> Senate Member, 2011 - present
-                            </div>
-                            <div class="bSenBio__infoIt">
-                                <strong>Hometown:</strong> Oklahoma City, Oklahoma
-                            </div>
+                            {{ content.field_bio_info }}
                         </div>
                     </div>
                 </div>
@@ -188,57 +179,6 @@
 <section class="section section_ind_d section_bg-color_c">
 
     <div class="bContainer">
-        <div class="bNews">
-            <h2>Recent News</h2>
-            <div class="bNews__items">
-
-                <div class="bNews__item">
-                    <a href="#" class="bNews__title">
-                        Time to turn cellphones into paperweights
-                    </a>
-                    <span class="bNews__date">
-                October 22, 2019
-              </span>
-
-                    <span class="bNews__desc">
-                After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
-                <a href="#" class="bNews__readMore">read more.</a>
-              </span>
-
-                </div>
-                <div class="bNews__item">
-              <span class="bNews__imgWrap">
-                <span class="bNews__img" style="background-image: url('../dist/images/tmp/news-tmp-img-1.jpg')"></span>
-              </span>
-
-                    <a href="#" class="bNews__title">
-                        New ruling confirms what we already knew.
-                    </a>
-                    <span class="bNews__date">
-                October 20, 2019
-              </span>
-
-                </div>
-                <div class="bNews__item">
-                    <a href="#" class="bNews__title">
-                        Time to turn cellphones into paperweights
-                    </a>
-                    <span class="bNews__date">
-                October 22, 2019
-              </span>
-
-                    <span class="bNews__desc">
-                After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science ....
-                <a href="#" class="bNews__readMore">read more.</a>
-              </span>
-                </div>
-            </div>
-            <div class="bNews__btnAll">
-                <a href="#" class="btn">
-                    see all news
-                </a>
-            </div>
-        </div>
 
         <div class="bAbout bWrap bWrap_size_a">
             <h2>About the Senator</h2>
@@ -278,7 +218,7 @@
                 </a>
             </div>
         </div>
-        </div>
+    </div>
 
 
 </section>
