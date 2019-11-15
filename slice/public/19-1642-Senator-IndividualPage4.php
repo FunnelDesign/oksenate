@@ -45,17 +45,20 @@
 
                       <div class="bSoc__items">
                         <div class="bSoc__item">
-                          <a class="bSoc__ico ss-icon ss-social-circle ss-facebook" target="_blank" href="#">
+                          <a target="_blank" href="#">
+<!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-facebook"></i>-->
                             facebook
                           </a>
                         </div>
                         <div class="bSoc__item">
-                          <a class="bSoc__ico ss-icon ss-social-circle ss-twitter" target="_blank" href="#">
+                          <a target="_blank" href="#">
+<!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-twitter"></i>-->
                             twitter
                           </a>
                         </div>
                         <div class="bSoc__item">
-                          <a class="bSoc__ico ss-icon ss-social-circle ss-instagram" target="_blank" href="#">
+                          <a target="_blank" href="#">
+<!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-instagram"></i>-->
                             instagram
                           </a>
                         </div>
