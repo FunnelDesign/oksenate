@@ -59,6 +59,14 @@
     &_a {
       background: $color-dark-blue;
     }
+
+    &_b {
+      background: #dedede;
+    }
+
+    &_c {
+      background: $color-white-1;
+    }
   }
 
   &_ind {
@@ -69,6 +77,14 @@
 
     &_b {
       @include padding(40px 0 30px, 60px 0 50px, 90px 0 76px);
+    }
+
+    &_c {
+      padding: 58px 0 75px;
+    }
+
+    &_d {
+      padding: 50px 0 88px;
     }
   }
 }

@@ -1,0 +1,41 @@
+.bNews {
+
+ &__items {
+   display: flex;
+   margin-left: -12px;
+   margin-right: -12px;
+ }
+
+  &__item {
+    max-width: 33.333333%;
+    min-width: 33.333333%;
+    border-radius: 5px;
+  }
+
+  &__imgWrap {
+    padding-bottom: 20%;
+    position: relative;
+    display: block;
+  }
+
+  &__img {
+    border-radius: 5px;
+    overflow: hidden;
+    @include stretch-block();
+    background-size: cover;
+    background-position: center;
+    display: block;
+  }
+
+  &__title {
+    display: block;
+  }
+
+  &__date {
+    display: block;
+  }
+
+  &__btnAll {
+    text-align: center;
+  }
+}

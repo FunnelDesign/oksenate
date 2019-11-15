@@ -1,0 +1,36 @@
+.bSoc {
+  $self: &;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+
+  @media (max-width: $bp-small - 1) {
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  &__items {
+    display: flex;
+    align-items: center;
+  }
+
+  &__item {
+    margin-right: 12px;
+
+    @media (min-width: $bp-small) {
+      margin-right: 28px;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__ico {
+    color: $color-blue;
+
+    &:hover {
+      color: $color-blue;
+    }
+  }
+}
