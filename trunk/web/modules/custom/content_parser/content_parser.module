@@ -283,7 +283,8 @@ function _reference_create($type, $data) {
 /**
  * Find img tag in html, download files and change src attribute.
  */
-function parser_download_images(&$doc, $base_url, $path = 'public://') {
+function parser_download_images(&$doc, $base_url, $path = 'public://senator_bio') {
+//  _content_parser_retrieve_images($doc);
   return _parser_download_files($doc, 'img', 'src', $base_url, $path);
 }
 
@@ -301,7 +302,7 @@ function parser_download_links($doc, $extensions, $base_url, $path = 'public://'
 /**
  * Find files in html, download and change tag attribute.
  */
-function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'public://') { 
+function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'public://senator_bio') {
   foreach ($doc->find($selector) as $element) {
     $file_url = parser_get_absolute_url($base_url, pq($element)->attr($attr));
     $file_url_info = parse_url($file_url);
@@ -339,7 +340,7 @@ function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'pub
 /**
  * {@inheritdoc}
  */
-function _content_parser_retrieve_images($doc, $query, $attr = 'src') {
+function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
   $elements = [];
 
   foreach ($doc->find($query) as $element) {
