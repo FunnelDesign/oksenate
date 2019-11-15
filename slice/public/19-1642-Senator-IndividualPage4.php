@@ -228,7 +228,7 @@
 
               </div>
               <div class="bHide__moreWr">
-                <a class="bHide__more" href="#">
+                <a class="bHide__more" data-ev="toggleClass:bHide:open" href="#">
                   <span class="bHide__moreOpen">show more</span>
                   <span class="bHide__moreClose">show less</span>
                 </a>
