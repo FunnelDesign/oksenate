@@ -223,6 +223,81 @@
           </div>
         </div>
 
+        <div class="bMembership bWrap bWrap_size_a">
+          <h2>Committee Membership</h2>
+          <div class="bMembership__items">
+            <a href="#" class="bMembership__item">
+              Appropriations Subcommittee on Education
+            </a>
+            <a href="#" class="bMembership__item">
+              Business, Commerce & Tourism
+            </a>
+            <a href="#" class="bMembership__item">
+              Public Safety
+            </a>
+            <a href="#" class="bMembership__item">
+              Transportation - Vice Chair
+            </a>
+            <a href="#" class="bMembership__item">
+              Transporation
+            </a>
+          </div>
+        </div>
+        
+        <div class="bDistrict bWrap bWrap_size_a">
+          <h2>District 1  <a href="#"><i class="ss-icon ss-glyphish-filled ss-map"></i>see map </a></h2>
+
+          <div class="bDistrict__table">
+            <div class="bDistrict__tr">
+              <div class="bDistrict__th">
+                counties represented
+              </div>
+              <div class="bDistrict__th">
+                zip codes represented
+              </div>
+
+            </div>
+
+            <div class="bDistrict__tr">
+              <div class="bDistrict__td">
+                Craig
+              </div>
+              <div class="bDistrict__td">
+                74016    74072    74301    74330    74331    74332    74333
+              </div>
+            </div>
+
+            <div class="bDistrict__tr">
+              <div class="bDistrict__td">
+                Delaware
+              </div>
+              <div class="bDistrict__td">
+                74016    74072    74301    74330    74331    74332    74333
+              </div>
+            </div>
+
+            <div class="bDistrict__tr">
+              <div class="bDistrict__td">
+                Mayes
+              </div>
+              <div class="bDistrict__td">
+                74016    74072    74301    74330    74331    74332    74333
+              </div>
+            </div>
+
+            <div class="bDistrict__tr">
+              <div class="bDistrict__td">
+                Ottawa
+              </div>
+              <div class="bDistrict__td">
+                74016    74072    74301    74330    74331    74332    74333
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
 
     </section>

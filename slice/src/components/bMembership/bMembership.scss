@@ -1,0 +1,18 @@
+.bMembership {
+
+  &__items {
+    max-width: 438px;
+    margin: 0 auto;
+  }
+
+  &__item {
+    padding: 5px 10px;
+    background: $color-white;
+    border: 1px solid gray;
+    border-radius: 5px;
+    color: $color-blue;
+    font-family: $Roboto-Bold;
+    display: block;
+    margin:  0 0 10px;
+  }
+}

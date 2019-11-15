@@ -1,0 +1,19 @@
+.bDistrict {
+
+  &__table {
+
+  }
+
+  &__tr {
+    display: flex;
+  }
+
+  &__td, &__th {
+    flex: 1;
+
+    &:first-child {
+      min-width: 220px;
+      max-width: 220px;
+    }
+  }
+}
