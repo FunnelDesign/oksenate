@@ -186,6 +186,42 @@
             </a>
           </div>
         </div>
+        
+        <div class="bAbout bWrap bWrap_size_a">
+          <h2>About the Senator</h2>
+          <div class="bMedia bAbout__bMedia">
+
+              <a href="#XVsjLNUK-pw" class="bMedia__play-btn bMedia-tile__play-btn">
+                <span class="bMedia__preview" style="background-image: url('../dist/images/tmp/video-pre-tmp-1.jpg')"></span>
+                play video
+              </a>
+              <div class="bMedia__wrap">
+                <iframe id="XVsjLNUK-pw" width="560" height="315" src="https://www.youtube.com/embed/XVsjLNUK-pw?rel=0&amp;controls=1&amp;showinfo=0&amp;enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+              </div>
+            
+          </div>
+
+          <div class="bAbout__desc">
+            <div class="bHide">
+              <div class="bHide__cont">
+
+                <p>Senator Greg Treat was elected 2011, in a special election to replace Lt. Governor Todd Lamb as the state senator from District 47.</p>
+                <p>District 47 encompasses northwest Oklahoma City and portions of Edmond, Deer Creek, and Bethany.</p>
+                <p>After graduating from Catoosa High School, Treat attended the University of Oklahoma earning a political science and history degree and graduating with honors earning him an invitation to the Phi Beta Kappa honor society. It was during college that Greg was awarded the Cortez A.M. Ewing Fellowship that allowed him to intern for then-US Rep. Tom Coburn in Washington DC.</p>
+                <p>Prior to being elected, Greg worked in a number of campaigns, worked as the Legislative Director for the House Republican Caucus, the Legislative Director for then-Lieutenant Governor Mary Fallin, as the regional director for Dr. Tom Coburn’s successful 2004 campaign for US Senate, as State Government Liaison/Field Rep for Senator Coburn, and as Director of the Victory effort for the GOP in 2010.</p>
+                <p>In 2016, Treat was elected by his colleagues in the Senate Republican Caucus to serve as Senate Majority Floor Leader. In 2015, he was elected to serve as an Assistant Majority Floor Leader. He has also served as a Majority Whip. He previously served as Chair of the Appropriations Subcommittee on Public Safety and Judiciary as well as a member of the Appropriations, Health and Human Services, Judiciary, Energy and Rules Committees.</p>
+                <p>Senator Treat and his wife Maressa reside in northwest Oklahoma City with their three children: Mason (9), Cooper (6), and Olivia (5). Outside of his work in the Senate, Greg is actively involved in campaigns and works for a promotional marketing company. The Treat family attends Frontline Church.</p>
+
+              </div>
+              <div class="bHide__moreWr">
+                <a class="bHide__more" href="#">
+                  <span class="bHide__moreOpen">show more</span>
+                  <span class="bHide__moreClose">show less</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
 
