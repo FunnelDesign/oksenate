@@ -2,6 +2,7 @@ import './styles'
 
 import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
+import BlockVideo from "./components/bMedia/video";
 
 const $ = jQuery;
 
@@ -29,6 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
 function init() {
 	new bEvent();
 	initSelect();
+
+
+	new BlockVideo();
 }
 
 function initSelect() {
