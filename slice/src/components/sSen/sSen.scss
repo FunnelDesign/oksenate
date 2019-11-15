@@ -1,4 +1,5 @@
 .sSen {
+  $this: &;
 
   &__head {
 
@@ -229,5 +230,33 @@
 
   &_sName {
     display: block;
+  }
+
+  &__filRes {
+    padding: 50px 75px 66px;
+    background: #dedede;
+    text-align: center;
+
+    .bContainer {
+      position: relative;
+    }
+
+    #{$this}__filIco {
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      font-family: $RobotoCondensed-Regular;
+      @include font-size(18px, 24px, 32px);
+      margin: 0;
+      color: $color-blue;
+      text-transform: uppercase;
+    }
+  }
+
+  &__btnBack {
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 }
