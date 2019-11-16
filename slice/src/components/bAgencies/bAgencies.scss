@@ -1,0 +1,58 @@
+.bAgencies {
+  max-width: 634px;
+  margin: 0 auto;
+
+  &_gap {
+
+    &_a {
+      margin-bottom: 70px;
+    }
+  }
+
+  &__items {
+
+  }
+
+  &__item {
+    background: #ffffff;
+    border: 2px solid #cbcbcb;
+    border-bottom: none;
+    padding: 7px 8px;
+    display: flex;
+    align-items: center;
+    font-family: $Roboto-Bold;
+    color: $color-blue-3;
+
+    &:first-child {
+      border-radius: 5px 5px 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 5px 5px;
+      border-bottom: 2px solid #cbcbcb;
+    }
+  }
+
+  &__title {
+    flex: 1;
+    padding: 0 10px;
+  }
+
+  &__btn {
+    min-width: 164px;
+    text-align: center;
+    display: inline-block;
+    padding: 7px 5px;
+    text-decoration: none;
+    border: 2px solid #cbcbcb;
+    font-family: $RobotoCondensed-Regular;
+    color: $color-blue-3;
+    text-transform: uppercase;
+    border-radius: 5px;
+
+    &:hover {
+      background: $color-blue;
+      color: $color-white;
+    }
+  }
+}

@@ -46,5 +46,6 @@ import './components/bSelect/bSelect.scss'
 import './components/link/link.scss'
 import './components/breadcrumb/breadcrumb.scss'
 import './components/form/fSignUp.scss'
+import './components/bAgencies/bAgencies.scss'
 
 
