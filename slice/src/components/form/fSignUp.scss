@@ -1,0 +1,18 @@
+.fSignUp {
+  text-align: center;
+  color: #777777;
+
+  &__desc {
+    margin-bottom: 46px;
+    @include cr-last-child;
+  }
+
+  &__items {
+    max-width: 330px;
+    margin: 0 auto 30px;
+  }
+
+  .form-actions {
+    display: inline-block;
+  }
+}

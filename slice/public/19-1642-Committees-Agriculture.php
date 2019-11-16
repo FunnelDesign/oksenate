@@ -211,6 +211,36 @@
           </div>
 
         </div>
+
+        <div class="pageIn__ico">
+          <img src="../dist/images/titleIco/title-ico-4.png" srcset="../dist/images/titleIco/title-ico-4-2x.png 2x" alt="">
+        </div>
+        <div class="bTitle bTitle_wSub_a bTitle_gap_a">
+          <h1>Sign Up for Notifications</h1>
+        </div>
+
+        <div class="form fSignUp">
+          <div class="fSignUp__desc">
+            <p>Enter your name and email below to receive updates about <br>
+              the Agriculture and Wildlife committee.</p>
+          </div>
+          <div class="fSignUp__items">
+            <div class="form-item">
+              <input type="text" class="form-text" placeholder="First Name"/>
+            </div>
+            <div class="form-item">
+              <input type="text" class="form-text" placeholder="Last Name"/>
+            </div>
+            <div class="form-item">
+              <input type="text" class="form-text" placeholder="Email Address"/>
+            </div>
+          </div>
+          <div class="form-actions">
+            <input type="submit" class="form-submit" value="submit">
+            <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
+          </div>
+        </div>
+
       </div>
 
     </section>
