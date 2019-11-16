@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Committees--Appropriations'; ?>
+<?php $title = '19-1642-Committees-Agriculture'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -15,7 +15,7 @@
           <a href="#" class="link link_cl_a link_back">back</a>
           <div class="breadcrumb">
             <a href="#">Committees</a>
-            <span>Appropriations</span>
+            <span>Agriculture and Wildlife</span>
           </div>
         </div>
 
@@ -25,24 +25,7 @@
         <div class="bContainer">
 
           <div class="bTitle bTitle_wSub_a bTitle_gap_a">
-            <h1>Appropriations</h1>
-            <div class="bTitle__sub">
-              <p>Select a subcommittee from the dropdown for more information.</p>
-            </div>
-          </div>
-
-          <div class="bSelect bSelect_a">
-            <div class="form-item form-type-select">
-              <select class="form-select">
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-              </select>
-            </div>
+            <h1>Agriculture and Wildlife</h1>
           </div>
 
         </div>

@@ -22,6 +22,11 @@
     &_b {
       @include min-height($sm: 500px, $md: 612px);
     }
+
+    &_c {
+      padding: 50px 0 63px;
+      @include min-height(244px);
+    }
   }
 
   &__bg-wrap, &__bg {
@@ -107,13 +112,18 @@
 
   &__sNav {
     position: absolute;
-    left: 17px;
-    top: -24px;
-    display: flex;
-    align-items: center;
+    left: 0;
+    top: 28px;
+    width: 100%;
 
-    & > * {
-      padding-right: 28px;
+    .bContainer {
+      display: flex;
+      align-items: center;
+      padding: 0 17px;
+
+      & > * {
+        padding-right: 28px;
+      }
     }
   }
 
