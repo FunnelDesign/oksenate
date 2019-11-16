@@ -23,6 +23,9 @@
 
       <div class="section__v-inner section__v-inner_c">
         <div class="bContainer">
+          <div class="pageIn__ico">
+            <img src="../dist/images/titleIco/title-ico-2.png" srcset="../dist/images/titleIco/title-ico-2-2x.png 2x" alt="">
+          </div>
 
           <div class="bTitle bTitle_wSub_a bTitle_gap_a">
             <h1>Agriculture and Wildlife</h1>
@@ -94,7 +97,7 @@
         </div>
         <h2>Subcommittee Events</h2>
         
-        <div class="bTiles bTiles_ev">
+        <div class="bTiles bTiles_ev bTiles_gap_a">
 
           <div class="bTiles__items">
             <a href="#" class="bTiles__item">
@@ -150,61 +153,61 @@
               </span>
 
             </a>
+          </div>
 
+          <div class="bTiles__btnAllWrap">
+            <a href="#" class="btn">see all</a>
+          </div>
+
+        </div>
+
+        <div class="pageIn__ico">
+          <img src="../dist/images/titleIco/title-ico-3.png" srcset="../dist/images/titleIco/title-ico-3-2x.png 2x" alt="">
+        </div>
+        <h2>Latest Press Releases</h2>
+
+        <div class="bTiles bTiles_rel bTiles_gap_a">
+
+          <div class="bTiles__items">
             <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-              Thur. Nov. 17, 2019 |  9:00am
-              </span>
               <span class="bTiles__title">
-                Public Safety and Judiciary Subcommittee Budget Hearings
-              </span>
-              <span class="bTiles__sub">
-              Third Meeting
+               Title of Press Release
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
-                  <span><span>•</span></span> room 511-a
+                <span class="btn btn_a">
+                  view now
                 </span>
               </span>
 
             </a>
 
             <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-              Tues. Nov. 19, 2019 |  9:00am
-              </span>
               <span class="bTiles__title">
-               Public Safety and Judiciary Subcommittee Budget Hearings
-
-              </span>
-              <span class="bTiles__sub">
-              Fourth Meeting
+               Title of Press Release
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
-                  <span><span>•</span></span> room 511-a
+                <span class="btn btn_a">
+                  view now
                 </span>
               </span>
 
             </a>
 
             <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-               Fri. Nov. 15, 2019 |  9:00am
-              </span>
               <span class="bTiles__title">
-                Oversight Committee for the Legislative Office of Fiscal Transparency (LOFT)
-              </span>
-              <span class="bTiles__sub">
-               Third Meeting
+               Title of Press Release
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
-                  <span><span>•</span></span> room 535
+                <span class="btn btn_a">
+                  view now
                 </span>
               </span>
 
             </a>
+          </div>
+
+          <div class="bTiles__btnAllWrap">
+            <a href="#" class="btn">see all</a>
           </div>
 
         </div>
