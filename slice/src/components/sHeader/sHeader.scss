@@ -234,6 +234,9 @@
       backface-visibility: hidden;
       transition: opacity .3s;
       margin: 0;
+
+      box-shadow: 1px 1px 3px #121e32, -1px 1px 3px #121e32;
+      border-radius: 0 0 5px 5px;
     }
   }
 

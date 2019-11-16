@@ -101,6 +101,18 @@
     }
   }
 
+  &__sNav {
+    position: absolute;
+    left: 17px;
+    top: -24px;
+    display: flex;
+    align-items: center;
+
+    & > * {
+      padding-right: 28px;
+    }
+  }
+
   &__btnBack {
     position: absolute;
     left: 0;

@@ -10,6 +10,15 @@
     <section class="section section_ind_md section_bg-color_f">
       <div class="bContainer">
 
+        <div class="section__sNav">
+          <a href="#" class="link link_cl_a link_back">back</a>
+          <div class="breadcrumb">
+            <a href="#">Committees</a>
+            <span>Appropriations</span>
+          </div>
+
+        </div>
+
         <div class="bTitle bTitle_wSub_a bTitle_gap_a">
           <h1>Appropriations</h1>
           <div class="bTitle__sub">

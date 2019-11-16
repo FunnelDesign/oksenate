@@ -1,0 +1,40 @@
+.link {
+  font-family: $RobotoCondensed-Bold;
+  color: $color-red;
+  font-size: 10px;
+  text-transform: uppercase;
+  text-decoration: none;
+  backface-visibility: hidden;
+  display: inline-block;
+
+  &:hover {
+    opacity: .7;
+  }
+
+  &_cl {
+
+    &_a {
+      color: $color-white;
+    }
+  }
+
+  &_back {
+    top: 1px;
+    position: relative;
+
+    &:before {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 9px;
+      height: 9px;
+      border: 2px solid currentColor;
+      border-right: none;
+      border-top: none;
+      transform: rotate(45deg);
+      margin-right: 4px;
+      margin-top: -2px;
+      transition: .3s;
+    }
+  }
+}

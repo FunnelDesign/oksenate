@@ -1,0 +1,33 @@
+.breadcrumb {
+  color: #afafaf;
+  font-size: 12px;
+  font-family: $Roboto-Regular;
+  line-height: 1.2;
+
+  a {
+    color: #afafaf;
+    text-decoration: none;
+    font-size: 12px;
+    font-family: $Roboto-Regular;
+    padding-right: 9px;
+    margin-right: 8px;
+    position: relative;
+
+    &:hover {
+      color: $color-white;
+    }
+
+    &:after {
+      @include pseudo-block($left: 100%, $top: 50%);
+      transform: translate(0, -50%);
+      height: 10px;
+      border-left: 1px solid #afafaf;
+      margin-top: 1px;
+    }
+  }
+
+  span {
+    font-family: $Roboto-Bold;
+    color: $color-white;
+  }
+}

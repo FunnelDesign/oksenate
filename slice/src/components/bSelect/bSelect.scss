@@ -15,6 +15,14 @@
       &.select2-container--default:not(.select2-container--open) .select2-selection--single {
         background: $color-dark-blue;
       }
+
+      .select2-selection--single .select2-selection__rendered {
+        padding: 17px 36px 17px 25px;
+      }
+
+      .select2-selection--single .select2-selection__arrow {
+        right: 8px;
+      }
     }
   }
 
