@@ -57,4 +57,29 @@
       }
     }
   }
+
+  &__sub {
+    font-family: $FreightTextProMedium-Regular;
+    font-size: 14px;
+    text-align: center;
+    @include cr-last-child;
+  }
+
+  &_wSub {
+
+    &_a {
+
+      h1, h2 {
+        margin: 0 0 6px;
+      }
+    }
+  }
+
+  &_gap {
+    @include cr-last-child;
+
+    &_a {
+      margin-bottom: 15px;
+    }
+  }
 }

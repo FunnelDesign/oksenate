@@ -67,9 +67,22 @@
     &_c {
       background: $color-white-1;
     }
+
+    &_f {
+      background: $color-blue;
+      color: #ffff;
+
+      h1, h2, h3, h4, h5, h6 {
+        color: #ffff;
+      }
+    }
   }
 
   &_ind {
+
+    &_md {
+      padding: 50px 0 63px;
+    }
 
     &_a {
       padding: 90px 0 50px;

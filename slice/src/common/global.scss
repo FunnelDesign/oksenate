@@ -46,6 +46,15 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
+h1 {
+  text-align: center;
+  font-family: $RobotoCondensed-Light;
+  @include font-size(18px, 24px, 32px);
+  margin: 0 0 50px;
+  color: $color-dark-blue-1;
+  text-transform: capitalize;
+}
+
 h2 {
   text-align: center;
   font-family: $RobotoCondensed-Light;

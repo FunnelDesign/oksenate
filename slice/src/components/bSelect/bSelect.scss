@@ -1,0 +1,24 @@
+.bSelect {
+
+  &_a {
+    text-align: center;
+
+    .select2-container {
+      width: 348px;
+      margin: 0 auto;
+
+      &.select2-container--default .select2-selection--single {
+        border: 1px solid $color-dark-blue;
+        transition: background-color .1s, border .1s;
+      }
+
+      &.select2-container--default:not(.select2-container--open) .select2-selection--single {
+        background: $color-dark-blue;
+      }
+    }
+  }
+
+  &_gap {
+
+  }
+}

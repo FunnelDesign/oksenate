@@ -42,5 +42,6 @@ import './components/bMedia/bMedia.scss'
 import './components/bHide/bHide.scss'
 import './components/bMembership/bMembership.scss'
 import './components/bDistrict/bDistrict.scss'
+import './components/bSelect/bSelect.scss'
 
 
