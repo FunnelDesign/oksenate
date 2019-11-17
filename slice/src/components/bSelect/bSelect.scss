@@ -4,8 +4,6 @@
     text-align: center;
 
     .select2-container {
-      width: 348px;
-      margin: 0 auto;
 
       &.select2-container--default .select2-selection--single {
         border: 1px solid $color-dark-blue;
@@ -26,7 +24,30 @@
     }
   }
 
+  &_size {
+
+    &_a {
+
+      .select2-container {
+        width: 348px;
+        margin: 0 auto;
+      }
+    }
+
+    &_b {
+
+      .select2-container {
+        width: 162px;
+        margin: 0 auto;
+      }
+    }
+  }
+
   &_gap {
+
+    &_a {
+      margin-bottom: 53px;
+    }
 
   }
 }

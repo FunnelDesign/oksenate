@@ -1,0 +1,28 @@
+.bListLinks {
+  max-width: 900px;
+  margin: 0 auto;
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -60px;
+    margin-left: -60px;
+  }
+
+  &__item {
+    max-width: 33.3333333%;
+    min-width: 33.3333333%;
+    padding-left: 60px;
+    padding-right: 60px;
+    min-height: 100px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  &__link {
+    font-family: $FreightTextProBook-Regular;
+    font-size: 18px;
+    color: $color-blue-3;
+    line-height: 1.7;
+  }
+}

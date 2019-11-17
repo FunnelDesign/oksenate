@@ -30,4 +30,24 @@
     font-family: $Roboto-Bold;
     color: $color-white;
   }
+
+  &_a {
+    color: $color-blue-3;
+
+    a {
+      color: $color-blue-3;
+
+      &:hover {
+        color: $color-red;
+      }
+
+      &:after {
+        border-color: $color-blue-3;
+      }
+    }
+
+    span {
+      color: $color-blue-3;
+    }
+  }
 }

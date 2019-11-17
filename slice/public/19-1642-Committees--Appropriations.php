@@ -31,7 +31,7 @@
             </div>
           </div>
 
-          <div class="bSelect bSelect_a">
+          <div class="bSelect bSelect_a bSelect_size_a">
             <div class="form-item form-type-select">
               <select class="form-select">
                 <option>Select Subcommittee</option>
