@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Committees--Appropriations'; ?>
+<?php $title = '19-1642-Committees'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -8,26 +8,16 @@
   <div class="pageIn">
 
     <section class="section section_bg-color_f section_inner-v-centered">
-
-      <div class="section__sNav">
-
-        <div class="bContainer">
-          <a href="#" class="link link_cl_a link_back">back</a>
-          <div class="breadcrumb">
-            <a href="#">Committees</a>
-            <span>Appropriations</span>
-          </div>
-        </div>
-
+      <div class="section__bg-wrap">
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-5.jpg')"></div>
       </div>
-
       <div class="section__v-inner section__v-inner_d">
         <div class="bContainer">
 
           <div class="bTitle bTitle_wSub_a bTitle_gap_a">
-            <h1>Appropriations</h1>
+            <h1>Standing Committees</h1>
             <div class="bTitle__sub">
-              <p>Select a subcommittee from the dropdown for more information.</p>
+              <p>Select a committee from the dropdown for more information.</p>
             </div>
           </div>
 

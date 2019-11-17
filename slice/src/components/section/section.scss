@@ -27,15 +27,20 @@
       padding: 69px 0 44px;
       @include min-height(244px);
     }
+
+    &_d {
+      padding: 50px 0;
+      @include min-height(244px);
+    }
   }
 
   &__bg-wrap, &__bg {
     @include stretch-block();
-    z-index: -1;
   }
 
   &__bg-wrap {
     overflow: hidden;
+    z-index: 0;
 
     &_mobile {
       @include display($sm: none);
@@ -49,6 +54,7 @@
   &__bg {
     background-size: cover;
     background-position: 50% 50%;
+    z-index: -1;
 
     &_mobile {
       @include display($sm: none);
