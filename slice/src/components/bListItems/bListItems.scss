@@ -17,7 +17,7 @@
     background: #ffffff;
     border: 2px solid #cbcbcb;
     border-bottom: none;
-    padding: 7px 8px;
+    padding: 6px 8px;
     display: flex;
     align-items: center;
     font-family: $Roboto-Bold;
@@ -38,11 +38,18 @@
     padding: 0 10px;
   }
 
+  &__sub {
+    font-family: $Roboto-Regular;
+    font-size: 10px;
+    color: $color-blue;
+    display: block;
+  }
+
   &__btn {
     min-width: 164px;
     text-align: center;
     display: inline-block;
-    padding: 7px 5px;
+    padding: 6px 5px;
     text-decoration: none;
     border: 2px solid #cbcbcb;
     font-family: $RobotoCondensed-Regular;

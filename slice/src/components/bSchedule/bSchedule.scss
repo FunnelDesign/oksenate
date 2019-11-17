@@ -1,0 +1,19 @@
+.bSchedule {
+
+  h2 {
+    margin: 0 0 29px;
+  }
+
+  &__title {
+    text-align: center;
+    font-family: $RobotoCondensed-LightItalic;
+    font-size: 18px;
+    color: $color-dark-blue-1;
+    margin-bottom: 32px;
+  }
+
+  &__item {
+    margin-bottom: 30px;
+    @include cr-last-item;
+  }
+}

@@ -24,13 +24,12 @@
           <div class="bSelect bSelect_a">
             <div class="form-item form-type-select">
               <select class="form-select">
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
-                <option>Select Subcommittee</option>
+                <option>Select Committee</option>
+                <option>Select Committee</option>
+                <option>Select Committee</option>
+                <option>Select Committee</option>
+                <option>Select Committee</option>
+                <option>Select Committee</option>
               </select>
             </div>
           </div>
@@ -40,67 +39,14 @@
 
     </section>
 
-    <section class="section section_ind_f section_bg-color_b">
-
-      <div class="bContainer">
-        <div class="senators senators_col senators_dark">
-
-          <div class="senators__items">
-                  <span class="senators__item">
-                  <span class="senators__imgWrap">
-                      <span class="senators__img" style="background-image: url('../dist/images/tmp/senators-img-3.jpg')"></span>
-                    </span>
-
-                    <span class="senators__name">
-                     Sen. Casey Murdock
-                    </span>
-                    <span class="senators__position">
-                      Chairman
-                    </span>
-
-                  </span>
-
-            <a href="#" class="senators__item">
-                    <span class="senators__imgWrap">
-                      <span class="senators__img" style="background-image: url('../dist/images/tmp/senators-img-4.jpg')"></span>
-                    </span>
-
-              <span class="senators__name">
-                     Sen. Roland Pederson
-                    </span>
-              <span class="senators__position">
-                     Vice Chairman
-                    </span>
-
-            </a>
-
-          </div>
-
-          <div class="senators__all">
-
-            <h2>Appropriations <br>
-              Members</h2>
-
-            <div class="senators__btnWrap">
-              <a href="#" class="btn">see all members</a>
-            </div>
-
-
-          </div>
-
-        </div>
-      </div>
-
-    </section>
-
-    <section class="section section_ind_c section_bg-color_c">
+    <section class="section section_ind_d section_bg-color_b">
 
       <div class="bContainer">
         <div class="pageIn__ico">
           <img src="../dist/images/titleIco/title-ico-1.png" srcset="../dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
         </div>
-        <h2>Subcommittee Events</h2>
-        
+        <h2>Committee Events</h2>
+
         <div class="bTiles bTiles_ev">
 
           <div class="bTiles__items">
@@ -212,6 +158,241 @@
               </span>
 
             </a>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <section class="section section_ind_c section_bg-color_c">
+
+      <div class="bContainer">
+
+
+        <div class="bSchedule">
+          <div class="pageIn__ico pageIn__ico_a">
+            <img src="../dist/images/titleIco/title-ico-7.png" srcset="../dist/images/titleIco/title-ico-7-2x.png 2x" alt="">
+          </div>
+          <h2>2019 Committee Meeting Schedule</h2>
+
+          <div class="bSchedule__items">
+
+            <div class="bSchedule__item">
+              <div class="bSchedule__title">
+                Mondays
+              </div>
+
+              <div class="bListItems bSchedule__bListItems">
+                <div class="bListItems__items">
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                      Agriculture and Wildlife
+                      <span class="bListItems__sub">10:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 511-a
+                    </a>
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                   Retirement and Insurance
+                       <span class="bListItems__sub">10:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                    Public Safety
+                       <span class="bListItems__sub">10:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                   Health and Human Services
+                       <span class="bListItems__sub">After AM Session</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 419-c
+                    </a>
+
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="bSchedule__item">
+              <div class="bSchedule__title">
+                Tuesdays
+              </div>
+
+              <div class="bListItems bSchedule__bListItems">
+                <div class="bListItems__items">
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                      Agriculture and Wildlife
+                      <span class="bListItems__sub">10:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 511-a
+                    </a>
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                   Retirement and Insurance
+                       <span class="bListItems__sub">1:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                    Public Safety
+                       <span class="bListItems__sub">2:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="bSchedule__item">
+              <div class="bSchedule__title">
+                Wednesdays
+              </div>
+
+              <div class="bListItems bSchedule__bListItems">
+                <div class="bListItems__items">
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                      Agriculture and Wildlife
+                      <span class="bListItems__sub">10:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 511-a
+                    </a>
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                   Retirement and Insurance
+                       <span class="bListItems__sub">10:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                    Public Safety
+                       <span class="bListItems__sub">3:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <div class="bSchedule__item">
+              <div class="bSchedule__title">
+                Thursdays
+              </div>
+
+              <div class="bListItems bSchedule__bListItems">
+                <div class="bListItems__items">
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                      Agriculture and Wildlife
+                      <span class="bListItems__sub">10:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 511-a
+                    </a>
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                   Retirement and Insurance
+                       <span class="bListItems__sub">11:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+
+                  </div>
+
+                  <div class="bListItems__item">
+                    <span class="bListItems__title">
+                    Public Safety
+                       <span class="bListItems__sub">1:00am</span>
+                    </span>
+
+                    <a href="#" class="bListItems__btn btn btn_b">
+                      <span><span>•</span></span> room 535
+                    </a>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+
           </div>
 
         </div>

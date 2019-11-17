@@ -95,7 +95,7 @@
         <div class="pageIn__ico">
           <img src="../dist/images/titleIco/title-ico-1.png" srcset="../dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
         </div>
-        <h2>Subcommittee Events</h2>
+        <h2>Upcoming Events</h2>
         
         <div class="bTiles bTiles_ev bTiles_gap_a">
 
