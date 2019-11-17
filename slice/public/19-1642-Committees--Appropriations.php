@@ -125,7 +125,7 @@
                 Third Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn bTiles__btn_live">
+                <span class="bTiles__btn btn btn_b btn_b_live">
                   <span><span>•</span> live now</span> room 511-a
                 </span>
               </span>
@@ -143,8 +143,8 @@
                 Fourth Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
-                  <span><span>•</span></span> room 511-a
+                  <span class="bTiles__btn btn btn_b">
+                    <span><span>•</span></span> room 511-a
                 </span>
               </span>
 
@@ -161,7 +161,7 @@
                Third Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
+                 <span class="bTiles__btn btn btn_b">
                   <span><span>•</span></span> room 535
                 </span>
               </span>
@@ -179,7 +179,7 @@
               Third Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
+                <span class="bTiles__btn btn btn_b">
                   <span><span>•</span></span> room 511-a
                 </span>
               </span>
@@ -198,7 +198,7 @@
               Fourth Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
+                 <span class="bTiles__btn btn btn_b">
                   <span><span>•</span></span> room 511-a
                 </span>
               </span>
@@ -216,7 +216,7 @@
                Third Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn">
+                 <span class="bTiles__btn btn btn_b">
                   <span><span>•</span></span> room 535
                 </span>
               </span>

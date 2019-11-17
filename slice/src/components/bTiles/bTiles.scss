@@ -113,51 +113,6 @@
       text-align: center;
       display: block;
     }
-
-    #{$this}__btn {
-      display: inline-block;
-      vertical-align: middle;
-      padding: 6px 12px;
-      background: $color-white;
-      border: 1px solid #cfcfcf;
-      border-radius: 5px;
-      font-family: $RobotoCondensed-Regular;
-      font-size: 14px;
-      color: $color-blue-3;
-      text-transform: uppercase;
-      transition: background .3s, color .3s;
-      min-width: 160px;
-
-      &:hover {
-        background: $color-red;
-        color: $color-white;
-
-        span {
-          color: $color-white;
-        }
-      }
-
-      span {
-        color: #ff0000;
-        font-family: $RobotoCondensed-Bold;
-        display: inline-block;
-        vertical-align: middle;
-        transition: background .3s, color .3s;
-
-        span {
-          font-size: 27px;
-          display: inline-block;
-          vertical-align: middle;
-          margin-top: -1px;
-          line-height: 1;
-          position: relative;
-        }
-      }
-
-      &_live {
-        border-color: #ff0707;
-      }
-    }
   }
 
   &_rel {
