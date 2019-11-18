@@ -1,0 +1,79 @@
+.bTb {
+  display: table;
+  width: 100%;
+  max-width: 636px;
+  margin: 0 auto;
+  $this: &;
+
+  &__tr {
+    display: table-row;
+    border: 1px solid #cbcbcb;
+
+    &:first-child {
+
+      #{$this}__td {
+        border-top: 1px solid #cbcbcb;
+
+        &:first-child {
+          border-top-left-radius: 5px;
+        }
+
+        &:last-child {
+          border-top-right-radius: 5px;
+        }
+      }
+    }
+
+    &:last-child {
+
+      #{$this}__td {
+
+        &:first-child {
+          border-bottom-left-radius: 5px;
+        }
+
+        &:last-child {
+          border-bottom-right-radius: 5px;
+        }
+      }
+    }
+  }
+
+  &__td {
+    display: table-cell;
+    padding: 22px 10px 18px;
+    background: $color-white;
+    border-bottom: 1px solid #cbcbcb;
+    font-family: $Roboto-Regular;
+    color: $color-blue;
+    font-size: 14px;
+    line-height: 1.27;
+
+    &:first-child {
+      border-left: 1px solid #cbcbcb;
+    }
+
+    &:last-child {
+      border-right: 1px solid #cbcbcb;
+    }
+
+    strong {
+      font-family: $Roboto-Bold;
+    }
+  }
+
+  &_a {
+
+    #{$this}__td {
+
+      &:first-child {
+        width: 90px;
+        text-align: center;
+      }
+
+      &:last-child {
+        vertical-align: middle;
+      }
+    }
+  }
+}

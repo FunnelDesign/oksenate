@@ -68,6 +68,7 @@
   &_wSub {
 
     &_a {
+      @include cr-last-child;
 
       h1, h2 {
         margin: 0 0 6px;
@@ -76,9 +77,9 @@
   }
 
   &_gap {
-    @include cr-last-child;
 
     &_a {
+      @include cr-last-child;
       margin-bottom: 15px;
     }
   }

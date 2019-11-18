@@ -1,0 +1,45 @@
+.bDateList {
+
+  &__items {
+    max-width: 470px;
+    margin: 0 auto;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 11px;
+    @include cr-last-item;
+  }
+
+  &__date {
+    max-width: 37px;
+    min-width: 37px;
+    margin-right: 24px;
+    border: 2px solid $color-red;
+    border-radius: 5px;
+    font-family: $RobotoCondensed-Bold;
+    font-size: 18px;
+    color: $color-blue;
+    text-align: center;
+    overflow: hidden;
+    line-height: 1.2;
+
+    span {
+      background: $color-red;
+      display: block;
+      color: $color-white;
+      font-family: $RobotoCondensed-Regular;
+      font-size: 12px;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+  }
+
+  &__desc {
+    flex: 1;
+    font-family: $FreightTextProBook-Regular;
+    font-size: 18px;
+    color: $color-blue;
+  }
+}
