@@ -63,6 +63,12 @@
     font-size: 14px;
     text-align: center;
     @include cr-last-child;
+
+    &_a {
+      font-family: $FreightTextProBook-Regular;
+      font-size: 18px;
+      color: $color-blue;
+    }
   }
 
   &_wSub {
@@ -81,6 +87,11 @@
     &_a {
       @include cr-last-child;
       margin-bottom: 15px;
+    }
+
+    &_b {
+      @include cr-last-child;
+      margin-bottom: 40px;
     }
   }
 }

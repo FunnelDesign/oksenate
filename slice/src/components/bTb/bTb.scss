@@ -5,6 +5,14 @@
   margin: 0 auto;
   $this: &;
 
+  &__tHead {
+    display: table-header-group;
+  }
+
+  &__tBody {
+    display: table-row-group;
+  }
+
   &__tr {
     display: table-row;
     border: 1px solid #cbcbcb;
@@ -39,6 +47,15 @@
     }
   }
 
+  &__th {
+    font-family: $RobotoCondensed-Regular;
+    color: #808080;
+    font-size: 12px;
+    text-transform: uppercase;
+    display: table-cell;
+    padding: 10px 10px;
+  }
+
   &__td {
     display: table-cell;
     padding: 22px 10px 18px;
@@ -64,11 +81,11 @@
 
   &_a {
 
-    #{$this}__td {
+    #{$this}__td, #{$this}__th {
 
       &:first-child {
         width: 90px;
-        text-align: center;
+        padding-left: 16px;
       }
 
       &:last-child {
