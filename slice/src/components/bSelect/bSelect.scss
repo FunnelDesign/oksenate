@@ -2,6 +2,16 @@
 
   &_a {
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -10px;
+    margin-left: -10px;
+
+    & > * {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
 
     .select2-container {
 
@@ -47,6 +57,10 @@
 
     &_a {
       margin-bottom: 53px;
+    }
+
+    &_b {
+      margin-bottom: 40px;
     }
 
   }

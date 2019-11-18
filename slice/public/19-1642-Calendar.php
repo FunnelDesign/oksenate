@@ -261,7 +261,7 @@
             </div>
 
             <div class="bTb__td">
-              <a href="#" class="btn btn_b btn_b_sA">download</a>
+              <a href="#" class="btn btn_b btn_s_a">download</a>
             </div>
 
           </div>
@@ -281,7 +281,7 @@
             </div>
 
             <div class="bTb__td">
-              <a href="#" class="btn btn_b btn_b_sA">download</a>
+              <a href="#" class="btn btn_b btn_s_a">download</a>
             </div>
 
           </div>
@@ -301,7 +301,7 @@
             </div>
 
             <div class="bTb__td">
-              <a href="#" class="btn btn_b btn_b_sA">download</a>
+              <a href="#" class="btn btn_b btn_s_a">download</a>
             </div>
 
           </div>

@@ -1,6 +1,7 @@
 .bListLinks {
   max-width: 900px;
   margin: 0 auto;
+  $this: &;
 
   &__items {
     display: flex;
@@ -24,5 +25,17 @@
     font-size: 18px;
     color: $color-blue-3;
     line-height: 1.7;
+  }
+
+  &_a {
+    max-width: 906px;
+
+    #{$this}__items {
+      margin: 0;
+
+      & > * {
+        margin: 0 4px 8px;
+      }
+    }
   }
 }
