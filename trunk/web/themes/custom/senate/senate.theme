@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Views;
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -46,9 +47,17 @@ function senate_preprocess_node(array &$vars) {
   if (!empty($node)) {
 
     switch ($node->bundle()) {
-
       case 'homepage':
         $vars['search'] = _senate_get_block('searchapi_find_legislation');
+        break;
+      case 'committee':
+        $commitee = (!empty($vars["content"]["field_comt_committee"]) &&
+          !empty($vars["content"]["field_comt_committee"]['#items'])) ?
+          $vars["content"]["field_comt_committee"]['#items']->getValue() : '';
+        if (!empty($commitee) && !empty($commitee[0])) {
+          $params = [$commitee[0]["target_id"]];
+          $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
+        }
         break;
     }
   }
@@ -168,6 +177,15 @@ function senate_preprocess_field(array &$vars, $hook) {
         $url->setOption('attributes', $options);
 
         $vars['elements'][$key]['element'] = Link::fromTextAndUrl($markup, $url);
+      }
+      break;
+    case 'field_comt_sched_event_room':
+      if (!empty($vars["items"]) && !empty($vars["items"][0])) {
+        $vars["items"][0]["content"]["#options"]["attributes"] = ['class' =>
+          ['bListItems__btn', 'btn', 'btn_b']
+        ];
+        $title = $vars["items"][0]["content"]["#title"];
+        $vars["items"][0]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);
       }
       break;
   }
@@ -307,4 +325,32 @@ function _senate_get_block($bid) {
   }
 
   return $render;
+}
+
+function senate_preprocess(&$vars, $hook) {
+  $vars['theme_path'] = base_path() . drupal_get_path('theme', 'senate');
+}
+
+/**
+ * Return the rendered view with contextual filter.
+ * @param string $view_id - The view machine name.
+ * @param string $display_id - The display machine name.
+ * @param array $arguments - The arguments to pass.
+ *
+ * @return object $result
+ */
+function _senate_get_view($view_id, $display_id, array $arguments) {
+  $result = false;
+  $view = Views::getView($view_id);
+
+  if (is_object($view)) {
+    $view->setDisplay($display_id);
+    $view->setArguments($arguments);
+    $view->execute();
+    $view_res = $view->render();
+
+    $result = \Drupal::service('renderer')->render($view_res);
+  }
+
+  return $result;
 }
