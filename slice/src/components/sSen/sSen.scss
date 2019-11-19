@@ -102,6 +102,7 @@
   }
 
   &__filTitle, label {
+    display: block;
     font-family: $RobotoCondensed-Regular;
     @include font-size(13px, 13px, 14px);
     color: $color-blue;
