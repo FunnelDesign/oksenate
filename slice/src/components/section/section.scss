@@ -143,8 +143,13 @@
 
   &__btnBack {
     position: absolute;
-    left: 0;
-    top: 0;
+    left: 55px;
+    top: -40px;
+
+    @include md {
+      left: 0;
+      top: 0;
+    }
   }
 
   .bContainer {
