@@ -10,11 +10,15 @@
 
     h1 {
       font-family: $RobotoCondensed-Light;
-      @include font-size(18px, 24px, 32px);
+      @include font-size(24px, 24px, 32px);
       color: $color-dark-blue-1;
       margin: 0;
       text-transform: capitalize;
-      text-align: left;
+      text-align: center;
+
+      @include sm {
+        text-align: left;
+      }
     }
   }
 
@@ -23,10 +27,16 @@
     @include font-size(14px, 16px, 16px);
     color: $color-dark-blue-1;
     text-transform: uppercase;
+    text-align: center;
+
+    @include sm {
+      text-align: left;
+    }
   }
 
   &__row {
     margin-bottom: 20px;
+    @include cr-last-item;
 
     @include sm {
       display: flex;
@@ -37,16 +47,16 @@
   }
 
   &__col {
+    margin: 0 auto 20px;
 
     @include sm {
       flex: 1;
-      margin-left: 20px;
-      margin-right: 20px;
+      margin: 0 20px;
     }
 
     &:first-child {
-      max-width: 140px;
-      min-width: 140px;
+      max-width: 170px;
+      min-width: 170px;
 
       @include sm {
         max-width: 196px;
@@ -73,14 +83,22 @@
     border-top: 2px solid #c8c8c8;
     border-bottom: 2px solid #c8c8c8;
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    margin-right: -10px;
-    margin-left: -10px;
+    text-align: center;
+
+    @include sm {
+      text-align: left;
+      display: flex;
+      align-items: center;
+      margin-right: -10px;
+      margin-left: -10px;
+    }
 
     & > * {
-      padding-left: 10px;
-      padding-right: 10px;
+
+      @include sm {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
     }
   }
 
@@ -88,6 +106,7 @@
     font-family: $Roboto-MediumItalic;
     font-size: 14px;
     color: $color-dark-blue;
+    @include margin-bottom(15px, 0);
   }
 
   &__infoIt {
@@ -134,8 +153,6 @@
   }
 
   &__con {
-    display: flex;
-    align-items: center;
     min-height: 114px;
     border: 2px solid #bfbebe;
     border-radius: 5px;
@@ -145,8 +162,18 @@
     color: #414141;
     line-height: 1.8;
 
+    @include sm {
+      display: flex;
+      align-items: center;
+    }
+
     & > * {
-      padding: 0 10px;
+      margin-bottom: 10px;
+
+      @include sm {
+        margin-bottom: 0;
+        padding: 0 10px;
+      }
     }
 
     .ss-icon {
@@ -161,22 +188,37 @@
 
   &__address {
     position: relative;
-    display: flex;
-    align-items: center;
+    text-align: center;
+
+    @include sm {
+      display: flex;
+      align-items: center;
+      text-align: left;
+    }
 
     &:before {
       content: '';
-      display: inline-block;
-      vertical-align: middle;
+      display: block;
+      margin: 0 auto 10px;
       width: 18px;
       height: 26px;
       background: url('address-img-tmp-1.png') no-repeat;
       background-size: contain;
-      margin-right: 13px;
+
+      @include sm {
+        margin: 0 13px 0 0;
+        display: inline-block;
+        vertical-align: middle;
+      }
     }
   }
 
   &__telMail {
+    text-align: center;
+
+    @include sm {
+      text-align: left;
+    }
 
     a {
       text-decoration: none;
