@@ -6,7 +6,7 @@
   }
 
   &__res {
-    padding: 56px 0 56px;
+    @include padding(30px 0, 56px 0);
   }
 
   &__byAdd {
@@ -20,13 +20,13 @@
     line-height: 1.2;
     background: $color-blue-3;
     color: $color-white;
-    @include font-size(18, 24px, 32px);
+    @include font-size(18px, 24px, 32px);
     font-family: $RobotoCondensed-Light;
     border: 1px solid #3e5376;
     border-radius: 5px;
     text-transform: capitalize;
     text-decoration: none;
-    padding: 21px 32px;
+    @include padding(10px 20px, 21px 32px);
     transition: background-color .3s;
 
     &:hover {
@@ -37,8 +37,8 @@
       content: '';
       display: inline-block;
       vertical-align: middle;
-      width: 40px;
-      height: 55px;
+      @include width(30px, 40px);
+      @include height(44px, 55px);
       background: url('by-address-img-tmp.png') no-repeat;
       background-size: contain;
       margin-right: 18px;
@@ -47,23 +47,43 @@
 
   &__fil {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     border-top: 1px solid #cecece;
     border-bottom: 1px solid #cecece;
+    background: #dedede;
+
+    @include sm {
+      flex-wrap: nowrap;
+    }
   }
 
   &__filCol {
-    flex: 1;
-    padding: 42px 10px 25px;
-    min-height: 250px;
+    @include padding(10px, 42px 10px 25px);
     background: #dedede;
     text-align: center;
-    border-right: 1px solid #cecece;
     @include cr-last-child;
     display: flex;
     flex-direction: column;
+    min-height: 170px;
+    max-width: 150px;
+    min-width: 150px;
+
+    @include sm {
+      max-width: none;
+      min-width: 0;
+      flex: 1;
+      min-height: 250px;
+      border-right: 1px solid #cecece;
+    }
 
     &:last-child {
       border-right: none;
+      padding-bottom: 40px;
+
+      @include sm {
+        padding-bottom: 10px;
+      }
     }
   }
 
@@ -83,7 +103,7 @@
 
   &__filTitle {
     font-family: $RobotoCondensed-Regular;
-    font-size: 14px;
+    @include font-size(13px, 13px, 14px);
     color: $color-blue;
     text-transform: uppercase;
     margin: 0 0 12px;
@@ -91,8 +111,8 @@
   }
 
   &__opt {
-    width: 150px;
-    margin: 0 auto 20px;
+    @include width(132px, 132px, 150px);
+    @include margin(0 auto 10px, 0 auto 20px);
 
     .select2-container {
       width: 100%;
@@ -118,7 +138,7 @@
   &__senShow {
     text-align: center;
     overflow: hidden;
-    margin: 0 0 50px;
+    @include margin(0 0 30px, 0 0 50px);
 
     h4 {
       font-family: $RobotoCondensed-Light;
@@ -145,6 +165,7 @@
   &__items {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     margin-right: -28px;
     margin-left: -28px;
   }
@@ -256,7 +277,13 @@
 
   &__btnBack {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    top: -36px;
+    left: -67px;
+
+    @include sm {
+      top: auto;
+      bottom: 0;
+      left: 0;
+    }
   }
 }
