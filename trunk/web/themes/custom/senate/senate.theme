@@ -354,3 +354,15 @@ function _senate_get_view($view_id, $display_id, array $arguments) {
 
   return $result;
 }
+
+/**
+ * Implements template_theme_suggestions_node_HOOK_alter().
+ * Add theme suggestions to the view exposed forms.
+ */
+function senate_theme_suggestions_views_exposed_form_alter(&$suggestions, $vars, $hook) {
+  global $base_path;
+  $vars['theme_path'] = $base_path . \Drupal::theme()
+      ->getActiveTheme()
+      ->getPath();
+
+}
