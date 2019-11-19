@@ -24,8 +24,8 @@
     }
 
     &_c {
-      padding: 69px 0 44px;
-      @include min-height(244px);
+      @include padding(20px 0,69px 0 44px);
+      @include min-height(150px, 244px);
     }
 
     &_d {
@@ -112,7 +112,7 @@
     }
 
     &_f {
-      padding: 74px 0 50px;
+      @include padding(40px 0 30px, 74px 0 50px);
     }
 
     &_j {
@@ -125,18 +125,30 @@
   }
 
   &__sNav {
-    position: absolute;
-    left: 0;
-    top: 28px;
-    width: 100%;
+    padding: 10px;
+
+    @include sm {
+      position: absolute;
+      left: 0;
+      top: 28px;
+      width: 100%;
+    }
 
     .bContainer {
       display: flex;
       align-items: center;
-      padding: 0 17px;
+      padding: 0;
+
+      @include sm {
+        padding: 0 17px;
+      }
 
       & > * {
-        padding-right: 28px;
+        padding-right: 20px;
+
+        @include sm {
+          padding-right: 28px;
+        }
       }
     }
   }

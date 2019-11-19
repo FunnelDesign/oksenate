@@ -4,7 +4,7 @@
   &_gap {
 
     &_a {
-      margin-bottom: 70px;
+      @include margin-bottom(30px, 50px, 70px);
     }
   }
 
@@ -53,27 +53,36 @@
   }
 
   &__btnAllWrap {
-    margin-top: 50px;
     text-align: center;
+    @include margin-top(30px, 50px);
   }
 
   &_ev {
 
     #{$this}__item {
-      max-width: calc(33.333333% - 12px);
-      min-width: calc(33.333333% - 12px);
+      max-width: 280px;
+      min-width: 280px;
+
       width: auto;
-      min-height: 240px;
       border: 1px solid #cfcfcf;
       background: #f0f0f0;
       margin: 0 6px 12px;
       display: flex;
+      flex-wrap: wrap;
       flex-direction: column;
       text-align: center;
       color: #888888;
       font-size: 12px;
-      padding: 38px 25px 30px;
+      padding: 20px;
       transition: background .5s;
+
+      @include sm {
+        min-height: 240px;
+        padding: 38px 25px 30px;
+        flex-wrap: nowrap;
+        max-width: calc(33.333333% - 12px);
+        min-width: calc(33.333333% - 12px);
+      }
 
       &:hover {
         background: $color-blue;

@@ -10,8 +10,9 @@
     font-size: 12px;
     font-family: $Roboto-Regular;
     padding-right: 9px;
-    margin-right: 8px;
     position: relative;
+    margin: 5px 8px 5px 0;
+    display: inline-block;
 
     &:hover {
       color: $color-white;

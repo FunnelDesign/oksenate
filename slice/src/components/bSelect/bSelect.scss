@@ -5,6 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
     margin-right: -10px;
     margin-left: -10px;
 
@@ -39,8 +40,8 @@
     &_a {
 
       .select2-container {
-        width: 348px;
         margin: 0 auto;
+        @include width(280px, 348px);
       }
     }
 
@@ -56,11 +57,11 @@
   &_gap {
 
     &_a {
-      margin-bottom: 53px;
+      @include margin-bottom(30px, 53px);
     }
 
     &_b {
-      margin-bottom: 40px;
+      @include margin-bottom(30px, 40px);
     }
 
   }

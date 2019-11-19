@@ -3,8 +3,8 @@
   color: #777777;
 
   &__desc {
-    margin-bottom: 46px;
     @include cr-last-child;
+    @include margin-bottom(30px, 46px);
   }
 
   &__items {

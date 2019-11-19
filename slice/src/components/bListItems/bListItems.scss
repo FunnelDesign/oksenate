@@ -5,7 +5,7 @@
   &_gap {
 
     &_a {
-      margin-bottom: 70px;
+      @include margin-bottom(30px, 50px, 70px);
     }
   }
 
@@ -15,7 +15,7 @@
 
   &__item {
     background: #ffffff;
-    border: 2px solid #cbcbcb;
+    border: 1px solid #cbcbcb;
     border-bottom: none;
     padding: 6px 8px;
     display: flex;
@@ -23,13 +23,21 @@
     font-family: $Roboto-Bold;
     color: $color-blue-3;
 
+    @include sm {
+      border-width: 2px;
+    }
+
     &:first-child {
       border-radius: 5px 5px 0 0;
     }
 
     &:last-child {
       border-radius: 0 0 5px 5px;
-      border-bottom: 2px solid #cbcbcb;
+      border-bottom: 1px solid #cbcbcb;
+
+      @include sm {
+        border-width: 2px;
+      }
     }
   }
 
@@ -46,16 +54,21 @@
   }
 
   &__btn {
-    min-width: 164px;
+    min-width: 100px;
     text-align: center;
     display: inline-block;
     padding: 6px 5px;
     text-decoration: none;
-    border: 2px solid #cbcbcb;
+    border: 1px solid #cbcbcb;
     font-family: $RobotoCondensed-Regular;
     color: $color-blue-3;
     text-transform: uppercase;
     border-radius: 5px;
+
+    @include sm {
+      min-width: 164px;
+      border-width: 2px;
+    }
 
     &:hover {
       background: $color-blue;

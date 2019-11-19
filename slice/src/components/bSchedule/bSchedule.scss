@@ -1,7 +1,7 @@
 .bSchedule {
 
   h2 {
-    margin: 0 0 29px;
+    @include margin(0 0 20px, 0 0 29px);
   }
 
   &__title {
@@ -9,11 +9,11 @@
     font-family: $RobotoCondensed-LightItalic;
     font-size: 18px;
     color: $color-dark-blue-1;
-    margin-bottom: 32px;
+    @include margin-bottom(20px, 32px);
   }
 
   &__item {
-    margin-bottom: 30px;
+    @include margin-bottom(20px, 30px);
     @include cr-last-item;
   }
 }
