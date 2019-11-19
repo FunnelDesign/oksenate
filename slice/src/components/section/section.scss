@@ -108,7 +108,7 @@
     }
 
     &_d {
-      padding: 50px 0 88px;
+      @include padding(40px 0, 50px 0 88px);
     }
 
     &_f {

@@ -40,8 +40,13 @@
     flex: 1;
 
     &:first-child {
-      min-width: 220px;
-      max-width: 220px;
+      min-width: 120px;
+      max-width: 120px;
+
+      @include sm {
+        min-width: 220px;
+        max-width: 220px;
+      }
     }
   }
 

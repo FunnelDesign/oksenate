@@ -1,8 +1,8 @@
 .bAbout {
-  margin-bottom: 47px;
+  @include margin-bottom(30px, 47px);
 
   &__bMedia {
-    margin-bottom: 50px;
+    @include margin-bottom(30px, 50px);
   }
 
   &__desc {

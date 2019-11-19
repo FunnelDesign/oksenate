@@ -1,22 +1,36 @@
 .bNews {
   $this: &;
-  margin-bottom: 65px;
+  @include margin-bottom(30px, 40px, 68px);
 
   &__items {
     display: flex;
-    margin-left: -12px;
-    margin-right: -12px;
-    margin-bottom: 40px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: -6px;
+    margin-right: -6px;
+    margin-bottom: 20px;
+
+    @include sm {
+      flex-wrap: nowrap;
+      margin-bottom: 40px;
+    }
   }
 
   &__item {
-    max-width: calc(100% / 3 - 6px);
-    min-width: calc(100% / 3 - 6px);
+    max-width: 280px;
+    min-width:  280px;
     border-radius: 5px;
     margin-right: 6px;
     margin-left: 6px;
     background: $color-white;
     border: 2px solid #dfdfdf;
+    margin-bottom: 12px;
+
+    @include sm {
+      max-width: calc(100% / 3 - 6px);
+      min-width: calc(100% / 3 - 6px);
+      margin-bottom: 0;
+    }
   }
 
   &__imgWrap {
@@ -40,8 +54,8 @@
 
   &__body {
     background: $color-white;
-    padding: 34px 30px 20px;
     display: block;
+    @include padding(20px, 34px 30px 20px);
   }
 
   &__title {
