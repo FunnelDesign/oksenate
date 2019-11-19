@@ -16,7 +16,6 @@
       text-transform: capitalize;
       text-align: left;
     }
-
   }
 
   &__dis {
@@ -26,23 +25,33 @@
     text-transform: uppercase;
   }
 
-
-
   &__row {
-    display: flex;
-    margin-left: -20px;
-    margin-right: -20px;
-    margin-bottom: 34px;
+    margin-bottom: 20px;
+
+    @include sm {
+      display: flex;
+      margin-left: -20px;
+      margin-right: -20px;
+      margin-bottom: 34px;
+    }
   }
 
   &__col {
-    flex: 1;
-    margin-left: 20px;
-    margin-right: 20px;
+
+    @include sm {
+      flex: 1;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
 
     &:first-child {
-      max-width: 196px;
-      min-width: 196px;
+      max-width: 140px;
+      min-width: 140px;
+
+      @include sm {
+        max-width: 196px;
+        min-width: 196px;
+      }
     }
   }
 

@@ -101,7 +101,7 @@
     }
   }
 
-  &__filTitle {
+  &__filTitle, label {
     font-family: $RobotoCondensed-Regular;
     @include font-size(13px, 13px, 14px);
     color: $color-blue;
@@ -110,7 +110,7 @@
     @include cr-last-child;
   }
 
-  &__opt {
+  &__opt, .js-form-type-select {
     @include width(132px, 132px, 150px);
     @include margin(0 auto 10px, 0 auto 20px);
 
