@@ -12,6 +12,7 @@
     & > * {
       padding-left: 10px;
       padding-right: 10px;
+      margin-bottom: 20px;
     }
 
     .select2-container {
@@ -57,11 +58,11 @@
   &_gap {
 
     &_a {
-      @include margin-bottom(30px, 53px);
+      @include margin-bottom(10px, 33px);
     }
 
     &_b {
-      @include margin-bottom(30px, 40px);
+      @include margin-bottom(10px, 30px);
     }
 
   }

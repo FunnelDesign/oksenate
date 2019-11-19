@@ -127,8 +127,8 @@
   &_rel {
 
     #{$this}__item {
-      max-width: calc(33.333333% - 12px);
-      min-width: calc(33.333333% - 12px);
+      max-width: 280px;
+      min-width: 280px;
       width: auto;
       min-height: 150px;
       border: 1px solid #cfcfcf;
@@ -142,6 +142,11 @@
       font-size: 12px;
       padding: 38px 25px 30px;
       transition: background .5s;
+
+      @include sm {
+        max-width: calc(33.333333% - 12px);
+        min-width: calc(33.333333% - 12px);
+      }
 
       &:hover {
         background: #dedede;
@@ -171,25 +176,39 @@
     #{$this}__items {
       padding: 0;
       margin: 0;
-      border-top: 2px solid #cecece;
-      border-bottom: 2px solid #cecece;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
+      border-top: 1px solid #cecece;
+
+      @include sm {
+        flex-wrap: nowrap;
+        border-top: 2px solid #cecece;
+        border-bottom: 2px solid #cecece;
+      }
     }
 
     #{$this}__item {
       width: auto;
+      min-width: 280px;
       flex: 1;
-      padding: 20px 20px;
+      padding: 15px 15px;
       margin: 0;
       border-radius: 0;
-      min-height: 176px;
       background: #dedede;
       text-align: center;
       border: none;
-      border-right: 2px solid #cecece;
+      border-right: 1px solid #cecece;
       @include cr-last-child;
       display: flex;
       flex-direction: column;
+      border-bottom: 1px solid #cecece;
+
+      @include sm {
+        min-width: 0;
+        min-height: 176px;
+        padding: 20px 20px;
+        border-width: 2px;
+        border-bottom: none
+      }
 
       &:last-child {
         border-right: none;

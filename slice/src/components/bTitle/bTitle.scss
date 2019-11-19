@@ -91,7 +91,7 @@
 
     &_b {
       @include cr-last-child;
-      margin-bottom: 40px;
+      @include margin-bottom(20px, 30px);
     }
   }
 }

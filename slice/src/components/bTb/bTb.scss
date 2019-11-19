@@ -50,21 +50,31 @@
   &__th {
     font-family: $RobotoCondensed-Regular;
     color: #808080;
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
     display: table-cell;
-    padding: 10px 10px;
+    padding: 2px;
+
+    @include sm {
+      padding: 10px 10px;
+      font-size: 12px;
+    }
   }
 
   &__td {
     display: table-cell;
-    padding: 22px 10px 18px;
+    padding: 10px 5px;
     background: $color-white;
     border-bottom: 1px solid #cbcbcb;
     font-family: $Roboto-Regular;
     color: $color-blue;
-    font-size: 14px;
+    font-size: 11px;
     line-height: 1.27;
+
+    @include sm {
+      padding: 22px 10px 18px;
+      font-size: 14px;
+    }
 
     &:first-child {
       border-left: 1px solid #cbcbcb;
@@ -77,6 +87,11 @@
     strong {
       font-family: $Roboto-Bold;
     }
+
+    .btn_s_a {
+      min-width: 35px;
+      padding: 5px 7px;
+    }
   }
 
   &_a {
@@ -84,8 +99,13 @@
     #{$this}__td, #{$this}__th {
 
       &:first-child {
-        width: 90px;
         padding-left: 16px;
+        text-align: center;
+
+        @include sm {
+          width: 90px;
+          text-align: left;
+        }
       }
 
       &:last-child {
