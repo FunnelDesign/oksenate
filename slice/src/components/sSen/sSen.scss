@@ -302,8 +302,11 @@
   }
 
 
-  .ui-autocomplete {
-    background: none;
+  input.ui-autocomplete {
+
+    &-input {
+      background: none;
+    }
 
     &-loading {
       background: $color-white url('loader-1.gif') no-repeat 95% center;
