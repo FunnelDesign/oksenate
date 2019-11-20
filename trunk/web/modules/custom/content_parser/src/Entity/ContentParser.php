@@ -616,6 +616,17 @@ class ContentParser extends ConfigEntityBase {
           else{}
         }
       }
+      if($field_name == 'field_senator_index_zip_taxonomy') {
+        foreach ($result as $li){
+          $string = trim(strip_tags($li->textContent));
+          $term = \Drupal::entityTypeManager()
+            ->getStorage('taxonomy_term')
+            ->loadByProperties(['name' => $string]);
+          if(!empty($term))
+            $value[] = $term[key($term)]->id();
+          else{}
+        }
+      }
 
 
 //      if($field_name == 'field_bio_info'){
