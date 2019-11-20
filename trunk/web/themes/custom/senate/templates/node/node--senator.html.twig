@@ -75,6 +75,9 @@
 <section class="section section_ind_c section_bg-color_b">
 
     <div class="bContainer">
+        <a href="/senators" class="btn btn_a section__btnBack">
+            back to senators
+        </a>
 
         <div class="bWrap bWrap_size_a">
 
@@ -124,7 +127,6 @@
                             {{ content.field_senator_address_txt }}
                             <div class="bSenBio__telMail">
                                 {{ content.field_senator_telephone }}
-                                <br>
                                 {{ content.field_senator_email_link }}
                             </div>
                         </div>
@@ -162,7 +164,7 @@
             {{ content.field_senator_committee_taxonomy }}
         </div>
         <div class="bDistrict bWrap bWrap_size_a">
-            {{ content.field_senator_district_taxonomy[0]['#title'] }}
+            <h2>{{ content.field_senator_district_taxonomy[0]['#title'] }}</h2>
             <div class="bDistrict__table">
                 <div class="bDistrict__tr">
                     <div class="bDistrict__th">

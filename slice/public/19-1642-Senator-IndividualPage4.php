@@ -48,21 +48,21 @@
 
                       <div class="bSoc__items">
                         <div class="bSoc__item">
-                          <a target="_blank" href="#">
+                          <a target="_blank" href="#">facebook
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-facebook"></i>-->
-                            facebook
+
                           </a>
                         </div>
                         <div class="bSoc__item">
-                          <a target="_blank" href="#">
+                          <a target="_blank" href="#">twitter
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-twitter"></i>-->
-                            twitter
+
                           </a>
                         </div>
                         <div class="bSoc__item">
-                          <a target="_blank" href="#">
+                          <a target="_blank" href="#">instagram
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-instagram"></i>-->
-                            instagram
+
                           </a>
                         </div>
                       </div>
@@ -126,10 +126,11 @@
                       <a href="tel:(405) 521-5632">(405) 521-5632</a>
                     </div>
 
-                    <div class="bSenBio__tel">
+                    <div class="bSenBio__mail">
                       <i class="ss-icon ss-glyphish-filled ss-mail"></i>
                       <a href="mailto:test@test.com">
                         Email Senator Treat
+<!--                        Email Senator John Michael Montgomery-->
                       </a>
                     </div>
 

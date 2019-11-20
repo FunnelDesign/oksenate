@@ -185,7 +185,7 @@
       font-size: 12px;
       display: inline-block;
       vertical-align: middle;
-      margin-right: 1px;
+      margin-right: 5px;
       margin-top: 2px;
     }
   }
@@ -193,6 +193,7 @@
   &__address {
     position: relative;
     text-align: center;
+    @include cr-last-child;
 
     @include sm {
       display: flex;
@@ -218,23 +219,53 @@
     }
   }
 
+  &__mail, &__tel {
+
+    @include sm {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__tel {
+
+    @include sm {
+      margin-top: 2px;
+      margin-bottom: 5px;
+    }
+  }
+
+  &__mail {
+
+    a {
+      line-height: 1.2;
+    }
+  }
+
   &__telMail {
     text-align: center;
-    min-width: 135px;
-    max-width: 135px;
+
+    @include sm {
+      min-width: 135px;
+      max-width: 135px;
+      margin: 0 auto;
+    }
 
     @include sm {
       text-align: left;
+      margin: 0;
     }
 
     a {
       text-decoration: none;
+      color: #414141;
 
       @include sm {
-        width: 118px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        width: 130px;
+        min-width: 130px;
+        //overflow: hidden;
+        //text-overflow: ellipsis;
+        //white-space: nowrap;
         display: inline-block;
         vertical-align: middle;
       }
