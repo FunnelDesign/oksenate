@@ -101,13 +101,6 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_slider_bg_image_mob':
       $vars['img_classes'] = ['section__bg_mobile'];
       break;
-    case 'field_senator_telephone':
-      $vars['items'][0]['content']['#title'] =  Markup::create("<i class=\"ss-icon ss-glyphish-filled ss-phone\"></i> " . $vars['items'][0]['content']['#title']) ;
-      break;
-    case 'field_senator_email_link':
-      $vars['items'][0]['content']['#title'] =  Markup::create("<i class=\"ss-icon ss-glyphish-filled ss-mail\"></i> " . $vars['items'][0]['content']['#title']) ;
-      break;
-
     case 'field_home_finder_left_link':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
