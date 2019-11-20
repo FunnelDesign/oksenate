@@ -37,8 +37,8 @@
  * @see template_preprocess_field()
  */
 #}
-<div class="bSenBio__mail">
-    {% for item in items %}
-        <i class="ss-icon ss-glyphish-filled ss-mail"></i>{{ item.content }}
-    {% endfor %}
-</div>
+<ul>
+  {% for item in items %}
+    <li>{{ item.content }}</li>
+  {% endfor %}
+</ul>
