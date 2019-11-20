@@ -193,6 +193,7 @@
   &__address {
     position: relative;
     text-align: center;
+    @include cr-last-child;
 
     @include sm {
       display: flex;
