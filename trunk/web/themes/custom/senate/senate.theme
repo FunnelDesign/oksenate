@@ -101,6 +101,13 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_slider_bg_image_mob':
       $vars['img_classes'] = ['section__bg_mobile'];
       break;
+    case 'field_senator_telephone':
+      $vars['items'][0]['content']['#title'] =  Markup::create("<i class=\"ss-icon ss-glyphish-filled ss-phone\"></i> " . $vars['items'][0]['content']['#title']) ;
+      break;
+    case 'field_senator_email_link':
+      $vars['items'][0]['content']['#title'] =  Markup::create("<i class=\"ss-icon ss-glyphish-filled ss-mail\"></i> " . $vars['items'][0]['content']['#title']) ;
+      break;
+
     case 'field_home_finder_left_link':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
@@ -120,6 +127,35 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
         $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
         $vars['items'][$key]['wrappers'] = 'sFooter__btnWr';
+      }
+      break;
+    case 'field_senator_address_txt':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['wrappers'] = 'bSenBio__address';
+      }
+      break;
+
+    case 'field_senator_social_inst_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-instagram');
+        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+      }
+      break;
+
+    case 'field_senator_social_fb_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-facebook');
+        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+      }
+      break;
+    case 'field_senator_social_tw_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-twitter');
+        $vars['items'][$key]['wrappers'] = 'bSoc__item';
       }
       break;
     case 'field_footer_find_senator_image':
@@ -216,6 +252,10 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_home_finder_left_link':
     case 'field_footer_find_senator_link':
     case 'field_home_leadership_link':
+    case 'field_senator_social_fb_link':
+    case 'field_senator_social_inst_link':
+    case 'field_senator_social_tw_link':
+    case 'field_senator_address_txt':
       $suggestions[] = 'field__with_custom_wrapper';
       break;
 

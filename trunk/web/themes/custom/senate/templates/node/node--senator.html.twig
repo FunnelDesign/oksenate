@@ -92,44 +92,23 @@
                                 <h1>{{ label }}</h1>
                             </div>
                             <div class="bSenBio__dis">
-                                {{ content.field_district }}
+                                {{ content.field_senator_district_taxonomy[0]['#title'] }}
                             </div>
                         </div>
-
-                        <div class="bSenBio__soc">
-
-                            <div class="bSenBio__socSub">
-                                Follow me
-                            </div>
-
-                            <div class="bSoc bSenBio__bSoc">
-
-                                <div class="bSoc__items">
-                                    <div class="bSoc__item">
-                                        <a class="bSoc__ico ss-icon ss-social-circle ss-facebook" target="_blank"
-                                           href="#">
-                                            facebook
-                                        </a>
-                                    </div>
-                                    <div class="bSoc__item">
-                                        <a class="bSoc__ico ss-icon ss-social-circle ss-twitter" target="_blank"
-                                           href="#">
-                                            twitter
-                                        </a>
-                                    </div>
-                                    <div class="bSoc__item">
-                                        <a class="bSoc__ico ss-icon ss-social-circle ss-instagram" target="_blank"
-                                           href="#">
-                                            instagram
-                                        </a>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
+                        {{ content.field_senator_social_links_par }}
                         <div class="bSenBio__info">
-                            {{ content.field_bio_info }}
+                            <div class="bSenBio__infoIt">
+                                <strong>Party:</strong> {{ content.field_party }}
+                            </div>
+                            <div class="bSenBio__infoIt">
+                                <strong>Education:</strong> {{ content.field_senator_education_txt }}
+                            </div>
+                            <div class="bSenBio__infoIt">
+                                <strong>Legislative Experience:</strong> {{ content.field_senator_leg_experience_txt }}
+                            </div>
+                            <div class="bSenBio__infoIt">
+                                <strong>Hometown:</strong> {{ content.field_senator_hometown_txt }}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -141,40 +120,19 @@
                         </a>
                     </div>
                     <div class="bSenBio__col">
-
                         <div class="bSenBio__con">
-
-                            <div class="bSenBio__address">
-                                2300 N. Lincoln Blvd., Rm. 422 <br>
-                                Oklahoma City, OK 73105
-                            </div>
-
+                            {{ content.field_senator_address_txt }}
                             <div class="bSenBio__telMail">
-                                <a href="tel:(405) 521-5632">
-                                    <i class="ss-icon ss-glyphish-filled ss-phone"></i>
-                                    (405) 521-5632
-                                </a>
+                                {{ content.field_senator_telephone }}
                                 <br>
-
-                                <a href="mailto:test@test.com">
-                                    <i class="ss-icon ss-glyphish-filled ss-mail"></i>
-                                    Email Senator Treat
-                                </a>
-
+                                {{ content.field_senator_email_link }}
                             </div>
-
                         </div>
-
                     </div>
                 </div>
-
-
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 <section class="section section_ind_d section_bg-color_c">
@@ -201,34 +159,30 @@
 
         <div class="bMembership bWrap bWrap_size_a">
             <h2>Committee Membership</h2>
-            <div class="bMembership__items">
-                <a href="#" class="bMembership__item">
-                    Appropriations Subcommittee on Education
-                </a>
-                <a href="#" class="bMembership__item">
-                    Business, Commerce & Tourism
-                </a>
-                <a href="#" class="bMembership__item">
-                    Public Safety
-                </a>
-                <a href="#" class="bMembership__item">
-                    Transportation - Vice Chair
-                </a>
-                <a href="#" class="bMembership__item">
-                    Transporation
-                </a>
-            </div>
+            {{ content.field_senator_committee_taxonomy }}
         </div>
         <div class="bDistrict bWrap bWrap_size_a">
-            <h2>District 1  <a href="#"><i class="ss-icon ss-glyphish-outined ss-map"></i>see map </a></h2>
+            {{ content.field_senator_district_taxonomy[0]['#title'] }}
+            <div class="bDistrict__table">
+                <div class="bDistrict__tr">
+                    <div class="bDistrict__th">
+                        counties represented
+                    </div>
+                    <div class="bDistrict__th">
+                        zip codes represented
+                    </div>
+                </div>
 
-            {{ content.field_counties_and_zip_codes }}
-
-
+                <div class="bDistrict__tr">
+                    <div class="bDistrict__td">
+                        {{ content.field_senator_county_taxonomy }}
+                    </div>
+                    <div class="bDistrict__td">
+                        {{ content.field_senator_index_zip_taxonomy }}
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
-
-
 </section>
 

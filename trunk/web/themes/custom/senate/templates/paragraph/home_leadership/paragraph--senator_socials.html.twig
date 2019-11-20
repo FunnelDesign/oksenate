@@ -38,17 +38,15 @@
  * @ingroup themeable
  */
 #}
-<div class="bSenBio__info">
-    <div class="bSenBio__infoIt">
-        <strong>Party:</strong>{{ content.field_education }}
+<div class="bSenBio__soc">
+    <div class="bSenBio__socSub">
+        Follow me
     </div>
-    <div class="bSenBio__infoIt">
-        <strong>Education:</strong> {{ content.field_occupation }}
-    </div>
-    <div class="bSenBio__infoIt">
-        <strong>Legislative Experience:</strong> {{ content.field_legislative_experience }}
-    </div>
-    <div class="bSenBio__infoIt">
-        <strong>Hometown:</strong>
+    <div class="bSoc bSenBio__bSoc">
+        <div class="bSoc__items">
+            {{ content.field_senator_social_fb_link }}
+            {{ content.field_senator_social_tw_link }}
+            {{ content.field_senator_social_inst_link }}
+        </div>
     </div>
 </div>
