@@ -1,4 +1,4 @@
-<?php //include 'drupal-css.inc'; ?>
+<?php /*include 'drupal-css.inc'; */?>
 
 <?php  $timestamp = time() ?>
 <link href="../dist/vendor/slick/slick.css" rel="stylesheet" type="text/css">

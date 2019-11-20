@@ -300,4 +300,16 @@
       left: 0;
     }
   }
+
+
+  input.ui-autocomplete {
+
+    &-input {
+      background: none;
+    }
+  }
+
+  input.form-autocomplete.ui-autocomplete-loading {
+    background: $color-white url('loader-1.gif') no-repeat 94% 50%;
+  }
 }
