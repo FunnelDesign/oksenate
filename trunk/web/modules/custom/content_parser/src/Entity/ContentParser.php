@@ -628,6 +628,52 @@ class ContentParser extends ConfigEntityBase {
         }
       }
 
+      if($field_name == 'field_senator_education_txt') {
+        $mini = explode('<br>', $result);
+        foreach ($mini as $string) {
+          $string = trim(strip_tags($string));
+          if (!$string) {
+            continue;
+          }
+          if(strpos($string, 'Education') !== FALSE){
+            $pos = strpos($string, ':');
+            $value = trim(substr($string, $pos+1));
+          }
+        }
+        $result = NULL;
+      }
+
+      if($field_name == 'field_senator_hometown_txt') {
+        $mini = explode('<br>', $result);
+        foreach ($mini as $string) {
+          $string = trim(strip_tags($string));
+          if (!$string) {
+            continue;
+          }
+          if(strpos($string, 'Hometown') !== FALSE){
+            $pos = strpos($string, ':');
+            $value = trim(substr($string, $pos+1));
+
+          }
+          $result = NULL;
+        }
+      }
+
+      if($field_name == 'field_senator_leg_experience_txt') {
+        $mini = explode('<br>', $result);
+        foreach ($mini as $string) {
+          $string = trim(strip_tags($string));
+          if (!$string) {
+            continue;
+          }
+          if(strpos($string, 'Legislative Experience') !== FALSE){
+            $pos = strpos($string, ':');
+            $value = trim(substr($string, $pos+1));
+          }
+        }
+        $result = NULL;
+      }
+
 
 //      if($field_name == 'field_bio_info'){
 //        $mini  = explode('<br>', $result);
