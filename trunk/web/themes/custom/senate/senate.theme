@@ -57,6 +57,16 @@ function senate_preprocess_node(array &$vars) {
         if (!empty($commitee) && !empty($commitee[0])) {
           $params = [$commitee[0]["target_id"]];
           $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
+
+          $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+            ->loadTree('committees', $commitee[0]["target_id"], 3, FALSE);
+
+          $result = [];
+          foreach ($tree as $term) {
+            $result[] = $term->tid;
+          }
+          $result = implode(',', $result);
+          $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
         }
         break;
     }

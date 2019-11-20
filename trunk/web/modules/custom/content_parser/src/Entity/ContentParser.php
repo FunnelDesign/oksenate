@@ -577,6 +577,104 @@ class ContentParser extends ConfigEntityBase {
 
       $value = [];
 
+        if($field_name == 'field_senator_committee_taxonomy') {
+
+          foreach ($result as $li){
+            $string = trim(strip_tags($li->textContent));
+            if(strpos($string, '-')){
+              $string = stristr($string, '-', TRUE);
+            }
+            $string = str_replace('Appropriations Subcommittee on ', '', $string);
+            $string = str_replace('&', 'and', $string);
+            $term = \Drupal::entityTypeManager()
+              ->getStorage('taxonomy_term')
+              ->loadByProperties(['name' => $string]);
+            if(!empty($term))
+              $value[] = $term[key($term)]->id();
+            else{}
+          }
+
+        }
+      if($field_name == 'field_senator_district_taxonomy') {
+
+          $term = \Drupal::entityTypeManager()
+            ->getStorage('taxonomy_term')
+            ->loadByProperties(['name' => $result]);
+          if(!empty($term))
+            $value[] = $term[key($term)]->id();
+          else{}
+          $result = null;
+        }
+      if($field_name == 'field_senator_county_taxonomy') {
+        foreach ($result as $li){
+          $string = trim(strip_tags($li->textContent));
+          $term = \Drupal::entityTypeManager()
+            ->getStorage('taxonomy_term')
+            ->loadByProperties(['name' => $string]);
+          if(!empty($term))
+            $value[] = $term[key($term)]->id();
+          else{}
+        }
+      }
+      if($field_name == 'field_senator_index_zip_taxonomy') {
+        foreach ($result as $li){
+          $string = trim(strip_tags($li->textContent));
+          $term = \Drupal::entityTypeManager()
+            ->getStorage('taxonomy_term')
+            ->loadByProperties(['name' => $string]);
+          if(!empty($term))
+            $value[] = $term[key($term)]->id();
+          else{}
+        }
+      }
+
+      if($field_name == 'field_senator_education_txt') {
+        $mini = explode('<br>', $result);
+        foreach ($mini as $string) {
+          $string = trim(strip_tags($string));
+          if (!$string) {
+            continue;
+          }
+          if(strpos($string, 'Education') !== FALSE){
+            $pos = strpos($string, ':');
+            $value = trim(substr($string, $pos+1));
+          }
+        }
+        $result = NULL;
+      }
+
+      if($field_name == 'field_senator_hometown_txt') {
+        $mini = explode('<br>', $result);
+        foreach ($mini as $string) {
+          $string = trim(strip_tags($string));
+          if (!$string) {
+            continue;
+          }
+          if(strpos($string, 'Hometown') !== FALSE){
+            $pos = strpos($string, ':');
+            $value = trim(substr($string, $pos+1));
+
+          }
+          $result = NULL;
+        }
+      }
+
+      if($field_name == 'field_senator_leg_experience_txt') {
+        $mini = explode('<br>', $result);
+        foreach ($mini as $string) {
+          $string = trim(strip_tags($string));
+          if (!$string) {
+            continue;
+          }
+          if(strpos($string, 'Legislative Experience') !== FALSE){
+            $pos = strpos($string, ':');
+            $value = trim(substr($string, $pos+1));
+          }
+        }
+        $result = NULL;
+      }
+
+
 //      if($field_name == 'field_bio_info'){
 //        $mini  = explode('<br>', $result);
 //        $out = [];
