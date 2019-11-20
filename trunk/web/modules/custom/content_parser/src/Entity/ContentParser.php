@@ -584,6 +584,8 @@ class ContentParser extends ConfigEntityBase {
             if(strpos($string, '-')){
               $string = stristr($string, '-', TRUE);
             }
+            $string = str_replace('Appropriations Subcommittee on ', '', $string);
+            $string = str_replace('&', 'and', $string);
             $term = \Drupal::entityTypeManager()
               ->getStorage('taxonomy_term')
               ->loadByProperties(['name' => $string]);
