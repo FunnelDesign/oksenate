@@ -277,40 +277,46 @@
 
             <div class="bDistrict__tr">
               <div class="bDistrict__td">
-                Craig
+                <ul>
+                  <li>Craig</li>
+                  <li>Delaware</li>
+                  <li>Mayes</li>
+                  <li>Ottawa</li>
+                </ul>
               </div>
               <div class="bDistrict__td">
-                74016    74072    74301    74330    74331    74332    74333
+                <ul>
+                  <li>74016</li>
+                  <li>74072</li>
+                  <li>74301</li>
+                  <li>74330</li>
+                  <li>74331</li>
+                  <li>74332</li>
+                  <li>74333</li>
+                  <li>74338</li>
+                  <li>74339</li>
+                  <li>74340</li>
+                  <li>74342</li>
+                  <li>74343</li>
+                  <li>74344</li>
+                  <li>74346</li>
+                  <li>74349</li>
+                  <li>74350</li>
+                  <li>74352</li>
+                  <li>74354</li>
+                  <li>74358</li>
+                  <li>74360</li>
+                  <li>74361</li>
+                  <li>74363</li>
+                  <li>74364</li>
+                  <li>74365</li>
+                  <li>74366</li>
+                  <li>74367</li>
+                  <li>74369</li>
+                  <li>74370</li>
+                </ul>
               </div>
             </div>
-
-            <div class="bDistrict__tr">
-              <div class="bDistrict__td">
-                Delaware
-              </div>
-              <div class="bDistrict__td">
-                74016    74072    74301    74330    74331    74332    74333
-              </div>
-            </div>
-
-            <div class="bDistrict__tr">
-              <div class="bDistrict__td">
-                Mayes
-              </div>
-              <div class="bDistrict__td">
-                74016    74072    74301    74330    74331    74332    74333
-              </div>
-            </div>
-
-            <div class="bDistrict__tr">
-              <div class="bDistrict__td">
-                Ottawa
-              </div>
-              <div class="bDistrict__td">
-                74016    74072    74301    74330    74331    74332    74333
-              </div>
-            </div>
-
           </div>
 
         </div>
