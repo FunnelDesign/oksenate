@@ -185,7 +185,7 @@
       font-size: 12px;
       display: inline-block;
       vertical-align: middle;
-      margin-right: 1px;
+      margin-right: 5px;
       margin-top: 2px;
     }
   }
@@ -193,6 +193,7 @@
   &__address {
     position: relative;
     text-align: center;
+    @include cr-last-child;
 
     @include sm {
       display: flex;
@@ -222,13 +223,26 @@
     color: #414141;
   }
 
+  &__mail, &__tel {
+
+    @include sm {
+      display: flex;
+      align-items: center;
+    }
+  }
+
   &__telMail {
     text-align: center;
-    min-width: 135px;
-    max-width: 135px;
+
+    @include sm {
+      min-width: 135px;
+      max-width: 135px;
+      margin: 0 auto;
+    }
 
     @include sm {
       text-align: left;
+      margin: 0;
     }
 
     a {
@@ -236,7 +250,8 @@
       color: #414141;
 
       @include sm {
-        width: 118px;
+        width: 130px;
+        min-width: 130px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
