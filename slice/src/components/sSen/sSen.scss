@@ -300,4 +300,14 @@
       left: 0;
     }
   }
+
+
+  .ui-autocomplete {
+    background: none;
+
+    &-loading {
+      background: $color-white url('loader-1.gif') no-repeat 95% center;
+    }
+  }
+
 }

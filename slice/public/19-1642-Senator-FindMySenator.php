@@ -19,19 +19,34 @@
             <div class="sSen__filIco">
               <img src="../dist/images/filterIco/senator-filter-icons-1.png" srcset="../dist/images/filterIco/senator-filter-icons-1-2x.png 2x"  alt="">
             </div>
-            <div class="sSen__filTitle">
-              search by zip code
-            </div>
+<!--            <div class="sSen__filTitle">-->
+<!--              search by zip code-->
+<!--            </div>-->
             <div class="sSen__opt">
+<!--              <div class="form f-search f-search_min">-->
+<!--                <div class="form-item">-->
+<!--                  <input type="text" class="form-text" placeholder="Enter Zip"/>-->
+<!--                </div>-->
+<!--                <div class="form-actions">-->
+<!--                  <input type="submit" class="form-submit" value="">-->
+<!--                  <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>-->
+<!--                </div>-->
+<!--              </div>-->
+
               <div class="form f-search f-search_min">
-                <div class="form-item">
-                  <input type="text" class="form-text" placeholder="Enter Zip"/>
-                </div>
-                <div class="form-actions">
-                  <input type="submit" class="form-submit" value="">
-                  <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
+                <div class="js-form-item form-item js-form-type-entity-autocomplete form-type-entity-autocomplete js-form-item-zip form-item-zip">
+                  <label for="edit-zip">search by zip code</label>
+                  <input
+                    data-drupal-selector="edit-zip"
+                    class="form-autocomplete form-text ui-autocomplete-input"
+                    data-autocomplete-path="/entity_reference_autocomplete/taxonomy_term/default/kLVypGEEaZEicbnexfCrIxnl21qjo0yEHO7q0PzdfnE"
+                    type="text" id="edit-zip" name="zip" value="" size="60" maxlength="128" autocomplete="off"
+                    placeholder="Enter Zip"
+                  >
+
                 </div>
               </div>
+
             </div>
 
           </div>
