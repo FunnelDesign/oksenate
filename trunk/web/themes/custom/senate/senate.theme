@@ -140,6 +140,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-instagram');
         $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['content']['#title'] = "instagram";
       }
       break;
 
@@ -148,6 +149,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-facebook');
         $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['content']['#title'] = "facebook";
       }
       break;
     case 'field_senator_social_tw_link':
@@ -155,6 +157,8 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-twitter');
         $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['content']['#title'] = "twitter";
+
       }
       break;
     case 'field_footer_find_senator_image':
@@ -378,7 +382,7 @@ function senate_preprocess(&$vars, $hook) {
  *
  * @return object $result
  */
-function _senate_get_view($view_id, $display_id, array $arguments) {
+function _senate_get_view($view_id, $display_id, array $arguments = []) {
   $result = false;
   $view = Views::getView($view_id);
 
