@@ -382,7 +382,7 @@ function senate_preprocess(&$vars, $hook) {
  *
  * @return object $result
  */
-function _senate_get_view($view_id, $display_id, array $arguments) {
+function _senate_get_view($view_id, $display_id, array $arguments = []) {
   $result = false;
   $view = Views::getView($view_id);
 
