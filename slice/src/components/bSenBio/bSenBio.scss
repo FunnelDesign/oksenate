@@ -156,7 +156,7 @@
     min-height: 114px;
     border: 2px solid #bfbebe;
     border-radius: 5px;
-    padding: 20px;
+    padding: 20px 18px;
     font-family: $FreightTextProMedium-Regular;
     font-size: 12px;
     color: #414141;
@@ -172,7 +172,11 @@
 
       @include sm {
         margin-bottom: 0;
-        padding: 0 10px;
+        padding: 0 20px 0 0;
+
+        &:last-child {
+          padding-right: 0;
+        }
       }
     }
 
@@ -182,7 +186,7 @@
       display: inline-block;
       vertical-align: middle;
       margin-right: 1px;
-      margin-top: 1px;
+      margin-top: 2px;
     }
   }
 
@@ -201,6 +205,7 @@
       display: block;
       margin: 0 auto 10px;
       width: 18px;
+      min-width: 18px;
       height: 26px;
       background: url('address-img-tmp-1.png') no-repeat;
       background-size: contain;
@@ -215,6 +220,8 @@
 
   &__telMail {
     text-align: center;
+    min-width: 135px;
+    max-width: 135px;
 
     @include sm {
       text-align: left;
@@ -222,6 +229,23 @@
 
     a {
       text-decoration: none;
+
+      @include sm {
+        width: 118px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    a[href^="mailto"] {
+     text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }

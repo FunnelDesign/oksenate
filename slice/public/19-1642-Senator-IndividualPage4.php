@@ -105,17 +105,33 @@
                     Oklahoma City, OK 73105
                   </div>
 
-                  <div class="bSenBio__telMail">
-                    <a href="tel:(405) 521-5632">
-                      <i class="ss-icon ss-glyphish-filled ss-phone"></i>
-                      (405) 521-5632
-                    </a>
-                    <br>
+<!--                  <div class="bSenBio__telMail">-->
+<!--                    <a href="tel:(405) 521-5632">-->
+<!--                      <i class="ss-icon ss-glyphish-filled ss-phone"></i>-->
+<!--                      (405) 521-5632-->
+<!--                    </a>-->
+<!--                    <br>-->
+<!---->
+<!--                    <a href="mailto:test@test.com">-->
+<!--                      <i class="ss-icon ss-glyphish-filled ss-mail"></i>-->
+<!--                      Email Senator Treat-->
+<!--                    </a>-->
+<!---->
+<!--                  </div>-->
 
-                    <a href="mailto:test@test.com">
+                  <div class="bSenBio__telMail">
+
+                    <div class="bSenBio__tel">
+                      <i class="ss-icon ss-glyphish-filled ss-phone"></i>
+                      <a href="tel:(405) 521-5632">(405) 521-5632</a>
+                    </div>
+
+                    <div class="bSenBio__tel">
                       <i class="ss-icon ss-glyphish-filled ss-mail"></i>
-                      Email Senator Treat
-                    </a>
+                      <a href="mailto:test@test.com">
+                        Email Senator Treat
+                      </a>
+                    </div>
 
                   </div>
 
