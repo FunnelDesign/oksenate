@@ -628,7 +628,7 @@ class ContentParser extends ConfigEntityBase {
               'value' => $out[0],                  // body field value// body text format
             ],
             'field_party' => [   // paragraph's field machine name
-              'value' => $out[4],                  // body field value// body text format
+              'value' => $out[4] == 'Republican' ? 1 : 2,                  // body field value// body text format
             ],
             'field_education' => [   // paragraph's field machine name
               'value' => $out[1],                  // body field value// body text format
