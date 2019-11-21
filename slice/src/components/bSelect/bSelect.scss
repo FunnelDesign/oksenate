@@ -3,7 +3,6 @@
   &_a {
     text-align: center;
     display: flex;
-    align-items: center;
     justify-content: center;
     flex-wrap: wrap;
     margin-right: -10px;
@@ -13,6 +12,8 @@
       padding-left: 10px;
       padding-right: 10px;
       margin-bottom: 20px;
+      margin-top: 0;
+      @include cr-last-item;
     }
 
     .select2-container {
