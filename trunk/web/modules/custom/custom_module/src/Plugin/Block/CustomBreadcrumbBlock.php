@@ -86,13 +86,23 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
    */
   public function build() {
     $breadcrumbs = $this->breadcrumbManager->build($this->routeMatch)->getLinks();
+
+    if (!empty($breadcrumbs[0]) && ($breadcrumbs[0]->getUrl()->toString() == '/')) {
+      unset($breadcrumbs[0]);
+    }
+    if (!empty($breadcrumbs[1]) && ($breadcrumbs[1]->getUrl()->toString() == '/node')) {
+      unset($breadcrumbs[1]);
+    }
     $last = end($breadcrumbs);
 
     $request = \Drupal::request();
     $page_title = $this->titleResolver->getTitle($request, $this->routeMatch->getRouteObject());
-    if (!empty($page_title) && ($page_title == $last->getText())) {
+    if (!empty($page_title) && !empty($last) && ($page_title == $last->getText())) {
       array_pop($breadcrumbs);
-      $back = end($breadcrumbs);
+    }
+
+    $back = end($breadcrumbs);
+    if (!empty($back)) {
       $url = $back->getUrl()->toString();
       $back_url = Url::fromUserInput($url);
       $options = ['class' => ['link', 'link_cl_a', 'link_back']];
@@ -103,22 +113,23 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     return [
       '#type' => 'inline_template',
       '#template' => '
-        <div class="section__sNav">
-          <div class="bContainer">
-            {{ back_link }}
-            <div class="breadcrumb">
-              {% for breadcrumb in breadcrumbs %}
-                {{ breadcrumb }}
-              {% endfor %}
+          <div class="section__sNav">
+            <div class="bContainer">
+              {{ back_link }}
               
-              {% if page_title is not empty %}
-                <span>
-                  {{ page_title }}
-                </span>
+              {% if breadcrumbs %}
+                <div class="breadcrumb">
+                  {% for breadcrumb in breadcrumbs %}
+                    {{ breadcrumb }}
+                  {% endfor %}
+                  
+                  {% if page_title is not empty %}
+                    <span>{{ page_title }}</span>
+                  {% endif %}
+                </div>
               {% endif %}
             </div>
-          </div>
-        </div>',
+          </div>',
       '#context' => [
         'breadcrumbs' => !empty($breadcrumbs) ? $breadcrumbs : [],
         'page_title' => !empty($page_title) ? $page_title : NULL,
