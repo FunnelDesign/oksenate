@@ -36,7 +36,7 @@
 dom_id ? 'js-view-dom-id-' ~ dom_id,
 ] %}
 <div{{ attributes.addClass(classes) }}>
-    <section class="section sSen sSen_loading">
+    <section class="section sSen">
 
         {{ title_prefix }}
         {{ title }}
@@ -56,7 +56,7 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
             {{ exposed }}
         </div>
         {{ attachment_before }}
-        <div class="sSen__res">
+        <div class="sSen__res sSen_loading">
             <div class="bContainer">
                 {% if rows -%}
                     {{ rows }}
@@ -68,7 +68,7 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
         </div>
         {{ attachment_after }}
         {{ more }}
-
+{#TODO: theme no result message#}
         {% if footer %}
             <footer>
                 {{ footer }}
