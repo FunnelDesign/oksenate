@@ -241,6 +241,11 @@
 
     a {
       line-height: 1.2;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 
