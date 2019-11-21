@@ -160,6 +160,10 @@
           <div class="sSen__senShow">
             <h4>Showing All 48 Senators</h4>
           </div>
+          
+          <div class="sSen__noRes">
+            <h2>No result</h2>
+          </div>
 
           <div class="sSen__items">
 
