@@ -84,9 +84,9 @@
                 Third Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn btn btn_b btn_b_live">
+                <a href="#" class="bTiles__btn btn btn_b btn_b_live">
                   <span><span>•</span> live now</span> room 511-a
-                </span>
+                </a>
               </span>
 
             </span>
