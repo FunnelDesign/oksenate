@@ -100,18 +100,11 @@
                         </div>
                         {{ content.field_senator_social_links_par }}
                         <div class="bSenBio__info">
-                            <div class="bSenBio__infoIt">
-                                <strong>Party:</strong> {{ content.field_party }}
-                            </div>
-                            <div class="bSenBio__infoIt">
-                                <strong>Education:</strong> {{ content.field_senator_education_txt }}
-                            </div>
-                            <div class="bSenBio__infoIt">
-                                <strong>Legislative Experience:</strong> {{ content.field_senator_leg_experience_txt }}
-                            </div>
-                            <div class="bSenBio__infoIt">
-                                <strong>Hometown:</strong> {{ content.field_senator_hometown_txt }}
-                            </div>
+                            {{ content.field_party }}
+                            {{ content.field_senator_education_txt }}
+                            {{ content.field_senator_leg_experience_txt }}
+                            {{ content.field_senator_hometown_txt }}
+                            {{ content.field_senator_occupation_txt }}
                         </div>
                     </div>
                 </div>
