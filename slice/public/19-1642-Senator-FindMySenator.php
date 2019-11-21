@@ -7,7 +7,7 @@
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
-    <section class="section sSen">
+    <section class="section sSen sSen_loading">
 
       <div class="sSen__head">
         <div class="sSen__byAdd">
