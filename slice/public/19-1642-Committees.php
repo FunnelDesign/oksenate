@@ -22,16 +22,28 @@
           </div>
 
           <div class="bSelect bSelect_a bSelect_size_a">
-            <div class="form-item form-type-select">
-              <select class="form-select">
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-              </select>
+            <div class="form-item  form-type-select">
+              <div class="bDrop select2 select2-container select2-container--default">
+                <div class="bDrop__title select2-selection select2-selection--single" data-ev="toggleCustomClass:bDrop:select2-container--open">
+                  <div class="select2-selection__rendered">
+                    Select Committee
+                  </div>
+                  <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                </div>
+                <div class="bDrop__body select2-dropdown select2-dropdown--below">
+                  <div class="select2-results__options">
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option active"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
           </div>
 
         </div>
@@ -50,23 +62,23 @@
         <div class="bTiles bTiles_ev">
 
           <div class="bTiles__items">
-            <a href="#" class="bTiles__item">
+            <span class="bTiles__item">
               <span class="bTiles__date">
                 Thur. Nov. 7, 2019 |  9:00am
               </span>
-              <span class="bTiles__title">
+              <a href="#" class="bTiles__title">
                 Public Safety and Judiciary Subcommittee Budget Hearings
-              </span>
+              </a>
               <span class="bTiles__sub">
                 Third Meeting
               </span>
               <span class="bTiles__btnWrap">
-                <span class="bTiles__btn btn btn_b btn_b_live">
+                <a href="#" class="bTiles__btn btn btn_b btn_b_live">
                   <span><span>•</span> live now</span> room 511-a
-                </span>
+                </a>
               </span>
 
-            </a>
+            </span>
 
             <a href="#" class="bTiles__item">
               <span class="bTiles__date">
@@ -188,7 +200,7 @@
 
                   <div class="bListItems__item">
                     <span class="bListItems__title">
-                      Agriculture and Wildlife
+                      <a href="#">Agriculture and Wildlife</a>
                       <span class="bListItems__sub">10:00am</span>
                     </span>
 

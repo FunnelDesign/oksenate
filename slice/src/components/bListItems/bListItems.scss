@@ -44,6 +44,16 @@
   &__title {
     flex: 1;
     padding: 0 10px;
+
+    a {
+      font-family: $Roboto-Bold;
+      color: $color-blue-3;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &__sub {

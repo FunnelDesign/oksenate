@@ -7,6 +7,7 @@
 
   &__title {
     @include cr-last-child;
+    margin-bottom: 5px;
 
     h1 {
       font-family: $RobotoCondensed-Light;
@@ -15,6 +16,7 @@
       margin: 0;
       text-transform: capitalize;
       text-align: center;
+      line-height: 1;
 
       @include sm {
         text-align: left;
@@ -82,7 +84,7 @@
     padding: 16px 0;
     border-top: 2px solid #c8c8c8;
     border-bottom: 2px solid #c8c8c8;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: center;
 
     @include sm {
@@ -113,7 +115,7 @@
     font-family: $FreightTextProBook-Regular;
     font-size: 14px;
     color: $color-dark-blue-1;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     @include cr-last-item;
 
     strong {
@@ -127,7 +129,7 @@
     border-radius: 5px;
     background: $color-blue;
     font-family: $RobotoCondensed-Regular;
-    font-size: 12px;
+    @include font-size(12px, 14px);
     color: $color-white;
     text-decoration: none;
     position: relative;
@@ -239,6 +241,11 @@
 
     a {
       line-height: 1.2;
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 

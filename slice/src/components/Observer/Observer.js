@@ -45,6 +45,10 @@ window.Observer = class {
 		$target.closest(`.${sel}`).toggleClass(`${sel}_${clName}`).trigger(`ev.${ev}.${clName}`);
 	}
 
+	toggleCustomClass($target, sel, clName, ev) {
+		$target.closest(`.${sel}`).toggleClass(`${clName}`).trigger(`ev.${ev}.${clName}`);
+	}
+
 	removeClass($target, sel, clName, ev) {
 		$target.closest(`.${sel}`).removeClass(`${sel}_${clName}`).trigger(`ev.${ev}.${clName}`);
 	}
