@@ -1,0 +1,21 @@
+.bDrop {
+
+  .select2-selection__rendered, .select2-selection__arrow, .select2-selection__arrow b {
+    pointer-events: none;
+  }
+
+  &__body {
+
+  }
+
+  .bDrop__item {
+    display: block;
+    text-align: left;
+    text-decoration: none;
+
+    &:hover, &.active , &.menu-item--active-trail {
+      background-color: $color-blue;
+      color: white;
+    }
+  }
+}

@@ -22,16 +22,39 @@
           </div>
 
           <div class="bSelect bSelect_a bSelect_size_a">
-            <div class="form-item form-type-select">
-              <select class="form-select">
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-                <option>Select Committee</option>
-              </select>
+<!--            <div class="form-item form-type-select">-->
+<!--              <select class="form-select">-->
+<!--                <option>Select Committee</option>-->
+<!--                <option>Select Committee</option>-->
+<!--                <option>Select Committee</option>-->
+<!--                <option>Select Committee</option>-->
+<!--                <option>Select Committee</option>-->
+<!--                <option>Select Committee</option>-->
+<!--              </select>-->
+<!--            </div>-->
+
+            <div class="form-item  form-type-select">
+              <div class="bDrop select2 select2-container select2-container--default">
+                <div class="bDrop__title select2-selection select2-selection--single" data-ev="toggleCustomClass:bDrop:select2-container--open">
+                  <div class="select2-selection__rendered">
+                    Select Committee
+                  </div>
+                  <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                </div>
+                <div class="bDrop__body select2-dropdown select2-dropdown--below">
+                  <div class="select2-results__options">
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option active"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                    <a href="#" class="bDrop__item select2-results__option"> Select Committee</a>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
           </div>
 
         </div>

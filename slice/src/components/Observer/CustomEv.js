@@ -5,6 +5,18 @@ class CustomEv {
 	constructor() {
 		this.addAccessibilityCookie();
 		this.menuMobileOpen();
+		this.closeDrop();
+	}
+
+	closeDrop() {
+
+		$(document).on('click touch', (e) => {
+			let $ev =  $(e.target);
+
+			if (!$ev.closest('.bDrop').length) {
+				$('.bDrop').removeClass('select2-container--open')
+			}
+		});
 	}
 
 	menuMobileOpen() {
