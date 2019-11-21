@@ -40,5 +40,21 @@ function initSelect() {
 		width: 'full',
 		minimumResultsForSearch: Infinity
 	});
+
+	$('select').on('select2:open', function(e){
+
+		// $('.select2-results .select2-results__options').each(function() {
+		// 	console.log('asdf');
+		// 	new SimpleBar(this, {
+		// 		autoHide: false
+		// 	});
+		// });
+
+		$('.select2-results .select2-results__options').scrollbar({
+			disableBodyScroll: false,
+			duration: 600,
+			scrollStep: 160
+		});
+	});
 }
 
