@@ -71,6 +71,11 @@ function senate_preprocess_node(array &$vars) {
           $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
         }
         break;
+      case 'committee_events':
+        if ($view_mode == 'teaser') {
+          $vars["attributes"]["class"][] = 'bTiles__item';
+        }
+        break;
     }
   }
 }
@@ -234,6 +239,15 @@ function senate_preprocess_field(array &$vars, $hook) {
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars["items"][0]["content"]["#options"]["attributes"] = ['class' =>
           ['bListItems__btn', 'btn', 'btn_b']
+        ];
+        $title = $vars["items"][0]["content"]["#title"];
+        $vars["items"][0]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);
+      }
+      break;
+    case 'field_comt_evt_room':
+      if (!empty($vars["items"]) && !empty($vars["items"][0])) {
+        $vars["items"][0]["content"]["#options"]["attributes"] = ['class' =>
+          ['bTiles__btn', 'btn', 'btn_b', 'btn_b_live']
         ];
         $title = $vars["items"][0]["content"]["#title"];
         $vars["items"][0]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);

@@ -72,24 +72,20 @@
  * @ingroup themeable
  */
 #}
-<a href="{{ url }}" class="bTiles__item">
+<span {{ attributes }}>
   <span class="bTiles__date">
     {{ content.field_comt_evt_date }}
   </span>
-  <span class="bTiles__title">
-{#    {{ title_prefix }}#}
+  {{ title_prefix }}
+    <a href="{{ url }}" class="bTiles__title">
       {{ label }}
-{#    {{ title_suffix }}#}
-  </span>
+    </a>
+  {{ title_suffix }}
   <span class="bTiles__sub">
     {{ content.field_comt_evt_subtitle }}
   </span>
 
-{#  {{ content.field_comt_evt_room }}#}
-
   <span class="bTiles__btnWrap">
-    <span class="bTiles__btn btn btn_b">
-      <span><span>•</span></span> room 511-a
-    </span>
+    {{ content.field_comt_evt_room }}
   </span>
-</a>
+</span>

@@ -82,7 +82,7 @@
 
         <div class="bTitle bTitle_wSub_a bTitle_gap_a">
           {{ title_prefix }}
-            <h1>{{ label }}</h1>
+            <h1 {{ title_attributes }}>{{ label }}</h1>
           {{ title_suffix }}
 
           <div class="bTitle__sub">
@@ -90,9 +90,7 @@
           </div>
         </div>
 
-        <div class="bSelect bSelect_a bSelect_size_a">
-          {{ dropdown }}
-        </div>
+        {{ dropdown }}
 
       </div>
     </div>
