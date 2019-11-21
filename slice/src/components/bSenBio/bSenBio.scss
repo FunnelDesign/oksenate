@@ -235,6 +235,10 @@
       margin-top: 2px;
       margin-bottom: 5px;
     }
+
+    a {
+      text-decoration: none;
+    }
   }
 
   &__mail {
@@ -264,15 +268,11 @@
     }
 
     a {
-      text-decoration: none;
       color: #414141;
 
       @include sm {
         width: 130px;
         min-width: 130px;
-        //overflow: hidden;
-        //text-overflow: ellipsis;
-        //white-space: nowrap;
         display: inline-block;
         vertical-align: middle;
       }
