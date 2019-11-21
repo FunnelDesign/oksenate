@@ -109,48 +109,22 @@
   <section class="section section_ind_f section_bg-color_b">
     <div class="bContainer">
       <div class="senators senators_col senators_dark">
-
-        <div class="senators__items">
-          <span class="senators__item">
-          <span class="senators__imgWrap">
-            <span class="senators__img" style="background-image: url('{{ theme_path }}/dist/images/tmp/senators-img-3.jpg')"></span>
-          </span>
-
-            <span class="senators__name">
-             Sen. Casey Murdock
-            </span>
-            <span class="senators__position">
-              Chairman
-            </span>
-          </span>
-
-          <a href="#" class="senators__item">
-            <span class="senators__imgWrap">
-              <span class="senators__img" style="background-image: url('{{ theme_path }}/dist/images/tmp/senators-img-4.jpg')"></span>
-            </span>
-
-            <span class="senators__name">
-              Sen. Roland Pederson
-            </span>
-            <span class="senators__position">
-              Vice Chairman
-            </span>
-          </a>
-
-        </div>
+        {{ content.field_subcomt_app_mmb }}
 
         <div class="senators__all">
-          <h2>Appropriations <br>
-            Members</h2>
+          {{ content.field_subcomt_app_title }}
 
-          <div class="senators__btnWrap">
-            <a href="#" class="btn">see all members</a>
-          </div>
+          {% if all_members %}
+            <div class="senators__btnWrap">
+              {{ all_members }}
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
   </section>
 
+  {{ committee_events }}
   <section class="section section_ind_c section_bg-color_c">
     <div class="bContainer">
       <div class="pageIn__ico">

@@ -83,6 +83,12 @@ function senate_preprocess_node(array &$vars) {
         if (!empty($commitee) && !empty($commitee[0])) {
           $params = [$commitee[0]["target_id"]];
           $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
+
+          $url = Url::fromUserInput('/senators');
+          $options = ['class' => ['btn']];
+          $url->setOption('attributes', $options);
+          $url->setOption('query', ['committee' => $commitee[0]["target_id"]]);
+          $vars['all_members'] = Link::fromTextAndUrl(t('see all members'), $url);
         }
         break;
     }
@@ -262,6 +268,11 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["items"][0]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);
       }
       break;
+    case 'field_subcomt_app_title':
+      if (!empty($vars['items'])) {
+        $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';
+      }
+      break;
   }
 }
 
@@ -276,6 +287,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_block_navigation_links':
     case 'field_home_leadership_name_txt':
     case 'field_home_leadership_post_txt':
+    case 'field_subcomt_mmb_position':
       $suggestions[] = 'field__no_wrappers';
       break;
 
@@ -522,6 +534,20 @@ function senate_preprocess_views_view_list(&$vars) {
           $vars['empty_title'] = t('Select Subcommittee');
         }
       }
+      break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function senate_preprocess_paragraph(array &$vars) {
+  $paragraph = $vars['paragraph'];
+  $bundle = $paragraph->bundle();
+
+  switch ($bundle) {
+    case 'subcomt_mmb':
+
       break;
   }
 }
