@@ -60,6 +60,8 @@ function senate_preprocess_node(array &$vars) {
 
           $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
             ->loadTree('committees', $commitee[0]["target_id"], 3, FALSE);
+          $ancestors = \Drupal::service('entity_type.manager')
+            ->getStorage("taxonomy_term")->loadParents($commitee[0]["target_id"]);
 
           $result = [];
           foreach ($tree as $term) {
