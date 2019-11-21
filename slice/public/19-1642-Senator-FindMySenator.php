@@ -7,7 +7,7 @@
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
-    <section class="section sSen">
+    <section class="section sSen sSen_loading">
 
       <div class="sSen__head">
         <div class="sSen__byAdd">
@@ -159,6 +159,10 @@
 
           <div class="sSen__senShow">
             <h4>Showing All 48 Senators</h4>
+          </div>
+          
+          <div class="sSen__noRes">
+            <h2>No result</h2>
           </div>
 
           <div class="sSen__items">

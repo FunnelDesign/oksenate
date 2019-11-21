@@ -25,15 +25,25 @@
     <h3>{{ title }}</h3>
   {% endif %}
 
-  <{{ list.type }}{{ list.attributes }}>
-    <li>{{ 'Select Committee'|t }}</li>
-    {% for row in rows %}
-      <li{{ row.attributes }}>
-        {{- row.content -}}
-      </li>
-    {% endfor %}
-
-  </{{ list.type }}>
+  <div class="bSelect bSelect_a bSelect_size_a">
+    <div class="form-item  form-type-select">
+      <div class="bDrop select2 select2-container select2-container--default">
+        <div class="bDrop__title select2-selection select2-selection--single" data-ev="toggleCustomClass:bDrop:select2-container--open">
+          <div class="select2-selection__rendered">
+            {{ 'Select Committee'|t }}
+          </div>
+          <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+        </div>
+        <div class="bDrop__body select2-dropdown select2-dropdown--below">
+          <div class="select2-results__options">
+            {% for row in rows %}
+              {{- row.content -}}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% if attributes -%}
   </div>
