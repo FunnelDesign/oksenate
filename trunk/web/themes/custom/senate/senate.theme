@@ -421,3 +421,61 @@ function senate_theme_suggestions_views_exposed_form_alter(&$suggestions, $vars,
       ->getPath();
 
 }
+
+function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  global $base_path;
+  $theme_path = $base_path . \Drupal::theme()
+      ->getActiveTheme()
+      ->getPath();
+
+  if (!empty($form['zip'])){
+    $form['zip']['#prefix'] = " <div class=\"sSen__filCol\">
+        <div class=\"sSen__filIco\">
+            <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-1.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-1-2x.png 2x\"  alt=\"\">
+        </div><div class=\"sSen__opt form f-search f-search_min\">";
+    $form['zip']['#suffix'] = "</div></div>";
+  }
+
+  if (!empty($form['county'])){
+    $form['county']['#prefix'] = " <div class=\"sSen__filCol\">
+        <div class=\"sSen__filIco\">
+            <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-2.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-2-2x.png 2x\"  alt=\"\">
+        </div>";
+    $form['county']['#suffix'] = "</div>";
+  }
+
+  if (!empty($form['county'])){
+    $form['county']['#prefix'] = " <div class=\"sSen__filCol\">
+        <div class=\"sSen__filIco\">
+            <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-2.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-2-2x.png 2x\"  alt=\"\">
+        </div>";
+    $form['county']['#suffix'] = "</div>";
+  }
+
+  if (!empty($form['district'])){
+    $form['district']['#prefix'] = " <div class=\"sSen__filCol\">
+        <div class=\"sSen__filIco\">
+            <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-3.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-3-2x.png 2x\"  alt=\"\">
+        </div>";
+    $form['district']['#suffix'] = "<div class=\"sSen__filLink\">
+            <a href=\"$theme_path/dist/oklahoma_co.pdf\" target=\"_blank\">see district map</a>
+        </div></div>";
+  }
+
+  if (!empty($form['committee'])){
+    $form['committee']['#prefix'] = " <div class=\"sSen__filCol\">
+        <div class=\"sSen__filIco\">
+            <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-4.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-4-2x.png 2x\"  alt=\"\">
+        </div>";
+    $form['committee']['#suffix'] = "</div>";
+  }
+
+  if (!empty($form['party'])){
+    $form['party']['#prefix'] = " <div class=\"sSen__filCol\">
+        <div class=\"sSen__filIco\">
+            <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-5.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-5-2x.png 2x\"  alt=\"\">
+        </div>";
+    $form['party']['#suffix'] = "</div>";
+  }
+
+}
