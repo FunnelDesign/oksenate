@@ -36,8 +36,11 @@
 
     &:before, &:after {
       display: none;
+    }
 
-      #{$this}_loading & {
+    &_loading {
+
+      &:before, &:after {
         display: block;
       }
     }
