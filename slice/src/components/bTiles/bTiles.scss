@@ -83,13 +83,13 @@
         max-width: calc(33.333333% - 12px);
         min-width: calc(33.333333% - 12px);
       }
+    }
 
-      &:hover {
-        background: $color-blue;
+    a#{$this}__item:hover {
+      background: $color-blue;
 
-        #{$this}__title, #{$this}__date, #{$this}__sub {
-          color: $color-white;
-        }
+      #{$this}__title, #{$this}__date, #{$this}__sub {
+        color: $color-white;
       }
     }
 
@@ -109,6 +109,15 @@
       color: $color-blue-3;
       margin-bottom: 12px;
       display: block;
+      text-decoration: none;
+    }
+
+    a#{$this}__title {
+      transition: color .3s;
+
+      &:hover {
+        color: red;
+      }
     }
 
     #{$this}__sub {

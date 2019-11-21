@@ -73,13 +73,13 @@
         <div class="bTiles bTiles_ev">
 
           <div class="bTiles__items">
-            <a href="#" class="bTiles__item">
+            <span class="bTiles__item">
               <span class="bTiles__date">
                 Thur. Nov. 7, 2019 |  9:00am
               </span>
-              <span class="bTiles__title">
+              <a href="#" class="bTiles__title">
                 Public Safety and Judiciary Subcommittee Budget Hearings
-              </span>
+              </a>
               <span class="bTiles__sub">
                 Third Meeting
               </span>
@@ -89,7 +89,9 @@
                 </span>
               </span>
 
-            </a>
+            </span>
+
+
 
             <a href="#" class="bTiles__item">
               <span class="bTiles__date">
