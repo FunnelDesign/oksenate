@@ -22,17 +22,6 @@
           </div>
 
           <div class="bSelect bSelect_a bSelect_size_a">
-<!--            <div class="form-item form-type-select">-->
-<!--              <select class="form-select">-->
-<!--                <option>Select Committee</option>-->
-<!--                <option>Select Committee</option>-->
-<!--                <option>Select Committee</option>-->
-<!--                <option>Select Committee</option>-->
-<!--                <option>Select Committee</option>-->
-<!--                <option>Select Committee</option>-->
-<!--              </select>-->
-<!--            </div>-->
-
             <div class="form-item  form-type-select">
               <div class="bDrop select2 select2-container select2-container--default">
                 <div class="bDrop__title select2-selection select2-selection--single" data-ev="toggleCustomClass:bDrop:select2-container--open">
@@ -90,8 +79,6 @@
               </span>
 
             </span>
-
-
 
             <a href="#" class="bTiles__item">
               <span class="bTiles__date">
