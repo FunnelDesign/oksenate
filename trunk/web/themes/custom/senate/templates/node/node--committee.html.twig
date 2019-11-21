@@ -91,17 +91,7 @@
         </div>
 
         <div class="bSelect bSelect_a bSelect_size_a">
-{#          {{ dropdown }}#}
-          <div class="form-item form-type-select">
-            <select class="form-select">
-              <option>Select Committee</option>
-              <option>Agriculture and Wildlife</option>
-              <option>Appropriations</option>
-              <option>Business, Commerce and Tourism</option>
-              <option>Education</option>
-              <option>Energy</option>
-            </select>
-          </div>
+          {{ dropdown }}
         </div>
 
       </div>
@@ -110,18 +100,19 @@
 
   {{ committee_events }}
 
-  <section class="section section_ind_c section_bg-color_c">
-    <div class="bContainer">
-      <div class="bSchedule">
-        <div class="pageIn__ico pageIn__ico_a">
-          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-7.png" srcset="{{ theme_path }}/dist/images/titleIco/title-ico-7-2x.png 2x" alt="">
+  {% if content.field_comt_ms_sched.0 %}
+    <section class="section section_ind_c section_bg-color_c">
+      <div class="bContainer">
+        <div class="bSchedule">
+          <div class="pageIn__ico pageIn__ico_a">
+            <img src="{{ theme_path }}/dist/images/titleIco/title-ico-7.png" srcset="{{ theme_path }}/dist/images/titleIco/title-ico-7-2x.png 2x" alt="">
+          </div>
+
+          {{ content.field_comt_ms_title }}
+          {{ content.field_comt_ms_sched }}
         </div>
-
-        {{ content.field_comt_ms_title }}
-        {{ content.field_comt_ms_sched }}
       </div>
-    </div>
-
-  </section>
+    </section>
+  {% endif %}
 
 </article>
