@@ -188,7 +188,7 @@
 
                   <div class="bListItems__item">
                     <span class="bListItems__title">
-                      Agriculture and Wildlife
+                      <a href="#">Agriculture and Wildlife</a>
                       <span class="bListItems__sub">10:00am</span>
                     </span>
 
