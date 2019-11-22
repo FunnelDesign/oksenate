@@ -75,15 +75,7 @@
 <article{{ attributes }}>
 
   <section class="section section_bg-color_f section_inner-v-centered">
-    <div class="section__sNav">
-      <div class="bContainer">
-        <a href="#" class="link link_cl_a link_back">back</a>
-        <div class="breadcrumb">
-          <a href="#">Committees</a>
-          <span>Appropriations</span>
-        </div>
-      </div>
-    </div>
+    {{ breadcrumbs }}
 
     <div class="section__v-inner section__v-inner_d">
       <div class="bContainer">
@@ -106,147 +98,39 @@
     </div>
   </section>
 
-  <section class="section section_ind_f section_bg-color_b">
-    <div class="bContainer">
-      <div class="senators senators_col senators_dark">
-        {{ content.field_subcomt_app_mmb }}
+  {% if content.field_subcomt_app_mmb.0 %}
+    <section class="section section_ind_f section_bg-color_b">
+      <div class="bContainer">
+        <div class="senators senators_col senators_dark">
+          {{ content.field_subcomt_app_mmb }}
 
-        <div class="senators__all">
-          {{ content.field_subcomt_app_title }}
+          <div class="senators__all">
+            {{ content.field_subcomt_app_title }}
 
-          {% if all_members %}
-            <div class="senators__btnWrap">
-              {{ all_members }}
-            </div>
-          {% endif %}
+            {% if all_members %}
+              <div class="senators__btnWrap">
+                {{ all_members }}
+              </div>
+            {% endif %}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  {% endif %}
 
-  {{ committee_events }}
-  <section class="section section_ind_c section_bg-color_c">
-    <div class="bContainer">
-      <div class="pageIn__ico">
-        <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png" srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
-      </div>
-      <h2>Subcommittee Events</h2>
-
-      <div class="bTiles bTiles_ev">
-        <div class="bTiles__items">
-          <a href="#" class="bTiles__item">
-            <span class="bTiles__date">
-              Thur. Nov. 7, 2019 |  9:00am
-            </span>
-            <span class="bTiles__title">
-              Public Safety and Judiciary Subcommittee Budget Hearings
-            </span>
-            <span class="bTiles__sub">
-              Third Meeting
-            </span>
-            <span class="bTiles__btnWrap">
-              <span class="bTiles__btn btn btn_b btn_b_live">
-                <span><span>•</span> live now</span> room 511-a
-              </span>
-            </span>
-
-          </a>
-
-          <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-                Tues. Nov. 12, 2019 |  9:00am
-              </span>
-            <span class="bTiles__title">
-                Public Safety and Judiciary Subcommittee Budget Hearings
-              </span>
-            <span class="bTiles__sub">
-                Fourth Meeting
-              </span>
-            <span class="bTiles__btnWrap">
-                  <span class="bTiles__btn btn btn_b">
-                    <span><span>•</span></span> room 511-a
-                </span>
-              </span>
-
-          </a>
-
-          <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-               Fri. Nov. 15, 2019 |  9:00am
-              </span>
-            <span class="bTiles__title">
-                Oversight Committee for the Legislative Office of Fiscal Transparency (LOFT)
-              </span>
-            <span class="bTiles__sub">
-               Third Meeting
-              </span>
-            <span class="bTiles__btnWrap">
-                 <span class="bTiles__btn btn btn_b">
-                  <span><span>•</span></span> room 535
-                </span>
-              </span>
-          </a>
-
-          <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-              Thur. Nov. 17, 2019 |  9:00am
-              </span>
-            <span class="bTiles__title">
-                Public Safety and Judiciary Subcommittee Budget Hearings
-              </span>
-            <span class="bTiles__sub">
-              Third Meeting
-              </span>
-            <span class="bTiles__btnWrap">
-                <span class="bTiles__btn btn btn_b">
-                  <span><span>•</span></span> room 511-a
-                </span>
-              </span>
-
-          </a>
-
-          <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-              Tues. Nov. 19, 2019 |  9:00am
-              </span>
-            <span class="bTiles__title">
-               Public Safety and Judiciary Subcommittee Budget Hearings
-
-              </span>
-            <span class="bTiles__sub">
-              Fourth Meeting
-              </span>
-            <span class="bTiles__btnWrap">
-                 <span class="bTiles__btn btn btn_b">
-                  <span><span>•</span></span> room 511-a
-                </span>
-              </span>
-
-          </a>
-
-          <a href="#" class="bTiles__item">
-              <span class="bTiles__date">
-               Fri. Nov. 15, 2019 |  9:00am
-              </span>
-            <span class="bTiles__title">
-                Oversight Committee for the Legislative Office of Fiscal Transparency (LOFT)
-              </span>
-            <span class="bTiles__sub">
-               Third Meeting
-              </span>
-            <span class="bTiles__btnWrap">
-                 <span class="bTiles__btn btn btn_b">
-                  <span><span>•</span></span> room 535
-                </span>
-              </span>
-
-          </a>
+  {% if committee_events %}
+    <section class="section section_ind_c section_bg-color_c">
+      <div class="bContainer">
+        <div class="pageIn__ico">
+          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png"
+               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
         </div>
+        <h2>{{ 'Subcommittee Events'|t }}</h2>
 
+        {{ committee_events }}
       </div>
-    </div>
-
-  </section>
+    </section>
+  {% endif %}
 
 {#  <div{{ content_attributes }}>#}
 {#    {{ content }}#}

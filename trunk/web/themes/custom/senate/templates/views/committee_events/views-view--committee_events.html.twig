@@ -33,51 +33,42 @@
  */
 #}
 {% set classes = [
-  dom_id ? 'js-view-dom-id-' ~ dom_id,
-  'bContainer'
+  dom_id ? 'js-view-dom-id-' ~ dom_id
 ] %}
-<section class="section section_ind_d section_bg-color_b">
-  <div{{ attributes.addClass(classes) }}>
-    <div class="bContainer">
-      <div class="pageIn__ico">
-        <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png"
-             srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
-      </div>
+<div{{ attributes.addClass(classes) }}>
 
-      {{ title_prefix }}
-      <h2>{{ 'Committee Events'|t }}</h2>
-      {{ title_suffix }}
+  {{ title_prefix }}
+{#  {{ title }}#}
+  {{ title_suffix }}
 
-      {% if header %}
-        <header>
-          {{ header }}
-        </header>
+  {% if header %}
+    <header>
+      {{ header }}
+    </header>
+  {% endif %}
+
+  {{ exposed }}
+  {{ attachment_before }}
+
+  <div class="bTiles bTiles_ev">
+    <div class="bTiles__items">
+      {% if rows -%}
+        {{ rows }}
+      {% elseif empty -%}
+        {{ empty }}
       {% endif %}
-
-      {{ exposed }}
-      {{ attachment_before }}
-
-      <div class="bTiles bTiles_ev">
-        <div class="bTiles__items">
-          {% if rows -%}
-            {{ rows }}
-          {% elseif empty -%}
-            {{ empty }}
-          {% endif %}
-          {{ pager }}
-        </div>
-      </div>
-
-      {{ attachment_after }}
-      {{ more }}
-
-      {% if footer %}
-        <footer>
-          {{ footer }}
-        </footer>
-      {% endif %}
-
-      {{ feed_icons }}
+      {{ pager }}
     </div>
   </div>
-</section>
+
+  {{ attachment_after }}
+  {{ more }}
+
+  {% if footer %}
+    <footer>
+      {{ footer }}
+    </footer>
+  {% endif %}
+
+  {{ feed_icons }}
+</div>
