@@ -696,13 +696,13 @@ class ContentParser extends ConfigEntityBase {
         $arr = [
           'type' => 'senator_socials',   // paragraph type machine name
           'field_senator_social_fb_link' => [   // paragraph's field machine name
-            'value' => $result[0],                  // body field value// body text format
+            'uri' => $result[0],                  // body field value// body text format
           ],
           'field_senator_social_inst_link' => [   // paragraph's field machine name
-            'value' => $result[0],                  // body field value// body text format
+            'uri' => $result[0],                  // body field value// body text format
           ],
           'field_senator_social_tw_link' => [   // paragraph's field machine name
-            'value' => $result[0],                  // body field value// body text format
+            'uri' => $result[0],                  // body field value// body text format
           ],
         ];
 
