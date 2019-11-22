@@ -5,13 +5,18 @@ class CustomEv {
 	constructor() {
 		this.addAccessibilityCookie();
 		this.menuMobileOpen();
-		this.closeDrop();
+		this.customClick();
 	}
 
-	closeDrop() {
+	customClick() {
 
 		$(document).on('click touch', (e) => {
 			let $ev =  $(e.target);
+
+			if ($ev.hasClass('form-submit') && $ev.closest('.sSen__fil').length) {
+
+				$('.sSen__res').addClass('sSen__res_loading')
+			}
 
 			if (!$ev.closest('.bDrop').length) {
 				$('.bDrop').removeClass('select2-container--open')

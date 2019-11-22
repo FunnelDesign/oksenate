@@ -15,6 +15,8 @@
         </div>
         <div class="sSen__fil">
 
+          <a href="#" class="form-submit TEST-ONLY_FOR_SLICE" style="position: absolute;">loader ONLY FOR SLICE</a>
+
           <div class="sSen__filCol">
             <div class="sSen__filIco">
               <img src="../dist/images/filterIco/senator-filter-icons-1.png" srcset="../dist/images/filterIco/senator-filter-icons-1-2x.png 2x"  alt="">
@@ -174,7 +176,7 @@
           </div>
         </div>
       </div>
-      <div class="sSen__res sSen__res_loading">
+      <div class="sSen__res">
 
         <div class="bContainer">
 
