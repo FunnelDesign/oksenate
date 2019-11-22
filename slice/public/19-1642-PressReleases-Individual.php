@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Senator-IndividualPage4'; ?>
+<?php $title = '19-1642-PressReleases-Individual'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
