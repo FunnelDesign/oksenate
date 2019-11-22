@@ -227,6 +227,41 @@
               </div>
 
             </div>
+
+            <nav class="pager">
+              <ul class="pager__items js-pager__items">
+                <li class="pager__item pager__item--previous">
+                  <a href="#">
+                    <span></span>
+                  </a>
+                </li>
+                <li class="pager__item is-active">
+                  <a href="#">
+                    1
+                  </a>
+                </li>
+                <li class="pager__item">
+                  <a href="#">
+                    2
+                  </a>
+                </li>
+                <li class="pager__item">
+                  <a href="#">
+                    3
+                  </a>
+                </li>
+                <li class="pager__item">
+                  <a href="#">
+                    4
+                  </a>
+                </li>
+                <li class="pager__item pager__item--next">
+                  <a href="#">
+                    <span></span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
 
         </div>
