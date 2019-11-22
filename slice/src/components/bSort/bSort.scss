@@ -4,7 +4,7 @@
   h4 {
     font-family: $FreightTextProBook-Regular;
     font-size: 18px;
-    margin: 0 0 40px;
+    @include margin(0 0 10px, 0 0 40px);
     color: $color-blue-3;
   }
 

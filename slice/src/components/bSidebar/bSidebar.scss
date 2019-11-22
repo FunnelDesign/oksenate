@@ -1,4 +1,7 @@
 .bSidebar {
   width: 210px;
 
+  @include xs-only{
+    margin: 0 auto 30px;
+  }
 }
