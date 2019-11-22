@@ -1,5 +1,4 @@
 .pager {
-  margin-bottom: 20px;
   
   a {
     color: #bababa;
@@ -7,6 +6,7 @@
 
   &__items {
     padding: 0;
+    margin: 0;
     text-align: left;
     display: flex;
     justify-content: center;
