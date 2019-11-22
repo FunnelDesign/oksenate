@@ -628,6 +628,21 @@ class ContentParser extends ConfigEntityBase {
         }
       }
 
+      if($field_name == 'field_senator_occupation_txt') {
+        $mini = explode('<br>', $result);
+        foreach ($mini as $string) {
+          $string = trim(strip_tags($string));
+          if (!$string) {
+            continue;
+          }
+          if(strpos($string, 'Occupation') !== FALSE){
+            $pos = strpos($string, ':');
+            $value = trim(substr($string, $pos+1));
+          }
+        }
+        $result = NULL;
+      }
+
       if($field_name == 'field_senator_education_txt') {
         $mini = explode('<br>', $result);
         foreach ($mini as $string) {
@@ -673,7 +688,9 @@ class ContentParser extends ConfigEntityBase {
         }
         $result = NULL;
       }
-
+      if($field_name == 'title') {
+        $result = str_replace('Senator', '', $result);
+      }
 
 //      if($field_name == 'field_bio_info'){
 //        $mini  = explode('<br>', $result);
