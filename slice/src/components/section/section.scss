@@ -152,6 +152,13 @@
         }
       }
     }
+
+    &_a {
+
+      @include sm {
+        top: 10px;
+      }
+    }
   }
 
   &__btnBack {
