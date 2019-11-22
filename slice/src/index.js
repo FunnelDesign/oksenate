@@ -3,6 +3,7 @@ import './styles'
 import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
 import BlockVideo from "./components/bMedia/video";
+import bSort from "./components/bSort/bSort";
 
 const $ = jQuery;
 
@@ -29,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function init() {
 	new bEvent();
+	new bSort();
 	initSelect();
 
 
@@ -42,13 +44,6 @@ function initSelect() {
 	});
 
 	$('select').on('select2:open', function(e){
-
-		// $('.select2-results .select2-results__options').each(function() {
-		// 	console.log('asdf');
-		// 	new SimpleBar(this, {
-		// 		autoHide: false
-		// 	});
-		// });
 
 		$('.select2-results .select2-results__options').scrollbar({
 			disableBodyScroll: false,

@@ -96,4 +96,15 @@
       display: none;
     }
   }
+
+  &_a {
+
+    &:after {
+      bottom: 36px;
+      height: 24px;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #f0f0f0);
+      transition: background .3s;
+      z-index: 1;
+    }
+  }
 }

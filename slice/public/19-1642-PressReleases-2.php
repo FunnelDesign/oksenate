@@ -39,42 +39,65 @@
           <aside class="bSidebar pageIn__bSidebar">
             <div class="bSort">
               <h4>Sort By Date</h4>
-              <div class="bSort__items">
-                <?php
-                $event_items = [
-                  ['2019'],
-                  ['2018'],
-                  ['2017'],
-                  ['2016'],
-                  ['2015'],
-                  ['2014']
-                ]
-                ?>
-                <?php foreach ($event_items as $element): ?>
 
-                  <div class="bSort__item">
-                    <div class="bSort__title">
-                      <?php print $element[0]; ?>
-                    </div>
-                    <div class="bSort__body">
-                      <a href="#">Decemeber</a>
-                      <a href="#" class="bef-link-active">November</a>
-                      <a href="#">October</a>
-                      <a href="#">September</a>
-                      <a href="#">August</a>
-                      <a href="#">July</a>
-                      <a href="#">June</a>
-                      <a href="#">May</a>
-                      <a href="#">April</a>
-                      <a href="#">March</a>
-                      <a href="#">February</a>
-                      <a href="#">January</a>
-                    </div>
+
+              <div class="bHide bHide_a">
+                <div class="bHide__cont">
+
+                  <div class="bSort__items">
+                    <?php
+                    $event_items = [
+                      ['2019'],
+                      ['2018'],
+                      ['2017'],
+                      ['2016'],
+                      ['2015'],
+                      ['2014'],
+                      ['2013'],
+                      ['2012'],
+                      ['2011'],
+                      ['2010'],
+                      ['2009'],
+                      ['2008'],
+                      ['2007'],
+                      ['2006'],
+                      ['2005'],
+                    ]
+                    ?>
+                    <?php foreach ($event_items as $element): ?>
+
+                      <div class="bSort__item">
+                        <div class="bSort__title">
+                          <?php print $element[0]; ?>
+                        </div>
+                        <div class="bSort__body">
+                          <a href="#">Decemeber</a>
+                          <a href="#">November</a>
+                          <a href="#">October</a>
+                          <a href="#">September</a>
+                          <a href="#">August</a>
+                          <a href="#">July</a>
+                          <a href="#">June</a>
+                          <a href="#">May</a>
+                          <a href="#">April</a>
+                          <a href="#">March</a>
+                          <a href="#" class="bef-link-active">February</a>
+                          <a href="#">January</a>
+                        </div>
+                      </div>
+
+                    <?php endforeach; ?>
+
+
                   </div>
 
-                <?php endforeach; ?>
-
-
+                </div>
+                <div class="bHide__moreWr">
+                  <a class="bHide__more" data-ev="toggleClass:bHide:open" href="#">
+                    <span class="bHide__moreOpen">show more</span>
+                    <span class="bHide__moreClose">show less</span>
+                  </a>
+                </div>
               </div>
             </div>
           </aside>
@@ -104,6 +127,93 @@
                       A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
                     </p>
                     
+                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
+                      Department of Career and Technology Education to acquire or
+                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+
+                    </p>
+                  </div>
+
+                  <?php include 'tpl/blocks/bSoc.inc'; ?>
+                </div>
+
+                <div class="bPostList__item">
+                  <div class="bPostList__header">
+
+                    <div class="bPostList__date">
+                      February 28, 2019 |  9:00am
+                    </div>
+
+                    <a href="#" class="bPostList__title">
+                      Measure to build aerospace training facility heads to full Senate vote
+                    </a>
+
+                  </div>
+
+
+                  <div class="bPostList__text">
+                    <p>
+                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
+                    </p>
+
+                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
+                      Department of Career and Technology Education to acquire or
+                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+
+                    </p>
+                  </div>
+
+                  <?php include 'tpl/blocks/bSoc.inc'; ?>
+                </div>
+
+                <div class="bPostList__item">
+                  <div class="bPostList__header">
+
+                    <div class="bPostList__date">
+                      February 28, 2019 |  9:00am
+                    </div>
+
+                    <a href="#" class="bPostList__title">
+                      Measure to build aerospace training facility heads to full Senate vote
+                    </a>
+
+                  </div>
+
+
+                  <div class="bPostList__text">
+                    <p>
+                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
+                    </p>
+
+                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
+                      Department of Career and Technology Education to acquire or
+                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+
+                    </p>
+                  </div>
+
+                  <?php include 'tpl/blocks/bSoc.inc'; ?>
+                </div>
+
+                <div class="bPostList__item">
+                  <div class="bPostList__header">
+
+                    <div class="bPostList__date">
+                      February 28, 2019 |  9:00am
+                    </div>
+
+                    <a href="#" class="bPostList__title">
+                      Measure to build aerospace training facility heads to full Senate vote
+                    </a>
+
+                  </div>
+
+
+                  <div class="bPostList__text">
+                    <p>
+                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
+                    </p>
+
                     <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
                       Department of Career and Technology Education to acquire or
                       lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
