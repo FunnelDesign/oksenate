@@ -13,8 +13,11 @@ class CustomEv {
 		$(document).on('click touch', (e) => {
 			let $ev =  $(e.target);
 
+			console.log($ev);
+
 			if ($ev.hasClass('form-submit') && $ev.closest('.sSen__fil').length) {
 
+				console.log($ev, 'sSen form-submit');
 				$('.sSen__res').addClass('sSen__res_loading')
 			}
 
