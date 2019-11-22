@@ -556,10 +556,9 @@ function senate_preprocess_views_view(&$vars) {
   $view = $vars['view'];
   $id = $view->id();
   $display_id = $view->current_display;
-
   switch ($id) {
-    case 'committee_events':
-
+    case 'senators':
+      $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
       break;
   }
 }
