@@ -692,86 +692,32 @@ class ContentParser extends ConfigEntityBase {
         $result = str_replace('Senator', '', $result);
       }
 
-//      if($field_name == 'field_bio_info'){
-//        $mini  = explode('<br>', $result);
-//        $out = [];
-//        foreach ($mini as $string){
-//          $string = trim(strip_tags($string));
-//          if(!$string){
-//            continue;
-//          }
-//          $pos = strpos($string, ':')+1;
-//          $out[] = trim(substr($string, $pos));
-//        }
-//        $arr = [
-//          'type' => 'senator_info',   // paragraph type machine name
-//          'field_occupation' => [   // paragraph's field machine name
-//            'value' => 'N/a',                  // body field value// body text format
-//          ],
-//          'field_party' => [   // paragraph's field machine name
-//            'value' => 'N/a',                  // body field value// body text format
-//          ],
-//          'field_education' => [   // paragraph's field machine name
-//            'value' => 'N/a',                  // body field value// body text format
-//          ],
-//          'field_hometown' => [   // paragraph's field machine name
-//            'value' => 'N/a',                  // body field value// body text format
-//          ],
-//          'field_legislative_experience' => [   // paragraph's field machine name
-//            'value' => 'N/a',                  // body field value// body text format
-//          ],
-//        ];
-//
-//        if(count($out) === 4){
-//          $arr = [
-//            'type' => 'senator_info',   // paragraph type machine name
-//            'field_party' => [   // paragraph's field machine name
-//              'value' => $out[3],                  // body field value// body text format
-//            ],
-//            'field_education' => [   // paragraph's field machine name
-//              'value' => $out[0],                  // body field value// body text format
-//            ],
-//            'field_hometown' => [   // paragraph's field machine name
-//              'value' => $out[2],                  // body field value// body text format
-//            ],
-//            'field_legislative_experience' => [   // paragraph's field machine name
-//              'value' => $out[1],                  // body field value// body text format
-//            ],
-//          ];
-//        }
-//        if(count($out) === 5){
-//          $arr = [
-//            'type' => 'senator_info',   // paragraph type machine name
-//            'field_occupation' => [   // paragraph's field machine name
-//              'value' => $out[0],                  // body field value// body text format
-//            ],
-//            'field_party' => [   // paragraph's field machine name
-//              'value' => $out[4] == 'Republican' ? 1 : 2,                  // body field value// body text format
-//            ],
-//            'field_education' => [   // paragraph's field machine name
-//              'value' => $out[1],                  // body field value// body text format
-//            ],
-//            'field_hometown' => [   // paragraph's field machine name
-//              'value' => $out[3],                  // body field value// body text format
-//            ],
-//            'field_legislative_experience' => [   // paragraph's field machine name
-//              'value' => $out[2],                  // body field value// body text format
-//            ],
-//          ];
-//        }
-//
-//        $paragraph = Paragraph::create($arr);
-//
-//        $paragraph->save();
-//
-//        $entity->set('field_bio_info',
-//        [
-//          'target_id' => $paragraph->id(),
-//          'target_revision_id' => $paragraph->getRevisionId(),
-//        ]);
-//
-//        continue;
-//      }
+      if($field_name == 'field_senator_social_links_par'){
+        $arr = [
+          'type' => 'senator_socials',   // paragraph type machine name
+          'field_senator_social_fb_link' => [   // paragraph's field machine name
+            'value' => $result[0],                  // body field value// body text format
+          ],
+          'field_senator_social_inst_link' => [   // paragraph's field machine name
+            'value' => $result[0],                  // body field value// body text format
+          ],
+          'field_senator_social_tw_link' => [   // paragraph's field machine name
+            'value' => $result[0],                  // body field value// body text format
+          ],
+        ];
+
+        $paragraph = Paragraph::create($arr);
+
+        $paragraph->save();
+
+        $entity->set('field_senator_social_links_par',
+        [
+          'target_id' => $paragraph->id(),
+          'target_revision_id' => $paragraph->getRevisionId(),
+        ]);
+
+        continue;
+      }
 
       if ($field['isMulti'] && is_array($result)) {
         foreach ($result as $data) {
