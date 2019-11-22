@@ -63,6 +63,7 @@
     font-size: 14px;
     text-align: center;
     @include cr-last-child;
+    color: #404040;
 
     &_a {
       font-family: $FreightTextProBook-Regular;
@@ -92,6 +93,11 @@
     &_b {
       @include cr-last-child;
       @include margin-bottom(20px, 30px);
+    }
+
+    &_c {
+      @include cr-last-child;
+      @include margin-bottom(30px, 50px);
     }
   }
 }
