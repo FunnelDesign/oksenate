@@ -1,0 +1,42 @@
+.bSort {
+
+  h4 {
+    font-family: $FreightTextProBook-Regular;
+    font-size: 18px;
+    margin: 0 0 40px;
+    color: $color-blue-3;
+  }
+
+  &__title {
+    font-family: $Roboto-Italic;
+    font-size: 12px;
+    color: $color-blue-3;
+    padding: 8px 0;
+  }
+
+  &__body {
+    display: none;
+
+    a {
+      font-family: $Roboto-Italic;
+      font-size: 12px;
+      color: #888888;
+      display: block;
+      padding: 2px 10px 2px 18px;
+      text-decoration: none;
+      margin: 9.5px 0;
+
+      &:hover {
+        background: #ffffff;
+      }
+
+      &:first-child {
+        margin-top: 3px;
+      }
+
+      &:last-child {
+        margin-bottom: 3px;
+      }
+    }
+  }
+}

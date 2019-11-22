@@ -1,0 +1,55 @@
+.bPostList {
+
+  &__sortBy {
+    font-family: $Roboto-Italic;
+    font-size: 14px;
+    color: $color-blue-3;
+    margin-bottom: 55px;
+  }
+
+  &__item {
+    padding: 30px 40px 20px 22px;
+    border: 2px solid #dcdcdc;
+    border-radius: 5px;
+  }
+
+  &__header {
+    margin-bottom: 17px;
+    @include cr-last-child;
+  }
+
+  &__date {
+    font-family: $RobotoCondensed-Regular;
+    font-size: 12px;
+    color: $color-red;
+    margin-bottom: 4px;
+  }
+
+  &__title {
+    @include font-size(20px, 24px);
+    color: $color-blue-3;
+    font-family: $FreightTextProBook-Regular;
+    text-decoration: none;
+    line-height: 1.3;
+
+    &:hover {
+      color: $color-red;
+    }
+  }
+
+  &__text {
+    font-family: $Roboto-Regular;
+    font-size: 12px;
+    color: #888888;
+    margin-bottom: 28px;
+    @include cr-last-child;
+
+  }
+
+  &__readMore {
+    font-family: $Roboto-Italic;
+    font-size: 12px;
+    color: $color-blue-3;
+    text-transform: capitalize;
+  }
+}

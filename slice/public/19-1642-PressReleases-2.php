@@ -1,87 +1,124 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-PressReleases-Individual'; ?>
+<?php $title = '19-1642-PressReleases-2'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
-    <section class="section section_ind_d section_bg-color_c">
+    <section class="section section_bg-color_f section_inner-v-centered">
+      <div class="section__bg-wrap">
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-8.jpg')"></div>
+      </div>
+      <div class="section__v-inner section__v-inner_d">
+        <div class="bContainer">
 
-      <div class="pageIn__pCols">
-        <div class="sidebar">
+          <div class="pageIn__ico">
+            <img src="../dist/images/titleIco/title-ico-13.png" srcset="../dist/images/titleIco/title-ico-13-2x.png 2x"
+                 alt="">
+          </div>
+
+          <div class="bTitle bTitle_wSub_a bTitle_gap_a">
+            <h1>Press Releases</h1>
+          </div>
 
         </div>
-
-        <div class="pageIn__main">
-
-        </div>
-
       </div>
 
+    </section>
+
+    <section class="section section_ind_c section_bg-color_c">
+
       <div class="bContainer">
+        <div class="bPostList__sortBy">
+          Showing: February 2019
+        </div>
 
-        <div class="bPost">
-          <div class="bPost__header">
-            <div class="bPost__date">
-              February 28, 2019 |  9:00am
+        <div class="pageIn__pCols">
+          <aside class="bSidebar pageIn__bSidebar">
+            <div class="bSort">
+              <h4>Sort By Date</h4>
+              <div class="bSort__items">
+                <?php
+                $event_items = [
+                  ['2019'],
+                  ['2018'],
+                  ['2017'],
+                  ['2016'],
+                  ['2015'],
+                  ['2014']
+                ]
+                ?>
+                <?php foreach ($event_items as $element): ?>
+
+                  <div class="bSort__item">
+                    <div class="bSort__title">
+                      <?php print $element[0]; ?>
+                    </div>
+                    <div class="bSort__body">
+                      <a href="#">Decemeber</a>
+                      <a href="#" class="bef-link-active">November</a>
+                      <a href="#">October</a>
+                      <a href="#">September</a>
+                      <a href="#">August</a>
+                      <a href="#">July</a>
+                      <a href="#">June</a>
+                      <a href="#">May</a>
+                      <a href="#">April</a>
+                      <a href="#">March</a>
+                      <a href="#">February</a>
+                      <a href="#">January</a>
+                    </div>
+                  </div>
+
+                <?php endforeach; ?>
+
+
+              </div>
             </div>
-            <div class="bPost__title">
-              <h1>Measure to build aerospace training facility heads to full Senate vote</h1>
+          </aside>
+
+          <div class="pageIn__main">
+
+            <div class="bPostList">
+
+              <div class="bPostList__items">
+
+                <div class="bPostList__item">
+                  <div class="bPostList__header">
+
+                    <div class="bPostList__date">
+                      February 28, 2019 |  9:00am
+                    </div>
+
+                    <a href="#" class="bPostList__title">
+                      Measure to build aerospace training facility heads to full Senate vote
+                    </a>
+
+                  </div>
+
+
+                  <div class="bPostList__text">
+                    <p>
+                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
+                    </p>
+                    
+                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
+                      Department of Career and Technology Education to acquire or
+                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+
+                    </p>
+                  </div>
+
+                  <?php include 'tpl/blocks/bSoc.inc'; ?>
+                </div>
+
+              </div>
+
             </div>
           </div>
-          <div class="bPost__body">
-            <div class="bPost__imgWrap">
-              <div class="bPost__img">
-                <img src="../dist/images/tmp/img-tmp-post-1.jpg" alt="">
-                <span class="bPost__imgCap">
-                  Sen. Adam Pugh
-                </span>
-              </div>
-            </div>
-            <div class="bPost__text">
-              <p>A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.</p>
-              <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma Department of Career and Technology Education to acquire or lease property for the purpose of creating the statewide aerospace training facility. Under the measure, the State Board would establish admission standards and the curriculum requirements.</p>
-              <p>Pugh said he filed the legislation after officials at the state’s air force bases voiced a growing need for job candidates with specific skill sets in Oklahoma. Aerospace and aviation is the state’s second largest industry and still growing rapidly, with an annual economic impact of $44 billion and providing 205,000 direct and indirect jobs with an average salary of $73,300.</p>
-              <p>“Creating a state aerospace training facility is a logical and necessary step in continuing to support the rapid expansion of the industry in Oklahoma,” said Pugh. “The increasing visibility of aviation and aerospace in Oklahoma has not gone unnoticed by military officials and aerospace executives, as industry leaders continue to push for broadened job training opportunities to fill hundreds of available jobs in the aviation industry across the state.”</p>
-              <p>Pugh noted the statewide program would have no district boundaries, which would be a different approach from CareerTech programming, allowing students from anywhere in the state to access the training center. Pugh says ensuring the industry’s viability is critical to the continuing effort to diversify Oklahoma’s economy, and the creation of an aeronautics training center will continue to fuel that exponential growth.</p>
-              <p>“This would be unique from the perspective that students from all four corners of the state and everywhere in between would have the same learning opportunities, whether through mobile distance learning or in-residence training. Hands-on materials could be packed up and transported around the state as needed to facilitate those students engaged in distance learning,” Pugh said. “Building this center allows the state to maximize the competitive advantages that already exist in Oklahoma’s aerospace industry. Cultivating the skill sets needed in the aerospace industry will help to drive better jobs, stronger economic growth and higher tax revenues for Oklahoma.”</p>
-              <p>Pugh said in addition to a line item appropriation in the state budget for the training center, he is seeking other sources of funding, including grants, partnerships with Tinker Air Force Base, and private sector partners. He also is looking to source donated materials like aircraft parts and components that would offer realistic, hands-on training opportunities for students.</p>
-              <p>SB 432 now moves to the Senate floor for consideration.</p>
-              <p>For more information, contact: <br>
-                Sen. Pugh: <a href="tel:+(405) 521-5622">(405) 521-5622</a></p>
-            </div>
 
-          </div>
-
-          <div class="bSoc bSoc_min">
-
-            <div class="bSoc__items">
-              <div class="bSoc__item">
-                <a target="_blank" href="#">
-                  <img src="../dist/images/soc/soc-facebook.png"
-                       srcset="../dist/images/soc/soc-facebook-2x.png 2x"
-                       alt="">
-                </a>
-              </div>
-              <div class="bSoc__item">
-                <a target="_blank" href="#">
-                  <img src="../dist/images/soc/soc-twitter.png"
-                       srcset="../dist/images/soc/soc-twitter-2x.png 2x"
-                       alt="">
-                </a>
-              </div>
-              <div class="bSoc__item">
-                <a target="_blank" href="#">
-                  <img src="../dist/images/soc/soc-mail.png"
-                       srcset="../dist/images/soc/soc-mail-2x.png 2x"
-                       alt="">
-                </a>
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
 
