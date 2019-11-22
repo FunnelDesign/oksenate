@@ -5,13 +5,31 @@ class CustomEv {
 	constructor() {
 		this.addAccessibilityCookie();
 		this.menuMobileOpen();
-		this.closeDrop();
+		this.customClick();
 	}
 
-	closeDrop() {
+	customClick() {
+
+		$(document).on('submit',function(){
+			console.log('submit-ev submit');
+		});
+
+		$('.sSen__head .bef-exposed-form').on('submit', function(){
+			console.log('submit');
+			$('.sSen__res').addClass('sSen__res_loading')
+
+		});
 
 		$(document).on('click touch', (e) => {
 			let $ev =  $(e.target);
+
+			console.log($ev);
+
+			if ($ev.hasClass('form-submit') && $ev.closest('.sSen__fil').length) {
+
+				console.log($ev, 'sSen form-submit');
+				$('.sSen__res').addClass('sSen__res_loading')
+			}
 
 			if (!$ev.closest('.bDrop').length) {
 				$('.bDrop').removeClass('select2-container--open')
