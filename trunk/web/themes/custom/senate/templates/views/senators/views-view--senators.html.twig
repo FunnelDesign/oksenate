@@ -59,16 +59,20 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
         <div class="sSen__res sSen_loading">
             <div class="bContainer">
                 {% if rows -%}
+                    <div class="sSen__senShow">
+                       {{ total_rows }}
+                    </div>
                     {{ rows }}
                 {% elseif empty -%}
-                    {{ empty }}
+                    <div class="sSen__noRes">
+                        {{ empty }}
+                    </div>
                 {% endif %}
                 {{ pager }}
             </div>
         </div>
         {{ attachment_after }}
         {{ more }}
-{#TODO: theme no result message#}
         {% if footer %}
             <footer>
                 {{ footer }}
