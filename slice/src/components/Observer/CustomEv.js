@@ -10,6 +10,10 @@ class CustomEv {
 
 	customClick() {
 
+		$(document).on('submit',function(){
+			console.log('submit-ev submit');
+		});
+
 		$('.sSen__head .bef-exposed-form').on('submit', function(){
 			console.log('submit');
 			$('.sSen__res').addClass('sSen__res_loading')
