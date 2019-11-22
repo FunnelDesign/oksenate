@@ -76,6 +76,31 @@ function senate_preprocess_node(array &$vars) {
           $vars["attributes"]["class"][] = 'bTiles__item';
         }
         break;
+      case 'subcommittee':
+        $commitee = (!empty($vars["content"]["field_subcomt"]) &&
+          !empty($vars["content"]["field_subcomt"]['#items'])) ?
+          $vars["content"]["field_subcomt"]['#items']->getValue() : '';
+        if (!empty($commitee) && !empty($commitee[0])) {
+          $params = [$commitee[0]["target_id"]];
+          $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
+
+          $url = Url::fromUserInput('/senators');
+          $options = ['class' => ['btn']];
+          $url->setOption('attributes', $options);
+          $url->setOption('query', ['committee' => $commitee[0]["target_id"]]);
+          $vars['all_members'] = Link::fromTextAndUrl(t('see all members'), $url);
+
+          $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+            ->loadTree('committees', $commitee[0]["target_id"], 3, FALSE);
+          $result = [];
+          foreach ($tree as $term) {
+            $result[] = $term->tid;
+          }
+          $result = implode(',', $result);
+          $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
+        }
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
     }
   }
 }
@@ -253,6 +278,11 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["items"][0]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);
       }
       break;
+    case 'field_subcomt_app_title':
+      if (!empty($vars['items'])) {
+        $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';
+      }
+      break;
   }
 }
 
@@ -267,6 +297,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_block_navigation_links':
     case 'field_home_leadership_name_txt':
     case 'field_home_leadership_post_txt':
+    case 'field_subcomt_mmb_position':
       $suggestions[] = 'field__no_wrappers';
       break;
 
@@ -493,4 +524,56 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
     $form['party']['#suffix'] = "</div>";
   }
 
+}
+
+/**
+ * Implements hook_preprocess_views_view_list();
+ */
+function senate_preprocess_views_view_list(&$vars) {
+  $view = $vars['view'];
+  $id = $view->id();
+  $display_id = $view->current_display;
+
+  switch ($id) {
+    case 'committee_dropdown':
+      $args = !empty($view->args) ? $view->args[0] : '';
+      $vars['empty_title'] = t('Select Committee');
+      if (!empty($args)) {
+        $ancestors = \Drupal::service('entity_type.manager')
+          ->getStorage("taxonomy_term")->loadParents($args);
+        if (!empty($ancestors)) {
+          $vars['empty_title'] = t('Select Subcommittee');
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view_list();
+ */
+function senate_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+  $id = $view->id();
+  $display_id = $view->current_display;
+
+  switch ($id) {
+    case 'committee_events':
+
+      break;
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function senate_preprocess_paragraph(array &$vars) {
+  $paragraph = $vars['paragraph'];
+  $bundle = $paragraph->bundle();
+
+  switch ($bundle) {
+    case 'subcomt_mmb':
+
+      break;
+  }
 }

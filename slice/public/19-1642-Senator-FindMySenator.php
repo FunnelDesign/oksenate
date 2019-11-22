@@ -7,13 +7,15 @@
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
-    <section class="section sSen sSen_loading">
+    <section class="section sSen">
 
       <div class="sSen__head">
         <div class="sSen__byAdd">
           <a href="#" class="sSen__btnByAdd">search by address</a>
         </div>
         <div class="sSen__fil">
+
+          <a href="#" class="form-submit TEST-ONLY_FOR_SLICE" style="position: absolute;">loader ONLY FOR SLICE</a>
 
           <div class="sSen__filCol">
             <div class="sSen__filIco">
@@ -62,6 +64,27 @@
 
               <div class="form-item form-type-select">
                 <select class="form-select">
+                  <option>Select County</option>
+                  <option>Cotton</option>
+                  <option>Craig</option>
+                  <option>Creek</option>
+                  <option>Custer</option>
+                  <option>Delaware</option>
+                  <option>Dewey</option>
+                  <option>Select County</option>
+                  <option>Cotton</option>
+                  <option>Craig</option>
+                  <option>Creek</option>
+                  <option>Custer</option>
+                  <option>Delaware</option>
+                  <option>Dewey</option>
+                  <option>Select County</option>
+                  <option>Cotton</option>
+                  <option>Craig</option>
+                  <option>Creek</option>
+                  <option>Custer</option>
+                  <option>Delaware</option>
+                  <option>Dewey</option>
                   <option>Select County</option>
                   <option>Cotton</option>
                   <option>Craig</option>

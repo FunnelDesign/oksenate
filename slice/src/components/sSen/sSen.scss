@@ -36,8 +36,11 @@
 
     &:before, &:after {
       display: none;
+    }
 
-      #{$this}_loading & {
+    &_loading {
+
+      &:before, &:after {
         display: block;
       }
     }
@@ -305,8 +308,11 @@
     color: $color-white;
   }
 
-  &_sName {
+  &__sName {
     display: block;
+    font-family: $RobotoCondensed-Regular;
+    font-size: 15px;
+    color: #1f2f4b;
   }
 
   &__filRes {

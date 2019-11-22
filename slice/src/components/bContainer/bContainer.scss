@@ -15,4 +15,9 @@
   @media (min-width: $bp-large) {
     max-width: $width-large;
   }
+
+  &:before {
+    content: " ";
+    display: table;
+  }
 }

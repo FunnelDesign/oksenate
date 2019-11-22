@@ -152,15 +152,23 @@
         }
       }
     }
+
+    &_a {
+
+      @include sm {
+        top: 10px;
+      }
+    }
   }
 
   &__btnBack {
     position: absolute;
     left: 0;
-    top: -40px;
+    top: 0;
 
     @include sm {
       left: 55px;
+      top: -40px;
     }
 
     @include md {
