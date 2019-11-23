@@ -136,11 +136,14 @@
 
       {{ press_releases }}
 
-      <div class="pageIn__ico">
-        <img src="{{ theme_path }}/dist/images/titleIco/title-ico-4.png" srcset="../dist/images/titleIco/title-ico-4-2x.png 2x" alt="">
-      </div>
-      {{ content.field_subcomt_webform_title }}
-      {{ content.field_subcomt_webform }}
+      {% if content.field_subcomt_webform.0 %}
+        <div class="pageIn__ico">
+          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-4.png"
+               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-4-2x.png 2x" alt="">
+        </div>
+        {{ content.field_subcomt_webform_title }}
+        {{ content.field_subcomt_webform }}
+      {% endif %}
     </div>
   </section>
 

@@ -98,8 +98,9 @@ function senate_preprocess_node(array &$vars) {
             $result[] = $term->tid;
           }
           if (count($result) == 1) {
+            $result = implode(',', $result);
             $vars['committee_events_title'] = t('Upcoming Events');
-            $vars['committee_events'] = _senate_get_view('subcommittee_events', 'block_1', $result);
+            $vars['committee_events'] = _senate_get_view('subcommittee_events', 'block_1', [$result]);
           }
           else {
             $vars['committee_events_title'] = t('Subcommittee Events');
@@ -476,12 +477,13 @@ function _senate_get_view($view_id, $display_id, array $arguments = []) {
     $view->setDisplay($display_id);
     $view->setArguments($arguments);
     $view->execute();
+    $total_rows = count($view->result);
     $view_res = $view->render();
 
     $result = \Drupal::service('renderer')->render($view_res);
   }
 
-  return $result;
+  return !empty($total_rows) ? $result : '';
 }
 
 /**
