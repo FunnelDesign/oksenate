@@ -97,16 +97,23 @@ function senate_preprocess_node(array &$vars) {
           foreach ($tree as $term) {
             $result[] = $term->tid;
           }
+          $vars['committee_events_title'] = (count($result) == 1) ? t('Upcoming Events') : t('Subcommittee Events');
           $result = implode(',', $result);
           $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
 
           $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
           if (!empty($term_obj)) {
             if ($term_obj->hasField('field_comt_icon')) {
-              $vars['icon'] = file_create_url($term_obj->get('field_comt_icon')->entity->getFileUri());
+              $icon_field = $term_obj->get('field_comt_icon');
+              if (!empty($icon_field->entity)) {
+                $vars['icon'] = file_create_url($icon_field->entity->getFileUri());
+              }
             }
             if ($term_obj->hasField('field_comt_icon_2x')) {
-              $vars['icon_2x'] = file_create_url($term_obj->get('field_comt_icon_2x')->entity->getFileUri());
+              $icon_field = $term_obj->get('field_comt_icon_2x');
+              if (!empty($icon_field->entity)) {
+                $vars['icon_2x'] = file_create_url($icon_field->entity->getFileUri());
+              }
             }
           }
         }
