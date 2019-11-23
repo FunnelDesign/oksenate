@@ -116,8 +116,13 @@ function senate_preprocess_node(array &$vars) {
               }
             }
           }
+
+          $vars['press_releases'] = _senate_get_view('subcmt_up_press_rels', 'block_1', [$result]);
         }
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
+      case 'press_release':
+        $vars['title'] = $node->getTitle();
         break;
     }
   }
