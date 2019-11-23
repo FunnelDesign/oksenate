@@ -97,9 +97,15 @@ function senate_preprocess_node(array &$vars) {
           foreach ($tree as $term) {
             $result[] = $term->tid;
           }
-          $vars['committee_events_title'] = (count($result) == 1) ? t('Upcoming Events') : t('Subcommittee Events');
-          $result = implode(',', $result);
-          $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
+          if (count($result) == 1) {
+            $vars['committee_events_title'] = t('Upcoming Events');
+            $vars['committee_events'] = _senate_get_view('subcommittee_events', 'block_1', $result);
+          }
+          else {
+            $vars['committee_events_title'] = t('Subcommittee Events');
+            $result = implode(',', $result);
+            $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
+          }
 
           $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
           if (!empty($term_obj)) {
