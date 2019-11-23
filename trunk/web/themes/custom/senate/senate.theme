@@ -81,23 +81,34 @@ function senate_preprocess_node(array &$vars) {
           !empty($vars["content"]["field_subcomt"]['#items'])) ?
           $vars["content"]["field_subcomt"]['#items']->getValue() : '';
         if (!empty($commitee) && !empty($commitee[0])) {
-          $params = [$commitee[0]["target_id"]];
+          $tid = !empty($commitee[0]["target_id"]) ? $commitee[0]["target_id"] : '';
+          $params = [$tid];
           $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
 
           $url = Url::fromUserInput('/senators');
           $options = ['class' => ['btn']];
           $url->setOption('attributes', $options);
-          $url->setOption('query', ['committee' => $commitee[0]["target_id"]]);
+          $url->setOption('query', ['committee' => $tid]);
           $vars['all_members'] = Link::fromTextAndUrl(t('see all members'), $url);
 
           $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
-            ->loadTree('committees', $commitee[0]["target_id"], 3, FALSE);
-          $result = [];
+            ->loadTree('committees', $tid, 3, FALSE);
+          $result = [$tid];
           foreach ($tree as $term) {
             $result[] = $term->tid;
           }
           $result = implode(',', $result);
           $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
+
+          $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+          if (!empty($term_obj)) {
+            if ($term_obj->hasField('field_comt_icon')) {
+              $vars['icon'] = file_create_url($term_obj->get('field_comt_icon')->entity->getFileUri());
+            }
+            if ($term_obj->hasField('field_comt_icon_2x')) {
+              $vars['icon_2x'] = file_create_url($term_obj->get('field_comt_icon_2x')->entity->getFileUri());
+            }
+          }
         }
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
