@@ -314,6 +314,16 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';
       }
       break;
+    case 'field_agencies_doc_doc':
+      $items = !empty($vars["items"]) ? $vars["items"] : [];
+      $vars['files'] = [];
+      foreach ($items as $key => $item) {
+        if (!empty($item["content"]["#file"])) {
+          $vars['files'][$key]['url'] = file_create_url($item["content"]["#file"]->getFileUri());
+          $vars['files'][$key]['title'] = !empty($item["content"]["#description"]) ? $item["content"]["#description"] : '';
+        }
+      }
+      break;
   }
 }
 
@@ -615,6 +625,13 @@ function senate_preprocess_views_view(&$vars) {
   switch ($id) {
     case 'senators':
       $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
+      break;
+    case 'agencies_documents':
+      $tid = !empty($view->args) ? $view->args[0] : '';
+      if (!empty($tid)) {
+        $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+        $vars['title'] = $term_obj->getName();
+      }
       break;
   }
 }
