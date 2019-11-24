@@ -11,6 +11,8 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Views;
 
+define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations-education/agencies-documents');
+
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
  */
@@ -390,6 +392,25 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
   }
 
+  switch ($form_id) {
+    case 'views_exposed_form':
+      $storage = $form_state->getStorage();
+      $view = !empty($storage["view"]) ? $storage["view"] : '';
+      $view_name = !empty($view) ? $view->id() : '';
+
+      if ($view_name == 'agencies_documents') {
+        $tid = !empty($view->args) ? $view->args[0] : '';
+        $years = _senate_get_years_existing_nodes($tid);
+        if (!empty($form["year"])) {
+          foreach ($form["year"]["#options"] as $key => $value) {
+            if (($key !== 'All') && (!in_array($key, $years))) {
+              unset($form["year"]["#options"][$key]);
+            }
+          }
+        }
+      }
+      break;
+  }
 }
 
 /**
@@ -603,6 +624,7 @@ function senate_preprocess_views_view_unformatted(&$vars) {
     case 'subcommittee_agencies':
       $rows = !empty($vars["rows"]) ? $vars["rows"] : [];
       $vars['unique_items'] = [];
+      $vars['agency_doc_path'] = SENATE_AGENCIES_DOC_BASE_PATH;
 
       foreach ($rows as $key => $row) {
         $tid = (!empty($row["content"]) && !empty($row["content"]["#row"])) ?
@@ -648,4 +670,28 @@ function senate_preprocess_paragraph(array &$vars) {
 
       break;
   }
+}
+
+/**
+ * Years of existing nodes.
+ * @param $tid
+ *
+ * @return array
+ */
+function _senate_get_years_existing_nodes($tid) {
+  if (empty($tid)) {
+    return [];
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'agencies_doc')
+    ->condition('nfd.status', 1);
+  $query->innerJoin('node__field_agencies_doc_agency', 'ag', 'ag.entity_id = nfd.nid and ag.deleted = 0');
+  $query->innerJoin('node__field_agencies_doc_year', 'year', 'year.entity_id = nfd.nid and year.deleted = 0');
+  $query->fields('year', ['field_agencies_doc_year_value'])
+    ->condition('ag.field_agencies_doc_agency_target_id', $tid);
+  $query->distinct(TRUE);
+  $result = $query->execute()->fetchCol();
+
+  return !empty($result) ? $result : [];
 }

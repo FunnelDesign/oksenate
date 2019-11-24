@@ -26,7 +26,7 @@
     <span class="bListItems__title">
       {{- row.content -}}
     </span>
-    <a href="#" class="bListItems__btn">{{ 'see documents'|t }}</a>
+    <a href="{{ agency_doc_path ~ '/' ~ unique_items[loop.index0] }}" class="bListItems__btn">{{ 'see documents'|t }}</a>
   </div>
   {% endif %}
 {% endfor %}
