@@ -53,24 +53,19 @@ function senate_preprocess_node(array &$vars) {
         $vars['search'] = _senate_get_block('searchapi_find_legislation');
         break;
       case 'committee':
-        $commitee = (!empty($vars["content"]["field_comt_committee"]) &&
-          !empty($vars["content"]["field_comt_committee"]['#items'])) ?
-          $vars["content"]["field_comt_committee"]['#items']->getValue() : '';
-        if (!empty($commitee) && !empty($commitee[0])) {
-          $params = [$commitee[0]["target_id"]];
+        $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+          ->loadTree('committees', 0, NULL, FALSE);
+        $tids = [];
+        foreach ($tree as $term) {
+          $tids[] = $term->tid;
+        }
+
+        if (!empty($tids)) {
+          $result = implode(',', $tids);
+          $params = [$result];
           $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
 
-          $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
-            ->loadTree('committees', $commitee[0]["target_id"], 3, FALSE);
-          $ancestors = \Drupal::service('entity_type.manager')
-            ->getStorage("taxonomy_term")->loadParents($commitee[0]["target_id"]);
-
-          $result = [];
-          foreach ($tree as $term) {
-            $result[] = $term->tid;
-          }
-          $result = implode(',', $result);
-          $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
+          $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', $params);
         }
         break;
       case 'committee_events':
