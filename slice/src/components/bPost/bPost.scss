@@ -83,4 +83,35 @@
     margin-bottom: 55px;
     text-align: center;
   }
+
+  &_a {
+
+    #{$this}__title {
+
+      h1, h2 {
+        margin: 0;
+        font-family: $FreightTextProMedium-Regular;
+        color: $color-blue-3;
+        @include font-size(20px, 24px);
+        text-align: center;
+      }
+
+      h1 {
+        text-transform: uppercase;
+      }
+    }
+
+    h4 {
+      text-align: center;
+      text-transform: uppercase;
+      margin: 0 0 20px;
+      font-size: 18px;
+      color: #888888;
+      font-family: $FreightTextProBold-Regular;
+    }
+
+    ul, ol {
+      padding: 0 0 0 15px;
+    }
+  }
 }
