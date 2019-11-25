@@ -240,6 +240,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_leadership_logo_image':
     case 'field_home_finder_left_image':
     case 'field_home_finder_right_image':
+    case 'field_webform_block_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -366,6 +367,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_home_leadership_logo_image':
     case 'field_home_finder_right_image':
     case 'field_home_finder_left_image':
+    case 'field_webform_block_icon':
       $suggestions[] = 'field__src_srcset_images';
       break;
   }
@@ -649,7 +651,15 @@ function senate_preprocess_views_view(&$vars) {
       $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
       break;
     case 'subcommittee_events':
-      $vars['events_url'] = "/upcoming-events/" . $view->args[0];
+      $tid = !empty($view->args) ? $view->args[0] : '';
+      if (!empty($tid)) {
+        $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+        $vars['committee_name'] = Markup::create("<h2>Upcoming " . $term_obj->getName() ." Events</h2>");
+        $vars['events_url'] = "/upcoming-events/" . $view->args[0];
+      }
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      $vars['webform'] = _senate_get_block('webform_notification_block');
+
       break;
     case 'agencies_documents':
       $tid = !empty($view->args) ? $view->args[0] : '';
