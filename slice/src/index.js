@@ -4,6 +4,7 @@ import bEvent from './components/bEvent/bEvent'
 import Observer from "./components/Observer/Observer";
 import BlockVideo from "./components/bMedia/video";
 import bSort from "./components/bSort/bSort";
+import navSelect from "./components/navSelect/navSelect";
 
 const $ = jQuery;
 
@@ -26,6 +27,7 @@ if (window.Drupal?.behaviors) {
 
 document.addEventListener('DOMContentLoaded', () => {
 	new Observer();
+	new navSelect();
 });
 
 function init() {

@@ -1,0 +1,37 @@
+.bOverview {
+
+  &__items {
+    max-width: 630px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &__item {
+    @include cr-last-item;
+    @include margin-bottom(40px, 70px);
+  }
+
+  &__title {
+    margin-bottom: 20px;
+    @include cr-last-child;
+
+    h2 {
+      text-align: center;
+      font-family: $RobotoCondensed-Light;
+      color: $color-blue;
+      margin: 0;
+    }
+  }
+
+  &__body {
+    font-family: $FreightTextProMedium-Regular;
+    @include cr-last-child;
+    color: #000000;
+    @include margin-bottom(20px, 30px);
+    line-height: 1.6;
+  }
+
+  &__btnWrap {
+    text-align: center;
+  }
+}
