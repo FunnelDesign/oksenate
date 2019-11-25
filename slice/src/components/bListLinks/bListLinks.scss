@@ -58,4 +58,36 @@
       }
     }
   }
+
+  &_btnArr {
+
+    #{$this}__link {
+      padding: 16px 37px 16px 20px;
+      background: $color-white;
+      border: 1px solid #cbcbcb;
+      border-radius: 5px;
+      color: $color-blue;
+      font-family: $Roboto-Bold;
+      display: block;
+      margin:  0 0 9px;
+      text-decoration: none;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.4;
+      backface-visibility: hidden;
+
+      &:hover {
+        opacity: .7;
+      }
+
+      &:after {
+        @include pseudo-block($right: 20px, $top: 50%);
+        transform: translate(0, -50%);
+        width: 7px;
+        height: 13px;
+        background: url('arrow-blue-ico-1.png') no-repeat;
+        background-size: contain;
+      }
+    }
+  }
 }
