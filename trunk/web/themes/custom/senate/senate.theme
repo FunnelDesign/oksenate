@@ -79,7 +79,14 @@ function senate_preprocess_node(array &$vars) {
           $vars["content"]["field_subcomt"]['#items']->getValue() : '';
         if (!empty($commitee) && !empty($commitee[0])) {
           $tid = !empty($commitee[0]["target_id"]) ? $commitee[0]["target_id"] : '';
-          $params = [$tid];
+          $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+            ->loadTree('committees', $tid, NULL, FALSE);
+          $tids = [];
+          foreach ($tree as $term) {
+            $tids[] = $term->tid;
+          }
+          $params = implode(',', $tids);
+          $params = [$params];
           $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
 
           $url = Url::fromUserInput('/senators');
@@ -88,21 +95,14 @@ function senate_preprocess_node(array &$vars) {
           $url->setOption('query', ['committee' => $tid]);
           $vars['all_members'] = Link::fromTextAndUrl(t('see all members'), $url);
 
-          $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
-            ->loadTree('committees', $tid, 3, FALSE);
-          $result = [$tid];
-          foreach ($tree as $term) {
-            $result[] = $term->tid;
-          }
-          if (count($result) == 1) {
-            $result = implode(',', $result);
+          if (empty($tids)) {
             $vars['committee_events_title'] = t('Upcoming Events');
-            $vars['committee_events'] = _senate_get_view('subcommittee_events', 'block_1', [$result]);
+            $vars['committee_events'] = _senate_get_view('subcommittee_events', 'block_1', [$tid]);
           }
           else {
+            $params[0] = $tid . ',' . $params[0];
             $vars['committee_events_title'] = t('Subcommittee Events');
-            $result = implode(',', $result);
-            $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', [$result]);
+            $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', $params);
           }
 
           $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
@@ -121,7 +121,7 @@ function senate_preprocess_node(array &$vars) {
             }
           }
 
-          $vars['press_releases'] = _senate_get_view('subcmt_up_press_rels', 'block_1', [$result]);
+          $vars['press_releases'] = _senate_get_view('subcmt_up_press_rels', 'block_1', $params);
           $vars['subcommittee_agencies'] = _senate_get_view('subcommittee_agencies', 'block_1', [$tid]);
         }
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
@@ -671,13 +671,14 @@ function senate_preprocess_views_view(&$vars) {
     case 'subcommittee_events':
       $tid = !empty($view->args) ? $view->args[0] : '';
       if (!empty($tid)) {
-        $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
+        $tid = explode(',', $tid);
+        $parent = Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadAllParents($tid[0]);
+        $term_obj = reset($parent);
         $vars['committee_name'] = Markup::create("<h2>Upcoming " . $term_obj->getName() ." Events</h2>");
         $vars['events_url'] = "/upcoming-events/" . $view->args[0];
       }
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       $vars['webform'] = _senate_get_block('webform_notification_block');
-
       break;
     case 'agencies_documents':
       $tid = !empty($view->args) ? $view->args[0] : '';
