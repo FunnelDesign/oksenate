@@ -86,6 +86,7 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
    */
   public function build() {
     $breadcrumbs = $this->breadcrumbManager->build($this->routeMatch)->getLinks();
+    $text_color = $this->getTextColor();
 
     if (!empty($breadcrumbs[0]) && ($breadcrumbs[0]->getUrl()->toString() == '/')) {
       unset($breadcrumbs[0]);
@@ -109,7 +110,10 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
         $url = 'internal:' . $url;
       }
       $back_url = Url::fromUri($url);
-      $options = ['class' => ['link', 'link_cl_a', 'link_back']];
+      $options = ['class' => ['link', 'link_back']];
+      if (!empty($text_color['back_link'])) {
+        $options['class'][] = $text_color['back_link'];
+      }
       $back_url->setOption('attributes', $options);
       $back_link = Link::fromTextAndUrl(t('back'), $back_url);
     }
@@ -122,7 +126,7 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
               {{ back_link }}
               
               {% if breadcrumbs %}
-                <div class="breadcrumb">
+                <div class="breadcrumb {{ breadcrumb_class }}">
                   {% for breadcrumb in breadcrumbs %}
                     {{ breadcrumb }}
                   {% endfor %}
@@ -138,6 +142,7 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
         'breadcrumbs' => !empty($breadcrumbs) ? $breadcrumbs : [],
         'page_title' => !empty($page_title) ? $page_title : NULL,
         'back_link' => !empty($back_link) ? $back_link : NULL,
+        'breadcrumb_class' => !empty($text_color['breadcrumbs']) ? $text_color['breadcrumbs'] : '',
       ],
       '#cache' => [
         'contexts' => ['url.path'],
@@ -145,4 +150,29 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     ];
   }
 
+  public function getTextColor() {
+    $color = 'white';
+    $color_map = [
+      'white' => [
+        'back_link' => 'link_cl_a',
+        'breadcrumbs' => '',
+      ],
+      'navy' => [
+        'back_link' => 'link_cl_b',
+        'breadcrumbs' => 'breadcrumb_a',
+      ],
+    ];
+
+    $view_id = \Drupal::routeMatch()->getParameter('view_id');
+
+    if (!empty($view_id)) {
+      switch ($view_id) {
+        case 'agencies_documents':
+          $color = 'navy';
+          break;
+      }
+    }
+
+    return !empty($color_map[$color]) ? $color_map[$color] : [];
+  }
 }
