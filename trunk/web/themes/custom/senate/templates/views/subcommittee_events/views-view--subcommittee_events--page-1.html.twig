@@ -48,25 +48,33 @@ dom_id ? 'js-view-dom-id-' ~ dom_id
 
     {{ exposed }}
     {{ attachment_before }}
-    <div class="bContainer">
-        <div class="pageIn__ico">
-            <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png" srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x"
-                 alt="">
-        </div>
-        <h2>Upcoming Education Events</h2>
+    <section class="section section_ind_j section_bg-color_c">
 
-        <div class="bTiles bTiles_ev bTiles_gap_a">
-            <div class="bTiles__items">
-                {% if rows -%}
-                    {{ rows }}
-                {% elseif empty -%}
-                    {{ empty }}
-                {% endif %}
-                {{ pager }}
+        {{ breadcrumbs }}
+
+        <div class="bContainer">
+            <div class="pageIn__ico">
+                <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png"
+                     srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x"
+                     alt="">
             </div>
 
+            {{ committee_name }}
+
+            <div class="bTiles bTiles_ev bTiles_gap_a">
+                <div class="bTiles__items">
+                    {% if rows -%}
+                        {{ rows }}
+                    {% elseif empty -%}
+                        {{ empty }}
+                    {% endif %}
+                    {{ pager }}
+                </div>
+
+            </div>
+            {{ webform }}
         </div>
-    </div>
+    </section>
 
     {{ attachment_after }}
     {{ more }}
