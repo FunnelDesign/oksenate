@@ -11,7 +11,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Views;
 
-define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations-education/agencies-documents');
+define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/standing-committees/appropriations/education/agencies-documents');
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -690,6 +690,7 @@ function senate_preprocess_views_view(&$vars) {
         $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
         $vars['title'] = $term_obj->getName();
       }
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
   }
 }

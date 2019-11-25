@@ -104,7 +104,11 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     $back = end($breadcrumbs);
     if (!empty($back)) {
       $url = $back->getUrl()->toString();
-      $back_url = Url::fromUserInput($url);
+      $uri_parts = parse_url($url);
+      if (empty($uri_parts["scheme"])) {
+        $url = 'internal:' . $url;
+      }
+      $back_url = Url::fromUri($url);
       $options = ['class' => ['link', 'link_cl_a', 'link_back']];
       $back_url->setOption('attributes', $options);
       $back_link = Link::fromTextAndUrl(t('back'), $back_url);
