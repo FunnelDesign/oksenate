@@ -1,0 +1,15 @@
+.bColumns {
+
+  &_2 {
+
+    @include sm {
+      column-count: 2;
+      column-gap: 40px;
+    }
+  }
+
+  a {
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
