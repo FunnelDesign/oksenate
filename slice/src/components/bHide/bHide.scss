@@ -105,7 +105,7 @@
 
     #{$this}__cont {
       max-height: none;
-      overflow: hidden;
+      overflow: visible;
 
       .bSort__item:nth-child(n + 6) {
         display: none;
