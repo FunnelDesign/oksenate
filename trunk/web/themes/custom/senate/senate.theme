@@ -648,6 +648,9 @@ function senate_preprocess_views_view(&$vars) {
     case 'senators':
       $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
       break;
+    case 'subcommittee_events':
+      $vars['events_url'] = "/upcoming-events/" . $view->args[0];
+      break;
     case 'agencies_documents':
       $tid = !empty($view->args) ? $view->args[0] : '';
       if (!empty($tid)) {

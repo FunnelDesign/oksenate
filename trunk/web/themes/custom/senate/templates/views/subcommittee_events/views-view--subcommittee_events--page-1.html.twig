@@ -33,46 +33,49 @@
  */
 #}
 {% set classes = [
-  dom_id ? 'js-view-dom-id-' ~ dom_id
+dom_id ? 'js-view-dom-id-' ~ dom_id
 ] %}
 <div{{ attributes.addClass(classes) }}>
 
-  {{ title_prefix }}
-{#  {{ title }}#}
-  {{ title_suffix }}
+    {{ title_prefix }}
+    {{ title_suffix }}
 
-  {% if header %}
-    <header>
-      {{ header }}
-    </header>
-  {% endif %}
+    {% if header %}
+        <header>
+            {{ header }}
+        </header>
+    {% endif %}
 
-  {{ exposed }}
-  {{ attachment_before }}
+    {{ exposed }}
+    {{ attachment_before }}
+    <div class="bContainer">
+        <div class="pageIn__ico">
+            <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png" srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x"
+                 alt="">
+        </div>
+        <h2>Upcoming Education Events</h2>
 
-  <div class="bTiles bTiles_ev bTiles_gap_a">
-    <div class="bTiles__items">
-      {% if rows -%}
-        {{ rows }}
-      {% elseif empty -%}
-        {{ empty }}
-      {% endif %}
-      {{ pager }}
+        <div class="bTiles bTiles_ev bTiles_gap_a">
+            <div class="bTiles__items">
+                {% if rows -%}
+                    {{ rows }}
+                {% elseif empty -%}
+                    {{ empty }}
+                {% endif %}
+                {{ pager }}
+            </div>
+
+        </div>
     </div>
 
-    <div class="bTiles__btnAllWrap">
-      <a href="{{ events_url }}" class="btn">{{ "see all"|t }}</a>
-    </div>
-  </div>
+    {{ attachment_after }}
+    {{ more }}
 
-  {{ attachment_after }}
-  {{ more }}
+    {% if footer %}
+        <footer>
+            {{ footer }}
+        </footer>
+    {% endif %}
 
-  {% if footer %}
-    <footer>
-      {{ footer }}
-    </footer>
-  {% endif %}
-
-  {{ feed_icons }}
+    {{ feed_icons }}
 </div>
