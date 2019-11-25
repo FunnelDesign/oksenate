@@ -1,0 +1,46 @@
+.bTable {
+
+  &_a {
+
+    @include sm {
+      position: relative;
+      left: -30px;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    tr {
+
+    }
+
+    td {
+      padding: 12px 12px;
+      vertical-align: top;
+
+      &:first-child {
+
+        @include sm {
+          padding-left: 170px;
+        }
+      }
+    }
+  }
+
+  &_s {
+
+    &_a {
+      max-width: 540px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      @include margin-bottom(30px, 55px);
+    }
+  }
+}
