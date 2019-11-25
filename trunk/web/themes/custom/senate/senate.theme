@@ -134,6 +134,29 @@ function senate_preprocess_node(array &$vars) {
       case 'press_release':
         $vars['title'] = $node->getTitle();
         break;
+      case 'senator':
+
+        $district = (!empty($vars["content"]["field_senator_district_taxonomy"]) &&
+          !empty($vars["content"]["field_senator_district_taxonomy"]['#items'])) ?
+          $vars["content"]["field_senator_district_taxonomy"]['#items']->getValue() : '';
+
+        if (!empty($district) && !empty($district[0])) {
+          $tid = !empty($district[0]["target_id"]) ? $district[0]["target_id"] : '';
+          $term_obj = Drupal::entityTypeManager()
+            ->getStorage('taxonomy_term')
+            ->load($tid);
+          if (!empty($term_obj)) {
+            if ($term_obj->hasField('field_district_term_map_file')) {
+
+              $file = $term_obj->get('field_district_term_map_file');
+              if (!empty($file->entity)) {
+                $file_url = file_create_url($file->entity->getFileUri());
+                $vars['file'] = Markup::create("<a href='$file_url' target='_blank'><i class=\"ss-icon ss-glyphish-outined ss-map\"></i>see map</a>");
+              }
+            }
+          }
+        }
+        break;
     }
   }
 }
