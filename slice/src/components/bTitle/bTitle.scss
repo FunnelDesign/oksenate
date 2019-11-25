@@ -70,6 +70,10 @@
       font-size: 18px;
       color: $color-blue;
     }
+
+    &_b {
+      color: #404040;
+    }
   }
 
   &_wSub {
@@ -98,6 +102,11 @@
     &_c {
       @include cr-last-child;
       @include margin-bottom(30px, 50px);
+    }
+
+    &_d {
+      @include cr-last-child;
+      @include margin-bottom(30px, 50px, 84px);
     }
   }
 }

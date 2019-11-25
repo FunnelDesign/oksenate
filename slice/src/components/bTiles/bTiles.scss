@@ -158,7 +158,7 @@
       }
 
       &:hover {
-        background: #dedede;
+        background: #fff;
       }
     }
 
@@ -177,6 +177,20 @@
 
     #{$this}__btn {
 
+    }
+
+    &_a {
+
+      #{$this}__item {
+
+        @include sm {
+          padding: 38px 25px 48px;
+        }
+      }
+
+      #{$this}__ico {
+        margin: 0 auto 27px;
+      }
     }
   }
 

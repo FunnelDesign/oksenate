@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-PressReleases-2'; ?>
+<?php $title = '19-1642-WeekInReview'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -9,18 +9,18 @@
 
     <section class="section section_bg-color_f section_inner-v-centered">
       <div class="section__bg-wrap">
-        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-8.jpg')"></div>
+        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-10.jpg')"></div>
       </div>
       <div class="section__v-inner section__v-inner_d">
         <div class="bContainer">
 
           <div class="pageIn__ico">
-            <img src="../dist/images/titleIco/title-ico-13.png" srcset="../dist/images/titleIco/title-ico-13-2x.png 2x"
+            <img src="../dist/images/titleIco/title-ico-14.png" srcset="../dist/images/titleIco/title-ico-14-2x.png 2x"
                  alt="">
           </div>
 
           <div class="bTitle bTitle_wSub_a bTitle_gap_a">
-            <h1>Press Releases</h1>
+            <h1>Week In Review</h1>
           </div>
 
         </div>
@@ -32,7 +32,7 @@
 
       <div class="bContainer">
         <div class="bPostList__sortBy">
-          Showing: February 2019
+          Showing: All
         </div>
 
         <div class="pageIn__pCols">
@@ -50,11 +50,11 @@
                   <div class="bPostList__header">
 
                     <div class="bPostList__date">
-                      February 28, 2019 |  9:00am
+                      March 5, 2019
                     </div>
 
                     <a href="#" class="bPostList__title">
-                      Measure to build aerospace training facility heads to full Senate vote
+                      Monday, March 5, to Wed., March 8, 2018
                     </a>
 
                   </div>
@@ -62,12 +62,11 @@
 
                   <div class="bPostList__text">
                     <p>
-                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
-                    </p>
-                    
-                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
-                      Department of Career and Technology Education to acquire or
-                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+                      • The Senate met Monday, passing the following bills: <br>
+                      -SB 1043, Sen. Paul Rosino and Rep. Lewis Moore, modifies
+                      the fee county clerks may charge for records. The bill eliminates
+                      the term "reasonable fee." The bill provides county clerks in
+                      counties with  ... <a href="#" class="bPostList__readMore">read more.</a>
 
                     </p>
                   </div>
@@ -79,11 +78,11 @@
                   <div class="bPostList__header">
 
                     <div class="bPostList__date">
-                      February 28, 2019 |  9:00am
+                      February 26, 2019
                     </div>
 
                     <a href="#" class="bPostList__title">
-                      Measure to build aerospace training facility heads to full Senate vote
+                      Monday, Feb. 26, to Wed., March 1, 2018
                     </a>
 
                   </div>
@@ -91,12 +90,11 @@
 
                   <div class="bPostList__text">
                     <p>
-                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
-                    </p>
-
-                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
-                      Department of Career and Technology Education to acquire or
-                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+                      • The Senate met Monday, passing the following bills: <br>
+                      -SB 1043, Sen. Paul Rosino and Rep. Lewis Moore, modifies
+                      the fee county clerks may charge for records. The bill eliminates
+                      the term "reasonable fee." The bill provides county clerks in
+                      counties with  ... <a href="#" class="bPostList__readMore">read more.</a>
 
                     </p>
                   </div>
@@ -108,11 +106,11 @@
                   <div class="bPostList__header">
 
                     <div class="bPostList__date">
-                      February 28, 2019 |  9:00am
+                      February 19, 2019
                     </div>
 
                     <a href="#" class="bPostList__title">
-                      Measure to build aerospace training facility heads to full Senate vote
+                      Monday, Feb. 19, to Wed., Feb. 22, 2018
                     </a>
 
                   </div>
@@ -120,12 +118,11 @@
 
                   <div class="bPostList__text">
                     <p>
-                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
-                    </p>
-
-                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
-                      Department of Career and Technology Education to acquire or
-                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+                      • The Senate met Monday, passing the following bills: <br>
+                      -SB 1043, Sen. Paul Rosino and Rep. Lewis Moore, modifies
+                      the fee county clerks may charge for records. The bill eliminates
+                      the term "reasonable fee." The bill provides county clerks in
+                      counties with  ... <a href="#" class="bPostList__readMore">read more.</a>
 
                     </p>
                   </div>
@@ -137,11 +134,11 @@
                   <div class="bPostList__header">
 
                     <div class="bPostList__date">
-                      February 28, 2019 |  9:00am
+                      February 12, 2019
                     </div>
 
                     <a href="#" class="bPostList__title">
-                      Measure to build aerospace training facility heads to full Senate vote
+                      Monday, Feb. 12, to Wed., Feb. 15, 2018
                     </a>
 
                   </div>
@@ -149,12 +146,11 @@
 
                   <div class="bPostList__text">
                     <p>
-                      A measure to build a statewide aerospace training facility cleared both the Senate Education and the Appropriation and Budget committees this week and is now headed to the Senate floor.
-                    </p>
-
-                    <p>Senate Bill 432, authored by Sen. Adam Pugh, R-Edmond, authorizes the Oklahoma
-                      Department of Career and Technology Education to acquire or
-                      lease property for the purpose of creating the statewide ... <a href="#" class="bPostList__readMore">read more.</a>
+                      • The Senate met Monday, passing the following bills: <br>
+                      -SB 1043, Sen. Paul Rosino and Rep. Lewis Moore, modifies
+                      the fee county clerks may charge for records. The bill eliminates
+                      the term "reasonable fee." The bill provides county clerks in
+                      counties with  ... <a href="#" class="bPostList__readMore">read more.</a>
 
                     </p>
                   </div>
