@@ -1,0 +1,12 @@
+# This declares the plugin manager to the service container. For background
+# information on the service container, see https://www.drupal.org/node/2133171.
+# Changes here require that the cache be cleared in order to have Drupal notice
+# them.
+services:
+  senate_breadcrumb.breadcrumb:
+    decorates: easy_breadcrumb.breadcrumb
+    decoration_inner_name: easy_breadcrumb_breadcrumb
+    class: Drupal\senate_breadcrumb\SenateBreadcrumbBuilder
+    arguments: ['@router.request_context', '@access_manager', '@router', '@request_stack', '@path_processor_manager', '@config.factory', '@title_resolver', '@current_user', '@path.current', '@plugin.manager.menu.link', '@language_manager', '@entity_type.manager', '@entity.repository', '@logger.factory', '@messenger', '@easy_breadcrumb_breadcrumb']
+    tags:
+      - { name: breadcrumb_builder, priority: 1010 }
