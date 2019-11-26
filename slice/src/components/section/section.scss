@@ -131,6 +131,7 @@
   &__sNav {
     padding: 10px;
     margin-bottom: 20px;
+    z-index: 1;
 
     @include sm {
       position: absolute;
