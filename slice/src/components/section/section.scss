@@ -2,6 +2,10 @@
   position: relative;
   $this: &;
 
+  & > .contextual-region {
+    position: static;
+  }
+
   &_inner-v-centered {
     display: flex;
     flex-direction: column;
