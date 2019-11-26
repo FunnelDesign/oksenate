@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\custom_module\Plugin\Block;
+namespace Drupal\senate_breadcrumb\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
@@ -168,6 +168,7 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     if (!empty($view_id)) {
       switch ($view_id) {
         case 'agencies_documents':
+        case 'subcommittee_events':
           $color = 'navy';
           break;
       }
