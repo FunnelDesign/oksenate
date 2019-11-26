@@ -2,7 +2,7 @@
   text-align: center;
   color: #777777;
 
-  &__desc {
+  &__desc, &__desc.form-item {
     @include cr-last-child;
     @include margin-bottom(30px, 46px);
   }
@@ -16,3 +16,4 @@
     display: inline-block;
   }
 }
+
