@@ -1,0 +1,60 @@
+<?php
+/**
+ * @file
+ * Custom module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter().
+ *
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ * @param $form_id
+ */
+function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  if (preg_match('/webform_submission_subcommittee_notifications/', $form_id)) {
+    $view_id = Drupal::routeMatch()->getParameter('view_id');
+
+    if (!empty($view_id)) {
+      switch ($view_id) {
+        case 'subcommittee_events':
+          $current_path = \Drupal::service('path.current')->getPath();
+          $arg  = explode('/', $current_path);
+          if (!empty($arg[2]) && is_numeric($arg[2])) {
+            $form['actions']['submit']['#validate'][] = 'custom_module_add_committee';
+          }
+          break;
+      }
+    }
+  }
+}
+
+function custom_module_add_committee($form, FormStateInterface $form_state) {
+  $view_id = Drupal::routeMatch()->getParameter('view_id');
+
+  if (!empty($view_id)) {
+    switch ($view_id) {
+      case 'subcommittee_events':
+        $current_path = \Drupal::service('path.current')->getPath();
+        $arg  = explode('/', $current_path);
+        if (!empty($arg[2]) && is_numeric($arg[2])) {
+          $form_state->setValue('committee', $arg[2]);
+        }
+        break;
+    }
+  }
+
+
+  // Check that this node is valid.
+  if ($node instanceof \Drupal\node\NodeInterface) {
+    // Get the value of the email submissions to field.
+    $email_override = $node->get('field_email_submissions_to')->getValue();
+    // Check that the value exists.
+    if (!empty($email_override)) {
+      // Set the value of email submissions to field to the email override field on the webform.
+      $form_state->setValue('email_override', array_shift($email_override)['value']);
+    }
+  }
+}
