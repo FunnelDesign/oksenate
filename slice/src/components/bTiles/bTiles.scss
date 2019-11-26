@@ -192,6 +192,22 @@
         margin: 0 auto 27px;
       }
     }
+
+    &_b {
+
+      #{$this}__item {
+        min-height: 241px;
+      }
+
+      #{$this}__date {
+        margin-bottom: 10px;
+      }
+
+      #{$this}__title {
+        margin-bottom: 24px;
+        line-height: 1.6;
+      }
+    }
   }
 
   &_nav {
@@ -242,5 +258,12 @@
       }
     }
 
+  }
+
+  &_hLeft {
+
+    #{$this}__items  {
+      justify-content: flex-start;
+    }
   }
 }

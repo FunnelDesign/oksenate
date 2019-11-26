@@ -20,6 +20,10 @@
     &_b {
       color: $color-red;
     }
+
+    &_c {
+      color: $color-blue;
+    }
   }
 
   &_back {
@@ -38,6 +42,28 @@
       border-top: none;
       transform: rotate(45deg);
       margin-right: 4px;
+      margin-top: -2px;
+      transition: .3s;
+    }
+  }
+
+  &_to {
+    top: 1px;
+    position: relative;
+    white-space: nowrap;
+    text-transform: uppercase;
+
+    &:after {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 9px;
+      height: 9px;
+      border: 2px solid currentColor;
+      border-right: none;
+      border-top: none;
+      transform: rotate(-135deg);
+      margin-left: 4px;
       margin-top: -2px;
       transition: .3s;
     }

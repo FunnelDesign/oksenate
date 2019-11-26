@@ -5,6 +5,8 @@ window.navSelect = class {
 	constructor(props = {}) {
 		this.name = props.name || `navSelect`;
 		this.selector = props.selector || `.${this.name}`;
+		this.prefix = props.prefix || `year-`;
+		this.prefixContent = props.prefixContent || `overview-`;
 
 		checkInit(this.selector, this.name, (item) => {
 			this.init($(item));
@@ -18,8 +20,8 @@ window.navSelect = class {
 		if(!$select.length) return;
 
 		let $body = $('body, html');
-		let prefix = 'year-';
-		let prefixContent = 'overview-';
+		let prefix = `${this.prefix}`;
+		let prefixContent = `${this.prefixContent}`;
 		let speed = 600;
 
 		if(window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
