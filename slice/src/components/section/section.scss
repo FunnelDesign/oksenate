@@ -184,4 +184,25 @@
   .bContainer {
     position: relative;
   }
+
+  &__btnWrap {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px;
+
+    & > * {
+      margin-right: 5px;
+      margin-left: 5px;
+      margin-bottom: 10px;
+    }
+
+    &_gap {
+
+      &_a {
+        @include margin-bottom(30px, 40px);
+      }
+    }
+  }
 }

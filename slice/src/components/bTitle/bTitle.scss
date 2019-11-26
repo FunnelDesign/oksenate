@@ -85,6 +85,18 @@
         margin: 0 0 6px;
       }
     }
+
+    &_b {
+      @include cr-last-child;
+
+      h1, h2 {
+        margin: 0 0 28px;
+      }
+
+      br {
+        @include display(none, block);
+      }
+    }
   }
 
   &_gap {
