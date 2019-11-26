@@ -45,16 +45,4 @@ function custom_module_add_committee($form, FormStateInterface $form_state) {
         break;
     }
   }
-
-
-  // Check that this node is valid.
-  if ($node instanceof \Drupal\node\NodeInterface) {
-    // Get the value of the email submissions to field.
-    $email_override = $node->get('field_email_submissions_to')->getValue();
-    // Check that the value exists.
-    if (!empty($email_override)) {
-      // Set the value of email submissions to field to the email override field on the webform.
-      $form_state->setValue('email_override', array_shift($email_override)['value']);
-    }
-  }
 }
