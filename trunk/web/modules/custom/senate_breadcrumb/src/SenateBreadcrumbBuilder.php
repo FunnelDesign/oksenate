@@ -42,7 +42,7 @@ use Drupal\easy_breadcrumb\EasyBreadcrumbBuilder;
 /**
  * Primary implementation for the Easy Breadcrumb builder.
  */
-class SenateBreadcrumbBuilder implements BreadcrumbBuilderInterface {
+class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements BreadcrumbBuilderInterface {
   use StringTranslationTrait;
 
   /**
@@ -158,6 +158,8 @@ class SenateBreadcrumbBuilder implements BreadcrumbBuilderInterface {
 
   protected $easyBreadcrumb;
 
+  protected $useEasyBreadcrumb;
+
   /**
    * Constructs the EasyBreadcrumbBuilder.
    *
@@ -219,6 +221,7 @@ class SenateBreadcrumbBuilder implements BreadcrumbBuilderInterface {
     $this->logger = $logger;
     $this->messenger = $messenger;
     $this->easyBreadcrumb = $easy_breadcrumb_breadcrumb;
+    $this->useEasyBreadcrumb = TRUE;
   }
 
   /**
@@ -234,9 +237,42 @@ class SenateBreadcrumbBuilder implements BreadcrumbBuilderInterface {
    * {@inheritdoc}
    */
   public function build(RouteMatchInterface $route_match) {
-    $breadcrumb = $this->easyBreadcrumb->build($route_match);
-//    $breadcrumb = new Breadcrumb();
-//    $links = [];
+    $view_id = \Drupal::routeMatch()->getParameter('view_id');
+    $breadcrumb = new Breadcrumb();
+
+    if (!empty($view_id)) {
+      switch ($view_id) {
+        case 'agencies_documents':
+        case 'subcommittee_events':
+          $current_path = \Drupal::service('path.current')->getPath();
+          $arg = explode('/', $current_path);
+          $removed = array_pop($arg);
+          if (is_numeric($removed)) {
+            $current_path_without_tid = implode('/', $arg);
+            $this->context->setPathInfo($current_path_without_tid);
+            $this->useEasyBreadcrumb = FALSE;
+            $breadcrumb = parent::build($route_match);
+          }
+          break;
+      }
+    }
+
+    if ($this->useEasyBreadcrumb) {
+      $breadcrumb = $this->easyBreadcrumb->build($route_match);
+    }
+
     return $breadcrumb;
+  }
+
+  /**
+   * Set request context from passed in $route_match if route is available.
+   *
+   * @param Drupal\Core\Routing\RouteMatchInterface $route_match
+   *   The route match for the breadcrumb.
+   */
+  protected function setRouteContextFromRouteMatch(RouteMatchInterface $route_match) {
+    if ($this->useEasyBreadcrumb) {
+      $this->easyBreadcrumb->setRouteContextFromRouteMatch($route_match);
+    }
   }
 }
