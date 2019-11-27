@@ -160,6 +160,8 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
 
   protected $useEasyBreadcrumb;
 
+  const COMMITTEE_MAIN_PAGE_NID = 1384;
+
   /**
    * Constructs the EasyBreadcrumbBuilder.
    *
@@ -243,7 +245,6 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
     if (!empty($view_id)) {
       switch ($view_id) {
         case 'agencies_documents':
-        case 'subcommittee_events':
           $current_path = \Drupal::service('path.current')->getPath();
           $arg = explode('/', $current_path);
           $removed = array_pop($arg);
@@ -252,6 +253,31 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
             $this->context->setPathInfo($current_path_without_tid);
             $this->useEasyBreadcrumb = FALSE;
             $breadcrumb = parent::build($route_match);
+          }
+          break;
+        case 'subcommittee_events':
+          $current_path = \Drupal::service('path.current')->getPath();
+          $arg = explode('/', $current_path);
+          $tid = array_pop($arg);
+          $links = [];
+
+          if (is_numeric($tid)) {
+            $this->useEasyBreadcrumb = FALSE;
+            $ancestors = $this->getTaxonomyAncestors($tid);
+            $nodes = $this->getNidsByTids($ancestors);
+
+            $url = Url::fromUserInput('/node/' . $this::COMMITTEE_MAIN_PAGE_NID);
+            $links[] = Link::fromTextAndUrl(t('Committees'), $url);
+
+            foreach ($nodes as $node) {
+              $nid = !empty($node->nid) ? $node->nid : '';
+              $title = !empty($node->title) ? $node->title : '';
+              if (!empty($nid) && !empty($title)) {
+                $url = Url::fromUserInput('/node/' . $nid);
+                $links[] = Link::fromTextAndUrl($title, $url);
+              }
+            }
+            $breadcrumb->setLinks($links);
           }
           break;
       }
@@ -274,5 +300,38 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
     if ($this->useEasyBreadcrumb) {
       $this->easyBreadcrumb->setRouteContextFromRouteMatch($route_match);
     }
+  }
+
+  public function getTaxonomyAncestors($tid) {
+    $ancestors = \Drupal::service('entity_type.manager')
+      ->getStorage("taxonomy_term")->loadAllParents($tid);
+    $ancestors = !empty($ancestors) ? $ancestors : [];
+    $tids = [];
+
+    foreach ($ancestors as $ancestor) {
+      $tids[] = !empty($ancestor) ? $ancestor->id() : '';
+    }
+
+    return $tids;
+  }
+
+  public function getNidsByTids($tids) {
+    if (empty($tids) || !is_array($tids)) {
+      return '';
+    }
+
+    $query = \Drupal::database()->select('node_field_data', 'nfd');
+    $query->fields('nfd', ['nid', 'title']);
+    $query->condition('nfd.status', 1)
+      ->condition('nfd.type', 'subcommittee');
+
+    $query->join('node__field_subcomt', 'nfs', 'nfs.entity_id = nfd.nid');
+    $query->fields('nfs', ['field_subcomt_target_id']);
+    $query->condition('nfs.bundle', 'subcommittee')
+      ->condition('nfs.field_subcomt_target_id', $tids, 'IN');
+
+    $result = $query->execute()->fetchAllAssoc('field_subcomt_target_id');
+
+    return !empty($result) ? $result : [];
   }
 }
