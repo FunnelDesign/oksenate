@@ -641,8 +641,9 @@ function senate_preprocess_views_view_list(&$vars) {
       $args = !empty($view->args) ? $view->args[0] : '';
       $vars['empty_title'] = t('Select Committee');
       if (!empty($args)) {
+        $args = explode(',', $args);
         $ancestors = \Drupal::service('entity_type.manager')
-          ->getStorage("taxonomy_term")->loadParents($args);
+          ->getStorage("taxonomy_term")->loadParents($args[0]);
         if (!empty($ancestors)) {
           $vars['empty_title'] = t('Select Subcommittee');
         }
