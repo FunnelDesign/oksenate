@@ -57,14 +57,23 @@ function senate_preprocess_node(array &$vars) {
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
           ->loadTree('committees', 0, NULL, FALSE);
         $tids = [];
+        $first_level_tids = [];
         foreach ($tree as $term) {
           $tids[] = $term->tid;
+          $parent = (!empty($term->parents) && isset($term->parents[0])) ? $term->parents[0] : '';
+          if ($parent === '0') {
+            $first_level_tids[] = $term->tid;
+          }
         }
 
+        if (!empty($first_level_tids)) {
+          $first_level_result = implode(',', $first_level_tids);
+          $first_level_params = [$first_level_result];
+          $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $first_level_params);
+        }
         if (!empty($tids)) {
           $result = implode(',', $tids);
           $params = [$result];
-          $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
 
           $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', $params);
         }
