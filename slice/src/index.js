@@ -5,6 +5,8 @@ import Observer from "./components/Observer/Observer";
 import BlockVideo from "./components/bMedia/video";
 import bSort from "./components/bSort/bSort";
 import navSelect from "./components/navSelect/navSelect";
+import SliderThumb from "./components/slider-thumb/SliderThumb";
+import FancyBox from "./components/fancybox/FancyBox";
 
 const $ = jQuery;
 
@@ -33,6 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function init() {
 	new bEvent();
 	new bSort();
+	new SliderThumb();
+	// new FancyBox();
 	initSelect();
 
 

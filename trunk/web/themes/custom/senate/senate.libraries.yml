@@ -4,12 +4,14 @@ global-styling:
     theme:
       dist/css/styles.min.css: {}
       dist/vendor/slick/slick.css: {}
+      dist/vendor/flexslider/flexslider.css: {}
       dist/vendor/jquery.scrollbar/jquery.scrollbar.css: {}
   js:
       dist/vendor/device/device.js: {}
       dist/vendor/jquery.cookie/jquery.cookie.js: {}
       dist/vendor/select2/select2.full.min.js: {}
       dist/vendor/slick/slick.min.js: {}
+      dist/vendor/flexslider/jquery.flexslider.min.js: {}
       dist/vendor/jquery.scrollbar/jquery.scrollbar.min.js: {}
       dist/js/index.min.js: {}
 
