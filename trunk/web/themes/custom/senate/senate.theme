@@ -162,7 +162,7 @@ function senate_preprocess_node(array &$vars) {
         }
         if (!empty($vars['content']['field_senator_video_link_video'])) {
           $items = $vars['content']['field_senator_video_link_video']['#items'];
-          $value = $items->getValue();
+          $value = !empty($items) ? $items->getValue() : '';
           if (!empty($value)) {
             $url = $value[0]['value'];
             $video_data = _get_youtube_embed_data($url, ['rel' => 0, 'controls' => 0, 'showinfo' => 0, 'enablejsapi' => 1]);
