@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Contacts-Internship'; ?>
+<?php $title = '19-1642-Contacts-ReserveARoom'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -16,7 +16,7 @@
           <a href="#" class="link link_cl_b link_back">back</a>
           <div class="breadcrumb breadcrumb_a">
             <a href="#">Contacts</a>
-            <span>Senate Internship</span>
+            <span>Reserve A Room</span>
           </div>
         </div>
 
@@ -25,10 +25,10 @@
       <div class="bContainer">
 
         <div class="pageIn__ico pageIn__ico_a">
-          <img src="../dist/images/titleIco/title-ico-22.png" srcset="../dist/images/titleIco/title-ico-22-2x.png 2x" alt="">
+          <img src="../dist/images/titleIco/title-ico-23.png" srcset="../dist/images/titleIco/title-ico-23-2x.png 2x" alt="">
         </div>
         <div class="bTitle bTitle_wSub_a bTitle_gap_b">
-          <h1>Senate Internship</h1>
+          <h1>Reserve a Room</h1>
         </div>
 
         <div class="bWrap bWrap_size_a bWrap_f_a bWrap_f_a_16 bWrap_cl_a bWrap_gap_b">
@@ -37,12 +37,12 @@
             <div class="slider-thumb__slider flexslider">
               <ul class="slides">
                 <?php $SliderThumb = array(
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg")
+                  array("slider-thumb-img-2.jpg"),
+                  array("slider-thumb-img-2.jpg"),
+                  array("slider-thumb-img-2.jpg"),
+                  array("slider-thumb-img-2.jpg"),
+                  array("slider-thumb-img-2.jpg"),
+                  array("slider-thumb-img-2.jpg")
                 )
                 ?>
                 <?php foreach($SliderThumb as $key => $element): ?>
@@ -86,20 +86,20 @@
         <div class="form fSignUp">
 
           <div class="fSignUp__desc">
-            <p>To start the internship process, give us your <br>
-              contact information and we will get back to you.</p>
+            <p>After selecting your reason for reserving a room below, <br>
+              give us your contact information and we will get back to you.</p>
           </div>
           <div class="fSignUp__items">
 
             <div class="form-item form-type-select">
               <select class="form-select">
-                <option>Dropdown Menu</option>
-                <option>Dropdown Menu</option>
-                <option>Dropdown Menu</option>
-                <option>Dropdown Menu</option>
-                <option>Dropdown Menu</option>
-                <option>Dropdown Menu</option>
-                <option>Dropdown Menu</option>
+                <option>Reason for Reserving a Room</option>
+                <option>Reason for Reserving a Room</option>
+                <option>Reason for Reserving a Room</option>
+                <option>Reason for Reserving a Room</option>
+                <option>Reason for Reserving a Room</option>
+                <option>Reason for Reserving a Room</option>
+                <option>Reason for Reserving a Room</option>
               </select>
             </div>
 
