@@ -12,4 +12,11 @@
     -webkit-column-break-inside: avoid;
     break-inside: avoid;
   }
+
+  &_linkOnly {
+
+    a {
+      display: block;
+    }
+  }
 }

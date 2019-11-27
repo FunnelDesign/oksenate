@@ -28,7 +28,33 @@
     }
   }
 
-  &_centered {
+  &_centered, &_cen {
     text-align: center;
+  }
+
+  &_cl {
+
+    &_a {
+      color: #404040;
+    }
+  }
+
+  &_f {
+
+    &_a {
+      font-family: $FreightTextProMedium-Regular;
+      line-height: 2;
+
+      strong {
+        font-family: $FreightTextProBold-Regular;
+      }
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      @include margin-bottom(30px, 77px);
+    }
   }
 }

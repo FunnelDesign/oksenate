@@ -69,7 +69,7 @@ p {
 }
 
 ul, ol {
-  margin: 0;
+  padding: 0;
   @include margin(0 0 12px, 0 0 20px);
 
   li {
@@ -78,8 +78,31 @@ ul, ol {
   }
 }
 
+ol{
+  counter-reset: myCounter;
+
+  li{
+    list-style: none;
+    padding-left: 10px;
+    position: relative;
+
+    &:before {
+      @include pseudo-block($top: -6px, $left: -14px);
+      counter-increment: myCounter;
+      content:counter(myCounter);
+      color: currentColor;
+      display: inline-block;
+      font-family: $FreightTextProBold-Regular;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+  }
+}
+
+
+
 a {
-  color: $color-link;
+  color: currentColor;
   text-decoration: underline;
   transition: all .3s;
 
@@ -98,4 +121,8 @@ a {
       stroke: currentColor;
     }
   }
+}
+
+b, strong {
+  font-weight: normal;
 }

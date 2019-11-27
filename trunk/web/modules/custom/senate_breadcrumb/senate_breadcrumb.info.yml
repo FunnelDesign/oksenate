@@ -1,0 +1,7 @@
+name: 'Senate breadcrumb'
+type: module
+description: 'Senate breadcrumb module.'
+package: 'Custom'
+core: 8.x
+dependencies:
+  - drupal:easy_breadcrumb

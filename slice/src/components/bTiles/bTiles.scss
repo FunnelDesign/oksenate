@@ -135,6 +135,10 @@
 
   &_rel {
 
+    #{$this}__items {
+      margin: 0 -6px -20px;
+    }
+
     #{$this}__item {
       max-width: 280px;
       min-width: 280px;
@@ -190,6 +194,26 @@
 
       #{$this}__ico {
         margin: 0 auto 27px;
+
+        &_a {
+          margin: 0 auto 20px;
+        }
+      }
+    }
+
+    &_b {
+
+      #{$this}__item {
+        min-height: 241px;
+      }
+
+      #{$this}__date {
+        margin-bottom: 10px;
+      }
+
+      #{$this}__title {
+        margin-bottom: 24px;
+        line-height: 1.6;
       }
     }
   }
@@ -242,5 +266,12 @@
       }
     }
 
+  }
+
+  &_hLeft {
+
+    #{$this}__items  {
+      justify-content: flex-start;
+    }
   }
 }

@@ -82,4 +82,41 @@
       order: 1;
     }
   }
+
+  &__info {
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 33px;
+    border-radius: 5px;
+    border: 1px solid #cbcbcb;
+    font-family: $FreightTextProMedium-Regular;
+    color: #404040;
+
+    strong {
+      font-family: $FreightTextProBold-Regular;
+    }
+
+    &It {
+      margin-bottom: 8px;
+    }
+
+    &_gap {
+
+      &_a {
+        @include margin-bottom(30px, 56px);
+      }
+    }
+  }
+
+  &_cl {
+
+    &_a {
+      color: #639e3b;
+    }
+
+    &_b {
+      color: #912f2f;
+    }
+  }
 }

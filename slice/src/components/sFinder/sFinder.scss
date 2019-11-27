@@ -117,4 +117,15 @@
       height: 60px;
     }
   }
+
+  &_a {
+    margin: 0;
+  }
+
+  &_gap {
+
+    &_a {
+      @include margin-bottom(33px);
+    }
+  }
 }

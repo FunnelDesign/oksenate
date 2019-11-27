@@ -12,7 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Views;
 use Drupal\Component\Utility\Html;
 
-define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/standing-committees/appropriations/education/agencies-documents');
+define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.

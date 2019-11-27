@@ -255,7 +255,7 @@
         </div>
 
         <div class="form fSignUp">
-          <div class="fSignUp__desc">
+          <div class="fSignUp__desc form-item">
             <p>Enter your name and email below to receive updates about <br>
               the Agriculture and Wildlife committee.</p>
           </div>

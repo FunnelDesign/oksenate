@@ -27,7 +27,7 @@
           <div class="bTitle bTitle_wSub_a bTitle_gap_a">
             <h1>Session Summary</h1>
             <div class="bTitle__sub">
-              <p>Select a year below to jump to.Select a year below to jump to.</p>
+              <p>Select a year below to jump to.</p>
             </div>
           </div>
 

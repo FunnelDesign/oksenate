@@ -101,6 +101,7 @@
       &:first-child {
         padding-left: 16px;
         text-align: center;
+        white-space: nowrap;
 
         @include sm {
           width: 90px;
@@ -111,6 +112,36 @@
       &:last-child {
         vertical-align: middle;
       }
+    }
+
+    &_v1 {
+
+      #{$this}__th {
+        vertical-align: bottom;
+
+        &:last-child {
+         text-align: center;
+        }
+      }
+
+
+      #{$this}__td {
+
+        &:last-child {
+          vertical-align: top;
+        }
+
+        &:nth-child(3) {
+          width: 93px;
+        }
+      }
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      margin-bottom: 57px;
     }
   }
 }
