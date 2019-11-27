@@ -50,15 +50,27 @@ textarea {
   .form-item {
     margin-bottom: 10px;
     margin-top: 0;
+    position: relative;
   }
 
-  .row {
+  .am-row {
     margin-left: $row-form-left;
     margin-right: $row-form-right;
 
-    div[class*='col-'] {
+    div[class*='am-col-'] {
       padding-left: $col-form-padding-left;
       padding-right: $col-form-padding-right;
+
+      .form-required:not([for='edit-captcha-response']) {
+
+        &:after {
+          margin: -6px 0 0 5px;
+
+          @media (min-width: $bp-small) {
+            margin: -3px 0 0 10px;
+          }
+        }
+      }
     }
 
     select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
@@ -82,15 +94,17 @@ textarea {
       background: none;
       width: auto;
       height: auto;
-      margin: 1px 0 0 0;
+      margin: -6px 0 0 0px;
       font-size: 16px;
       line-height: 1.2;
-      color: #ff000c;
+      color: $color-red;
       position: absolute;
       top: 50%;
       transform: translate(0, -50%);
+      font-family: $FreightTextProBook-Regular;
 
       @media (min-width: $bp-small) {
+        margin: -3px 0 0 5px;
         font-size: 18px;
       }
     }
@@ -99,18 +113,22 @@ textarea {
   .form-required[for='edit-captcha-response'] {
 
     &:before {
-      font-family: $RobotoCondensed-Regular;
       content: '*';
       background: none;
       width: auto;
       margin: 0 3px 0 0;
-      font-size: 24px;
+      font-size: 16px;
       line-height: 1;
-      color: #ff000c;
+      color: $color-red;
       height: 17px;
       display: inline-block;
       overflow: hidden;
       vertical-align: text-bottom;
+      font-family: $FreightTextProBook-Regular;
+
+      @media (min-width: $bp-small) {
+        font-size: 18px;
+      }
     }
 
     &:after {
@@ -143,10 +161,16 @@ textarea {
   }
 }
 
+.captcha {
+  max-width: 330px;
+  margin: 0 auto 20px;
+}
+
 .webform-confirmation__message {
   font-family: $RobotoCondensed-Regular;
-  font-size: 20px;
+  font-size: 28px;
   text-align: center;
+  color: $color-red;
 
   *:last-child {
     margin-bottom: 0;

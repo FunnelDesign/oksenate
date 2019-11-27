@@ -9,11 +9,26 @@
 
   &__items {
     max-width: 330px;
-    margin: 0 auto 30px;
+    margin: 0 auto 20px;
   }
 
   .form-actions {
     display: inline-block;
+  }
+
+  .form-type-select {
+
+    .select2-container {
+      width: 100%;
+
+      .select2-selection--single .select2-selection__rendered {
+        padding: 16px 36px 16px 25px;
+      }
+
+      .select2-selection--single .select2-selection__arrow {
+        right: 8px;
+      }
+    }
   }
 }
 
