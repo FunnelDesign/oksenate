@@ -45,6 +45,7 @@
         "drupal/search_api_page": "^1.0@beta",
         "drupal/time_field": "^1.13",
         "drupal/token": "^1.5",
+        "drupal/video_embed_field": "^2.2",
         "drupal/webform": "^5.5",
         "drush/drush": "^9.0.0",
         "oomphinc/composer-installers-extender": "^1.1",

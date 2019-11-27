@@ -136,6 +136,17 @@
 
         <div class="bAbout bWrap bWrap_size_a">
             <h2>About the Senator</h2>
+            {% if video_url %}
+                <div class="bMedia bAbout__bMedia">
+                    <a href="{{ '#' ~ video_id }}" class="bMedia__play-btn bMedia-tile__play-btn">
+                        {{ content.field_video_preview_image }}
+                    </a>
+                    <div class="bMedia__wrap">
+                        <iframe id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            {% endif %}
+
 
             <div class="bAbout__desc">
                 <div class="bHide">
