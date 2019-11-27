@@ -448,6 +448,14 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           }
         }
       }
+      elseif ($view_name == 'senators') {
+        $committee_options = (!empty($form["committee"]) && !empty($form["committee"]["#options"])) ?
+          $form["committee"]["#options"] : [];
+        $options = _senate_get_committee_options($committee_options);
+        if (!empty($options)) {
+          $form["committee"]["#options"] = $options;
+        }
+      }
       break;
   }
 }
@@ -768,4 +776,38 @@ function _get_youtube_embed_data($url, $query_options = array()) {
   }
 
   return $vars;
+}
+
+function _senate_get_committee_options($committee_options) {
+  if (!empty($committee_options["All"])) {
+    $new_options['All'] = t('Select Committee');
+  }
+
+  $new_options['Standing Committees'] = [];
+  $new_options['Subcommittees'] = [];
+
+  $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+    ->loadTree('committees', 0, NULL, FALSE);
+  $first_level_tids = [];
+  $second_level_tids = [];
+  foreach ($tree as $term) {
+    $parent = (!empty($term->parents) && isset($term->parents[0])) ? $term->parents[0] : '';
+    if ($parent === '0') {
+      $first_level_tids[] = $term->tid;
+    }
+    else {
+      $second_level_tids[] = $term->tid;
+    }
+  }
+
+  foreach ($committee_options as $tid => $name) {
+    if (in_array($tid, $first_level_tids)) {
+      $new_options['Standing Committees'][$tid] = $name;
+    }
+    elseif (in_array($tid, $second_level_tids)) {
+      $new_options['Subcommittees'][$tid] = $name;
+    }
+  }
+
+  return $new_options;
 }
