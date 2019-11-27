@@ -227,7 +227,8 @@
 
               <a href="#XVsjLNUK-pw" class="bMedia__play-btn bMedia-tile__play-btn">
                 <span class="bMedia__preview" style="background-image: url('../dist/images/tmp/video-pre-tmp-1.jpg')"></span>
-                play video
+
+                <span class="bMedia__previewText">play video</span>
               </a>
               <div class="bMedia__wrap">
                 <iframe id="XVsjLNUK-pw" width="560" height="315" src="https://www.youtube.com/embed/XVsjLNUK-pw?rel=0&amp;controls=1&amp;showinfo=0&amp;enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
