@@ -455,6 +455,9 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         if (!empty($options)) {
           $form["committee"]["#options"] = $options;
         }
+        if (!empty($form["zip"])) {
+          $form["zip"]["#placeholder"] = t('Enter Zip');
+        }
       }
       break;
   }
