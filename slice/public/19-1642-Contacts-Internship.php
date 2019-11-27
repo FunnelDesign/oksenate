@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Contacts-ContacSenator'; ?>
+<?php $title = '19-1642-Contacts-Internship'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -16,7 +16,7 @@
           <a href="#" class="link link_cl_b link_back">back</a>
           <div class="breadcrumb breadcrumb_a">
             <a href="#">Contacts</a>
-            <span>Contact My Senator</span>
+            <span>Senate Internship</span>
           </div>
         </div>
 
@@ -25,80 +25,56 @@
       <div class="bContainer">
 
         <div class="pageIn__ico pageIn__ico_b">
-          <img src="../dist/images/titleIco/title-ico-21.png" srcset="../dist/images/titleIco/title-ico-21-2x.png 2x" alt="">
+          <img src="../dist/images/titleIco/title-ico-22.png" srcset="../dist/images/titleIco/title-ico-22-2x.png 2x" alt="">
         </div>
         <div class="bTitle bTitle_wSub_a bTitle_gap_b">
-          <h1>Contact My Senator</h1>
+          <h1>Senate Internship</h1>
+        </div>
+
+        <div class="bWrap bWrap_size_a bWrap_f_a bWrap_f_a_16 bWrap_cl_a bWrap_gap_b">
+            
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+
+  
         </div>
 
         <div class="form fSignUp">
 
           <div class="fSignUp__desc">
-            <p>Select your senator below and then fill in <br>
-              the fields to send your senator a message.</p>
+            <p>To start the internship process, give us your <br>
+              contact information and we will get back to you.</p>
           </div>
           <div class="fSignUp__items">
 
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your Name"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your Address"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your City"/>
-            </div>
-            <div class="am-row">
-              <div class="am-col-sm-6 form-item form-type-select">
-                <select class="form-select">
-                  <option>Your State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                </select>
-              </div>
-
-              <div class="am-col-sm-6 form-item form-type-text">
-                <label class="form-required"></label>
-                <input type="text" class="form-text" placeholder="Your ZipCode"/>
-              </div>
-
-            </div>
-
-            <div class="form-item form-type-text">
-              <label></label>
-              <input type="text" class="form-text" placeholder="Phone Number"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your Email Address"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Subject"/>
-            </div>
-
             <div class="form-item form-type-select">
               <select class="form-select">
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
+                <option>Dropdown Menu</option>
+                <option>Dropdown Menu</option>
+                <option>Dropdown Menu</option>
+                <option>Dropdown Menu</option>
+                <option>Dropdown Menu</option>
+                <option>Dropdown Menu</option>
+                <option>Dropdown Menu</option>
               </select>
             </div>
 
             <div class="form-item form-type-text">
               <label class="form-required"></label>
-              <textarea class="form-textarea" placeholder="Your Message"></textarea>
+              <input type="text" class="form-text" placeholder="First Name"/>
+            </div>
+            <div class="form-item form-type-text">
+              <label class="form-required"></label>
+              <input type="text" class="form-text" placeholder="Last Name"/>
+            </div>
+            <div class="form-item form-type-text">
+              <label class="form-required"></label>
+              <input type="text" class="form-text" placeholder="Email Address"/>
+            </div>
+
+            <div class="form-item form-type-text">
+              <label></label>
+              <textarea class="form-textarea" placeholder="Type any additional comments or questions you may have here."></textarea>
             </div>
           </div>
           <div class="captcha">
@@ -123,10 +99,8 @@
             <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
           </div>
 
-          <div class="webform-confirmation__message">
-            <p>
-              Your form was successfully submitted!
-            </p>
+          <div class="form-required-note">
+            <span>*</span> Required
           </div>
 
           <div class="webform-confirmation__message">
@@ -135,6 +109,8 @@
             </p>
           </div>
         </div>
+
+
 
       </div>
 

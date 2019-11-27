@@ -135,6 +135,26 @@ textarea {
       display: none;
     }
   }
+
+  .form-required-note {
+    text-align: center;
+    @include margin-top(15px, 26px);
+    font-family: $FreightTextProBook-Regular;
+    font-size: 14px;
+    color: #6f6f6f;
+
+    span {
+      font-size: 16px;
+      line-height: 1;
+      color: $color-red;
+      display: inline-block;
+      font-family: $FreightTextProBook-Regular;
+
+      @media (min-width: $bp-small) {
+        font-size: 18px;
+      }
+    }
+  }
 }
 
 .form-actions {

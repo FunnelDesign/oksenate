@@ -48,6 +48,10 @@
       strong {
         font-family: $FreightTextProBold-Regular;
       }
+
+      &_16 {
+        line-height: 1.6;
+      }
     }
   }
 
@@ -55,6 +59,10 @@
 
     &_a {
       @include margin-bottom(30px, 77px);
+    }
+
+    &_b {
+      @include margin-bottom(30px, 50px);
     }
   }
 }
