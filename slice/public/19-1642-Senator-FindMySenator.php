@@ -139,12 +139,21 @@
               <div class="form-item form-type-select">
                 <select class="form-select">
                   <option>Select Committee</option>
-                  <option>Cotton</option>
-                  <option>Craig</option>
-                  <option>Creek</option>
-                  <option>Custer</option>
-                  <option>Delaware</option>
-                  <option>Dewey</option>
+                  <optgroup label="Standing Committees">
+                    <option>Agriculture and Wildlife</option>
+                    <option>Appropriations</option>
+                    <option>Business, Commerce and Tourism</option>
+                    <option>Education</option>
+                    <option>Energy</option>
+                    <option>Finance</option>
+                    <option>Finance</option>
+                    <option>General Government</option>
+                  </optgroup>
+                  <optgroup label="Subcommittees">
+                    <option>Education</option>
+                    <option>General Government and Transoration</option>
+                    <option>Health and Human Services</option>
+                  </optgroup>
                 </select>
               </div>
 

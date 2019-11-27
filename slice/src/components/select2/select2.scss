@@ -111,10 +111,15 @@
   -webkit-user-select: none;
   margin: 0 5px;
   border-radius: 5px;
-  font-family: $RobotoCondensed-Light;
+  font-family: $RobotoCondensed-Regular;
+  font-size: 12px;
 
   &[aria-selected] {
     cursor: pointer;
+  }
+
+  li {
+    margin: 0;
   }
 }
 
@@ -478,7 +483,11 @@
   .select2-results__group {
     cursor: default;
     display: block;
-    padding: 6px;
+    padding: 5px 10px;
+    font-family: $RobotoCondensed-Italic;
+    color: #617eae;
+    font-size: 12px;
+
   }
 }
 
