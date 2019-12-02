@@ -10,6 +10,10 @@ class CustomEv {
 
 	customClick() {
 
+		$('#views-exposed-form-senators-page-1 .form-submit').on('click touch', ()=> {
+			console.log('filter submit');
+		});
+
 		$(document).on('submit',function(){
 			console.log('submit-ev submit');
 		});
