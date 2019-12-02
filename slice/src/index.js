@@ -19,13 +19,7 @@ if (window.Drupal?.behaviors) {
 		attach: (context, settings) => {
 			init();
 
-			$('#views-exposed-form-senators-page-1').ajaxComplete(function(event, xhr, settings) {+
-				console.log(event, xhr, settings);
 
-				if ($(event.target.id) === 'views-exposed-form-senators-page-1') {
-					console.log(event.target.id);
-				}
-			});
 		},
 		completedCallback: () => { /*Do nothing. But it's here in case other modules/themes want to override it.*/}
 	}

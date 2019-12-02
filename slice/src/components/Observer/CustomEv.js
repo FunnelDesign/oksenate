@@ -14,6 +14,14 @@ class CustomEv {
 			console.log('submit-ev submit');
 		});
 
+		$(document).ajaxComplete(function(event, xhr, settings) {
+			console.log(event, xhr, settings);
+
+			if ($(event.target.id) === 'views-exposed-form-senators-page-1') {
+				console.log(event.target.id);
+			}
+		});
+
 		$('.sSen__head .bef-exposed-form').on('submit', function(){
 			console.log('submit');
 			$('.sSen__res').addClass('sSen__res_loading')
