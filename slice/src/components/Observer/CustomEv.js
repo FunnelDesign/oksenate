@@ -14,11 +14,23 @@ class CustomEv {
 			console.log('submit-ev submit');
 		});
 
-		$(document).ajaxComplete(function(event, xhr, settings) {
-			console.log(event, xhr, settings);
+		$(document).ajaxStart(function(event, xhr, settings) {
+			console.log('ajaxStart event: ', event);
+			console.log('ajaxStart xhr: ', xhr);
+			console.log('ajaxStart settings: ', settings);
 
 			if ($(event.target.id) === 'views-exposed-form-senators-page-1') {
-				console.log(event.target.id);
+				console.log('ajaxStart event.target.id: ',event.target.id);
+			}
+		});
+
+		$(document).ajaxComplete(function(event, xhr, settings) {
+			console.log('event: ', event);
+			console.log('xhr: ', xhr);
+			console.log('settings: ', settings);
+
+			if ($(event.target.id) === 'views-exposed-form-senators-page-1') {
+				console.log('event.target.id: ',event.target.id);
 			}
 		});
 
