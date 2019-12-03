@@ -211,9 +211,29 @@ function senate_preprocess_field(array &$vars, $hook) {
 
   switch ($vars['element']['#field_name']) {
     case 'field_senator_committee_taxonomy':
-      $items = !empty($vars['items']) ? $vars['items'] : [];
-      foreach ($items as $key => $item) {
-        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bMembership__item');
+
+      $commitees = (!empty($vars['items'])) ? $vars['items']: '';
+      if (!empty($commitees)){
+        foreach ($commitees as $key=> $item) {
+          $tid = !empty($item['content']['#plain_text']) ? $item['content']['#plain_text'] : '';
+          $term_obj = Drupal::entityTypeManager()
+            ->getStorage('taxonomy_term')
+            ->load($tid);
+          if (!empty($term_obj)) {
+            if ($term_obj->hasField('field_link_to_committee_page')) {
+              $commitee_link = $term_obj->get('field_link_to_committee_page')
+                ->getValue();
+              $url = Url::fromUri('internal:#');
+              if (!empty($commitee_link[0]['uri'])) {
+                $url = Url::fromUri($commitee_link[0]['uri']);
+              }
+              $options = ['class' => ['bMembership__item',], 'target' => ['_blank']];
+              $url->setOption('attributes', $options);
+              $title = $term_obj->get('name')->getValue();
+              $vars['items'][$key]['term_url'] = Link::fromTextAndUrl($title[0]['value'], $url);
+            }
+          }
+        }
       }
       break;
     case 'field_home_slider_bg_image_mob':
@@ -593,14 +613,6 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
         </div><div class=\"sSen__opt form f-search f-search_min\">";
     $form['zip']['#suffix'] = "</div></div>";
     $form['zip']['#attributes']['data-bef-auto-submit-exclude'] = '1';
-  }
-
-  if (!empty($form['county'])){
-    $form['county']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
-            <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-2.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-2-2x.png 2x\"  alt=\"\">
-        </div>";
-    $form['county']['#suffix'] = "</div>";
   }
 
   if (!empty($form['county'])){
