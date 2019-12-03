@@ -93,7 +93,13 @@
 
     &_a {
       text-align: center;
-      margin-bottom: 32px;
+      max-width: 260px;
+      margin: 0 auto 32px;
+
+      @include sm {
+        max-width: none;
+        margin: 0 0 32px;
+      }
 
       #{$this}__notice-m {
         padding: 12px 15px;
