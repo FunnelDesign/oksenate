@@ -18,8 +18,6 @@ if (window.Drupal?.behaviors) {
 	Drupal.behaviors.projectName = {
 		attach: (context, settings) => {
 			init();
-
-
 		},
 		completedCallback: () => { /*Do nothing. But it's here in case other modules/themes want to override it.*/}
 	}
