@@ -7,33 +7,115 @@
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
-    <section class="section section_inner-v-centered sHero">
+    <section class="section sSlider">
+      <div class="sSlider__in">
+        <div class="slider-type-a">
 
-      <div class="section__bg-wrap section__bg-wrap_mobile">
-        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-1-mobile.jpg')"></div>
-      </div>
+          <div class="slider-type-a__bg-items">
+            <?php
+            $bg_items_slider_a = "../dist/images/tmp/";
+            $slider_type_a_bg_items = array(
+              "section-bg-img-14-a.jpg",
+              "section-bg-img-14-a.jpg",
+            ) ?>
 
-      <div class="section__bg-wrap">
-        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-1.jpg')"></div>
-      </div>
-
-
-      <div class="section__v-inner section__v-inner_a">
-        <div class="bContainer">
-
-          <div class="sHero__img desktop-only">
-            <img src="../dist/images/logo.png" alt="">
+            <?php foreach ($slider_type_a_bg_items as $element): ?>
+              <div class="slider-type-a__bg-item">
+                <div class="section__bg-wrap">
+                  <div class="section__bg section__bg_a" style="background-image: url('<?php print $bg_items_slider_a . $element ?>')"></div>
+                </div>
+              </div>
+            <?php endforeach; ?>
           </div>
-          <div class="bTitle bTitle_b bTitle_line sHero__bTitle">
-            <h1>Oklahoma <span>Strong</span></h1>
+          <div class="slider-type-a__desc-wrap">
+            <div class="bContainer">
+
+              <div class="slider-type-a__desc">
+                <?php
+                $desc_items = [
+                  ['
+                   <div class="pageIn__ico sSlider__ico">
+                      <img src="../dist/images/titleIco/title-ico-37.png" 
+                           srcset="../dist/images/titleIco/title-ico-37-2x.png 2x"
+                           alt="">
+                    </div>
+                    <div class="bTitle bTitle_b bTitle_line sSlider__bTitle">
+                      <h1>Weather <span>Advisory</span></h1>
+                    </div>
+                    
+                    <div class="sSlider__desc">
+                      <p>Due to extreme weather, Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
+                    </div>
+                    <div class="sSlider__btnWrap">
+                      <a href="#" class="btn">read more</a>
+                    </div>
+                      '],
+                  ['
+                    <div class="pageIn__ico sSlider__ico">
+                      <img src="../dist/images/titleIco/title-ico-37.png" 
+                           srcset="../dist/images/titleIco/title-ico-37-2x.png 2x"
+                           alt="">
+                    </div>
+                    <div class="bTitle bTitle_b bTitle_line sSlider__bTitle">
+                      <h1>Weather <span>Advisory</span></h1>
+                    </div>
+                    
+                    <div class="sSlider__desc">
+                      <p>Due to extreme weather, Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
+                      
+                    </div>
+                     <div class="sSlider__btnWrap">
+                      <a href="#" class="btn">read more</a>
+                    </div>
+                      '],
+                ]
+                ?>
+                <?php foreach ($desc_items as $element): ?>
+
+                  <div class="slider-type-a__desc-item">
+                    <?php print $element[0]; ?>
+                  </div>
+                <?php endforeach; ?>
+
+              </div>
+              <div class="slider-type-a__nav">
+
+              </div>
+
+            </div>
           </div>
-          
-          <div class="sHero__desc">
-            <p>Serving Oklahoma for the creation of laws and budgets. </p>
-          </div>
+
         </div>
       </div>
     </section>
+
+<!--    <section class="section section_inner-v-centered sHero">-->
+<!---->
+<!--      <div class="section__bg-wrap section__bg-wrap_mobile">-->
+<!--        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-1-mobile.jpg')"></div>-->
+<!--      </div>-->
+<!---->
+<!--      <div class="section__bg-wrap">-->
+<!--        <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-1.jpg')"></div>-->
+<!--      </div>-->
+<!---->
+<!---->
+<!--      <div class="section__v-inner section__v-inner_a">-->
+<!--        <div class="bContainer">-->
+<!---->
+<!--          <div class="sHero__img desktop-only">-->
+<!--            <img src="../dist/images/logo.png" alt="">-->
+<!--          </div>-->
+<!--          <div class="bTitle bTitle_b bTitle_line sHero__bTitle">-->
+<!--            <h1>Oklahoma <span>Strong</span></h1>-->
+<!--          </div>-->
+<!--          -->
+<!--          <div class="sHero__desc">-->
+<!--            <p>Serving Oklahoma for the creation of laws and budgets. </p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </section>-->
 
     <section class="section sFinder">
       <div class="sFinder__bg">
