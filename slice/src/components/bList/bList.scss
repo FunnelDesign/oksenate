@@ -1,0 +1,27 @@
+.bList {
+  $this: &;
+
+  &_a {
+
+    li {
+      position: relative;
+      list-style: none;
+
+      &:before {
+        content: "\2022";
+        color: $color-red;
+        display: inline-block;
+        font-weight: bold;
+        line-height: 0.4;
+        position: absolute;
+        left: -18px;
+        @include font-size(15px, 17px);
+        @include top(5px, 7px);
+      }
+
+      strong {
+        color: #253857;
+      }
+    }
+  }
+}

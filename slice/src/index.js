@@ -7,6 +7,7 @@ import bSort from "./components/bSort/bSort";
 import navSelect from "./components/navSelect/navSelect";
 import SliderThumb from "./components/slider-thumb/SliderThumb";
 import FancyBox from "./components/fancybox/FancyBox";
+import SliderTypeA from "./components/slider-type-a/SliderTypeA";
 
 const $ = jQuery;
 
@@ -36,6 +37,7 @@ function init() {
 	new bEvent();
 	new bSort();
 	new SliderThumb();
+	new SliderTypeA();
 	// new FancyBox();
 	initSelect();
 

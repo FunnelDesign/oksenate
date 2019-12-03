@@ -1,0 +1,27 @@
+.sSlider {
+  display: flex;
+  flex-direction: column;
+  @include padding(40px 0 70px, 63px 0 90px);
+
+  &__in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    @include min-height(200px, 300px);
+  }
+
+  &__ico {
+    margin-bottom: 5px;
+  }
+
+  &__desc {
+    @include cr-last-child;
+    max-width: 350px;
+    margin: 0 auto 20px;
+    font-family: $FreightTextProMedium-Regular;
+    font-size: 14px;
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
+  }
+}
