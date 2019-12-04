@@ -1,0 +1,33 @@
+.search-form {
+
+
+  .path-search & {
+    max-width: 500px;
+    margin: 0 auto 30px;
+
+    .search-advanced, .search-help-link {
+      display: none;
+    }
+
+    .container-inline {
+      display: flex;
+      align-items: center;
+
+      & > * {
+
+        &:first-child {
+          flex: 1;
+          margin-right: 20px;
+        }
+      }
+
+      label {
+        display: none;
+      }
+
+      .form-submit {
+        padding: 16px 26px;
+      }
+    }
+  }
+}
