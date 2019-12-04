@@ -11,6 +11,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Views;
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\Xss;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 
@@ -308,6 +309,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_finder_left_image':
     case 'field_home_finder_right_image':
     case 'field_webform_block_icon':
+    case 'field_basic_top_logo_image':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -391,6 +393,25 @@ function senate_preprocess_field(array &$vars, $hook) {
         if (!empty($item["content"]["#file"])) {
           $vars['files'][$key]['url'] = file_create_url($item["content"]["#file"]->getFileUri());
           $vars['files'][$key]['title'] = !empty($item["content"]["#description"]) ? $item["content"]["#description"] : '';
+        }
+      }
+      break;
+
+    case 'field_financials_files':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('Download');
+        $title = Markup::create('<span class="bTiles__title">' . $title . '</span><span class="bTiles__btnWrap"><span class="btn btn_a btn_s_c">view pdf</span></span>');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = $file->url();
+          $url = Url::fromUri($url);
+          $options = ['class' => ['bTiles__item',]];
+          $options['target'] = '_blank';
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
         }
       }
       break;
