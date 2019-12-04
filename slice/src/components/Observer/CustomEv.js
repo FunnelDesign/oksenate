@@ -9,26 +9,22 @@ class CustomEv {
 
 	customClick() {
 
-		$('#views-exposed-form-senators-page-1 .form-submit').on('click touch', ()=> {
-			console.log('filter submit');
-
-			$('.sSen .sSen__res').addClass('sSen__res_loading');
-		});
-
-		$(document).on('submit',function(){
-			console.log('submit-ev submit');
-		});
+		addListenerForSenatorFilter();
 
 		$(document).ajaxStart(function(event, xhr, settings) {
-			console.log('ajaxStart event: ', event);
-			console.log('ajaxStart xhr: ', xhr);
-			console.log('ajaxStart settings: ', settings);
+			// console.log('ajaxStart event: ', event);
+			// console.log('ajaxStart xhr: ', xhr);
+			// console.log('ajaxStart settings: ', settings);
 		});
 
 		$(document).ajaxComplete(function(event, xhr, settings) {
 			console.log('ajaxComplete event: ', event);
 			console.log('ajaxComplete xhr: ', xhr);
 			console.log('ajaxComplete settings: ', settings);
+
+			if (~settings.data.indexOf('view_name=senators') ) {
+				addListenerForSenatorFilter();
+			}
 		});
 
 		$(document).on('click touch', (e) => {
@@ -38,6 +34,15 @@ class CustomEv {
 				$('.bDrop').removeClass('select2-container--open')
 			}
 		});
+
+		function addListenerForSenatorFilter() {
+
+			$('#views-exposed-form-senators-page-1 .form-submit').on('click touch', ()=> {
+				console.log('filter submit');
+
+				$('.sSen .sSen__res').addClass('sSen__res_loading');
+			});
+		}
 	}
 
 	addAccessibilityCookie() {
