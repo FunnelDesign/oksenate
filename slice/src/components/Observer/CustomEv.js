@@ -11,17 +11,7 @@ class CustomEv {
 
 		addListenerForSenatorFilter();
 
-		$(document).ajaxStart(function(event, xhr, settings) {
-			// console.log('ajaxStart event: ', event);
-			// console.log('ajaxStart xhr: ', xhr);
-			// console.log('ajaxStart settings: ', settings);
-		});
-
 		$(document).ajaxComplete(function(event, xhr, settings) {
-			console.log('ajaxComplete event: ', event);
-			console.log('ajaxComplete xhr: ', xhr);
-			console.log('ajaxComplete settings: ', settings);
-
 			if (~settings.data?.indexOf('view_name=senators') ) {
 				addListenerForSenatorFilter();
 			}
@@ -38,8 +28,6 @@ class CustomEv {
 		function addListenerForSenatorFilter() {
 
 			$('#views-exposed-form-senators-page-1 .form-submit').on('click touch', ()=> {
-				console.log('filter submit');
-
 				$('.sSen .sSen__res').addClass('sSen__res_loading');
 			});
 		}
