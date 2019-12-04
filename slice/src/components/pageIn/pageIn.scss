@@ -1,5 +1,12 @@
+@import "../bContainer/bContainer";
 .pageIn {
   $this: &;
+
+  .path-search & {
+    padding: 58px 0;
+
+    @extend .bContainer;
+  }
 
   .page-authorization & {
 
