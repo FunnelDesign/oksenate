@@ -136,10 +136,14 @@
 
         <div class="bAbout bWrap bWrap_size_a">
             <h2>About the Senator</h2>
+            {{ content.field_video_preview_image }}
+
             {% if video_url %}
                 <div class="bMedia bAbout__bMedia">
                     <a href="{{ '#' ~ video_id }}" class="bMedia__play-btn bMedia-tile__play-btn">
                         {{ content.field_video_preview_image }}
+
+                        <span class="bMedia__previewText">play video</span>
                     </a>
                     <div class="bMedia__wrap">
                         <iframe id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
@@ -166,6 +170,7 @@
         <div class="bMembership bWrap bWrap_size_a">
             <h2>Committee Membership</h2>
             {{ content.field_senator_committee_taxonomy }}
+            {{ term_url }}
         </div>
         <div class="bDistrict bWrap bWrap_size_a">
             <h2>{{ content.field_senator_district_taxonomy }}{{ file }}</h2>

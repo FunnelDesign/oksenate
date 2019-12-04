@@ -12,6 +12,10 @@
     &_b {
       max-width: 746px;
     }
+
+    &_c {
+      max-width: 350px;
+    }
   }
 
   &_indent {
@@ -52,6 +56,10 @@
       &_16 {
         line-height: 1.6;
       }
+
+      &_17 {
+        line-height: 1.7;
+      }
     }
   }
 
@@ -63,6 +71,14 @@
 
     &_b {
       @include margin-bottom(30px, 50px);
+    }
+
+    &_c {
+      @include margin-bottom(20px);
+    }
+
+    &_d {
+      @include margin-bottom(40px);
     }
   }
 }

@@ -1,0 +1,100 @@
+.slider-type-a {
+  line-height: 1.2;
+
+  &__bg-items {
+    @include stretch-block();
+
+    .slick-list, .slick-track {
+      height: 100%;
+    }
+  }
+
+  &__bg-item {
+    position: relative;
+    height: 100%;
+  }
+
+  &__desc-wrap {
+    @include adaptive(padding-top, $sm: 44px);
+
+    .slick-track {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__desc {
+    position: relative;
+  }
+
+  &__desc-item {
+    line-height: 1.6;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include min-height(190px, 236px);
+
+    *:last-child {
+      margin-bottom: 0;
+    }
+
+    &.slick-slide {
+      opacity: 0 !important;
+      transition: transform 0s .6s, opacity 0.6s !important;
+
+      &.slick-active {
+        opacity: 1 !important;
+        transition: transform .9s .6s, opacity 0.9s 0.6s !important;
+      }
+    }
+  }
+
+  &__nav {
+    @include margin-top(24px, 36px);
+    padding: 0 30px;
+    text-align: center;
+  }
+
+  .slick-dots {
+    padding: 0;
+    margin: 0 -5px;
+    list-style: none;
+    position: relative;
+    z-index: 1;
+
+    li {
+      margin: 0 5px 0;
+      display: inline-block;
+      padding: 0;
+      position: relative;
+      cursor: pointer;
+      vertical-align: middle;
+
+      &:hover, &.slick-active {
+
+        button {
+          background-color: #fff;
+          outline: none !important;
+        }
+      }
+    }
+
+    button {
+      @include text-hide();
+      @include width(10px, 13px);
+      @include height(10px, 13px);
+      background: none;
+      transition: background .3s, border .3s;
+      display: block;
+      padding: 0;
+      cursor: pointer;
+      color: transparent;
+      outline: none;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #fff;
+      border-radius: 50%;
+    }
+  }
+}
