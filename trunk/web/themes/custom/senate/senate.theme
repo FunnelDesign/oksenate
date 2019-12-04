@@ -44,8 +44,12 @@ function senate_preprocess_page(array &$vars) {
  * Implements hook_preprocess_node().
  */
 function senate_preprocess_node(array &$vars) {
+  global $base_path;
   $node = $vars['node'];
   $view_mode = !empty($vars["view_mode"]) ? $vars["view_mode"] : '';
+  $theme_path = $base_path . \Drupal::theme()
+      ->getActiveTheme()
+      ->getPath();
 
   if (!empty($node)) {
 
@@ -169,6 +173,12 @@ function senate_preprocess_node(array &$vars) {
             $vars['video_id'] = !empty($video_data['video_id']) ? $video_data['video_id'] : '';
             $vars['video_url'] = !empty($video_data['url']) ? $video_data['url'] : '';
           }
+
+          $img_file_uri = $theme_path . '/dist/images/default-video-preview.jpg';
+          if (!empty($vars['content']['field_video_preview_image'][0]['#item'])){
+            $img_file_uri = $vars['content']['field_video_preview_image'][0]['#item']->entity->url();
+          }
+          $vars['preview_image'] = Markup::create("<span class=\"bMedia__preview\" style=\"background-image: url('$img_file_uri')\"></span>");
         }
         break;
     }

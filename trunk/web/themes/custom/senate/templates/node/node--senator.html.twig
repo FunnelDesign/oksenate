@@ -136,13 +136,10 @@
 
         <div class="bAbout bWrap bWrap_size_a">
             <h2>About the Senator</h2>
-            {{ content.field_video_preview_image }}
-
             {% if video_url %}
                 <div class="bMedia bAbout__bMedia">
                     <a href="{{ '#' ~ video_id }}" class="bMedia__play-btn bMedia-tile__play-btn">
-                        {{ content.field_video_preview_image }}
-
+                        {{ preview_image }}
                         <span class="bMedia__previewText">play video</span>
                     </a>
                     <div class="bMedia__wrap">
