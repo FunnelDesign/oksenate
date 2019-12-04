@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Contacts-ContacSenator'; ?>
+<?php $title = 'Contact senator selection page'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -8,7 +8,6 @@
   <div class="pageIn">
 
     <section class="section section_ind_j section_bg-color_c">
-
 
       <div class="section__sNav section__sNav_a">
 
@@ -39,66 +38,35 @@
           </div>
           <div class="fSignUp__items">
 
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your Name"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your Address"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your City"/>
-            </div>
-            <div class="am-row">
-              <div class="am-col-sm-6 form-item form-type-select">
-                <select class="form-select">
-                  <option>Your State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                  <option>State</option>
-                </select>
-              </div>
-
-              <div class="am-col-sm-6 form-item form-type-text">
-                <label class="form-required"></label>
-                <input type="text" class="form-text" placeholder="Your ZipCode"/>
-              </div>
-
-            </div>
-
-            <div class="form-item form-type-text">
-              <label></label>
-              <input type="text" class="form-text" placeholder="Phone Number"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Your Email Address"/>
-            </div>
-            <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="Subject"/>
-            </div>
-
             <div class="form-item form-type-select">
               <select class="form-select">
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
-                <option>Send Email To</option>
+                <option>Select Your Senator</option>
+                <option>Select Your Senator</option>
+                <option>Select Your Senator</option>
+                <option>Select Your Senator</option>
+                <option>Select Your Senator</option>
+                <option>Select Your Senator</option>
+                <option>Select Your Senator</option>
+                <option>Select Your Senator</option>
               </select>
             </div>
 
             <div class="form-item form-type-text">
               <label class="form-required"></label>
-              <textarea class="form-textarea" placeholder="Your Message"></textarea>
+              <input type="text" class="form-text" placeholder="First Name"/>
+            </div>
+            <div class="form-item form-type-text">
+              <label class="form-required"></label>
+              <input type="text" class="form-text" placeholder="Last Name"/>
+            </div>
+            <div class="form-item form-type-text">
+              <label class="form-required"></label>
+              <input type="text" class="form-text" placeholder="Email Address"/>
+            </div>
+
+            <div class="form-item form-type-text">
+              <label class="form-required"></label>
+              <textarea class="form-textarea" placeholder="Type your message here."></textarea>
             </div>
           </div>
           <div class="captcha">
