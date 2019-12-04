@@ -105,6 +105,21 @@
       <div class="section__v-inner section__v-inner_c">
         <div class="bContainer">
           <div class="pageIn__ico">
+            <img src="../dist/images/titleIco/title-ico-29.png"
+                 srcset="../dist/images/titleIco/title-ico-29-2x.png 2x"
+                 alt="">
+          </div>
+          <div class="bTitle bTitle_wSub_a bTitle_gap_a">
+            <h1>General Government</h1>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section_bg-color_f section_inner-v-centered">
+      <div class="section__v-inner section__v-inner_c">
+        <div class="bContainer">
+          <div class="pageIn__ico">
             <img src="../dist/images/titleIco/title-ico-30.png"
                  srcset="../dist/images/titleIco/title-ico-30-2x.png 2x"
                  alt="">
