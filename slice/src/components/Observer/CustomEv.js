@@ -22,7 +22,7 @@ class CustomEv {
 			console.log('ajaxComplete xhr: ', xhr);
 			console.log('ajaxComplete settings: ', settings);
 
-			if (~settings.data.indexOf('view_name=senators') ) {
+			if (~settings.data?.indexOf('view_name=senators') ) {
 				addListenerForSenatorFilter();
 			}
 		});
