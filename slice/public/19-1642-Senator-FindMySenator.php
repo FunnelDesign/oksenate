@@ -13,7 +13,7 @@
         <div class="sSen__byAdd">
           <a href="#" class="sSen__btnByAdd">search by address</a>
         </div>
-        <div class="sSen__fil">
+        <div class="sSen__fil" id="views-exposed-form-senators-page-1">
 
           <a href="#" class="form-submit TEST-ONLY_FOR_SLICE" style="position: absolute;">loader ONLY FOR SLICE</a>
 
