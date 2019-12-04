@@ -8,6 +8,7 @@ import navSelect from "./components/navSelect/navSelect";
 import SliderThumb from "./components/slider-thumb/SliderThumb";
 import FancyBox from "./components/fancybox/FancyBox";
 import SliderTypeA from "./components/slider-type-a/SliderTypeA";
+import sHeader from "./components/sHeader/sHeader";
 
 const $ = jQuery;
 
@@ -39,6 +40,7 @@ function init() {
 	new SliderThumb();
 	new SliderTypeA();
 	// new FancyBox();
+	new sHeader();
 	initSelect();
 
 

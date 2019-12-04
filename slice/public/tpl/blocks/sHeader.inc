@@ -33,7 +33,7 @@
 
     <div class="sHeader__bottom">
       <div class="bContainer">
-        <a href="#" data-ev="toggleClass:sHeader:mobileMenu;removeClass:sHeader:searchOpen" class="sHeader__btn-mobile">
+        <a href="#" class="sHeader__btn-mobile">
           <span></span>
         </a>
 
@@ -123,7 +123,7 @@
         </div>
 
         <div class="sHeader__search">
-          <a href="#" data-ev="toggleClass:sHeader:searchOpen;removeClass:sHeader:mobileMenu" class="sHeader__searchBtn"></a>
+          <a href="#" class="sHeader__searchBtn"></a>
 
           <div class="sHeader__searchForm">
 <!--            <div class="form f-search">-->

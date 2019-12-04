@@ -15,7 +15,21 @@ window.sHeader = class {
 
 		$elm.on('click touch', `.${this.name}__btn-mobile`, (e) => {
 			e.preventDefault();
-			$elm.toggleClass(`${this.name}_mobile-active`);
+			$elm.toggleClass(`${this.name}_mobileMenu`);
+			$('body').toggleClass(`mobileMenu-open`);
+
+			$elm.removeClass(`${this.name}_searchOpen`);
+		});
+
+		$elm.on('click touch', `.${this.name}__searchBtn`, (e) => {
+			e.preventDefault();
+			$elm.toggleClass(`${this.name}_searchOpen`);
+
+			$elm.removeClass(`${this.name}_mobileMenu`);
+			$('body').removeClass(`mobileMenu-open`);
+
+			$elm.find('.f-search input.form-search').focus();
+
 		});
 	}
 };
