@@ -779,7 +779,12 @@ class ContentParser extends ConfigEntityBase {
     if (!$doc) {
       return 'Не удалось прочитать страницу';
     }
-
+//    foreach($doc['img'] as $img){
+//      if(pq($img)->attr('src') == '../bandblue.gif'){
+//        return true;
+//      }
+//    }
+//    return false;
 //    $doc = parser_download_images($doc, $base_url);
 
     try {
