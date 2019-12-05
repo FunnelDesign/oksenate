@@ -10,6 +10,7 @@
     text-align: left;
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   &__item {
@@ -25,60 +26,69 @@
       }
     }
 
-    &--previous {
-      margin-right: 10px;
-
-      span {
-        display: inline-block;
-        width: 9px;
-        height: 9px;
-        border: 2px solid #bababa;
-        border-top: none;
-        border-right: none;
-        transform: rotate(45deg);
-      }
+    &--previous, &--next, &--first, &--last {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:before, &:after {
+          content: '';
+          display: block;
+          width: 9px;
+          height: 9px;
+          border: 2px solid #bababa;
+          border-top: none;
+          border-right: none;
+          transform: rotate(45deg);
+          transition: border .3s;
+        }
+
+        &:after {
+          margin-left: -2px;
+        }
 
         &:hover {
 
-          span {
-            border: 2px solid $color-blue-3;
-            border-top: none;
-            border-right: none;
+          &:before, &:after {
+            border-color: $color-blue-3;
           }
         }
       }
-    }
-
-    &--next {
-      margin-left: 10px;
 
       span {
-        display: inline-block;
-        width: 9px;
-        height: 9px;
-        border: 2px solid #c3c0ac;
-        border-top: none;
-        border-right: none;
-        transform: rotate(225deg);
+        @include text-hide();
       }
+
+    }
+
+    &--previous, &--next {
+
+      a:after {
+        display: none;
+      }
+    }
+
+    &--next, &--last {
 
       a {
 
-        &:hover {
-
-          span {
-            border: 2px solid $color-blue-3;
-            border-top: none;
-            border-right: none;
-          }
+        &:before, &:after {
+          transform: rotate(225deg);
         }
       }
     }
 
     a {
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       span {
         transition: all .3s;

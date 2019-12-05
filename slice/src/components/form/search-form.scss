@@ -1,6 +1,5 @@
 .search-form {
 
-
   .path-search & {
     max-width: 400px;
     margin: 0 auto 30px;
@@ -11,6 +10,7 @@
 
     .container-inline {
       position: relative;
+      padding: 0;
 
       label {
         display: none;
