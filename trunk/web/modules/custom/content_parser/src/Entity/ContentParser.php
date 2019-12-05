@@ -587,10 +587,21 @@ class ContentParser extends ConfigEntityBase {
       $content = $this->loadUrl($href);
       $docYears = $this->getPhpQuery($content, $href);
       foreach ($docYears->find('a') as $key=>$a) {
+        if($href == '../../news/press_releases/press_releases_2017/pr20170119b.htm'){
+          continue;
+        }
         $href = pq($a)->attr('href');
         $href = parser_get_absolute_url($base_url, $href);
+
         if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
           $text = pq($a)->text();
+          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2015/pr20150729a.htm'){
+            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
+          }
+//          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2017/pr20170119b.htm'){
+//            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
+//          }
+
           $date = str_replace($text, '', pq($a)->parent()->text());
           $content = $this->loadUrl($href);
           $docNews = $this->getPhpQuery($content, $href);
@@ -646,9 +657,19 @@ class ContentParser extends ConfigEntityBase {
           $entity->set('title', $text);
           $entity->set('body', $html);
           $entity->set('field_senator', isset($senator)?$senator:[]);
-          $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
-          $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-          $entity->save();
+          try {
+            $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
+            $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
+            $entity->save();
+          }catch (\Error $exception){
+            $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+            \Drupal::logger('not_parsed')->notice($message);
+            continue;
+          }catch (\Exception $exception){
+            $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+            \Drupal::logger('not_parsed')->notice($message);
+            continue;
+          }
         }
       }
 //      $text = pq($a)->text();
@@ -759,16 +780,25 @@ class ContentParser extends ConfigEntityBase {
         }
       }
       $mini = parser_download_images($docNews, $href);
+      try {
+        $entity->set('field_release_img', $mini);
 
-      $entity->set('field_release_img', $mini);
-
-      $entity->set('field_press_release_old_url', $href);
-      $entity->set('title', $text);
-      $entity->set('body', $html);
-      $entity->set('field_senator', $senator?:1);
-      $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
-      $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-      $entity->save();
+        $entity->set('field_press_release_old_url', $href);
+        $entity->set('title', $text);
+        $entity->set('body', $html);
+        $entity->set('field_senator', isset($senator) ? $senator : []);
+        $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
+        $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
+        $entity->save();
+      }catch (\Error $exception){
+        $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+        \Drupal::logger('not_parsed')->notice($message);
+        continue;
+      }catch (\Exception $exception){
+      $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+      \Drupal::logger('not_parsed')->notice($message);
+      continue;
+    }
     }
   }
   return true;
