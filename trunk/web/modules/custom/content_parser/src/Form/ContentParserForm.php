@@ -699,6 +699,9 @@ class ContentParserForm extends EntityForm {
         $context['results'][$key] = [];
       }
     }
+    if(strpos($url, 'Senators/districts/') !== false){
+      $mini = 2;
+    }
 
     $context['message'] = $this->t('Парсинг страницы (@url) Уровень: @depth', [
       '@url' => $url,
