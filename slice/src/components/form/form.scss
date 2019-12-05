@@ -25,6 +25,7 @@ select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textare
   @include padding(12px 14px, 15px 20px);
   @include font-size(12px, 14px);
   border-radius: 5px;
+  box-sizing: border-box;
 
   &:focus:not([type=file]):not([readonly]) {
     border-color: rgba(0, 0, 0, .4);

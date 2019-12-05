@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = 'page-seach'; ?>
+<?php $title = 'page-search'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page path-search">
 <div class="pageWr">
