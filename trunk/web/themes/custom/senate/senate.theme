@@ -182,6 +182,9 @@ function senate_preprocess_node(array &$vars) {
           $vars['preview_image'] = Markup::create("<span class=\"bMedia__preview\" style=\"background-image: url('$img_file_uri')\"></span>");
         }
         break;
+      case 'reports':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
     }
   }
 }
@@ -387,6 +390,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_agencies_doc_doc':
+    case 'field_reports_files':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {
