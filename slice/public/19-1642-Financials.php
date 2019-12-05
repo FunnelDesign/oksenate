@@ -34,7 +34,7 @@
 
       <div class="bContainer">
         <div class="bTitle bTitle_gap_c">
-          <div class="bTitle__sub bTiles__sub_b">
+          <div class="bTitle__sub bTitle__sub_b">
             <p>View Financial Statements below by clicking the View PDF button.</p>
           </div>
         </div>
