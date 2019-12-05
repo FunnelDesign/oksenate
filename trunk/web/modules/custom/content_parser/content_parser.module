@@ -147,6 +147,7 @@ function _get_page_by_url($uri, $headers = [], $cookieJar, $charset = 'auto') {
   try {
     $body = (string) \Drupal::httpClient()
       ->get($uri, [
+        'timeout' => 0,
         'headers' => $headers,
         'cookies'  => $cookieJar
       ])
