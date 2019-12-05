@@ -551,6 +551,23 @@ class ContentParser extends ConfigEntityBase {
     if (!$this->isCheck($doc, $base_url)) {
       return $this->results->getNoAccessCode();
     }
+    $searchForReplace = [
+      'Audio',
+      'Print',
+      'Press Releases',
+      'October Press Releases',
+      'January Press Releases',
+      'February Press Releases',
+      'March Press Releases',
+      'April Press Releases',
+      'May Press Releases',
+      'June Press Releases',
+      'July Press Releases',
+      'August Press Releases',
+      'September Press Releases',
+      'November Press Releases',
+      'December Press Releases',
+    ];
 
 //    $remote_code = $this->getCode('remote_id');
 //
@@ -587,17 +604,14 @@ class ContentParser extends ConfigEntityBase {
       $content = $this->loadUrl($href);
       $docYears = $this->getPhpQuery($content, $href);
       foreach ($docYears->find('a') as $key=>$a) {
-        if($href == '../../news/press_releases/press_releases_2017/pr20170119b.htm'){
-          continue;
-        }
         $href = pq($a)->attr('href');
         $href = parser_get_absolute_url($base_url, $href);
 
         if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
           $text = pq($a)->text();
-          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2015/pr20150729a.htm'){
-            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
-          }
+//          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2015/pr20150729a.htm'){
+//            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
+//          }
 //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2017/pr20170119b.htm'){
 //            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
 //          }
@@ -607,10 +621,9 @@ class ContentParser extends ConfigEntityBase {
           $docNews = $this->getPhpQuery($content, $href);
           $mainContent = 'this table contains the main content of the page';
           $html = 'empty';
-
           foreach ($docNews['table'] as $table){
             if(pq($table)->attr('summary') == $mainContent){
-              $html = ['value'=>strip_tags(pq($table)->html(), '<p><br>'), 'format'=>'full_html'];
+              $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
             }
           }
           // Remove hash
@@ -741,7 +754,7 @@ class ContentParser extends ConfigEntityBase {
 
       foreach ($docNews['table'] as $table){
         if(pq($table)->attr('summary') == $mainContent){
-          $html = ['value'=>strip_tags(pq($table)->html(), '<p><br>'), 'format'=>'full_html'];
+          $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
         }
       }
       // Remove hash
