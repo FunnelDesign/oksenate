@@ -626,6 +626,11 @@ class ContentParser extends ConfigEntityBase {
               $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
             }
           }
+          if($html == 'empty'){
+            $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
+            \Drupal::logger('not_parsed')->notice($message);
+            continue;
+          }
           // Remove hash
           $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
           $date = preg_replace("/[^.0-9]/", '', $date);
@@ -756,6 +761,11 @@ class ContentParser extends ConfigEntityBase {
         if(pq($table)->attr('summary') == $mainContent){
           $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
         }
+      }
+      if($html == 'empty'){
+        $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
+        \Drupal::logger('not_parsed')->notice($message);
+        continue;
       }
       // Remove hash
       $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
