@@ -532,29 +532,80 @@ class ContentParser extends ConfigEntityBase {
       return $this->results->getNoAccessCode();
     }
 
-    $remote_code = $this->getCode('remote_id');
+//    $remote_code = $this->getCode('remote_id');
+//
+//    if ($remote_code) {
+//      $remote_id = $this->eval($doc, $remote_code, $base_url);
+//    }
+//
+//    if ($remote_id) {
+//      $entity = $this->getEntityByRemoteId($remote_id);
+//    }
+//
+//    if ($entity && $this->getSetting('no_update')) {
+//      return $this->results->getNoUpdateCode();
+//    }
+//
+//    if (!$entity) {
+//      $entity = _entity_create($this->entity_type, $this->bundle);
+//    }
+//
+//    if ($this->getSetting('save_url')) {
+//      $entity->set('path', [
+//        'alias' => $this->toAbsolutePath($base_url)
+//      ]);
+//    }
 
-    if ($remote_code) {
-      $remote_id = $this->eval($doc, $remote_code, $base_url);
-    }
+  foreach ($doc->find('a') as $key=>$a) {
+    $entity = _entity_create($this->entity_type, $this->bundle);
+    $href = pq($a)->attr('href');
+    $href = parser_get_absolute_url($base_url, $href);
+    $href = preg_replace('/#.*$/', '', $href);
+    if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
+      $text = pq($a)->text();
+      $date = str_replace($text, '', pq($a)->parent()->text());
+      $content = $this->loadUrl($href);
+      $docNews = $this->getPhpQuery($content, $href);
+      $mainContent = 'this table contains the main content of the page';
+      $html = 'empty';
 
-    if ($remote_id) {
-      $entity = $this->getEntityByRemoteId($remote_id);
-    }
+      if(strpos($base_url, '_bio.html') !== FALSE){
 
-    if ($entity && $this->getSetting('no_update')) {
-      return $this->results->getNoUpdateCode();
-    }
+      }
 
-    if (!$entity) {
-      $entity = _entity_create($this->entity_type, $this->bundle);
-    }
+      ///get senator id
+      $nodes = \Drupal::entityTypeManager()
+        ->getStorage('node')
+        ->condition('type', 'senator')
+        ->loadByProperties(['title' => 'sneator']);
+      foreach ( $nodes as $node ) {
+        $node->doSomething(...);
+      }
+      foreach ($docNews['table'] as $table){
+        if(pq($table)->attr('summary') == $mainContent){
+          $html = ['value'=>strip_tags(pq($table)->html(), '<p><br>'), 'format'=>'full_html'];
+        }
+      }
+          $mini = parser_download_images($docNews, $href);
+          $entity->set('field_release_img', $mini);
 
-    if ($this->getSetting('save_url')) {
-      $entity->set('path', [
-        'alias' => $this->toAbsolutePath($base_url)
-      ]);
+      // Remove hash
+      $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+      $date = trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date))));
+      if(empty($date)){
+        $date = pq($a)->parent()->parent()->text();
+        $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
+        $date = trim(str_replace($text, '', $date));
+      }
+
+      $entity->set('title', $text);
+      $entity->set('body', $html);
+      $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
+      $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
+      $entity->save();
     }
+  }
+  return true;
 
 //    $mini = parser_download_images($doc, $base_url);
 //
@@ -576,148 +627,147 @@ class ContentParser extends ConfigEntityBase {
       );
 
       $value = [];
-
-        if($field_name == 'field_senator_committee_taxonomy') {
-
-          foreach ($result as $li){
-            $string = trim(strip_tags($li->textContent));
-            if(strpos($string, '-')){
-              $string = stristr($string, '-', TRUE);
-            }
-            $string = str_replace('Appropriations Subcommittee on ', '', $string);
-            $string = str_replace('&', 'and', $string);
-            $term = \Drupal::entityTypeManager()
-              ->getStorage('taxonomy_term')
-              ->loadByProperties(['name' => $string]);
-            if(!empty($term))
-              $value[] = $term[key($term)]->id();
-            else{}
-          }
-
-        }
-      if($field_name == 'field_senator_district_taxonomy') {
-
-          $term = \Drupal::entityTypeManager()
-            ->getStorage('taxonomy_term')
-            ->loadByProperties(['name' => $result]);
-          if(!empty($term))
-            $value[] = $term[key($term)]->id();
-          else{}
-          $result = null;
-        }
-      if($field_name == 'field_senator_county_taxonomy') {
-        foreach ($result as $li){
-          $string = trim(strip_tags($li->textContent));
-          $term = \Drupal::entityTypeManager()
-            ->getStorage('taxonomy_term')
-            ->loadByProperties(['name' => $string]);
-          if(!empty($term))
-            $value[] = $term[key($term)]->id();
-          else{}
-        }
-      }
-      if($field_name == 'field_senator_index_zip_taxonomy') {
-        foreach ($result as $li){
-          $string = trim(strip_tags($li->textContent));
-          $term = \Drupal::entityTypeManager()
-            ->getStorage('taxonomy_term')
-            ->loadByProperties(['name' => $string]);
-          if(!empty($term))
-            $value[] = $term[key($term)]->id();
-          else{}
-        }
-      }
-
-      if($field_name == 'field_senator_occupation_txt') {
-        $mini = explode('<br>', $result);
-        foreach ($mini as $string) {
-          $string = trim(strip_tags($string));
-          if (!$string) {
-            continue;
-          }
-          if(strpos($string, 'Occupation') !== FALSE){
-            $pos = strpos($string, ':');
-            $value = trim(substr($string, $pos+1));
-          }
-        }
-        $result = NULL;
-      }
-
-      if($field_name == 'field_senator_education_txt') {
-        $mini = explode('<br>', $result);
-        foreach ($mini as $string) {
-          $string = trim(strip_tags($string));
-          if (!$string) {
-            continue;
-          }
-          if(strpos($string, 'Education') !== FALSE){
-            $pos = strpos($string, ':');
-            $value = trim(substr($string, $pos+1));
-          }
-        }
-        $result = NULL;
-      }
-
-      if($field_name == 'field_senator_hometown_txt') {
-        $mini = explode('<br>', $result);
-        foreach ($mini as $string) {
-          $string = trim(strip_tags($string));
-          if (!$string) {
-            continue;
-          }
-          if(strpos($string, 'Hometown') !== FALSE){
-            $pos = strpos($string, ':');
-            $value = trim(substr($string, $pos+1));
-
-          }
-          $result = NULL;
-        }
-      }
-
-      if($field_name == 'field_senator_leg_experience_txt') {
-        $mini = explode('<br>', $result);
-        foreach ($mini as $string) {
-          $string = trim(strip_tags($string));
-          if (!$string) {
-            continue;
-          }
-          if(strpos($string, 'Legislative Experience') !== FALSE){
-            $pos = strpos($string, ':');
-            $value = trim(substr($string, $pos+1));
-          }
-        }
-        $result = NULL;
-      }
-      if($field_name == 'title') {
-        $result = str_replace('Senator', '', $result);
-      }
-
-      if($field_name == 'field_senator_social_links_par'){
-        $arr = [
-          'type' => 'senator_socials',   // paragraph type machine name
-          'field_senator_social_fb_link' => [   // paragraph's field machine name
-            'uri' => $result[0],                  // body field value// body text format
-          ],
-          'field_senator_social_inst_link' => [   // paragraph's field machine name
-            'uri' => $result[0],                  // body field value// body text format
-          ],
-          'field_senator_social_tw_link' => [   // paragraph's field machine name
-            'uri' => $result[0],                  // body field value// body text format
-          ],
-        ];
-
-        $paragraph = Paragraph::create($arr);
-
-        $paragraph->save();
-
-        $entity->set('field_senator_social_links_par',
-        [
-          'target_id' => $paragraph->id(),
-          'target_revision_id' => $paragraph->getRevisionId(),
-        ]);
-
-        continue;
-      }
+//        if($field_name == 'field_senator_committee_taxonomy') {
+//
+//          foreach ($result as $li){
+//            $string = trim(strip_tags($li->textContent));
+//            if(strpos($string, '-')){
+//              $string = stristr($string, '-', TRUE);
+//            }
+//            $string = str_replace('Appropriations Subcommittee on ', '', $string);
+//            $string = str_replace('&', 'and', $string);
+//            $term = \Drupal::entityTypeManager()
+//              ->getStorage('taxonomy_term')
+//              ->loadByProperties(['name' => $string]);
+//            if(!empty($term))
+//              $value[] = $term[key($term)]->id();
+//            else{}
+//          }
+//
+//        }
+//      if($field_name == 'field_senator_district_taxonomy') {
+//
+//          $term = \Drupal::entityTypeManager()
+//            ->getStorage('taxonomy_term')
+//            ->loadByProperties(['name' => $result]);
+//          if(!empty($term))
+//            $value[] = $term[key($term)]->id();
+//          else{}
+//          $result = null;
+//        }
+//      if($field_name == 'field_senator_county_taxonomy') {
+//        foreach ($result as $li){
+//          $string = trim(strip_tags($li->textContent));
+//          $term = \Drupal::entityTypeManager()
+//            ->getStorage('taxonomy_term')
+//            ->loadByProperties(['name' => $string]);
+//          if(!empty($term))
+//            $value[] = $term[key($term)]->id();
+//          else{}
+//        }
+//      }
+//      if($field_name == 'field_senator_index_zip_taxonomy') {
+//        foreach ($result as $li){
+//          $string = trim(strip_tags($li->textContent));
+//          $term = \Drupal::entityTypeManager()
+//            ->getStorage('taxonomy_term')
+//            ->loadByProperties(['name' => $string]);
+//          if(!empty($term))
+//            $value[] = $term[key($term)]->id();
+//          else{}
+//        }
+//      }
+//
+//      if($field_name == 'field_senator_occupation_txt') {
+//        $mini = explode('<br>', $result);
+//        foreach ($mini as $string) {
+//          $string = trim(strip_tags($string));
+//          if (!$string) {
+//            continue;
+//          }
+//          if(strpos($string, 'Occupation') !== FALSE){
+//            $pos = strpos($string, ':');
+//            $value = trim(substr($string, $pos+1));
+//          }
+//        }
+//        $result = NULL;
+//      }
+//
+//      if($field_name == 'field_senator_education_txt') {
+//        $mini = explode('<br>', $result);
+//        foreach ($mini as $string) {
+//          $string = trim(strip_tags($string));
+//          if (!$string) {
+//            continue;
+//          }
+//          if(strpos($string, 'Education') !== FALSE){
+//            $pos = strpos($string, ':');
+//            $value = trim(substr($string, $pos+1));
+//          }
+//        }
+//        $result = NULL;
+//      }
+//
+//      if($field_name == 'field_senator_hometown_txt') {
+//        $mini = explode('<br>', $result);
+//        foreach ($mini as $string) {
+//          $string = trim(strip_tags($string));
+//          if (!$string) {
+//            continue;
+//          }
+//          if(strpos($string, 'Hometown') !== FALSE){
+//            $pos = strpos($string, ':');
+//            $value = trim(substr($string, $pos+1));
+//
+//          }
+//          $result = NULL;
+//        }
+//      }
+//
+//      if($field_name == 'field_senator_leg_experience_txt') {
+//        $mini = explode('<br>', $result);
+//        foreach ($mini as $string) {
+//          $string = trim(strip_tags($string));
+//          if (!$string) {
+//            continue;
+//          }
+//          if(strpos($string, 'Legislative Experience') !== FALSE){
+//            $pos = strpos($string, ':');
+//            $value = trim(substr($string, $pos+1));
+//          }
+//        }
+//        $result = NULL;
+//      }
+//      if($field_name == 'title') {
+//        $result = str_replace('Senator', '', $result);
+//      }
+//
+//      if($field_name == 'field_senator_social_links_par'){
+//        $arr = [
+//          'type' => 'senator_socials',   // paragraph type machine name
+//          'field_senator_social_fb_link' => [   // paragraph's field machine name
+//            'uri' => $result[0],                  // body field value// body text format
+//          ],
+//          'field_senator_social_inst_link' => [   // paragraph's field machine name
+//            'uri' => $result[0],                  // body field value// body text format
+//          ],
+//          'field_senator_social_tw_link' => [   // paragraph's field machine name
+//            'uri' => $result[0],                  // body field value// body text format
+//          ],
+//        ];
+//
+//        $paragraph = Paragraph::create($arr);
+//
+//        $paragraph->save();
+//
+//        $entity->set('field_senator_social_links_par',
+//        [
+//          'target_id' => $paragraph->id(),
+//          'target_revision_id' => $paragraph->getRevisionId(),
+//        ]);
+//
+//        continue;
+//      }
 
       if ($field['isMulti'] && is_array($result)) {
         foreach ($result as $data) {
@@ -742,26 +792,26 @@ class ContentParser extends ConfigEntityBase {
       }
     }
 
-    \Drupal::moduleHandler()
-        ->invokeAll('content_parser_prepare_entity_' . $this->id, [$entity]);
-
-    if ($prepare_code = $this->getSetting('prepare_code')) {
-       $entity = $this->evalEntity($doc, $entity, $prepare_code, $base_url);
-     }
-
-    $is_new = $entity->isNew();
-
-    try {
-      $entity->save();
-    } catch (\Exception $e) {
-      return $this->results->getErrorCode();
-    }
-
-    if ($is_new) {
-      $this->insertRemote($this->entity_type, $entity->id(), $remote_id, $base_url);
-    }
-
-    return !$is_new ? $this->results->getUpdateCode() : $this->results->getCreateCode();
+//    \Drupal::moduleHandler()
+//        ->invokeAll('content_parser_prepare_entity_' . $this->id, [$entity]);
+//
+//    if ($prepare_code = $this->getSetting('prepare_code')) {
+//       $entity = $this->evalEntity($doc, $entity, $prepare_code, $base_url);
+//     }
+//
+//    $is_new = $entity->isNew();
+//
+//    try {
+//      $entity->save();
+//    } catch (\Exception $e) {
+//      return $this->results->getErrorCode();
+//    }
+//
+//    if ($is_new) {
+//      $this->insertRemote($this->entity_type, $entity->id(), $remote_id, $base_url);
+//    }
+//
+//    return !$is_new ? $this->results->getUpdateCode() : $this->results->getCreateCode();
   }
 
   /**
