@@ -557,7 +557,7 @@ class ContentParser extends ConfigEntityBase {
 //    }
 
   foreach ($doc->find('a') as $key=>$a) {
-    $entity = _entity_create($this->entity_type, $this->bundle);
+
     $href = pq($a)->attr('href');
     $href = parser_get_absolute_url($base_url, $href);
     $href = preg_replace('/#.*$/', '', $href);
@@ -568,24 +568,12 @@ class ContentParser extends ConfigEntityBase {
       $docNews = $this->getPhpQuery($content, $href);
       $mainContent = 'this table contains the main content of the page';
       $html = 'empty';
-      if(strpos($base_url, '_bio.html') !== FALSE){
-        ///get senator id
-        $nodes = \Drupal::entityTypeManager()
-          ->getStorage('node')
-//          ->condition('content_type', 'senator')
-          ->loadByProperties(['field_temp_old_url' => $base_url]);
-        foreach ( $nodes as $node ) {
-          $senator = $node->id();
-        }
-      }
+
       foreach ($docNews['table'] as $table){
         if(pq($table)->attr('summary') == $mainContent){
           $html = ['value'=>strip_tags(pq($table)->html(), '<p><br>'), 'format'=>'full_html'];
         }
       }
-          $mini = parser_download_images($docNews, $href);
-          $entity->set('field_release_img', $mini);
-
       // Remove hash
       $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
       $date = trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date))));
@@ -594,7 +582,32 @@ class ContentParser extends ConfigEntityBase {
         $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
         $date = trim(str_replace($text, '', $date));
       }
+      if(strpos($base_url, '_bio.html') !== FALSE){
+        ///get senator id
+        $nodes = \Drupal::entityTypeManager()
+          ->getStorage('node')
+          ->loadByProperties(['title' => $base_url]);
+        foreach ( $nodes as $node ) {
+          $senator = $node->id();
+        }
+        $news = \Drupal::entityTypeManager()
+          ->getStorage('node')
+          ->loadByProperties(['field_press_release_old_url' => $href]);
+        if(!empty($news[key($news)]) && is_array($news[key($news)])){
+          $entity = $news[key($news)];
+          $alreadySenator = $entity->get('field_senator');
+          $entity->set('field_senator', $alreadySenator+[$senator]);
+          $entity->save();
+          continue;
+        }
+        else{
+          $entity = _entity_create($this->entity_type, $this->bundle);
+        }
+      }
+      $mini = parser_download_images($docNews, $href);
+      $entity->set('field_release_img', $mini);
 
+      $entity->set('field_press_release_old_url', $href);
       $entity->set('title', $text);
       $entity->set('body', $html);
       $entity->set('field_senator', $senator?:1);
