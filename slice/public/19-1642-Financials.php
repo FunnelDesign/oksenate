@@ -39,7 +39,7 @@
           </div>
         </div>
 
-        <div class="bTiles bTiles_rel">
+        <div class="bTiles bTiles_rel bTiles_gap_a">
 
           <div class="bTiles__items">
             <a href="#" class="bTiles__item">
