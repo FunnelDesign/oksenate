@@ -72,6 +72,13 @@ class ContentParser extends ConfigEntityBase {
   protected $test_url;
 
   /**
+   * Static var for senator check
+   *
+   * @var $senatorUrl
+   */
+  static $senatorUrl;
+
+  /**
    * The ContentParser check_code.
    *
    * @var string
@@ -346,9 +353,18 @@ class ContentParser extends ConfigEntityBase {
    */
   public function findUrls($doc, $base_url) {
     $list = [];
-
+    if(strpos($base_url, '_bio.aspx')){
+      $base_url = str_replace('_bio.aspx', '_bio.html', $base_url);
+    }
+    $content = $this->loadUrl($base_url);
+    $doc = $this->getPhpQuery($content, $base_url);
     foreach (_parser_get_page_links($doc) as $url) {
+
+
       $link_url_absolute = parser_get_absolute_url($base_url, $url);
+      if(strpos($link_url_absolute, '/districts/') !== false){
+        $mini = 2;
+      }
 
       if ($this->isAllowedUrl($link_url_absolute)) {
         $list[] = $link_url_absolute;
@@ -493,11 +509,15 @@ class ContentParser extends ConfigEntityBase {
    * {@inheritdoc}
    */
   public function processUrl($url, $options = [], $callback = null) {
+    if(strpos($url, 'Senators/districts/')){
+      $mini =2;
+    }
     if (!$this->isAllowedUrl($url)) {
       return;
     }
     if(strpos($url, '_bio.aspx')){
       $url = str_replace('_bio.aspx', '_bio.html', $url);
+      static::$senatorUrl = $url;
     }
 
     $headers = isset($options['headers']) ? $options['headers'] : [];
@@ -557,10 +577,139 @@ class ContentParser extends ConfigEntityBase {
 //    }
 
   foreach ($doc->find('a') as $key=>$a) {
-
     $href = pq($a)->attr('href');
     $href = parser_get_absolute_url($base_url, $href);
     $href = preg_replace('/#.*$/', '', $href);
+    if(strpos($href, '/districts/dist') !== false){
+      if(strpos($href, 'population.html') !== false){
+        continue;
+      }
+      $content = $this->loadUrl($href);
+      $docYears = $this->getPhpQuery($content, $href);
+      foreach ($docYears->find('a') as $key=>$a) {
+        $href = pq($a)->attr('href');
+        $href = parser_get_absolute_url($base_url, $href);
+        if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
+          $text = pq($a)->text();
+          $date = str_replace($text, '', pq($a)->parent()->text());
+          $content = $this->loadUrl($href);
+          $docNews = $this->getPhpQuery($content, $href);
+          $mainContent = 'this table contains the main content of the page';
+          $html = 'empty';
+
+          foreach ($docNews['table'] as $table){
+            if(pq($table)->attr('summary') == $mainContent){
+              $html = ['value'=>strip_tags(pq($table)->html(), '<p><br>'), 'format'=>'full_html'];
+            }
+          }
+          // Remove hash
+          $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+          $date = preg_replace("/[^.0-9]/", '', $date);
+//          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
+          if(empty($date)){
+            $date = pq($a)->parent()->parent()->text();
+            $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
+            $date = trim(str_replace($text, '', $date));
+          }
+          if(strpos($base_url, '_bio.html') !== FALSE){
+
+//        $news = \Drupal::entityTypeManager()
+//          ->getStorage('node')
+//          ->loadByProperties(['field_press_release_old_url' => 'test.html']);
+
+            ///get senator id
+            $nodes = \Drupal::entityTypeManager()
+              ->getStorage('node')
+              ->loadByProperties(['field_temp_old_url' => $base_url]);
+            $senator = $nodes[key($nodes)]->id();
+//        foreach ( $nodes as $node ) {
+//          $senator = $node->id();
+//        }
+            $news = \Drupal::entityTypeManager()
+              ->getStorage('node')
+              ->loadByProperties(['field_press_release_old_url' => $href]);
+            if(is_array($news) && !empty($news)){
+              $entity = $news[key($news)];
+              $entity->field_senator[] = ['target_id' => $senator];
+              $entity->save();
+              continue;
+            }
+            else{
+              $entity = _entity_create($this->entity_type, $this->bundle);
+            }
+          }
+          $mini = parser_download_images($docNews, $href);
+
+          $entity->set('field_release_img', $mini);
+
+          $entity->set('field_press_release_old_url', $href);
+          $entity->set('title', $text);
+          $entity->set('body', $html);
+          $entity->set('field_senator', isset($senator)?$senator:[]);
+          $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
+          $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
+          $entity->save();
+        }
+      }
+//      $text = pq($a)->text();
+//      $date = str_replace($text, '', pq($a)->parent()->text());
+//      $content = $this->loadUrl($href);
+//      $docNews = $this->getPhpQuery($content, $href);
+//      $mainContent = 'this table contains the main content of the page';
+//      $html = 'empty';
+//
+//      foreach ($docNews['table'] as $table){
+//        if(pq($table)->attr('summary') == $mainContent){
+//          $html = ['value'=>strip_tags(pq($table)->html(), '<p><br>'), 'format'=>'full_html'];
+//        }
+//      }
+//      // Remove hash
+//      $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+//      $date = trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date))));
+//      if(empty($date)){
+//        $date = pq($a)->parent()->parent()->text();
+//        $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
+//        $date = trim(str_replace($text, '', $date));
+//      }
+//      if(strpos($base_url, '_bio.html') !== FALSE){
+//
+////        $news = \Drupal::entityTypeManager()
+////          ->getStorage('node')
+////          ->loadByProperties(['field_press_release_old_url' => 'test.html']);
+//
+//        ///get senator id
+//        $nodes = \Drupal::entityTypeManager()
+//          ->getStorage('node')
+//          ->loadByProperties(['field_temp_old_url' => $base_url]);
+//        $senator = $nodes[key($nodes)]->id();
+////        foreach ( $nodes as $node ) {
+////          $senator = $node->id();
+////        }
+//        $news = \Drupal::entityTypeManager()
+//          ->getStorage('node')
+//          ->loadByProperties(['field_press_release_old_url' => $href]);
+//        if(is_array($news) && !empty($news)){
+//          $entity = $news[key($news)];
+//          $entity->field_senator[] = ['target_id' => $senator];
+//          $entity->save();
+//          continue;
+//        }
+//        else{
+//          $entity = _entity_create($this->entity_type, $this->bundle);
+//        }
+//      }
+//      $mini = parser_download_images($docNews, $href);
+//
+//      $entity->set('field_release_img', $mini);
+//
+//      $entity->set('field_press_release_old_url', $href);
+//      $entity->set('title', $text);
+//      $entity->set('body', $html);
+//      $entity->set('field_senator', $senator?:1);
+//      $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
+//      $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
+//      $entity->save();
+    }
     if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
       $text = pq($a)->text();
       $date = str_replace($text, '', pq($a)->parent()->text());
@@ -576,27 +725,32 @@ class ContentParser extends ConfigEntityBase {
       }
       // Remove hash
       $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-      $date = trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date))));
+      $date = preg_replace("/[^.0-9]/", '', $date);
       if(empty($date)){
         $date = pq($a)->parent()->parent()->text();
         $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
         $date = trim(str_replace($text, '', $date));
       }
       if(strpos($base_url, '_bio.html') !== FALSE){
+
+//        $news = \Drupal::entityTypeManager()
+//          ->getStorage('node')
+//          ->loadByProperties(['field_press_release_old_url' => 'test.html']);
+
         ///get senator id
         $nodes = \Drupal::entityTypeManager()
           ->getStorage('node')
-          ->loadByProperties(['title' => $base_url]);
-        foreach ( $nodes as $node ) {
-          $senator = $node->id();
-        }
+          ->loadByProperties(['field_temp_old_url' => $base_url]);
+        $senator = $nodes[key($nodes)]->id();
+//        foreach ( $nodes as $node ) {
+//          $senator = $node->id();
+//        }
         $news = \Drupal::entityTypeManager()
           ->getStorage('node')
           ->loadByProperties(['field_press_release_old_url' => $href]);
-        if(!empty($news[key($news)]) && is_array($news[key($news)])){
+        if(is_array($news) && !empty($news)){
           $entity = $news[key($news)];
-          $alreadySenator = $entity->get('field_senator');
-          $entity->set('field_senator', $alreadySenator+[$senator]);
+          $entity->field_senator[] = ['target_id' => $senator];
           $entity->save();
           continue;
         }
@@ -605,6 +759,7 @@ class ContentParser extends ConfigEntityBase {
         }
       }
       $mini = parser_download_images($docNews, $href);
+
       $entity->set('field_release_img', $mini);
 
       $entity->set('field_press_release_old_url', $href);
@@ -840,6 +995,54 @@ class ContentParser extends ConfigEntityBase {
     if (!$doc) {
       return 'Не удалось прочитать страницу';
     }
+//    http://www.oksenate.gov/Senators/biographies/allen_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/bergstrom_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/bice_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/boggs_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/boren_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/brooks_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/bullard_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/coleman_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/dahm_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/daniels_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/david_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/dossett_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/dugger_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/floyd_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/hall_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/haste_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/hicks_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/howard_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/ikley-freeman_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/jech_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/kidd_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/kirt_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/leewright_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/matthews_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/mccortney_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/montgomery_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/murdock_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/newhouse_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/paxton_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/pederson_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/pemberton_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/pugh_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/quinn_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/rader_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/rosino_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/scott_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/sharp_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/shaw_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/silk_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/simpson_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/smalley_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/standridge_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/stanislawski_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/stanley_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/thompson_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/treat_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/weaver_bio.aspx
+//    http://www.oksenate.gov/Senators/biographies/young_bio.aspx
 //    foreach($doc['img'] as $img){
 //      if(pq($img)->attr('src') == '../bandblue.gif'){
 //        return true;

@@ -359,6 +359,7 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
     $element = pq($element);
     $src = $element->attr($attr);
 //    $alt = $element->attr('alt');
+    $alt = '';
     if(strpos($src, 'headphone') !== FALSE){
       continue;
     }
