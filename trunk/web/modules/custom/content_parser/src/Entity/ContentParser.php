@@ -579,7 +579,7 @@ class ContentParser extends ConfigEntityBase {
         ->condition('type', 'senator')
         ->loadByProperties(['title' => 'sneator']);
       foreach ( $nodes as $node ) {
-        $node->doSomething(...);
+//        $node->doSomething(...);
       }
       foreach ($docNews['table'] as $table){
         if(pq($table)->attr('summary') == $mainContent){
