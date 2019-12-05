@@ -568,18 +568,15 @@ class ContentParser extends ConfigEntityBase {
       $docNews = $this->getPhpQuery($content, $href);
       $mainContent = 'this table contains the main content of the page';
       $html = 'empty';
-
       if(strpos($base_url, '_bio.html') !== FALSE){
-
-      }
-
-      ///get senator id
-      $nodes = \Drupal::entityTypeManager()
-        ->getStorage('node')
-        ->condition('type', 'senator')
-        ->loadByProperties(['title' => 'sneator']);
-      foreach ( $nodes as $node ) {
-//        $node->doSomething(...);
+        ///get senator id
+        $nodes = \Drupal::entityTypeManager()
+          ->getStorage('node')
+//          ->condition('content_type', 'senator')
+          ->loadByProperties(['field_temp_old_url' => $base_url]);
+        foreach ( $nodes as $node ) {
+          $senator = $node->id();
+        }
       }
       foreach ($docNews['table'] as $table){
         if(pq($table)->attr('summary') == $mainContent){
@@ -600,6 +597,7 @@ class ContentParser extends ConfigEntityBase {
 
       $entity->set('title', $text);
       $entity->set('body', $html);
+      $entity->set('field_senator', $senator?:1);
       $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
       $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
       $entity->save();
