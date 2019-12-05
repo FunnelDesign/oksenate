@@ -87,5 +87,6 @@
   @import url("common/css/drupal/classy/css/components/textarea.css");
   @import url("common/css/drupal/classy/css/components/ui-dialog.css");
   @import url("common/css/drupal/classy/css/components/user.css");
+  @import url("common/css/drupal/custom.css");
 </style>
 

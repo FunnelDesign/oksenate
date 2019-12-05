@@ -317,59 +317,8 @@
                   <strong>Senator</strong> Matthews became Chair of the Oklahoma Legislative …</p>
                 <p class="search-result__info"><a title="View user profile." href="/user/1" lang="" about="/user/1" typeof="schema:Person" property="schema:name" datatype="" class="username">webmaster</a> - 12/03/2019 - 07:39</p>
               </div>
-            </li></ol></div>  <nav class="pager" role="navigation" aria-labelledby="pagination-heading">
-          <h4 id="pagination-heading" class="visually-hidden">Pagination</h4>
-          <ul class="pager__items js-pager__items">
-            <li class="pager__item is-active">
-              <a href="?keys=senator&amp;page=0" title="Current page">
-            <span class="visually-hidden">
-              Current page
-            </span>1</a>
-            </li>
-            <li class="pager__item">
-              <a href="?keys=senator&amp;page=1" title="Go to page 2">
-            <span class="visually-hidden">
-              Page
-            </span>2</a>
-            </li>
-            <li class="pager__item">
-              <a href="?keys=senator&amp;page=2" title="Go to page 3">
-            <span class="visually-hidden">
-              Page
-            </span>3</a>
-            </li>
-            <li class="pager__item">
-              <a href="?keys=senator&amp;page=3" title="Go to page 4">
-            <span class="visually-hidden">
-              Page
-            </span>4</a>
-            </li>
-            <li class="pager__item">
-              <a href="?keys=senator&amp;page=4" title="Go to page 5">
-            <span class="visually-hidden">
-              Page
-            </span>5</a>
-            </li>
-            <li class="pager__item">
-              <a href="?keys=senator&amp;page=5" title="Go to page 6">
-            <span class="visually-hidden">
-              Page
-            </span>6</a>
-            </li>
-            <li class="pager__item pager__item--next">
-              <a href="?keys=senator&amp;page=1" title="Go to next page" rel="next">
-                <span class="visually-hidden">Next page</span>
-                <span aria-hidden="true">Next ›</span>
-              </a>
-            </li>
-            <li class="pager__item pager__item--last">
-              <a href="?keys=senator&amp;page=5" title="Go to last page">
-                <span class="visually-hidden">Last page</span>
-                <span aria-hidden="true">Last »</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+            </li></ol></div>
+        <?php include 'tpl/blocks/pager.inc'; ?>
 
       </div>
 
