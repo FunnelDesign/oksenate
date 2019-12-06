@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Publications-StateIssueOverview'; ?>
+<?php $title = '19-1642-Publications-LegislativeBriefs'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -14,7 +14,7 @@
           <a href="#" class="link link_cl_a link_back">back</a>
           <div class="breadcrumb">
             <a href="#">Publications</a>
-            <span>State Issue Overview</span>
+            <span>Legislative Briefs</span>
           </div>
         </div>
 
@@ -24,12 +24,12 @@
         <div class="bContainer">
 
           <div class="pageIn__ico">
-            <img src="../dist/images/titleIco/title-ico-18.png" srcset="../dist/images/titleIco/title-ico-18-2x.png 2x"
+            <img src="../dist/images/titleIco/title-ico-17.png" srcset="../dist/images/titleIco/title-ico-17-2x.png 2x"
                  alt="">
           </div>
 
           <div class="bTitle bTitle_wSub_a">
-            <h1>State Issue Overview</h1>
+            <h1>Legislative Briefs</h1>
           </div>
 
         </div>
@@ -43,25 +43,33 @@
 
         <div class="bTitle bTitle_gap_c">
           <div class="bTitle__sub bTitle__sub_b">
-            <p>Select a Report below to view the PDF.</p>
+            <p>Select a brief below to view the PDF.</p>
           </div>
         </div>
 
         <div class="bColumns bColumns_2 bWrap bWrap_size_b">
           <div class="bListLinks bListLinks_btnArr">
 
-            <a href="#" class="bListLinks__link">View Overview of State Issues - 2018 PDF</a>
-            <a href="#" class="bListLinks__link">View FY'17 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY'16 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View Overview of State Issues - 2016 PDF</a>
-            <a href="#" class="bListLinks__link">View FY’14 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY’13 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY’08 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY’08 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY’08 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY’08 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY’08 Appropriations Report PDF</a>
-            <a href="#" class="bListLinks__link">View FY’08 Appropriations Report PDF</a>
+            <a href="#" class="bListLinks__link">View 2018 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2017 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2016 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2015 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2014 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2013 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2012 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2011 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2010 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2009 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2008 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2007 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2006 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2005 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2004 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2003 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2002 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 2001 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 1999 Legislative Briefs PDF</a>
+            <a href="#" class="bListLinks__link">View 1998 Legislative Briefs PDF</a>
 
           </div>
 
