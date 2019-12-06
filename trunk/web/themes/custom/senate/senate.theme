@@ -185,6 +185,12 @@ function senate_preprocess_node(array &$vars) {
       case 'reports':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
+
+      case 'session_summary':
+        if (!empty($vars['content']['field_session_summary_year_date'][0]['#text'])){
+          $vars['summary_id'] = Markup::create("overview-" . $vars['content']['field_session_summary_year_date'][0]['#text']);
+        }
+        break;
     }
   }
 }
@@ -391,6 +397,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_agencies_doc_doc':
     case 'field_reports_files':
+    case 'field_session_summary_file':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {
@@ -764,6 +771,9 @@ function senate_preprocess_views_view(&$vars) {
         $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
         $vars['title'] = $term_obj->getName();
       }
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      break;
+    case 'session_summary':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
   }
