@@ -33,5 +33,13 @@
 
   &__btnWrap {
     text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0 -5px;
+
+    & > * {
+      margin: 0 5px 10px;
+    }
+
   }
 }

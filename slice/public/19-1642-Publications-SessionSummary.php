@@ -72,6 +72,9 @@
 
               <div class="bOverview__btnWrap">
                 <a href="#" class="btn btn_a btn_s_c">view  pdf</a>
+                <a href="#" class="btn btn_a btn_s_c">view  pdf</a>
+                <a href="#" class="btn btn_a btn_s_c">view  pdf</a>
+                <a href="#" class="btn btn_a btn_s_c">view  pdf</a>
               </div>
               
             </div>
