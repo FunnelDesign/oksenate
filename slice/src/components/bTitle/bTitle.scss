@@ -74,6 +74,16 @@
     &_b {
       color: #404040;
     }
+
+    &_c {
+      font-family: $FreightTextProBook-Regular;
+      font-size: 18px;
+      color: #777777;
+
+      br {
+        @include display(none, block);
+      }
+    }
   }
 
   &_wSub {
@@ -119,6 +129,11 @@
     &_d {
       @include cr-last-child;
       @include margin-bottom(30px, 50px, 84px);
+    }
+
+    &_f {
+      @include cr-last-child;
+      @include margin-bottom(35px, 63px);
     }
   }
 }
