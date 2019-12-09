@@ -6,13 +6,29 @@
   }
 
   &__it {
-    padding: 10px 20px 20px;
+    position: relative;
+  }
+
+  &__header {
+    position: relative;
+    padding: 0 0 3px 35px;
+
+    &:before {
+      @include pseudo-block($left: 8px, $top: 0, $bottom: 12px);
+      border-left: 3px solid $color-red;
+    }
+
+    &:after {
+      @include pseudo-block($left: 21px, $right: 0, $bottom: -1px);
+      border-bottom: 3px solid $color-red;
+    }
   }
 
   &__date {
     font-family: $RobotoCondensed-Bold;
-    font-size: 97px;
+    @include font-size(70px, 97px);
     color: #fff;
+    line-height: 1.2;
   }
 
   &__desc {
@@ -20,6 +36,23 @@
     color: #fff;
     font-size: 14px;
     font-family: $FreightTextProBook-Regular;
-    line-height: 1.4;
+    line-height: 1.7;
+    position: relative;
+    padding: 20px 41px 30px 41px;
+
+    &:before {
+      @include pseudo-block($left: 8px, $top: 12px, $bottom: 0);
+      border-left: 3px solid $color-red;
+    }
+
+    &:after {
+      @include pseudo-block($left: 0, $top: 0);
+      transform: translate(0, -50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: $color-red;
+      overflow: hidden;
+    }
   }
 }
