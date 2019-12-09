@@ -783,9 +783,12 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'week_review':
       $archive = _senate_get_archive_week_review();
+      $current_path = \Drupal::service('path.current')->getPath();
+
       $vars['sidebar'] = [
         '#theme' => 'senate_news_sidebar',
         '#archive' => $archive,
+        '#current_path' => $current_path,
       ];
       break;
   }
@@ -892,7 +895,8 @@ function senate_theme($existing, $type, $theme, $path) {
   return [
     'senate_news_sidebar' => [
       'variables' => [
-        'archive' => NULL
+        'archive' => NULL,
+        'current_path' => NULL,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
