@@ -114,9 +114,12 @@
     }
 
     &_j {
-      min-width: 395px;
       @include font-size(14px, 18px);
       @include padding(14px 26px);
+
+      @include sm {
+        min-width: 395px;
+      }
     }
   }
 }
