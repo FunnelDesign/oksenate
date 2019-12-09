@@ -63,29 +63,32 @@
               Republican
             </div>
           </div>
-        </div>
 
 
-        <div class="bWrap bWrap_f_a bWrap_f_a_15 bWrap_cl_b bWrap_size_d bWrap_gap_b">
-          <p>
-            Approving or rejecting gubernatorial appointments is crucial part of what being a Senator is all about. They all contribute to the creation of both state law and an annual state budget. They aid in drawing new boundaries for Oklahoma’s electoral districts every ten years, as well as serve as a court of impeachment.
-          </p>
-          <p>
-            The presiding officer of the Senate is the Lieutenant Governor of Oklahoma, who is the President of the Senate. Since the 1960s, the President Pro Tempore of the Senate has presided over daily work. Prior to that time, the President of the Senate took a leading role in the Senate, including appointing committees and members to those committees. The President of the Senate may cast a vote only in the instance of a tie vote and may not vote to create a tie.
-          </p>
-        </div>
+          <div class="bWrap bWrap_f_a bWrap_f_a_15 bWrap_cl_b bWrap_size_d bWrap_gap_b">
+            <p>
+              Approving or rejecting gubernatorial appointments is crucial part of what being a Senator is all about. They all contribute to the creation of both state law and an annual state budget. They aid in drawing new boundaries for Oklahoma’s electoral districts every ten years, as well as serve as a court of impeachment.
+            </p>
+            <p>
+              The presiding officer of the Senate is the Lieutenant Governor of Oklahoma, who is the President of the Senate. Since the 1960s, the President Pro Tempore of the Senate has presided over daily work. Prior to that time, the President of the Senate took a leading role in the Senate, including appointing committees and members to those committees. The President of the Senate may cast a vote only in the instance of a tie vote and may not vote to create a tie.
+            </p>
+          </div>
 
-        <div class="pageIn__btnWr pageIn__btnWr_gap_a">
-          <a href="#" class="btn btn_c btn_s_j">
+          <div class="pageIn__btnWr pageIn">
+            <a href="#" class="btn btn_c btn_s_j">
             <span class="btn__ico">
               <img src="../dist/images/link/link-ico-tmp-1.png"
                    srcset="../dist/images/link/link-ico-tmp-1-2x.png 2x"
                    alt="">
             </span>
 
-            Learn About Senate History
-          </a>
+              Learn About Senate History
+            </a>
+          </div>
+
         </div>
+
+
 
         <div class="bTiles bTiles_rel bTiles_rel_c bTiles_gap_a">
 

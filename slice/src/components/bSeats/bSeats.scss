@@ -1,4 +1,17 @@
 .bSeats {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  &:before {
+    @include pseudo-block($top: 210px, $left: 50%);
+    transform: translate(-50%, 0);
+    width: 1292px;
+    height: 706px;
+    background: url("bSeats-img-tmp-1.jpg") no-repeat;
+    background-size: contain;
+    z-index: -1;
+  }
 
   &__img {
     text-align: center;
@@ -28,6 +41,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 47px;
 
     & > * {
       margin-right: 29px;
