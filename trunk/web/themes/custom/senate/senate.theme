@@ -12,6 +12,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Views;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Xss;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 
@@ -790,6 +791,14 @@ function senate_preprocess_views_view(&$vars) {
         '#archive' => $archive,
         '#current_path' => $current_path,
       ];
+      $date = $view->args;
+      if (!empty($date) && !empty($date[0])) {
+        $date_obj = new DrupalDateTime($date[0]);
+        $vars['showing'] = $date_obj->format('F, Y');
+      }
+      else {
+        $vars['showing'] = t('All');
+      }
       break;
   }
 }
