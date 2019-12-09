@@ -781,6 +781,13 @@ function senate_preprocess_views_view(&$vars) {
     case 'session_summary':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
+    case 'week_review':
+      $archive = _senate_get_archive_week_review();
+      $vars['sidebar'] = [
+        '#theme' => 'senate_news_sidebar',
+        '#archive' => $archive,
+      ];
+      break;
   }
 }
 
@@ -875,4 +882,45 @@ function _senate_get_committee_options($committee_options) {
   }
 
   return $new_options;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function senate_theme($existing, $type, $theme, $path) {
+  $theme_path = base_path() . drupal_get_path('theme', 'senate');
+  return [
+    'senate_news_sidebar' => [
+      'variables' => [
+        'archive' => NULL
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+  ];
+}
+
+function _senate_get_archive_week_review() {
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'week_review')
+    ->condition('nfd.status', 1);
+  $query->innerJoin('node__field_week_review_date', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'week_review\'');
+
+  $query->addExpression("DATE_FORMAT(field_week_review_date_value, '%M')", 'month');
+  $query->addExpression("DATE_FORMAT(field_week_review_date_value, '%m')", 'month_digits');
+  $query->addExpression("DATE_FORMAT(field_week_review_date_value, '%Y')", 'year');
+
+  $query->groupBy('year');
+  $query->groupBy('month_digits');
+  $query->groupBy('month');
+  $query->orderBy('year', 'desc');
+  $query->orderBy('month_digits', 'desc');
+
+  $result = $query->execute()->fetchAll();
+
+  $archive = [];
+  foreach ($result as $row) {
+    $archive[$row->year][$row->month] = $row;
+  }
+
+  return !empty($archive) ? $archive : [];
 }
