@@ -1,0 +1,63 @@
+.bSeats {
+
+  &__img {
+    text-align: center;
+    position: relative;
+    margin-bottom: 21px;
+  }
+
+  &__cap {
+    position: absolute;
+    left: 50%;
+    bottom: -3px;
+    transform: translate(-50%, 0);
+    color: #1f2f4b;
+    font-family: $RobotoCondensed-Light;
+    text-align: center;
+    @include font-size(22px, 28px, 32px);
+    line-height: 1;
+
+    span {
+      display: block;
+      font-family: $RobotoCondensed-Bold;
+      @include font-size(40px, 50px, 60px);
+    }
+  }
+
+  &__count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    & > * {
+      margin-right: 29px;
+      margin-left: 29px;
+    }
+
+    &D, &R {
+      font-family: $RobotoCondensed-Light;
+      text-align: center;
+      @include font-size(22px, 28px, 32px);
+      color: #5170a2;
+      line-height: 1;
+
+      span {
+        display: block;
+        font-family: $RobotoCondensed-Bold;
+        @include font-size(100px, 130px, 146px);
+        margin-bottom: -6px;
+      }
+    }
+
+    &R {
+      color: #e13129;
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      margin-bottom: 48px;
+    }
+  }
+}

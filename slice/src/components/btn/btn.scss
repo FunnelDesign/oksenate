@@ -71,14 +71,22 @@
     &_live {
       border-color: #ff0707;
     }
+  }
 
-    &_sA {
+  &_c {
+    background: #253857;
+    text-transform: none;
 
+    &:hover {
+      background: #fff;
+      background: $color-red;
     }
+  }
 
-    &_sB {
-
-    }
+  &__ico {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
   }
 
   &_s {
@@ -103,6 +111,12 @@
 
     &_f {
       padding: 11px 18px;
+    }
+
+    &_j {
+      min-width: 395px;
+      @include font-size(14px, 18px);
+      @include padding(14px 26px);
     }
   }
 }

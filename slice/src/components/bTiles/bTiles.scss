@@ -216,6 +216,24 @@
         line-height: 1.6;
       }
     }
+
+    &_c {
+
+      #{$this}__item {
+
+        @include sm {
+          min-height: 343px;
+          max-width: calc(50% - 12px);
+          min-width: calc(50% - 12px);
+        }
+      }
+
+      #{$this}__ico {
+        height: 120px;
+        max-width: 250px;
+        margin: 0 auto 27px;
+      }
+    }
   }
 
   &_nav {

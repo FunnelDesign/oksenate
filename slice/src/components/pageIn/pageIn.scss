@@ -60,6 +60,17 @@
     @include margin-top(30px, 50px);
   }
 
+  &__btnWr {
+    text-align: center;
+
+    &_gap {
+
+      &_a {
+        @include margin-bottom(40px, 50px, 77px);
+      }
+    }
+  }
+
   &__pCols {
 
 

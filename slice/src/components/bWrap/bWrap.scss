@@ -16,6 +16,10 @@
     &_c {
       max-width: 350px;
     }
+
+    &_d {
+      max-width: 580px;
+    }
   }
 
   &_indent {
@@ -41,6 +45,10 @@
     &_a {
       color: #404040;
     }
+
+    &_b {
+      color: #777777;
+    }
   }
 
   &_f {
@@ -51,6 +59,10 @@
 
       strong {
         font-family: $FreightTextProBold-Regular;
+      }
+
+      &_15 {
+        line-height: 1.5;
       }
 
       &_16 {
