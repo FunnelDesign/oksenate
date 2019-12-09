@@ -1,0 +1,25 @@
+.bHist {
+
+  &__its {
+    max-width: 584px;
+    margin: 0 auto;
+  }
+
+  &__it {
+    padding: 10px 20px 20px;
+  }
+
+  &__date {
+    font-family: $RobotoCondensed-Bold;
+    font-size: 97px;
+    color: #fff;
+  }
+
+  &__desc {
+    @include cr-last-child;
+    color: #fff;
+    font-size: 14px;
+    font-family: $FreightTextProBook-Regular;
+    line-height: 1.4;
+  }
+}

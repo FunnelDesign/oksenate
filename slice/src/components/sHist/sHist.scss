@@ -1,0 +1,13 @@
+.sHist {
+  min-height: 1200px;
+  z-index: 1;
+
+  &__bg-wrap {
+    z-index: -1;
+  }
+
+  &__bg {
+    background-size: 1200px auto;
+    background-position: 50% 100%;
+  }
+}

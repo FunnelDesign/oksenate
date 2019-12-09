@@ -84,6 +84,21 @@
         @include display(none, block);
       }
     }
+
+    &_s {
+
+      &_a {
+        max-width: 480px;
+        margin: 0 auto;
+      }
+    }
+
+    &_cl {
+
+      &_a {
+        color: #fff;
+      }
+    }
   }
 
   &_wSub {
