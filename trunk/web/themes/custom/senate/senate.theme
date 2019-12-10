@@ -142,9 +142,6 @@ function senate_preprocess_node(array &$vars) {
         }
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
-      case 'press_release':
-        $vars['title'] = $node->getTitle();
-        break;
       case 'senator':
         $district = (!empty($vars["content"]["field_senator_district_taxonomy"]) &&
           !empty($vars["content"]["field_senator_district_taxonomy"]['#items'])) ?
@@ -193,7 +190,9 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'week_review':
+      case 'press_release':
         $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
+        $vars['title'] = $node->getTitle();
 
         if (!empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"])) {
           $sharethis = [

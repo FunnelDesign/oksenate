@@ -76,9 +76,9 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
         </div>
 
         <div class="pageIn__pCols">
-                <aside class="bSidebar pageIn__bSidebar">
-                    {{ sidebar }}
-                </aside>
+            <aside class="bSidebar pageIn__bSidebar">
+                {{ sidebar }}
+            </aside>
             <div class="pageIn__main">
 
                 {% if rows -%}
@@ -88,12 +88,12 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
                 {% elseif empty -%}
                     {{ empty }}
                 {% endif %}
-                    <div class="bPostList__pager">
-                        {#<div class="bPostList__pagerTitle">#}
-                            {#Page:#}
-                        {#</div>#}
-                        {{ pager }}
-                    </div>
+                <div class="bPostList__pager">
+                    {#<div class="bPostList__pagerTitle">#}
+                    {#Page:#}
+                    {#</div>#}
+                    {{ pager }}
+                </div>
             </div>
         </div>
         {{ attachment_after }}
