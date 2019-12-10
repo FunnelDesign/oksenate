@@ -139,9 +139,6 @@ function senate_preprocess_node(array &$vars) {
 
           $vars['press_releases'] = _senate_get_view('subcmt_up_press_rels', 'block_1', $params);
           $vars['subcommittee_agencies'] = _senate_get_view('subcommittee_agencies', 'block_1', [$tid]);
-
-          $ancestors = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term")->loadAllParents($tid);
-          $vars['section_inner_class'] = (count($ancestors) > 1) ? 'section__v-inner_c' : 'section__v-inner_d';
         }
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
