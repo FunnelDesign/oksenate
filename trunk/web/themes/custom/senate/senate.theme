@@ -192,6 +192,19 @@ function senate_preprocess_node(array &$vars) {
           $vars['summary_id'] = Markup::create("overview-" . $vars['content']['field_session_summary_year_date'][0]['#text']);
         }
         break;
+      case 'week_review':
+        $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
+
+        if (!empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"])) {
+          $sharethis = [
+            '#theme' => 'senate_news_sharethis',
+            '#url' => $vars["content"]["sharethis"]["#content"]["m_path"],
+            '#title' => $vars["content"]["sharethis"]["#content"]["m_title"],
+            '#current_path' => $path_to_theme,
+          ];
+          $vars["content"]["sharethis"]["#content"]["st_spans"] = render($sharethis);
+        }
+        break;
     }
   }
 }
@@ -927,6 +940,14 @@ function senate_theme($existing, $type, $theme, $path) {
     'senate_press_release_sidebar' => [
       'variables' => [
         'archive' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senate_news_sharethis' => [
+      'variables' => [
+        'url' => NULL,
+        'title' => NULL,
         'current_path' => NULL,
       ],
       'path' => $theme_path . '/templates/theme',

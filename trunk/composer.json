@@ -43,6 +43,7 @@
         "drupal/redirect": "^1.4",
         "drupal/redirect_after_login": "^2.5",
         "drupal/search_api_page": "^1.0@beta",
+        "drupal/sharethis": "^2.0@beta",
         "drupal/time_field": "^1.13",
         "drupal/token": "^1.5",
         "drupal/video_embed_field": "^2.2",
