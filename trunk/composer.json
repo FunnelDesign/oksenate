@@ -106,6 +106,12 @@
                 ".editorconfig": "../.editorconfig",
                 ".gitattributes": "../.gitattributes"
             }
+        },
+        "patches": {
+            "drupal/sharethis": {
+                "https://www.drupal.org/project/sharethis/issues/2885710": "https://www.drupal.org/files/issues/Error-operator-not-supported-for-strings-2885710-12128018.patch",
+                "https://www.drupal.org/project/sharethis/issues/2816573": "https://www.drupal.org/files/issues/2816573-6.patch"
+            }
         }
     }
 }
