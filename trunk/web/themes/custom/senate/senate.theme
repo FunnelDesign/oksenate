@@ -800,6 +800,24 @@ function senate_preprocess_views_view(&$vars) {
         $vars['showing'] = t('All');
       }
       break;
+    case 'press_releases':
+      $archive = _senate_get_archive_press_releases_review();
+      $current_path = \Drupal::service('path.current')->getPath();
+
+      $vars['sidebar'] = [
+        '#theme' => 'senate_press_release_sidebar',
+        '#archive' => $archive,
+        '#current_path' => $current_path,
+      ];
+      $date = $view->args;
+      if (!empty($date) && !empty($date[0])) {
+        $date_obj = new DrupalDateTime($date[0]);
+        $vars['showing'] = $date_obj->format('F, Y');
+      }
+      else {
+        $vars['showing'] = t('All');
+      }
+      break;
   }
 }
 
@@ -909,6 +927,13 @@ function senate_theme($existing, $type, $theme, $path) {
       ],
       'path' => $theme_path . '/templates/theme',
     ],
+    'senate_press_release_sidebar' => [
+      'variables' => [
+        'archive' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
   ];
 }
 
@@ -921,6 +946,32 @@ function _senate_get_archive_week_review() {
   $query->addExpression("DATE_FORMAT(field_week_review_date_value, '%M')", 'month');
   $query->addExpression("DATE_FORMAT(field_week_review_date_value, '%m')", 'month_digits');
   $query->addExpression("DATE_FORMAT(field_week_review_date_value, '%Y')", 'year');
+
+  $query->groupBy('year');
+  $query->groupBy('month_digits');
+  $query->groupBy('month');
+  $query->orderBy('year', 'desc');
+  $query->orderBy('month_digits', 'desc');
+
+  $result = $query->execute()->fetchAll();
+
+  $archive = [];
+  foreach ($result as $row) {
+    $archive[$row->year][$row->month] = $row;
+  }
+
+  return !empty($archive) ? $archive : [];
+}
+
+function _senate_get_archive_press_releases_review() {
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'press_release')
+    ->condition('nfd.status', 1);
+  $query->innerJoin('node__field_date', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'press_release\'');
+
+  $query->addExpression("DATE_FORMAT(field_date_value, '%M')", 'month');
+  $query->addExpression("DATE_FORMAT(field_date_value, '%m')", 'month_digits');
+  $query->addExpression("DATE_FORMAT(field_date_value, '%Y')", 'year');
 
   $query->groupBy('year');
   $query->groupBy('month_digits');
