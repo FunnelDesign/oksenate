@@ -38,7 +38,8 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
 
 <section class="section section_bg-color_f section_inner-v-centered">
     <div class="section__bg-wrap">
-        <div class="section__bg" style="background-image: url('{{ theme_path }}/dist/images/tmp/section-bg-img-8.jpg')"></div>
+        <div class="section__bg"
+             style="background-image: url('{{ theme_path }}/dist/images/tmp/section-bg-img-8.jpg')"></div>
     </div>
     <div class="section__v-inner section__v-inner_d">
         <div class="bContainer">
@@ -75,11 +76,9 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
         </div>
 
         <div class="pageIn__pCols">
-            <div class="pageIn__pCols">
                 <aside class="bSidebar pageIn__bSidebar">
                     {{ sidebar }}
                 </aside>
-            </div>
             <div class="pageIn__main">
 
                 {% if rows -%}
@@ -89,12 +88,12 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
                 {% elseif empty -%}
                     {{ empty }}
                 {% endif %}
-                <div class="bPostList__pager">
-                    <div class="bPostList__pagerTitle">
-                        Page:
+                    <div class="bPostList__pager">
+                        {#<div class="bPostList__pagerTitle">#}
+                            {#Page:#}
+                        {#</div>#}
+                        {{ pager }}
                     </div>
-                    {{ pager }}
-                </div>
             </div>
         </div>
         {{ attachment_after }}
