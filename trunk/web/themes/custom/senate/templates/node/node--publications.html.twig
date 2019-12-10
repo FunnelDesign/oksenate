@@ -87,11 +87,14 @@
 </section>
 <section class="section section_ind_c section_bg-color_c">
     <div class="bContainer">
-        <div class="bTitle bTitle_gap_d">
-            <div class="bTitle__sub bTitle__sub_b">
-                {{ content.body }}
+        {% if content.body %}
+            <div class="bTitle bTitle_gap_d">
+                <div class="bTitle__sub bTitle__sub_b">
+                    {{ content.body }}
+                </div>
             </div>
-        </div>
+        {% endif %}
+        {{ content.field_publications_columns_par }}
         {{ content.field_publications_paragraph }}
     </div>
 </section>

@@ -15,6 +15,7 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Core\Datetime\DrupalDateTime;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
+define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -455,6 +456,8 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_home_leadership_name_txt':
     case 'field_home_leadership_post_txt':
     case 'field_subcomt_mmb_position':
+    case 'field_publications_column_text':
+    case 'field_publications_column_title':
       $suggestions[] = 'field__no_wrappers';
       break;
 
@@ -838,8 +841,11 @@ function senate_preprocess_paragraph(array &$vars) {
   $bundle = $paragraph->bundle();
 
   switch ($bundle) {
-    case 'subcomt_mmb':
-
+    case 'publications':
+      $node = \Drupal::routeMatch()->getParameter('node');
+      if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
+        $vars['icon_attributes'] = ' bTiles__ico_a';
+      }
       break;
   }
 }
