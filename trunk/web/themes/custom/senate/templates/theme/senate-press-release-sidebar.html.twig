@@ -19,7 +19,7 @@
               </div>
               <div class="bSort__body">
                 {% for month_name, data in months %}
-                  {% set url = '/press-release/' ~ year ~ '-' ~ data.month_digits %}
+                  {% set url = '/press-releases/' ~ year ~ '-' ~ data.month_digits %}
                   {% set month_class = (current_path == url) ? 'bef-link-active' : '' %}
                   <a href="{{ url }}" class="{{ month_class }}">{{ month_name }}</a>
                 {% endfor %}
