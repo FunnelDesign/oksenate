@@ -87,7 +87,7 @@
 </section>
 <section class="section section_ind_c section_bg-color_c">
     <div class="bContainer">
-        {% if content.body %}
+        {% if content.body|render is not empty %}
             <div class="bTitle bTitle_gap_d">
                 <div class="bTitle__sub bTitle__sub_b">
                     {{ content.body }}
