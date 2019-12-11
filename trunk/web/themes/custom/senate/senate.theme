@@ -763,6 +763,26 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         }
       }
       break;
+    case 'journals':
+      $row = !empty($vars["rows"]) ? current($vars["rows"]) : '';
+      $nid = (!empty($row) && !empty($row["content"]) &&
+        !empty($row["content"]["#row"]->field_journals_files_paragraphs_item_field_data_nid)) ?
+        $row["content"]["#row"]->field_journals_files_paragraphs_item_field_data_nid : '';
+      if (!empty($nid)) {
+        $parent_node = \Drupal\node\Entity\Node::load($nid);
+
+        if ($parent_node->hasField('title')) {
+          $title = $parent_node->get('title');
+          $title = $title->getValue();
+          $vars["title"] = !empty($title) && !empty($title[0]) ? $title[0]['value'] : '';
+        }
+        if ($parent_node->hasField('field_journals_subtitle')) {
+          $subtitle = $parent_node->get('field_journals_subtitle');
+          $subtitle = $subtitle->getValue();
+          $vars["subtitle"] = !empty($subtitle) && !empty($subtitle[0]) ? $subtitle[0]['value'] : '';
+        }
+      }
+      break;
   }
 }
 
