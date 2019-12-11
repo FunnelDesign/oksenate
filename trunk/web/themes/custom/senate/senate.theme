@@ -545,6 +545,19 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           $form["zip"]["#placeholder"] = t('Enter Zip');
         }
       }
+      elseif ($view_name == 'journals') {
+        $options = _senate_get_journals_options();
+        if (!empty($options)) {
+          $years = array_keys($options);
+          $year_options = array_combine($years, $years);
+          $form["year"] = [
+            '#type' => 'select',
+            '#title' => t('Select element'),
+            '#options' => $year_options,
+            '#value' => '2019-01'
+          ];
+        }
+      }
       break;
   }
 }
@@ -1049,4 +1062,32 @@ function _senate_get_archive_press_releases_review() {
   }
 
   return !empty($archive) ? $archive : [];
+}
+
+function _senate_get_journals_options() {
+  $query = \Drupal::database()->select('paragraphs_item_field_data', 'pifd')
+    ->condition('pifd.type', 'journals_files')
+    ->condition('pifd.status', 1);
+  $query->innerJoin('node__field_journals_files', 'nfjf', 'pifd.id = nfjf.field_journals_files_target_id AND nfjf.deleted = 0');
+  $query->innerJoin('node_field_data', 'nfd', 'nfjf.entity_id = nfd.nid AND nfd.status = 1 AND nfd.type = \'journals\'');
+  $query->innerJoin('paragraph__field_journals_files_date', 'pfjfd', 'pifd.id = pfjfd.entity_id AND pfjfd.deleted = 0');
+
+  $query->addExpression("DATE_FORMAT(field_journals_files_date_value, '%M')", 'month');
+  $query->addExpression("DATE_FORMAT(field_journals_files_date_value, '%m')", 'month_digits');
+  $query->addExpression("DATE_FORMAT(field_journals_files_date_value, '%Y')", 'year');
+
+  $query->groupBy('year');
+  $query->groupBy('month_digits');
+  $query->groupBy('month');
+  $query->orderBy('year', 'desc');
+  $query->orderBy('month_digits', 'asc');
+
+  $result = $query->execute()->fetchAll();
+
+  $options = [];
+  foreach ($result as $row) {
+    $options[$row->year][$row->month_digits] = $row->month;
+  }
+
+  return !empty($options) ? $options : [];
 }
