@@ -873,6 +873,19 @@ function senate_preprocess_paragraph(array &$vars) {
         $vars['icon_attributes'] = ' bTiles__ico_a';
       }
       break;
+    case 'journals_files':
+      $date = (!empty($vars["content"]["field_journals_files_date"]) &&
+        !empty($vars["content"]["field_journals_files_date"]['#items'])) ?
+        $vars["content"]["field_journals_files_date"]['#items']->getValue() : '';
+      $file = (!empty($vars["content"]["field_journals_files_file"]) &&
+        !empty($vars["content"]["field_journals_files_file"][0])) ?
+        $vars["content"]["field_journals_files_file"][0]['#file'] : '';
+
+      $date = !empty($date) && !empty($date[0]) ? $date[0]["value"] : '';
+      $vars['file_url'] = !empty($file) ? file_create_url($file->getFileUri()) : '';
+      $date_obj = new DrupalDateTime($date);
+      $vars['date'] = $date_obj->format('F j');
+      break;
   }
 }
 

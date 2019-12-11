@@ -24,7 +24,11 @@
   <div class="bTitle__sub bTitle__sub_a">
     {{ subtitle }}
   </div>
-  {% for row in rows %}
-    {{- row.content -}}
-  {% endfor %}
+</div>
+<div class="bListLinks bListLinks_a">
+  <div class="bListLinks__items">
+    {% for row in rows %}
+      {{- row.content -}}
+    {% endfor %}
+  </div>
 </div>
