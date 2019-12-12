@@ -71,4 +71,21 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
+  if ($view->id() == 'journals' && $view->getDisplay()->display['id'] == 'page_1') {
+    $table_files = $query->getTableInfo('node__field_journals_files');
+    $table_files['join']->field = 'field_journals_files_target_id';
+    $table_files["join"]->configuration["field"] = 'field_journals_files_target_id';
+
+    $table_node = $query->getTableInfo('field_journals_files_paragraphs_item_field_data');
+    $table_node['join']->field = 'nid';
+    $table_node["join"]->configuration["field"] = 'nid';
+
+    foreach ($query->where as $key => &$condition_group) {
+      foreach ($condition_group['conditions'] as &$condition) {
+        if (strpos($condition['field'], 'DATE_FORMAT(paragraph__field_journals_files_date.field_journals_files_date_value') !== FALSE) {
+          $condition['field'] = str_replace('%Y-%m-%d', '%Y-%m', $condition['field']);
+        }
+      }
+    }
+  }
 }
