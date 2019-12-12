@@ -59,6 +59,36 @@
     }
   }
 
+  &_b {
+    max-width: 744px;
+    margin: 0 auto;
+
+    #{$this}__links {
+
+      @include sm {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 0 -20px;
+      }
+
+      & > * {
+
+        @include sm {
+          width: calc(50% - 40px);
+          margin: 0 20px 15px !important;
+        }
+
+        &:last-child:not(:first-child) {
+
+          @include sm {
+            margin-right: auto !important;
+          }
+        }
+      }
+    }
+  }
+
   &_btnArr {
 
     #{$this}__link {
@@ -88,6 +118,14 @@
         background: url('arrow-blue-ico-1.png') no-repeat;
         background-size: contain;
       }
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      @include margin-bottom(30px, 40px);
+      @include cr-last-item;
     }
   }
 }

@@ -851,6 +851,11 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'session_summary':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      $archive = _senate_get_session_summary_years();
+      $vars['select_year'] = [
+        '#theme' => 'senate_session_summary_select',
+        '#archive' => $archive,
+      ];
       break;
     case 'week_review':
       $archive = _senate_get_archive_week_review();
@@ -1020,6 +1025,13 @@ function senate_theme($existing, $type, $theme, $path) {
       ],
       'path' => $theme_path . '/templates/theme',
     ],
+    'senate_session_summary_select' => [
+      'variables' => [
+        'archive' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
     'senate_news_sharethis' => [
       'variables' => [
         'url' => NULL,
@@ -1078,6 +1090,24 @@ function _senate_get_archive_press_releases_review() {
   $archive = [];
   foreach ($result as $row) {
     $archive[$row->year][$row->month] = $row;
+  }
+
+  return !empty($archive) ? $archive : [];
+}
+
+function _senate_get_session_summary_years() {
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'session_summary')
+    ->condition('nfd.status', 1);
+  $query->innerJoin('node__field_session_summary_year_date', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'session_summary\'');
+  $query->addExpression("DATE_FORMAT(field_session_summary_year_date_value, '%Y')", 'year');
+  $query->orderBy('year', 'desc');
+  $result = $query->execute()->fetchAll();
+
+  $archive = [];
+  $archive[0] = 'Select a year';
+  foreach ($result as $row) {
+    $archive[] = $row->year;
   }
 
   return !empty($archive) ? $archive : [];

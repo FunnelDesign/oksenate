@@ -48,8 +48,14 @@
       a {
         text-decoration: none;
 
-        &:hover {
+        &:hover, &#{$this}__let_active {
           color: $color-red;
+        }
+
+        &#{$this}__let_disabled {
+          opacity: .4;
+          color: gray;
+          pointer-events: none;
         }
       }
     }
@@ -62,6 +68,11 @@
   &__it {
     margin: 0 0 20px;
     @include cr-last-child;
+    display: none;
+
+    &_active {
+      display: block;
+    }
   }
 
   &__bTitle {

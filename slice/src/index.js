@@ -9,6 +9,7 @@ import SliderThumb from "./components/slider-thumb/SliderThumb";
 import FancyBox from "./components/fancybox/FancyBox";
 import SliderTypeA from "./components/slider-type-a/SliderTypeA";
 import sHeader from "./components/sHeader/sHeader";
+import bTerms from "./components/bTerms/bTerms";
 
 const $ = jQuery;
 
@@ -41,6 +42,7 @@ function init() {
 	new SliderTypeA();
 	// new FancyBox();
 	new sHeader();
+	new bTerms();
 	initSelect();
 
 

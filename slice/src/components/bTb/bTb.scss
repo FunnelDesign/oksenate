@@ -9,7 +9,7 @@
     display: table-header-group;
   }
 
-  &__tBody {
+  &__tBody, &__tTrGroup {
     display: table-row-group;
   }
 
@@ -133,6 +133,78 @@
 
         &:nth-child(3) {
           width: 93px;
+        }
+      }
+    }
+
+    &_vo {
+      border-spacing: 0 12px;
+
+
+
+      #{$this}__th {
+        padding: 0 10px;
+      }
+
+      #{$this}__tr {
+        position: relative;
+
+        &:first-child {
+
+          #{$this}__td {
+
+            @include sm {
+              padding: 24px 10px 31px;
+            }
+
+            &:first-child {
+              padding-left: 16px;
+            }
+
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
+
+      #{$this}__td {
+        position: relative;
+        vertical-align: middle;
+        //text-align: center;
+
+        &:before {
+          @include pseudo-block($top: -12px, $left: -1px, $right: 0);
+          background: #fff;
+          height: 12px;
+        }
+
+        @include sm {
+          padding: 12px 10px 31px;
+        }
+
+        &:first-child {
+
+          &:before {
+            border-left: 1px solid #cbcbcb;
+          }
+        }
+
+        &:last-child {
+
+          &:before {
+            left: 0;
+            right: -1px;
+            border-right: 1px solid #cbcbcb;
+          }
+        }
+
+      }
+
+      #{$this}__text {
+
+        &_a {
+          text-transform: uppercase;
         }
       }
     }
