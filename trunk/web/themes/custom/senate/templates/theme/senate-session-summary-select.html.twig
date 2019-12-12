@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * News sidebar.
+ *
+ */
+#}
+<div class="navSelect bSelect bSelect_a bSelect_size_b">
+    <div class="form-item form-type-select">
+        <select class="form-select">
+            {% if archive %}
+                {% for year in archive %}>
+                    <option>{{ year }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    </div>
+</div>
