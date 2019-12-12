@@ -575,6 +575,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
               $form["field_journals_files_date_value"]['#default_value'] = $year_month_default;
             }
           }
+
+          $form['#attached']['drupalSettings']['senate']['view_journals'] = $options;
         }
       }
       break;
