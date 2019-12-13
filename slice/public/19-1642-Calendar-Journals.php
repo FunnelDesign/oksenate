@@ -94,7 +94,7 @@
         </div>
 
         <div class="bListLinks bListLinks_a bListLinks_gap_a">
-          <div class="bListLinks__items">
+          <div class="bListLinks__items bListLinks__items_cen">
             <a href="#" class="btn btn_b btn_s_b">january 3 pdf</a>
             <a href="#" class="btn btn_b btn_s_b">january 4 pdf</a>
             <a href="#" class="btn btn_b btn_s_b">january 5 pdf</a>
@@ -119,7 +119,7 @@
         </div>
 
         <div class="bListLinks bListLinks_a bListLinks_gap_a">
-          <div class="bListLinks__items">
+          <div class="bListLinks__items bListLinks__items_cen">
             <a href="#" class="btn btn_b btn_s_b">january 3 pdf</a>
           </div>
         </div>
