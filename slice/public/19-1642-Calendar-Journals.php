@@ -41,7 +41,7 @@
 
       <div class="bContainer">
 
-<!--        <div class="bSelect bSelect_a bSelect_size_b  bSelect_gap_b">-->
+<!--        <div class="bSelect bSelect_a bSelect_size_d  bSelect_gap_b">-->
           <form class="views-exposed-form bSelect bSelect_a bSelect_size_d  bSelect_gap_b" data-drupal-selector="views-exposed-form-journals-page-1" action="/calendar/journals" method="get" id="views-exposed-form-journals-page-1" accept-charset="UTF-8">
             <div class="js-form-item form-item js-form-type-select form-type-select js-form-item-year form-item-year form-no-label">
               <select data-drupal-selector="edit-year" id="edit-year" name="year" class="form-select">
