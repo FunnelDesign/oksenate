@@ -28,11 +28,26 @@
       }
 
       .select2-selection--single .select2-selection__rendered {
-        padding: 17px 36px 17px 25px;
+        padding: 17px 36px 17px 18px;
       }
 
       .select2-selection--single .select2-selection__arrow {
         right: 8px;
+
+        b {
+          border-width: 2px;
+        }
+      }
+    }
+
+    &.views-exposed-form {
+
+      //.form-item {
+      //  margin: 0;
+      //}
+
+      .form-actions {
+        display: none;
       }
     }
   }
@@ -47,13 +62,13 @@
       }
     }
 
-    &_b {
-
-      .select2-container {
-        width: 162px;
-        margin: 0 auto;
-      }
-    }
+    //&_b {
+    //
+    //  .select2-container {
+    //    width: 162px;
+    //    margin: 0 auto;
+    //  }
+    //}
 
     &_b {
 
@@ -67,6 +82,14 @@
 
       .select2-container {
         width: 350px;
+        margin: 0 auto;
+      }
+    }
+
+    &_d {
+
+      .select2-container {
+        width: 162px;
         margin: 0 auto;
       }
     }
