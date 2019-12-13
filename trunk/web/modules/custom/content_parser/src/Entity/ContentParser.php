@@ -554,7 +554,6 @@ class ContentParser extends ConfigEntityBase {
     $searchForReplace = [
       'Audio',
       'Print',
-      'Press Releases',
       'October Press Releases',
       'January Press Releases',
       'February Press Releases',
@@ -567,6 +566,8 @@ class ContentParser extends ConfigEntityBase {
       'September Press Releases',
       'November Press Releases',
       'December Press Releases',
+      '|',
+      'Press Releases'
     ];
 
 //    $remote_code = $this->getCode('remote_id');
