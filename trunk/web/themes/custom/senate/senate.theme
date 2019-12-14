@@ -211,6 +211,9 @@ function senate_preprocess_node(array &$vars) {
           $vars['leadersip'] = _senate_get_block('leadership');
         }
         break;
+      case 'cl_app_bud':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
     }
   }
 }
