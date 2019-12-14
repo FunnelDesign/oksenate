@@ -214,6 +214,10 @@ function senate_preprocess_node(array &$vars) {
       case 'cl_app_bud':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
+      case 'calendar':
+        $vars['latest_st_journals'] = _senate_get_view('calendar_lt_st_journals', 'block_1');
+        $vars['latest_joint_app'] = _senate_get_view('calendar_lt_joint_app_bd', 'block_1');
+        break;
     }
   }
 }
@@ -343,6 +347,8 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_webform_block_icon':
     case 'field_basic_top_logo_image':
     case 'field_par_publications_page_icon':
+    case 'field_menu_icon':
+    case 'field_calendar_up_ddl_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -465,6 +471,18 @@ function senate_preprocess_field(array &$vars, $hook) {
           $url->setOption('attributes', $options);
           $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
         }
+      }
+      break;
+    case 'field_menu_link':
+      if (!empty($vars["items"]) && !empty($vars["items"][0])) {
+        $vars["items"][0]["content"]["#options"]["attributes"] = [
+          'class' => ['btn']
+        ];
+      }
+      break;
+    case 'field_calendar_up_ddl_date':
+      if (!empty($vars['items']) && !empty($vars["items"][0])) {
+        $vars["date"] = $vars["items"][0]["content"]["#text"];
       }
       break;
   }
@@ -918,6 +936,10 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'journals':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      break;
+    case 'calendar_lt_st_journals':
+    case 'calendar_lt_joint_app_bd':
+      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
       break;
   }
 }
