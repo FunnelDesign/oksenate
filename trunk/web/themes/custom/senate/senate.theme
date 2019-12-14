@@ -212,12 +212,19 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'cl_app_bud':
-      case 'edu_indiv_art_work':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'calendar':
         $vars['latest_st_journals'] = _senate_get_view('calendar_lt_st_journals', 'block_1');
         $vars['latest_joint_app'] = _senate_get_view('calendar_lt_joint_app_bd', 'block_1');
+        break;
+      case 'edu_indiv_art_work':
+        if ($vars["view_mode"] == 'teaser') {
+          $vars['title'] = $node->label();
+        }
+        else {
+          $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        }
         break;
     }
   }
@@ -954,6 +961,11 @@ function senate_preprocess_views_view(&$vars) {
     case 'terms_glossary':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       $vars['top_text'] = _senate_get_block('glossarydescription');
+      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+      break;
+    case 'senate_artwork':
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      $vars['top_text'] = _senate_get_block('senateartworkdescription');
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
       break;
   }
