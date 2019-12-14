@@ -970,6 +970,10 @@ function senate_preprocess_paragraph(array &$vars) {
       $vars['file_url'] = !empty($file) ? file_create_url($file->getFileUri()) : '';
       $date_obj = new DrupalDateTime($date);
       $vars['date'] = $date_obj->format('F j');
+
+      if ($vars["view_mode"] == 'calendar_landing') {
+        $vars['date'] = $date_obj->format('F j, Y');
+      }
       break;
   }
 }
