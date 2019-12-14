@@ -949,6 +949,11 @@ function senate_preprocess_views_view(&$vars) {
     case 'calendar_lt_joint_app_bd':
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
       break;
+    case 'terms_glossary':
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      $vars['top_text'] = _senate_get_block('glossarydescription');
+      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+      break;
   }
 }
 
