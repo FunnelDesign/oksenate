@@ -50,13 +50,11 @@
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       <div class="bTerms__bTitle">
-        {{ content.field_glossary_terms_title }}
+        {{ content.field_glossary_subterms_title }}
       </div>
-
       <div class="bTerms__bBody">
-        {{ content.field_glossary_terms_desc }}
+        {{ content.field_glossary_subterms_desc }}
       </div>
-      {{ content.field_glossary_terms_sub }}
     {% endblock %}
   </div>
 {% endblock paragraph %}
