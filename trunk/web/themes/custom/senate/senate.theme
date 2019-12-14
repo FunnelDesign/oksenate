@@ -485,6 +485,14 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["date"] = $vars["items"][0]["content"]["#text"];
       }
       break;
+    case 'field_glossary_terms':
+      $node = !empty($vars["element"]["#object"]) ? $vars["element"]["#object"] : '';
+      if (!empty($node)) {
+        $letter = $node->hasField('field_glossary_letter') ?
+          $node->field_glossary_letter->get(0)->value : '';
+        $vars['id'] = 'item-' . strtolower($letter);
+      }
+      break;
   }
 }
 
