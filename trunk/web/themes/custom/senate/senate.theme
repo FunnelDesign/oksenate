@@ -212,6 +212,7 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'cl_app_bud':
+      case 'edu_indiv_art_work':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'calendar':
@@ -474,6 +475,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_menu_link':
+    case 'field_edu_indiv_art_work_btn':
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars["items"][0]["content"]["#options"]["attributes"] = [
           'class' => ['btn']
