@@ -15,7 +15,7 @@ deploy:
   only:
     - develop #triggered branch
   script:
-    #check branch name, pull only the same branch as triggerd, otherwise stop with error!
+    #check branch name, pull only the same branch as triggered, otherwise stop with error!
     - echo "Remote branch name:"
     - ssh $REMOTE_HOST_USER@$REMOTE_HOST "php -v"
     - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && git rev-parse --abbrev-ref HEAD"
