@@ -2,7 +2,7 @@
 # Docs at https://github.com/drush-ops/drush/blob/master/examples/example.site.yml
 
 stage:
-  host: devstages.com
+  host: funnelstaging.com
   user: senate
   root: /home/senate/public_html
-  uri: http://senate.devstages.com
+  uri: http://senate.funnelstaging.com
