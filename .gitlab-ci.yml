@@ -24,6 +24,8 @@ deploy:
     - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && chmod u+w $REMOTE_DIRECTORY/sites/default"
     - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && git pull $CI_BUILD_REPO $CI_BUILD_REF_NAME"
     - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_COMPOSER_DIRECTORY && composer install"
+    #FIX overriding .htaccess
+    - ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd REMOTE_DIRECTORY && mv .htaccess_default .htaccess"
     #OPTIONAL -  remove # on next row to enable drush clear ALL cache
     #- ssh $REMOTE_HOST_USER@$REMOTE_HOST "cd $REMOTE_DIRECTORY && drush cr"
     #OR CLEAR ONLY css-js - remove # on next row
