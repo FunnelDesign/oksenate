@@ -226,6 +226,9 @@ function senate_preprocess_node(array &$vars) {
           $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         }
         break;
+      case 'senate_votes':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
     }
   }
 }
@@ -500,6 +503,39 @@ function senate_preprocess_field(array &$vars, $hook) {
         $letter = $node->hasField('field_glossary_letter') ?
           $node->field_glossary_letter->get(0)->value : '';
         $vars['id'] = 'item-' . strtolower($letter);
+      }
+      break;
+    case 'field_senate_votes_action_file':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('Download');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = $file->url();
+          $url = Url::fromUri($url);
+          $options = ['class' => ['bTb__text', 'bTb__text_a', 'pageIn_cl_c']];
+          $options['target'] = '_blank';
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+        }
+      }
+      break;
+    case 'field_senate_votes':
+      $items = !empty($vars["items"]) ? $vars["items"] : [];
+      $pr_ids = [];
+      foreach ($items as $key => $item) {
+        if (!empty($item["content"]["#paragraph"])) {
+          $pr_ids[$key] = $item["content"]["#paragraph"]->id();
+        }
+      }
+      $grouped_items = _senate_votes_get_grouped_items($pr_ids);
+      $vars['groups'] = [];
+      foreach ($grouped_items as $key => $gr_items) {
+        foreach ($gr_items as $gr_item) {
+          $vars['groups'][$key][] = array_search($gr_item, $pr_ids);
+        }
       }
       break;
   }
@@ -1221,4 +1257,20 @@ function _senate_get_journals_options() {
   }
 
   return !empty($options) ? $options : [];
+}
+
+function _senate_votes_get_grouped_items($pr_ids) {
+  $query = \Drupal::database()->select('paragraph__field_senate_votes_measure', 'pfsvm')
+    ->fields('pfsvm', ['entity_id', 'field_senate_votes_measure_value'])
+    ->condition('pfsvm.bundle', 'senate_votes')
+    ->condition('pfsvm.deleted', 0)
+    ->condition('pfsvm.entity_id', $pr_ids, 'IN');
+  $result = $query->execute()->fetchAll();
+
+  $grouped = [];
+  foreach ($result as $row) {
+    $grouped[$row->field_senate_votes_measure_value][] = $row->entity_id;
+  }
+
+  return !empty($grouped) ? $grouped : [];
 }
