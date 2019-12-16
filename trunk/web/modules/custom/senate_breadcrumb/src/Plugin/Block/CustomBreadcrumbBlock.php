@@ -124,13 +124,13 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
           <div class="section__sNav">
             <div class="bContainer">
               {{ back_link }}
-              
+
               {% if breadcrumbs %}
                 <div class="breadcrumb {{ breadcrumb_class }}">
                   {% for breadcrumb in breadcrumbs %}
                     {{ breadcrumb }}
                   {% endfor %}
-                  
+
                   {% if page_title is not empty %}
                     <span>{{ page_title }}</span>
                   {% endif %}
@@ -164,11 +164,20 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     ];
 
     $view_id = \Drupal::routeMatch()->getParameter('view_id');
+    $node = \Drupal::request()->attributes->get('node');
 
     if (!empty($view_id)) {
       switch ($view_id) {
         case 'agencies_documents':
         case 'subcommittee_events':
+          $color = 'navy';
+          break;
+      }
+    }
+
+    if (!empty($node)) {
+      switch ($node->bundle()) {
+        case 'senate_votes':
           $color = 'navy';
           break;
       }
