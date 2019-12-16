@@ -22,7 +22,9 @@
 %}
 <article{{ attributes.addClass(classes) }}>
   {{ title_suffix.contextual_links }}
-  <a href="#" class="btn btn_a">{{ 'listen now'|trans }}</a>
+  <div class="bPostList__btnWrap">
+    <a href="#" class="btn btn_a">{{ 'listen now'|trans }}</a>
+  </div>
   {{ content.field_audio_title }}
   {{ content.field_media_audio_file }}
   {% if content %}
