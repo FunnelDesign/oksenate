@@ -968,6 +968,9 @@ function senate_preprocess_views_view(&$vars) {
       $vars['top_text'] = _senate_get_block('senateartworkdescription');
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
       break;
+    case 'senate_votes':
+      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+      break;
   }
 }
 
