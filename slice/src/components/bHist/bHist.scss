@@ -1,4 +1,5 @@
 .bHist {
+  $this: &;
 
   &__its {
     max-width: 584px;
@@ -7,6 +8,7 @@
 
   &__it {
     position: relative;
+    margin-bottom: 30px;
   }
 
   &__header {
@@ -28,7 +30,13 @@
     font-family: $RobotoCondensed-Bold;
     @include font-size(70px, 97px);
     color: #fff;
-    line-height: 1.2;
+    line-height: 0.8;
+    margin-bottom: 17px;
+  }
+
+  &__time {
+    font-size: 18px;
+    font-family: $FreightTextProMedium-Italic;
   }
 
   &__desc {
@@ -38,7 +46,9 @@
     font-family: $FreightTextProBook-Regular;
     line-height: 1.7;
     position: relative;
-    padding: 20px 41px 30px 41px;
+    padding: 20px 41px 18px 41px;
+    margin-bottom: 12px;
+    @include cr-last-item;
 
     &:before {
       @include pseudo-block($left: 8px, $top: 12px, $bottom: 0);
@@ -53,6 +63,30 @@
       border-radius: 50%;
       background: $color-red;
       overflow: hidden;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+
+      #{$this}__descIn {
+
+        &:after {
+          display: none;
+        }
+      }
+    }
+
+    &In {
+      position: relative;
+      @include cr-last-child;
+
+      &:after {
+        @include pseudo-block($left: 21px, $right: 0, $bottom: -1px);
+        border-bottom: 3px solid $color-red;
+        right: -44px;
+        bottom: -32px;
+        left: -19px;
+      }
     }
   }
 }
