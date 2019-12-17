@@ -20,14 +20,17 @@
     view_mode ? 'media--view-mode-' ~ view_mode|clean_class,
   ]
 %}
-<article{{ attributes.addClass(classes) }}>
-  {{ title_suffix.contextual_links }}
-  <div class="bPostList__btnWrap">
-    <a href="#" class="btn btn_a">{{ 'listen now'|trans }}</a>
-  </div>
-  {{ content.field_audio_title }}
-  {{ content.field_media_audio_file }}
-  {% if content %}
-    {{ content|without('field_audio_title', 'field_media_audio_file') }}
-  {% endif %}
-</article>
+<div class="bAudio__it">
+  <article{{ attributes.addClass(classes) }}>
+    {{ title_suffix.contextual_links }}
+    <div class="bAudio__desc">
+    {{ content.field_audio_title }}
+    </div>
+    <div class="bAudio__au">
+      {{ content.field_media_audio_file }}
+    </div>
+    {% if content %}
+      {{ content|without('field_audio_title', 'field_media_audio_file') }}
+    {% endif %}
+  </article>
+</div>

@@ -969,6 +969,7 @@ function senate_preprocess_views_view(&$vars) {
         $vars['showing'] = t('All');
       }
       break;
+    case 'press_releases_audio':
     case 'press_releases':
       $archive = _senate_get_archive_press_releases_review();
       $current_path = \Drupal::service('path.current')->getPath();
