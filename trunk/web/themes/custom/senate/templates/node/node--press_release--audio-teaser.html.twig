@@ -85,7 +85,12 @@
     {{ content.body }}
     <a href="{{ url }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
 </div>
-<div class="bAudio__its">
-  {{ content.field_press_release_audio }}
-</div>
+{% if content.field_press_release_audio %}
+  <div class="bPostList__bAudio bAudio">
+    <div class="bAudio__its">
+      {{ content.field_press_release_audio }}
+    </div>
+  </div>
+{% endif %}
+
 {{ content.sharethis }}
