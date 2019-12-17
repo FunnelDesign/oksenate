@@ -503,6 +503,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $letter = $node->hasField('field_glossary_letter') ?
           $node->field_glossary_letter->get(0)->value : '';
         $vars['id'] = 'item-' . strtolower($letter);
+        $vars['letter'] = strtolower($letter);
       }
       break;
     case 'field_senate_votes_action_file':

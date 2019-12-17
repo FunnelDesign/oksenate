@@ -53,7 +53,7 @@ label_display == 'visually_hidden' ? 'visually-hidden',
 
     {% for item in items %}
       {% set id1 = loop.index0 == '0' ? id %}
-      <div class="bTerms__it" id="{{ id1 }}">
+      <div class="bTerms__it" id="{{ id1 }}" data-letter="{{ letter }}">
         {{ item.content }}
       </div>
     {% endfor %}

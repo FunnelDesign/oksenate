@@ -113,8 +113,17 @@
         {{ attachment_before }}
 
         {% if rows -%}
-          <div class="bTerms__its">
-            {{ rows }}
+          <div class="bTerms__itsWr">
+            <div class="bTerms__its">
+              {{ rows }}
+            </div>
+
+            <div class="bTerms__moreWr">
+              <a class="bTerms__more" href="#">
+                <span class="bTerms__moreOpen">{{ "show more"|t }}</span>
+                <span class="bTerms__moreClose">{{ "show less"|t }}</span>
+              </a>
+            </div>
           </div>
         {% elseif empty -%}
           {{ empty }}
