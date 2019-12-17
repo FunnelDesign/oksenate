@@ -54,7 +54,7 @@
                 Rep. Lepak: <a href="tel: (405) 557-7380"> (405) 557-7380</a></p>
             </div>
 
-            <div class="bPostList__bAudio bAudio">
+            <div class="bPost__bAudio bAudio">
               <div class="bAudio__its">
                 <div class="bAudio__it">
                   <div class="bAudio__desc">
