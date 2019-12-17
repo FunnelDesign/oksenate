@@ -54,6 +54,55 @@
                 Rep. Lepak: <a href="tel: (405) 557-7380"> (405) 557-7380</a></p>
             </div>
 
+            <div class="bPostList__bAudio bAudio">
+              <div class="bAudio__its">
+                <div class="bAudio__it">
+                  <div class="bAudio__desc">
+                    (Sen. Lawler discusses fires and the Dept. of Agriculture's Hay Hotline and registry for farmers.)
+                  </div>
+                  <div class="bAudio__au">
+                    <audio controls="controls">
+                      <source src="/sites/default/files/2019-12/prac20190429c_0.mp3" type="audio/mpeg">
+                    </audio>
+                  </div>
+                </div>
+
+                <div class="bAudio__it">
+                  <!--                        <div class="bAudio__desc">-->
+                  <!---->
+                  <!--                        </div>-->
+                  <div class="bAudio__au">
+                    <audio controls="controls">
+                      <source src="/sites/default/files/2019-12/prac20190429c_0.mp3" type="audio/mpeg">
+                    </audio>
+                  </div>
+                </div>
+
+                <div class="bAudio__it">
+                  <div class="bAudio__desc">
+                    Test description   Test description  Test description  Test description  Test description
+
+                  </div>
+                  <div class="bAudio__au">
+                    <audio controls="controls">
+                      <source src="/sites/default/files/2019-12/prac20190429c_0.mp3" type="audio/mpeg">
+                    </audio>
+                  </div>
+                </div>
+
+                <div class="bAudio__it">
+                  <div class="bAudio__desc">
+                    Test description
+                  </div>
+                  <div class="bAudio__au">
+                    <audio controls="controls">
+                      <source src="/sites/default/files/2019-12/prac20190429c_0.mp3" type="audio/mpeg">
+                    </audio>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <?php include 'tpl/blocks/bSoc.inc'; ?>
