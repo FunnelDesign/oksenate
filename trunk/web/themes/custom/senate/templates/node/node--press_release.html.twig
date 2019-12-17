@@ -88,13 +88,7 @@
           <h1>{{ label }}</h1>
         </div>
       </div>
-      {% if content.field_press_release_audio %}
-        <div class="bPostList__bAudio bAudio">
-          <div class="bAudio__its">
-            {{ content.field_press_release_audio }}
-          </div>
-        </div>
-      {% endif %}
+
       <div class="bPost__body">
         <div class="bPost__imgWrap">
           <div class="bPost__img">
@@ -104,6 +98,13 @@
                 </span>
           </div>
         </div>
+        {% if content.field_press_release_audio %}
+          <div class="bPostList__bAudio bAudio">
+            <div class="bAudio__its">
+              {{ content.field_press_release_audio }}
+            </div>
+          </div>
+        {% endif %}
         <div class="bPost__text">
           {{ content.body }}
           {#TODO: add contacts here#}
