@@ -61,10 +61,13 @@
     }
   }
 
-  &__its {
-    padding: 0 12px;
+  &__itsWr {
     max-width: 634px;
     margin: 0 auto;
+  }
+
+  &__its {
+    padding: 0 12px;
   }
 
   &__it {
@@ -73,7 +76,15 @@
     display: none;
 
     &_active {
-      display: block;
+      display: none;
+
+      &_show {
+        display: block;
+      }
+
+      #{$this}_open & {
+        display: block;
+      }
     }
   }
 
@@ -108,5 +119,79 @@
     padding-left: 22px;
     margin-bottom: 26px;
     @include cr-last-child;
+  }
+
+  &__moreWr {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    display: none;
+
+    #{$this}_showMore & {
+      display: block;
+    }
+  }
+
+  &__more {
+    display: inline-block;
+    padding: 10px 22px;
+    border: 1px solid $color-red;
+    border-radius: 21px;
+    position: relative;
+    font-family: $RobotoCondensed-Bold;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: $color-red;
+    text-decoration: none;
+
+    &:before, &:after {
+      @include pseudo-block($top: 50%, $left: 100%);
+      border-bottom: 1px solid $color-red;
+      width: 100vw;
+    }
+
+    &:after {
+      left: auto;
+      right: 100%;
+    }
+  }
+
+  &__moreOpen, &__moreClose {
+    pointer-events: none;
+    position: relative;
+
+    &:after {
+      content: '';
+      display: inline-block;
+      vertical-align: middle;
+      width: 13px;
+      height: 7px;
+      margin-left: 10px;
+      background: url('arrow-png-shore-more.png') no-repeat;
+      background-size: contain;
+      margin-top: -1px;
+    }
+  }
+
+  &__moreOpen {
+
+    &:after {
+      transform: rotate(179deg);
+    }
+  }
+
+  &__moreClose {
+    display: none;
+  }
+
+  &_open {
+
+    #{$this}__moreClose {
+      display: inline-block;
+    }
+
+    #{$this}__moreOpen {
+      display: none;
+    }
   }
 }

@@ -74,37 +74,45 @@
 #}
 <section class="section section_ind_d section_bg-color_c">
 
-    <div class="bContainer">
-        <a href="/press-releases" class="btn btn_a section__btnBack">
-            back to press releases
-        </a>
+  <div class="bContainer">
+    <a href="/press-releases" class="btn btn_a section__btnBack">
+      back to press releases
+    </a>
 
-        <div class="bPost">
-            <div class="bPost__header">
-                <div class="bPost__date">
-                    {{ content.field_date }}
-                </div>
-                <div class="bPost__title">
-                    <h1>{{ label }}</h1>
-                </div>
-            </div>
-            <div class="bPost__body">
-                <div class="bPost__imgWrap">
-                    <div class="bPost__img">
-                        {{ content.field_release_img }}
-                        <span class="bPost__imgCap">
+    <div class="bPost">
+      <div class="bPost__header">
+        <div class="bPost__date">
+          {{ content.field_date }}
+        </div>
+        <div class="bPost__title">
+          <h1>{{ label }}</h1>
+        </div>
+      </div>
+
+      <div class="bPost__body">
+        <div class="bPost__imgWrap">
+          <div class="bPost__img">
+            {{ content.field_release_img }}
+            <span class="bPost__imgCap">
                     {#TODO: add senator name here#}
                 </span>
-                    </div>
-                </div>
-                <div class="bPost__text">
-                    {{ content.body }}
-                    {#TODO: add contacts here#}
-                </div>
-
-            </div>
-            {{ content.sharethis }}
+          </div>
         </div>
+        {% if content.field_press_release_audio %}
+          <div class="bPostList__bAudio bAudio">
+            <div class="bAudio__its">
+              {{ content.field_press_release_audio }}
+            </div>
+          </div>
+        {% endif %}
+        <div class="bPost__text">
+          {{ content.body }}
+          {#TODO: add contacts here#}
+        </div>
+
+      </div>
+      {{ content.sharethis }}
     </div>
+  </div>
 
 </section>
