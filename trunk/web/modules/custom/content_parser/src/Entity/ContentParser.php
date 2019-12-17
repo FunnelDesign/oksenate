@@ -551,6 +551,7 @@ class ContentParser extends ConfigEntityBase {
     if (!$this->isCheck($doc, $base_url)) {
       return $this->results->getNoAccessCode();
     }
+    $removeTable = 'this table contains return links';
     $searchForReplace = [
       'Audio',
       'Print',
@@ -622,15 +623,23 @@ class ContentParser extends ConfigEntityBase {
           $docNews = $this->getPhpQuery($content, $href);
           $mainContent = 'this table contains the main content of the page';
           $html = 'empty';
-          foreach ($docNews['table'] as $table){
+          foreach ($docNews['table'] as $key=>$table){
             if(pq($table)->attr('summary') == $mainContent){
-              $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
+              $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br>')), 'format'=>'full_html'];
+              $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+            }else{
+              unset($docNews['table'][$key]);
             }
           }
           if($html == 'empty'){
             $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
             \Drupal::logger('not_parsed')->notice($message);
             continue;
+          }
+          else{
+            $regexp = "/(For more information, contact:|For more information,contact:)(?s)(.*$)/";
+            $all = preg_match_all($regexp, $html);
+            $pregReplace = preg_replace($regexp, '', $html['value']);
           }
           // Remove hash
           $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
