@@ -227,6 +227,7 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'senate_votes':
+      case 'history':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
     }
