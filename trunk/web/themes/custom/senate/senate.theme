@@ -432,6 +432,9 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_subcomt_app_title':
+    case 'field_education_seats':
+    case 'field_education_democrat':
+    case 'field_education_republican':
       if (!empty($vars['items'])) {
         $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';
       }
@@ -486,6 +489,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_menu_link':
     case 'field_edu_indiv_art_work_btn':
+    case 'field_education_gallery_artwork':
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars["items"][0]["content"]["#options"]["attributes"] = [
           'class' => ['btn']
@@ -537,6 +541,15 @@ function senate_preprocess_field(array &$vars, $hook) {
         foreach ($gr_items as $gr_item) {
           $vars['groups'][$key][] = array_search($gr_item, $pr_ids);
         }
+      }
+      break;
+    case 'field_education_senate_history':
+    case 'field_education_find_bills':
+    case 'field_education_contact':
+    case 'field_education_leg_terms':
+      if (!empty($vars["items"]) && !empty($vars["items"][0])) {
+        $vars['url'] = $vars["items"][0]["content"]["#url"]->toString();
+        $vars['title'] = $vars["items"][0]["content"]["#title"];
       }
       break;
   }
