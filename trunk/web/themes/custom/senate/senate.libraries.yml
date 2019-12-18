@@ -2,10 +2,10 @@ global-styling:
   version: 0.0.1
   css:
     theme:
-      dist/css/styles.min.css: {}
-      dist/vendor/slick/slick.css: {}
-      dist/vendor/flexslider/flexslider.css: {}
       dist/vendor/jquery.scrollbar/jquery.scrollbar.css: {}
+      dist/vendor/flexslider/flexslider.css: {}
+      dist/vendor/slick/slick.css: {}
+      dist/css/styles.min.css: {}
   js:
       dist/vendor/device/device.js: {}
       dist/vendor/jquery.cookie/jquery.cookie.js: {}
