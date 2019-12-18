@@ -60,6 +60,12 @@ function senate_preprocess_node(array &$vars) {
       case 'homepage':
         $vars['search'] = _senate_get_block('searchapi_find_legislation');
         $vars['leadersip'] = _senate_get_block('leadership');
+
+        $top_slider_enabled = (!empty($vars["content"]["field_home_top_slider_turn_on"]) &&
+          !empty($vars["content"]["field_home_top_slider_turn_on"]['#items'])) ?
+          $vars["content"]["field_home_top_slider_turn_on"]['#items']->getValue() : '';
+        $vars['top_slider_enabled'] = (!empty($top_slider_enabled) && !empty($top_slider_enabled[0])) ?
+          $top_slider_enabled[0]["value"] : '';
         break;
       case 'committee':
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
