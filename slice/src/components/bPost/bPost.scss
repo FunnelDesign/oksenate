@@ -62,6 +62,11 @@
     color: #888888;
     text-align: center;
     display: block;
+
+    b, strong {
+      font-family: $Roboto-Bold;
+      font-weight: normal;
+    }
   }
 
   &__text {
@@ -70,6 +75,11 @@
     font-size: 14px;
     line-height: 1.9;
     @include cr-last-child;
+
+    b, strong {
+      font-family: $FreightTextProBold-Regular;
+      font-weight: normal;
+    }
 
     p {
       @include margin(0 0 16px, 0 0 28px);
@@ -140,7 +150,12 @@
     #{$this}__sub {
       font-size: 14px;
       text-align: center;
-      font-family: $FreightTextProBook-Regular
+      font-family: $FreightTextProBook-Regular;
+
+      b, strong {
+        font-family: $FreightTextProBold-Regular;
+        font-weight: normal;
+      }
     }
 
     #{$this}__header {
