@@ -361,6 +361,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_par_publications_page_icon':
     case 'field_menu_icon':
     case 'field_calendar_up_ddl_icon':
+    case 'field_home_top_slider_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -436,6 +437,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_education_seats':
     case 'field_education_democrat':
     case 'field_education_republican':
+    case 'field_home_top_slider_title':
       if (!empty($vars['items'])) {
         $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';
       }
@@ -491,6 +493,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_menu_link':
     case 'field_edu_indiv_art_work_btn':
     case 'field_education_gallery_artwork':
+    case 'field_home_top_slider_link':
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars["items"][0]["content"]["#options"]["attributes"] = [
           'class' => ['btn']
@@ -551,6 +554,17 @@ function senate_preprocess_field(array &$vars, $hook) {
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars['url'] = $vars["items"][0]["content"]["#url"]->toString();
         $vars['title'] = $vars["items"][0]["content"]["#title"];
+      }
+      break;
+    case 'field_home_top_slider':
+      $vars['bg_images'] = [];
+      $bg_images = _rows_from_paragraphs($vars, ['field_home_top_slider_bg_img']);
+      foreach ($bg_images as $key => $value) {
+        $bg_img = !empty($value["field_home_top_slider_bg_img"]) && !empty($value["field_home_top_slider_bg_img"][0]) ?
+          $value["field_home_top_slider_bg_img"][0]["value"] : '';
+        if (!empty($bg_img)) {
+          $vars['bg_images'][$key] = $bg_img;
+        }
       }
       break;
   }
