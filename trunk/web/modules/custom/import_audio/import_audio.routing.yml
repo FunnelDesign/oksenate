@@ -1,0 +1,7 @@
+import_audio.import_form:
+  path: '/admin/import-audio'
+  defaults:
+    _form: '\Drupal\import_audio\Form\ImportForm'
+    _title: 'Import Press releases audio'
+  requirements:
+    _access: 'TRUE'

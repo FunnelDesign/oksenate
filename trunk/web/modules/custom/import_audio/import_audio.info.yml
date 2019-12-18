@@ -1,0 +1,5 @@
+name: 'import_audio'
+type: module
+description: 'Import audio'
+core: 8.x
+package: 'Custom'
