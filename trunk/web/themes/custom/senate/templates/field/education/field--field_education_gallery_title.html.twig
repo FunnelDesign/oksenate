@@ -47,29 +47,8 @@
 'field__label',
 label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
-
-{% if label_hidden %}
-  {% if multiple %}
-
-    {% for item in items %}
-      {% set id1 = loop.index0 == '0' ? id %}
-      <div class="bTerms__it" id="{{ id1 }}" data-letter="{{ letter }}">
-        {{ item.content }}
-      </div>
-    {% endfor %}
-
-  {% else %}
-    {% for item in items %}
-      {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
-    {% endfor %}
-  {% endif %}
-
-{% else %}
-
-  <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
-
+<div class="bTitle bTitle_gap_b">
   {% for item in items %}
-    {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
+    <h2>{{ item.content }}</h2>
   {% endfor %}
-
-{% endif %}
+</div>

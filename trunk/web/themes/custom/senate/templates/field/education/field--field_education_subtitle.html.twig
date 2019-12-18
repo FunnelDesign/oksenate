@@ -52,15 +52,12 @@ label_display == 'visually_hidden' ? 'visually-hidden',
   {% if multiple %}
 
     {% for item in items %}
-      {% set id1 = loop.index0 == '0' ? id %}
-      <div class="bTerms__it" id="{{ id1 }}" data-letter="{{ letter }}">
-        {{ item.content }}
-      </div>
+      {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
     {% endfor %}
 
   {% else %}
     {% for item in items %}
-      {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
+      <h2>{{ item.content }}</h2>
     {% endfor %}
   {% endif %}
 

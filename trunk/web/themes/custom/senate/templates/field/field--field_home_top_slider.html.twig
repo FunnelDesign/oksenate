@@ -38,38 +38,49 @@
  */
 #}
 {% set classes = [
-'field',
-'field--name-' ~ field_name|clean_class,
-'field--type-' ~ field_type|clean_class,
-'field--label-' ~ label_display,
+  'field',
+  'field--name-' ~ field_name|clean_class,
+  'field--type-' ~ field_type|clean_class,
+  'field--label-' ~ label_display,
 ] %}
 {% set title_classes = [
-'field__label',
-label_display == 'visually_hidden' ? 'visually-hidden',
+  'field__label',
+  label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
+<section class="section sSlider">
+  <div class="sSlider__in">
+    <div class="slider-type-a">
 
-{% if label_hidden %}
-  {% if multiple %}
+      <div class="slider-type-a__bg-items">
 
-    {% for item in items %}
-      {% set id1 = loop.index0 == '0' ? id %}
-      <div class="bTerms__it" id="{{ id1 }}" data-letter="{{ letter }}">
-        {{ item.content }}
+        {% for bg_image in bg_images %}
+          <div class="slider-type-a__bg-item">
+            <div class="section__bg-wrap">
+              <div class="section__bg section__bg_a"
+                   style="background-image: url('{{ bg_image }}')"></div>
+            </div>
+          </div>
+        {% endfor %}
+
       </div>
-    {% endfor %}
+      <div class="slider-type-a__desc-wrap">
+        <div class="bContainer">
 
-  {% else %}
-    {% for item in items %}
-      {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
-    {% endfor %}
-  {% endif %}
+          <div class="slider-type-a__desc">
 
-{% else %}
+            {% for item in items %}
+              <div class="slider-type-a__desc-item">
+                {{ item.content }}
+              </div>
+            {% endfor %}
 
-  <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+          </div>
+          <div class="slider-type-a__nav">
 
-  {% for item in items %}
-    {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
-  {% endfor %}
+          </div>
 
-{% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

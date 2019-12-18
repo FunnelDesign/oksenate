@@ -48,28 +48,15 @@
 label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
 
-{% if label_hidden %}
-  {% if multiple %}
-
-    {% for item in items %}
-      {% set id1 = loop.index0 == '0' ? id %}
-      <div class="bTerms__it" id="{{ id1 }}" data-letter="{{ letter }}">
-        {{ item.content }}
-      </div>
-    {% endfor %}
-
-  {% else %}
-    {% for item in items %}
-      {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
-    {% endfor %}
-  {% endif %}
-
-{% else %}
-
-  <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
-
-  {% for item in items %}
-    {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
-  {% endfor %}
-
-{% endif %}
+<a href="{{ url }}" class="bTiles__item">
+  <span class="bTiles__ico bTiles__ico_a">
+    <img src="{{ theme_path }}/dist/images/ico/ico-tmp-10.png"
+         srcset="{{ theme_path }}/dist/images/ico/ico-tmp-10-2x.png 2x"
+         alt="">
+  </span>
+  <span class="bTiles__btnWrap">
+    <span class="btn  btn_s_d">
+      {{ title }}
+    </span>
+  </span>
+</a>

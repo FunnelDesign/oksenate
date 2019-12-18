@@ -358,8 +358,7 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
 
     $element = pq($element);
     $src = $element->attr($attr);
-//    $alt = $element->attr('alt');
-    $alt = '';
+    $alt = $element->attr('alt');
     if(strpos($src, 'headphone') !== FALSE){
       continue;
     }
@@ -398,7 +397,7 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
     if ($file) {
       $elements[] = [
        'target_id' => $file->id(),
-       'alt' => $alt ? $alt : null
+       'alt' => $element->attr('alt') ?: null
      ];
     }
   }

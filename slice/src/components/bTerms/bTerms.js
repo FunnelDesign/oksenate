@@ -1,4 +1,5 @@
 import {checkInit} from "../helper";
+
 const $ = jQuery;
 
 window.bTerms = class {
@@ -14,7 +15,7 @@ window.bTerms = class {
 	init($elm) {
 		let prefix = 'letter-';
 		let prefixContent = 'item-';
-		let compName =  `${this.name}`;
+		let compName = `${this.name}`;
 
 		let $letters = $elm.find(`.${this.name}__filLetters a`);
 		let $items = $elm.find(`.${this.name}__it`);
@@ -22,9 +23,9 @@ window.bTerms = class {
 		let $more = $elm.find(`.${this.name}__more`);
 
 
-		$letters.each((i, item)=> {
+		$letters.each((i, item) => {
 			let letter = $(item).attr('href').replace('#' + prefix, '');
-			let $target = $items.filter((i, term)=> {
+			let $target = $items.filter((i, term) => {
 				return $(term).attr('data-letter') === letter
 			});
 
@@ -40,29 +41,7 @@ window.bTerms = class {
 
 			let letter = $curLetter.attr('href').replace('#' + prefix, '');
 
-			let $target = $items.filter((i, term)=> {
-				return $(term).attr('data-letter') === letter
-			});
-
-			if (!$target.length) return;
-
-			$letters.removeClass(`${this.name}__let_active`);
-			$items.removeClass(`${this.name}__it_active`);
-			$items.removeClass(`${this.name}__it_active_show`);
-			$elm.removeClass(`${this.name}_showMore`);
-			$elm.removeClass(`${this.name}_open`);
-
-			$target.addClass(`${this.name}__it_active`);
-			$target.slice(0, 10).addClass(`${this.name}__it_active_show`);
-
-			//showItems($target.index());
-
-			$curLetter.addClass(`${this.name}__let_active`);
-
-			if ($target.length > 10) {
-				$elm.addClass(`${this.name}_showMore`);
-			}
-
+			showItems(letter, $curLetter);
 		});
 
 		$more.on('click touch', (e) => {
@@ -70,10 +49,27 @@ window.bTerms = class {
 			$elm.toggleClass(`${this.name}_open`)
 		});
 
-		showItems(0);
+		showItems('a', $elm.find(`.${this.name}__filLetters a[href="#letter-a"]`));
 
-		function showItems(index) {
-			$items.slice(index, index + 10).addClass(`${compName}__it_active ${compName}__it_active_show`);
+		function showItems(letter, $curLetter) {
+
+			let $target = $items.filter((i, term) => {
+				return $(term).attr('data-letter') === letter
+			});
+
+			$letters.removeClass(`${compName}__let_active`);
+			$items.removeClass(`${compName}__it_active`);
+			$items.removeClass(`${compName}__it_active_show`);
+			$elm.removeClass(`${compName}_showMore`);
+			$elm.removeClass(`${compName}_open`);
+
+			$target.addClass(`${compName}__it_active`);
+			$target.slice(0, 10).addClass(`${compName}__it_active_show`);
+			$curLetter.addClass(`${compName}__let_active`);
+
+			if ($target.length > 10) {
+				$elm.addClass(`${compName}_showMore`);
+			}
 		}
 	}
 };

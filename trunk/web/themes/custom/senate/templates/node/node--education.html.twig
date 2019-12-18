@@ -74,97 +74,88 @@
 #}
 <article{{ attributes }}>
 
-  {% if top_slider_enabled == '1' %}
-    {{ content.field_home_top_slider }}
-  {% else %}
-    <section class="section section_inner-v-centered sHero">
-      {{ content.field_home_top_bg_mob_image }}
-      {{ content.field_home_top_bg_image }}
-      <div class="section__v-inner section__v-inner_a">
-        <div class="bContainer">
+  <section class="section section_bg-color_f section_inner-v-centered">
+    {{ content.field_basic_top_image }}
 
-          <div class="sHero__img desktop-only">
-            {{ content.field_home_top_logo_image }}
-          </div>
-          <div class="bTitle bTitle_b bTitle_line sHero__bTitle">
-            {{ title_prefix }}
-            {{ content.field_home_top_title_text }}
-            {{ title_suffix }}
-          </div>
+    <div class="section__v-inner section__v-inner_d">
+      <div class="bContainer">
+        {{ content.field_basic_top_logo_image }}
 
-          <div class="sHero__desc">
-            {{ content.body }}
-          </div>
+        <div class="bTitle bTitle_wSub_a">
+          {{ title_prefix }}
+            <h1>{{ label }}</h1>
+          {{ title_suffix }}
         </div>
       </div>
-    </section>
-  {% endif %}
+    </div>
+  </section>
 
-    <section class="section sFinder">
-        <div class="sFinder__bg">
-            <span></span>
+  <section class="section section_ind_c section_bg-color_c">
+
+    <div class="bContainer">
+      {{ content.field_education_subtitle }}
+
+      <div class="bWrap bWrap_f_a bWrap_f_a_15 bWrap_cl_b bWrap_size_d bWrap_gap_d">
+        {{ content.body }}
+      </div>
+
+      <div class="bSeats bSeats_gap_a">
+        <div class="bSeats__img">
+          <img src="{{ theme_path }}/dist/images/tmp/seats-tmp-img-1.png"
+               srcset="{{ theme_path }}/dist/images/tmp/seats-tmp-img-1-2x.png 2x"
+               alt="">
+
+          {{ content.field_education_seats }}
         </div>
 
-        <div class="bContainer">
-            <div class="sFinder__in">
-                <div class="sFinder__col">
+        <div class="bSeats__count">
+          {{ content.field_education_democrat }}
 
-                    <div class="sFinder__ico">
-                        {{ content.field_home_finder_left_image }}
-                    </div>
-                    {{ content.field_home_finder_left_title }}
-                    <div class="sFinder__desc">
-                        {{ content.field_home_finder_left_text }}
-                    </div>
-                    {{ content.field_home_finder_left_link }}
-                </div>
-                <div class="sFinder__col">
-
-                    <div class="sFinder__ico">
-                        {{ content.field_home_finder_right_image }}
-                    </div>
-                    {{ content.field_home_finder_right_title }}
-
-                    <div class="sFinder__desc">
-                        {{ content.field_home_finder_right_text }}
-                    </div>
-
-                    {{ search }}
-
-                </div>
-            </div>
+          {{ content.field_education_republican }}
         </div>
-    </section>
 
-    <section class="section section_bg-color_a section_ind_a">
 
-        <div class="bContainer">
-            {{ content.field_home_tiles_paragraph }}
+        <div class="bWrap bWrap_f_a bWrap_f_a_15 bWrap_cl_b bWrap_size_d bWrap_gap_b">
+          {{ content.field_education_btm_text }}
         </div>
-    </section>
 
-    <section class="section section_inner-v-centered">
-        {{ content.field_home_section_image }}
-        <div class="section__v-inner">
-            <div class="bContainer">
-                <div class="bTitle bTitle_a">
-                    {{ content.field_home_section_text }}
-                </div>
-            </div>
-        </div>
-    </section>
+        {{ content.field_education_senate_history }}
+      </div>
 
-    <section class="section section_ind_b">
-        {{ content.field_home_slider_bg_image_mob }}
-        {{ content.field_home_slider_bg_image }}
-        <div class="bContainer">
-            <div class="bEvent">
-                {{ content.field_home_slider_title }}
-                <div class="bEvent__slider">
-                    {{ content.field_home_slider_images }}
-                </div>
-            </div>
+      <div class="bTiles bTiles_rel bTiles_rel_c bTiles_gap_a">
+
+        <div class="bTiles__items">
+          {{ content.field_education_find_bills }}
+
+          {{ content.field_education_contact }}
         </div>
-    </section>
-    {{ leadersip }}
+
+      </div>
+
+      {{ content.field_education_leg_title }}
+
+      {{ content.field_education_leg_terms }}
+    </div>
+
+  </section>
+
+  <section class="section section_bg-color_f section_inner-v-centered">
+    {{ content.field_education_gallery_bg_img }}
+
+    <div class="section__v-inner section__v-inner_f">
+      <div class="bContainer">
+        <div class="pageIn__ico">
+          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-44.png"
+               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-44-2x.png 2x"
+               alt="">
+        </div>
+
+        {{ content.field_education_gallery_title }}
+
+        {{ content.field_education_gallery_artwork }}
+      </div>
+    </div>
+
+  </section>
+
 </article>

@@ -74,97 +74,43 @@
 #}
 <article{{ attributes }}>
 
-  {% if top_slider_enabled == '1' %}
-    {{ content.field_home_top_slider }}
-  {% else %}
-    <section class="section section_inner-v-centered sHero">
-      {{ content.field_home_top_bg_mob_image }}
-      {{ content.field_home_top_bg_image }}
-      <div class="section__v-inner section__v-inner_a">
-        <div class="bContainer">
+  <section class="section section_bg-color_f section_inner-v-centered">
 
-          <div class="sHero__img desktop-only">
-            {{ content.field_home_top_logo_image }}
-          </div>
-          <div class="bTitle bTitle_b bTitle_line sHero__bTitle">
-            {{ title_prefix }}
-            {{ content.field_home_top_title_text }}
-            {{ title_suffix }}
-          </div>
+    {{ breadcrumbs }}
 
-          <div class="sHero__desc">
-            {{ content.body }}
-          </div>
+    <div class="section__v-inner section__v-inner_c">
+      <div class="bContainer">
+        <div class="pageIn__ico">
+          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-42.png"
+               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-42-2x.png 2x"
+               alt="">
+        </div>
+
+        <div class="bTitle bTitle_wSub_a bTitle_gap_a">
+          {{ title_prefix }}
+            <h1>{{ label }}</h1>
+          {{ title_suffix }}
         </div>
       </div>
-    </section>
-  {% endif %}
+    </div>
 
-    <section class="section sFinder">
-        <div class="sFinder__bg">
-            <span></span>
+  </section>
+
+  <section class="section sHist section__bgSh section_ind_c section_bg-color_f">
+    <div class="section__bg-wrap sHist__bg-wrap">
+      <div class="section__bg sHist__bg" style="background-image: url('{{ theme_path }}/dist/images/tmp/section-bg-img-15.jpg')"></div>
+    </div>
+
+    <div class="bContainer">
+      <div class="bTitle bTitle_gap_f">
+        <div class="bTitle__sub bTitle__sub_c bTitle__sub_cl_a bTitle__sub_s_a">
+          {{ content.body }}
         </div>
+      </div>
 
-        <div class="bContainer">
-            <div class="sFinder__in">
-                <div class="sFinder__col">
+      {{ content.field_history_events }}
+    </div>
 
-                    <div class="sFinder__ico">
-                        {{ content.field_home_finder_left_image }}
-                    </div>
-                    {{ content.field_home_finder_left_title }}
-                    <div class="sFinder__desc">
-                        {{ content.field_home_finder_left_text }}
-                    </div>
-                    {{ content.field_home_finder_left_link }}
-                </div>
-                <div class="sFinder__col">
+  </section>
 
-                    <div class="sFinder__ico">
-                        {{ content.field_home_finder_right_image }}
-                    </div>
-                    {{ content.field_home_finder_right_title }}
-
-                    <div class="sFinder__desc">
-                        {{ content.field_home_finder_right_text }}
-                    </div>
-
-                    {{ search }}
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section section_bg-color_a section_ind_a">
-
-        <div class="bContainer">
-            {{ content.field_home_tiles_paragraph }}
-        </div>
-    </section>
-
-    <section class="section section_inner-v-centered">
-        {{ content.field_home_section_image }}
-        <div class="section__v-inner">
-            <div class="bContainer">
-                <div class="bTitle bTitle_a">
-                    {{ content.field_home_section_text }}
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section section_ind_b">
-        {{ content.field_home_slider_bg_image_mob }}
-        {{ content.field_home_slider_bg_image }}
-        <div class="bContainer">
-            <div class="bEvent">
-                {{ content.field_home_slider_title }}
-                <div class="bEvent__slider">
-                    {{ content.field_home_slider_images }}
-                </div>
-            </div>
-        </div>
-    </section>
-    {{ leadersip }}
 </article>

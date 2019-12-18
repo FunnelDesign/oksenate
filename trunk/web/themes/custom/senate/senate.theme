@@ -60,6 +60,12 @@ function senate_preprocess_node(array &$vars) {
       case 'homepage':
         $vars['search'] = _senate_get_block('searchapi_find_legislation');
         $vars['leadersip'] = _senate_get_block('leadership');
+
+        $top_slider_enabled = (!empty($vars["content"]["field_home_top_slider_turn_on"]) &&
+          !empty($vars["content"]["field_home_top_slider_turn_on"]['#items'])) ?
+          $vars["content"]["field_home_top_slider_turn_on"]['#items']->getValue() : '';
+        $vars['top_slider_enabled'] = (!empty($top_slider_enabled) && !empty($top_slider_enabled[0])) ?
+          $top_slider_enabled[0]["value"] : '';
         break;
       case 'committee':
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
@@ -227,6 +233,7 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'senate_votes':
+      case 'history':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
     }
@@ -360,6 +367,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_par_publications_page_icon':
     case 'field_menu_icon':
     case 'field_calendar_up_ddl_icon':
+    case 'field_home_top_slider_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -432,6 +440,10 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_subcomt_app_title':
+    case 'field_education_seats':
+    case 'field_education_democrat':
+    case 'field_education_republican':
+    case 'field_home_top_slider_title':
       if (!empty($vars['items'])) {
         $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';
       }
@@ -486,6 +498,8 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_menu_link':
     case 'field_edu_indiv_art_work_btn':
+    case 'field_education_gallery_artwork':
+    case 'field_home_top_slider_link':
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars["items"][0]["content"]["#options"]["attributes"] = [
           'class' => ['btn']
@@ -503,6 +517,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $letter = $node->hasField('field_glossary_letter') ?
           $node->field_glossary_letter->get(0)->value : '';
         $vars['id'] = 'item-' . strtolower($letter);
+        $vars['letter'] = strtolower($letter);
       }
       break;
     case 'field_senate_votes_action_file':
@@ -535,6 +550,26 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($grouped_items as $key => $gr_items) {
         foreach ($gr_items as $gr_item) {
           $vars['groups'][$key][] = array_search($gr_item, $pr_ids);
+        }
+      }
+      break;
+    case 'field_education_senate_history':
+    case 'field_education_find_bills':
+    case 'field_education_contact':
+    case 'field_education_leg_terms':
+      if (!empty($vars["items"]) && !empty($vars["items"][0])) {
+        $vars['url'] = $vars["items"][0]["content"]["#url"]->toString();
+        $vars['title'] = $vars["items"][0]["content"]["#title"];
+      }
+      break;
+    case 'field_home_top_slider':
+      $vars['bg_images'] = [];
+      $bg_images = _rows_from_paragraphs($vars, ['field_home_top_slider_bg_img']);
+      foreach ($bg_images as $key => $value) {
+        $bg_img = !empty($value["field_home_top_slider_bg_img"]) && !empty($value["field_home_top_slider_bg_img"][0]) ?
+          $value["field_home_top_slider_bg_img"][0]["value"] : '';
+        if (!empty($bg_img)) {
+          $vars['bg_images'][$key] = $bg_img;
         }
       }
       break;
