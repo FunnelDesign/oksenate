@@ -51,4 +51,27 @@
       padding-right: 50px;
     }
   }
+
+  &_throbber {
+
+    &_show {
+
+      .ajax-progress {
+        display: block !important;
+
+        top: 0;
+        right: auto;
+        left: 100%;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  &_s {
+
+    &_a {
+      width: 100%;
+      max-width: 500px;
+    }
+  }
 }

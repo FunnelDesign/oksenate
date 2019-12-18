@@ -286,6 +286,63 @@
 
   }
 
+  &_search {
+
+    #{$this}__items {
+      padding: 0;
+      margin: 0;
+      flex-wrap: wrap;
+      border-top: 1px solid #cecece;
+
+      @include sm {
+        flex-wrap: nowrap;
+        border-top: 2px solid #cecece;
+        border-bottom: 2px solid #cecece;
+      }
+    }
+
+    #{$this}__item {
+      width: auto;
+      min-width: 280px;
+      flex: 1;
+      padding: 30px 40px;
+      margin: 0;
+      border-radius: 0;
+      background: #dedede;
+      text-align: center;
+      border: none;
+      border-right: 1px solid #cecece;
+      @include cr-last-child;
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid #cecece;
+      justify-content: center;
+      align-items: center;
+
+      @include sm {
+        min-width: 0;
+        min-height: 230px;
+        padding: 43px;
+        border-width: 2px;
+        border-bottom: none
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    #{$this}__title {
+      display: block;
+      font-family: $RobotoCondensed-Regular;
+      @include font-size(13px, 14px);
+      color: #253857;
+      text-transform: uppercase;
+      margin: 0 0 12px;
+    }
+
+  }
+
   &_art {
 
     #{$this}__item {

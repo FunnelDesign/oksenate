@@ -203,6 +203,15 @@
     }
   }
 
+  &__noRes {
+    @include cr-last-child;
+    @include padding(100px 0, 50px 0);
+
+    h2 {
+      @include font-size(25px, 30px, 45px);
+    }
+  }
+
   &_cl {
 
     &_a {
