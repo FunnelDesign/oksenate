@@ -564,12 +564,18 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_home_top_slider':
       $vars['bg_images'] = [];
-      $bg_images = _rows_from_paragraphs($vars, ['field_home_top_slider_bg_img']);
+      $vars['turn_on'] = [];
+      $bg_images = _rows_from_paragraphs($vars, ['field_home_top_slider_bg_img', 'field_home_top_slider_turn_on']);
       foreach ($bg_images as $key => $value) {
         $bg_img = !empty($value["field_home_top_slider_bg_img"]) && !empty($value["field_home_top_slider_bg_img"][0]) ?
           $value["field_home_top_slider_bg_img"][0]["value"] : '';
+        $turn_on = !empty($value["field_home_top_slider_turn_on"]) && !empty($value["field_home_top_slider_turn_on"][0]) ?
+          $value["field_home_top_slider_turn_on"][0]["value"] : '';
         if (!empty($bg_img)) {
           $vars['bg_images'][$key] = $bg_img;
+        }
+        if (!empty($turn_on)) {
+          $vars['turn_on'][] = $key;
         }
       }
       break;
