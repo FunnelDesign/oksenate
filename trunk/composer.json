@@ -50,6 +50,7 @@
         "drupal/redirect": "^1.4",
         "drupal/redirect_after_login": "^2.5",
         "drupal/search_api_page": "^1.0@beta",
+        "drupal/search_file_attachments": "^1.1",
         "drupal/sharethis": "^2.0@beta",
         "drupal/taxonomy_multidelete_terms": "^1.1",
         "drupal/time_field": "^1.13",
