@@ -53,13 +53,15 @@
 
       <div class="slider-type-a__bg-items">
 
-        {% for bg_image in bg_images %}
-          <div class="slider-type-a__bg-item">
-            <div class="section__bg-wrap">
-              <div class="section__bg section__bg_a"
-                   style="background-image: url('{{ bg_image }}')"></div>
+        {% for key, bg_image in bg_images %}
+          {% if key in turn_on %}
+            <div class="slider-type-a__bg-item">
+              <div class="section__bg-wrap">
+                <div class="section__bg section__bg_a"
+                     style="background-image: url('{{ bg_image }}')"></div>
+              </div>
             </div>
-          </div>
+          {% endif %}
         {% endfor %}
 
       </div>
@@ -68,10 +70,12 @@
 
           <div class="slider-type-a__desc">
 
-            {% for item in items %}
-              <div class="slider-type-a__desc-item">
-                {{ item.content }}
-              </div>
+            {% for key, item in items %}
+              {% if key in turn_on %}
+                <div class="slider-type-a__desc-item">
+                  {{ item.content }}
+                </div>
+              {% endif %}
             {% endfor %}
 
           </div>
