@@ -187,6 +187,8 @@ function senate_preprocess_node(array &$vars) {
           }
           $vars['preview_image'] = Markup::create("<span class=\"bMedia__preview\" style=\"background-image: url('$img_file_uri')\"></span>");
         }
+
+        $vars['nid'] = $node->id();
         break;
       case 'reports':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
