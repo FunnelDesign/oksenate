@@ -68,6 +68,10 @@
       &_a {
         @include margin-bottom(40px, 50px, 77px);
       }
+
+      &_b {
+        @include margin-bottom(25px, 35px, 44px);
+      }
     }
   }
 
