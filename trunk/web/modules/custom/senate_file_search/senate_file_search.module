@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ * Senate File search module.
+ */
+
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+function senate_file_search_preprocess_page(array &$vars) {
+  $file_search = \Drupal::hasService('senate_file_search.senate_file_search') ?
+    \Drupal::service('senate_file_search.senate_file_search') : '';
+
+  $b = $file_search->updateIndex();
+
+}
