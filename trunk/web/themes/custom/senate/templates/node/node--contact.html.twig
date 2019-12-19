@@ -78,23 +78,20 @@
         {#TODO: add breadcrumbs#}
 
         <div class="bContainer">
-
             <div class="pageIn__ico pageIn__ico_b">
                 {{ content.field_basic_top_logo_image }}
             </div>
             <div class="bTitle bTitle_wSub_a bTitle_gap_b">
                 <h1>{{ label }}</h1>
             </div>
-
             <div class="form fSignUp">
-
                 <div class="fSignUp__desc">
                     {{ content.body }}
                 </div>
-                {{ content.field_contact_webform }}
+                <div class="fSignUp__items">
+                    {{ content.field_contact_webform }}
+                </div>
             </div>
-
         </div>
-
     </section>
 </article>
