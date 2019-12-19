@@ -53,8 +53,10 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
             $email = $node->get('field_senator_contact_email')->getValue();
             $email = array_shift($email)['value'];
           }
+          $form['elements']['select_your_senator']['#default_value'] = $senator_nid;
           $form['elements']['select_your_senator']['#access'] = FALSE;
-          $form['elements']['mail_to']['#default_value'] = $email ;
+          $form['elements']['mail_to']['#default_value'] = $email;
+
         }
       }
       if(!empty($values) ) {
@@ -65,6 +67,7 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
             $email = array_shift($email)['value'];
           }
           $form['elements']['mail_to']['#default_value'] = $email;
+
         }
       }
       break;
