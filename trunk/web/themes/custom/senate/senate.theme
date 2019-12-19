@@ -714,6 +714,17 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         }
         $form["#attributes"]["class"][] = 'bSelect bSelect_a bSelect_size_d  bSelect_gap_b';
       }
+      elseif ($view_name == 'search_statutes_constitutions') {
+        $form["#attributes"]["class"][] = 'bTiles__items';
+        if (!empty($form["constitutions"])) {
+          $form["constitutions"]['#prefix'] = '<div class="bTiles__item">';
+          $form["constitutions"]['#suffix'] = '</div>';
+        }
+        if (!empty($form["statutes"])) {
+          $form["statutes"]['#prefix'] = '<div class="bTiles__item">';
+          $form["statutes"]['#suffix'] = '</div>';
+        }
+      }
       break;
   }
 }
@@ -1317,4 +1328,36 @@ function _senate_votes_get_grouped_items($pr_ids) {
   }
 
   return !empty($grouped) ? $grouped : [];
+}
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ */
+function senate_preprocess_views_view_field(&$vars) {
+  $view = $vars['view'];
+  $id = $view->id();
+  $display_id = $view->current_display;
+
+  switch ($id) {
+    case 'search_statutes_constitutions':
+      $items = $vars['field']->getItems($vars["row"]);
+      if (!empty($items) && !empty($items[0])) {
+        $options = ['class' => ['bListLinks__link']];
+        $options['target'] = '_blank';
+        $items[0]["rendered"]["#url"]->setOption('attributes', $options);
+
+        $parent_node = !empty($vars["row"]->_relationship_entities) &&
+          !empty($vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"]) ?
+          $vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"] : '';
+        $fid = !empty($vars["row"]->fid) ? $vars["row"]->fid : '';
+        $files = !empty($parent_node) ? $parent_node->field_statutes_constit_files->getValue() : [];
+        foreach ($files as $file) {
+          if (!empty($file["target_id"]) && ($file["target_id"] == $fid)) {
+            $items[0]["rendered"]["#title"] = $file["description"];
+          }
+        }
+        $vars["output"] = $items[0]["rendered"];
+      }
+      break;
+  }
 }
