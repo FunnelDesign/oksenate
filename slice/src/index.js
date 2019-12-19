@@ -10,6 +10,7 @@ import FancyBox from "./components/fancybox/FancyBox";
 import SliderTypeA from "./components/slider-type-a/SliderTypeA";
 import sHeader from "./components/sHeader/sHeader";
 import bTerms from "./components/bTerms/bTerms";
+import bStaff from "./components/bStaff/bStaff";
 
 const $ = jQuery;
 
@@ -43,6 +44,7 @@ function init() {
 	// new FancyBox();
 	new sHeader();
 	new bTerms();
+	new bStaff();
 	initSelect();
 
 
