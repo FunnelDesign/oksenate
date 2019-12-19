@@ -187,6 +187,10 @@
         font-family: $RobotoCondensed-Light;
         @include font-size(22px, 28px, 32px);
       }
+
+      &_a {
+        @include margin-bottom(20px, 35px);
+      }
     }
 
     #{$this}__imgWrap {
