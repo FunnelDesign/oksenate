@@ -635,6 +635,10 @@ class ContentParser extends ConfigEntityBase {
                 $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
               }
             }
+            // Remove hash
+            $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+            $date = preg_replace("/[^.0-9]/", '', $date);
+            //          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
             if($html == 'empty'){
               $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
               \Drupal::logger('not_parsed')->notice($message);
@@ -644,8 +648,8 @@ class ContentParser extends ConfigEntityBase {
               $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
               $all = preg_match($regexp, $html['value'], $matches);
               if(!empty($matches)){
-                foreach ($matches as $key=>$match){
-                  if($key === 0 || $key === 1){
+                foreach ($matches as $matchKey=>$match){
+                  if($matchKey === 0 || $matchKey === 1){
                     continue;
                   }
                   else{
@@ -655,12 +659,10 @@ class ContentParser extends ConfigEntityBase {
               }
               $html['value'] = preg_replace($regexp, '', $html['value']);
               $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
-              $html['summary'] = $this->makeSummary($html['value']);
+              if($this->makeSummary($html['value'], $text)){
+                $html['value'] = $this->makeSummary($html['value'], $text);
+              }
             }
-            // Remove hash
-            $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-            $date = preg_replace("/[^.0-9]/", '', $date);
-            //          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
             if(empty($date)){
               $date = pq($a)->parent()->parent()->text();
               $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
@@ -804,16 +806,19 @@ class ContentParser extends ConfigEntityBase {
           $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
           $all = preg_match($regexp, $html['value'], $matches);
           if(!empty($matches)){
-            foreach ($matches as $key=>$match){
-              if($key === 0 || $key === 1){
+            foreach ($matches as $matchKey=>$match){
+              if($matchKey === 0 || $matchKey === 1){
                 continue;
               }
               else{
-                $contactInfo[] = trim(strip_tags($match));
+                $contactInfo[] = ['value' => trim(strip_tags($match))];
               }
             }
           }
           $html['value'] = preg_replace($regexp, '', $html['value']);
+          if($this->makeSummary($html['value'], $text)){
+            $html['value'] = $this->makeSummary($html['value'], $text);
+          }
         }
         // Remove hash
         $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
@@ -857,6 +862,7 @@ class ContentParser extends ConfigEntityBase {
           $entity->set('field_press_release_old_url', $href);
           $entity->set('title', $text);
           $entity->set('body', $html);
+          $entity->set('field_press_release_contact_info', isset($contactInfo)?:[]);
           $entity->set('field_senator', isset($senator) ? $senator : []);
           $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
           $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
@@ -1159,20 +1165,27 @@ class ContentParser extends ConfigEntityBase {
     }
   }
 
-  public function makeSummary($text){
-    //    $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
-    //    $all = preg_match($regexp, $text, $matches);
-    //    if(!empty($matches)){
-    //      foreach ($matches as $key=>$match){
-    //        if($key === 0 || $key === 1){
-    //          continue;
-    //        }
-    //        else{
-    //          $contactInfo[] = trim(strip_tags($match));
-    //        }
-    //      }
-    //    }
-    //    $html['value'] = preg_replace($regexp, '', $html['value']);
+  public function makeSummary($text, $title){
+    $len = (int) strlen($title);
+    $strpos = (int) strpos($text, $title);
+    $targetString = substr($text, $strpos+$len);
+    return $targetString?$targetString:$text;
+//    $regexp = "/($title)(?s)(.*$)/";
+//    $all = preg_match($regexp, $text, $matches);
+//    if(!empty($matches)){
+//      return $matches[2];
+//      foreach ($matches as $key=>$match){
+//        if($key === 0 || $key === 1){
+//          continue;
+//        }
+//        if($key === 2){
+////          $summary = preg_match('/^(.*)\./', $match, $matches);
+//          $summary = preg_match('/^[^.]+./', $match, $matchSummary);
+//          return $matchSummary[0];
+//        }
+//      }
+//    }
+//    return FALSE;
   }
 
 }
