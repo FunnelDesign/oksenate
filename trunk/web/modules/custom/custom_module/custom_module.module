@@ -41,11 +41,14 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
       $form["elements"]["select_your_senator"]['#ajax'] = $ajax;
       $form["elements"]["mail_to"]['#ajax'] = $ajax;
       $form["elements"]["mail_to"]['#attributes'] = array('id' => 'mail-to-ajax-wrapper');
+      $form['elements']['mail_to']['#access'] = FALSE;
+
+      $values = $form_state->getValues();
+      $email = "change@default.email";
 
       if (!empty($senator_nid)){
         $node = \Drupal\node\Entity\Node::load($senator_nid);
         if (!empty($node) && ($node->getType() == 'senator')){
-          $email = "change@defaul.email";
           if ($node->get('field_senator_contact_email')->getValue()){
             $email = $node->get('field_senator_contact_email')->getValue();
             $email = array_shift($email)['value'];
@@ -54,12 +57,14 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
           $form['elements']['mail_to']['#default_value'] = $email ;
         }
       }
-      $values = $form_state->getValues();
       if(!empty($values) ) {
         $node = \Drupal\node\Entity\Node::load($values['select_your_senator']);
         if (!empty($node) && ($node->getType() == 'senator')){
-          $email = $node->get('field_senator_contact_email')->getValue();
-          $form['elements']['mail_to']['#default_value'] = array_shift($email)['value'];
+          if ($node->get('field_senator_contact_email')->getValue()){
+            $email = $node->get('field_senator_contact_email')->getValue();
+            $email = array_shift($email)['value'];
+          }
+          $form['elements']['mail_to']['#default_value'] = $email;
         }
       }
       break;
