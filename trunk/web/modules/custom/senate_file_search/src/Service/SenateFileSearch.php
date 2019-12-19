@@ -2,31 +2,15 @@
 
 namespace Drupal\senate_file_search\Service;
 
-use Drupal\Component\Utility\SafeMarkup;
-use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Config\Config;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Database\Connection;
-use Drupal\Core\Database\StatementInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Access\AccessibleInterface;
-use Drupal\search\Plugin\SearchPluginBase;
-use Drupal\search\Plugin\SearchIndexingInterface;
-use Drupal\Search\SearchQuery;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\search_file_attachments\Plugin\Search\FileSearch;
+use Drupal\Core\Database\Query\Condition;
 
 /**
  * Executes a keyword search for files against {file_managed} database table.
  *
- * @SearchPlugin(
- *   id = "senate_file_search",
- *   title = @Translation("Senate File")
- * )
  */
 class SenateFileSearch extends FileSearch {
 
@@ -40,24 +24,27 @@ class SenateFileSearch extends FileSearch {
   /**
    * An entity manager object.
    *
-   * @var \Drupal\Core\Entity\EntityManagerInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entityTypeManager;
 
   /**
    * A config object.
    *
-   * @var \Drupal\Core\Config\Config
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $config_factory;
 
+  protected $pluginId;
+
+
   /**
-   * Constructs a \Drupal\node\Plugin\Search\NodeSearch object.
+   * Constructor.
    *
    *   The plugin implementation definition.
    * @param \Drupal\Core\Database\Connection $database
    *   A database connection object.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface  $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   An entity manager object.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    */
@@ -66,6 +53,7 @@ class SenateFileSearch extends FileSearch {
     $this->entityTypeManager = $entity_type_manager;
     $this->config_factory = $config_factory;
     $this->moduleSettings = $config_factory->get('search_file_attachments.settings');
+    $this->pluginId = 'file_search';
 
     $this->setIncludedMimetypes();
   }
@@ -73,11 +61,27 @@ class SenateFileSearch extends FileSearch {
   /**
    * {@inheritdoc}
    */
-  public function updateIndex() {
+  public function updateIndex($fids = []) {
     $limit = (int) $this->config_factory->get('search.settings')->get('index.cron_limit');
 
-    $result = $this->database->queryRange("SELECT f.fid, MAX(sd.reindex) FROM {file_managed} f LEFT JOIN {search_dataset} sd ON sd.sid = f.fid AND sd.type = :type WHERE sd.sid IS NULL OR sd.reindex <> 0 GROUP BY f.fid ORDER BY MAX (sd.reindex) is null DESC, MAX (sd.reindex) ASC, f.fid ASC", 0, $limit, array(':type' => $this->getPluginId()), array('target' => 'replica'));
-    $fids = $result->fetchCol();
+    $query = $this->database->select('file_managed', 'f');
+    $query->leftJoin('search_dataset', 'sd', 'sd.sid = f.fid AND sd.type = \'' . $this->getPluginId() . '\'');
+    $query->addExpression('MAX (sd.reindex)', 'max_reindex');
+    $query->fields('f', ['fid']);
+
+    if (!empty($fids)) {
+      $query->condition('f.fid', $fids, 'IN');
+    }
+
+    $or = new Condition('OR');
+    $query->condition(
+      $or->condition('sd.sid', NULL, 'IS')
+        ->condition('sd.reindex', 0, '<>')
+    );
+    $query->groupBy('f.fid')->range(0, $limit);
+//    $a = $query->__toString();
+    $fids = $query->execute()->fetchCol();
+
     if (!$fids) {
       return;
     }
@@ -86,5 +90,12 @@ class SenateFileSearch extends FileSearch {
     foreach ($file_storage->loadMultiple($fids) as $file) {
       $this->indexFile($file);
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getPluginId() {
+    return $this->pluginId;
   }
 }

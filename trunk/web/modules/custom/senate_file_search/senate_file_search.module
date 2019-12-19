@@ -5,12 +5,49 @@
  */
 
 /**
- * Implements hook_preprocess_page() for page.html.twig.
+ * Implements hook_node_update().
  */
-function senate_file_search_preprocess_page(array &$vars) {
-  $file_search = \Drupal::hasService('senate_file_search.senate_file_search') ?
-    \Drupal::service('senate_file_search.senate_file_search') : '';
+function senate_file_search_node_update($node) {
 
-  $b = $file_search->updateIndex();
+  switch ($node->bundle()) {
+    case 'statutes_constit':
+      _senate_file_search_index_files($node);
+      break;
+  }
+}
 
+/**
+ * Implements hook_node_insert().
+ */
+function senate_file_search_node_insert($node) {
+
+  switch ($node->bundle()) {
+    case 'statutes_constit':
+      _senate_file_search_index_files($node);
+      break;
+  }
+}
+
+/**
+ * Search index new files.
+ */
+function _senate_file_search_index_files($node) {
+
+  if ($node->hasField('field_statutes_constit_files')) {
+    $file_search = \Drupal::hasService('senate_file_search.senate_file_search') ?
+      \Drupal::service('senate_file_search.senate_file_search') : '';
+    $field = $node->get('field_statutes_constit_files');
+    $field_value = $field->getValue();
+    $field_value = !empty($field_value) ? $field_value : [];
+    $fids = [];
+    foreach ($field_value as $field) {
+      if (!empty($field['target_id'])) {
+        $fids[] = $field['target_id'];
+      }
+    }
+
+    if (!empty($fids) && !empty($file_search)) {
+      $file_search->updateIndex($fids);
+    }
+  }
 }
