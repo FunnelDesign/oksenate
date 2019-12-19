@@ -7,6 +7,15 @@
     @include margin-bottom(30px, 46px);
   }
 
+  &__desc {
+
+    &_a {
+      font-family: $FreightTextProMedium-Regular;
+      color: #404040;
+      line-height: 1.6;
+    }
+  }
+
   &__items {
     max-width: 330px;
     margin: 0 auto 20px;
