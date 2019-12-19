@@ -645,6 +645,7 @@ class ContentParser extends ConfigEntityBase {
               continue;
             }
             else{
+              $contactInfo = [];
               $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
               $all = preg_match($regexp, $html['value'], $matches);
               if(!empty($matches)){
@@ -653,7 +654,7 @@ class ContentParser extends ConfigEntityBase {
                     continue;
                   }
                   else{
-                    $contactInfo[] = trim(strip_tags($match));
+                    $contactInfo[] = ['value' => trim(strip_tags($match))];
                   }
                 }
               }
@@ -702,6 +703,7 @@ class ContentParser extends ConfigEntityBase {
             $entity->set('field_press_release_old_url', $href);
             $entity->set('title', $text);
             $entity->set('body', $html);
+            $entity->set('field_press_release_contact_info', $contactInfo);
             $entity->set('field_senator', isset($senator)?$senator:[]);
             try {
               $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
@@ -803,6 +805,7 @@ class ContentParser extends ConfigEntityBase {
           continue;
         }
         else{
+          $contactInfo = [];
           $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
           $all = preg_match($regexp, $html['value'], $matches);
           if(!empty($matches)){
@@ -862,7 +865,7 @@ class ContentParser extends ConfigEntityBase {
           $entity->set('field_press_release_old_url', $href);
           $entity->set('title', $text);
           $entity->set('body', $html);
-          $entity->set('field_press_release_contact_info', isset($contactInfo)?:[]);
+          $entity->set('field_press_release_contact_info', $contactInfo);
           $entity->set('field_senator', isset($senator) ? $senator : []);
           $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
           $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
