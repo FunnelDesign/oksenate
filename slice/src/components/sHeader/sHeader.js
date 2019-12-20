@@ -31,6 +31,45 @@ window.sHeader = class {
 			$elm.find('.f-search input.form-search').focus();
 
 		});
+
+		addPadding();
+		addAccessibilityCookie();
+
+		$(window).on('resize', () => {
+			addPadding();
+		});
+
+		$elm.on('click touch', `.bMessage__close`, () => {
+			addPadding();
+		});
+
+		function addAccessibilityCookie() {
+			let $accessibility = $('#accessibility');
+
+			if (!$accessibility.length) return;
+			let cookeName = 'accessibility_message_was_shown';
+
+			if ($.cookie(cookeName)) {
+				$accessibility.hide();
+				addPadding();
+			} else {
+				$accessibility.on('ev.hide', () => {
+
+					$.cookie('accessibility_message_was_shown', "1", {
+						expires: 86400,
+						path: '/'
+					});
+
+					addPadding();
+				});
+			}
+		}
+
+		function addPadding() {
+			let $pageIn = $(`.pageIn`);
+			if (!$pageIn.length) return;
+			$pageIn.css(`padding-top`, $elm.outerHeight());
+		}
 	}
 };
 
