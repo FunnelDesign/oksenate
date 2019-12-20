@@ -48,6 +48,11 @@ window.sHeader = class {
 			addPadding();
 		});
 
+		$(document).on('drupalViewportOffsetChange.toolbar', function (event, offsets) {
+
+			console.log('offsets', offsets);
+		});
+
 		function addAccessibilityCookie() {
 			let $accessibility = $('#accessibility');
 
