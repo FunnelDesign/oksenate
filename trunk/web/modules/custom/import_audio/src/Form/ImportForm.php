@@ -4,7 +4,7 @@ namespace Drupal\import_audio\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\youtube_sync\ImportBatch;
+use Drupal\import_audio\ImportBatch;
 
 /**
  * Class ImportForm.
@@ -62,10 +62,11 @@ class ImportForm extends FormBase {
 //    }
 
     $operations = [];
-    $operations[] = [[ImportBatch::class, 'getMonthPages'], []];
+    //$operations[] = [[ImportBatch::class, 'getMonthPages'], []];
+    $operations[] = [[ImportBatch::class, 'processMonthPagesQueue'], []];
 
     $batch = [
-      'title' => t('Import playlists and videos'),
+      'title' => t('Import press audio press releases'),
       'operations' => $operations,
       'finished' => [ImportBatch::class, 'FinishedCallback'],
     ];

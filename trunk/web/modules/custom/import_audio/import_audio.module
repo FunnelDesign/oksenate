@@ -14,239 +14,171 @@ use Drupal\media\Entity\Media;
 use phpQuery as phpQuery;
 use phpUri as phpUri;
 
-function audio_import_test1() {
-  $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac201903.htm';
-  $body = (string) \Drupal::httpClient()
-    ->get($url, [
-      'timeout' => 0,
-      'headers' => [],
-    ])
-    ->getBody();
-   $pq = PhpQuery::newDocument($body);
+function audio_import_test_creation() {
 
-  $rows = $pq->find('table table table table tr');
+  $data = [
+    "title" => "Senate Committee approves bill allowing cities/counties to ban smoking on government-owned property ",
+    //"url" => "http://www.oksenate.gov/news/press_releases_audio_clips/pr20130225b.htm",
+    "url" => "http://www.oksenate.gov/news/press_releases/press_releases_2018/pr20180823a.htm",
+    "date" => "02.25.13",
+    "files" => [
+      0 => [
+//        "url" => "http://www.oksenate.gov/news/press_releases_audio_clips/prac20130225b.MP3",
+        "url" => "http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130225b.MP3",
+        "desc" => "Sen. Simpson explains measure on smoking bans on government-owned property.",
+        "media" => [],
+      ],
+    ],
+  ];
 
-  //dsm($rows[1]);
-//  dsm($rows->get(1));
+  dsm($data);
 
-//  dsm('empty');
-//  $pq_row = pq($rows->get(1));
-//  dsm($test = $pq_row->find('td')->html());
-//  dsm(strlen($test), 'length');
+  //fix url
+  if(strpos($data['url'], 'press_releases_audio_clips') !== FALSE) {
+
+    preg_match('/press_releases_audio_clips\/pr(20[1-9]{2})/', $data['url'], $matches);
+
+    //find year and replase
+    if(!empty($matches[1])) {
+      $data['url'] = str_replace('press_releases_audio_clips', 'press_releases/press_releases_' . $matches[1], $data['url']);
+      dsm($data['url']);
+    }
+
+  }
+
+  $node = reset(\Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['field_press_release_old_url' => $data['url']]));
+
+  if(empty($node)) {
+    \Drupal::logger('audio_import_no_release_error')->error('<pre><code>' . print_r($data, TRUE)  .  '</code></pre>');
+    return;
+  }
+
+  if(empty($data['files'])) {
+    \Drupal::logger('audio_import_no_files_error')->error('<pre><code>' . print_r($data, TRUE)  .  '</code></pre>');
+    return;
+  }
+
+  $drupal_audio_medias = [];
+
+  foreach ($data['files'] as $file_info) {
+
+    try {
+      $audio_media = audio_import_save_file($file_info['url'], $file_info['desc']);
+      $drupal_audio_medias[$audio_media->id()] = $audio_media;
+    } catch (Exception $e) {
+      $info = [
+        'file' => $file_info,
+        'error' => $e->getMessage(),
+        'data' => $data
+      ];
+      \Drupal::logger('audio_import_save_file_error')->error('<pre><code>' . print_r($info, TRUE)  .  '</code></pre>');
+    }
+  }
+
+  if(!empty($node->field_press_release_audio)) {
+    foreach($node->field_press_release_audio as $audio) {
+      //remove exist values
+      if(isset($drupal_audio_medias[$audio->target_id])) {
+        unset($drupal_audio_medias[$audio->target_id]);
+      }
+    }
+  }
+
+  if(!empty($drupal_audio_medias)) {
+    foreach ($drupal_audio_medias as $id => $drupal_media) {
+      $node->field_press_release_audio->appendItem($id);
+    }
+    dsm('save');
+    $node->save();
+  }
+
+  dsm($node);
+}
+
+
+function audio_import_test_creation_only_audio() {
+  $data['title'] = 'Senate President Pro Tem Bingman\'s Q &amp; A (Week 4)';
+  $data['url'] = '';
+  $data['date'] = '02.28.13';
+  $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/prac20130228b.MP3';
+  $data['files'][0]['desc'] = '';
+
+//  $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['field_media_audio_old_url' => $file_info['url']]);
 //
-//  dsm(empty($pq_row->find('td')->html()) ? 'is empty' : 'not empty');
-//  dsm(($pq_row->find('td')->html() === '&nbsp;') ? 'nbsp' : 'not nbsp');
+//  \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['field_media_audio_old_url' => $file_info['url']]);
 
-  dsm('no press');
-  $pq_row = pq($rows->get(0));
-  dsm($pq_row->find('td')->html());
 
-  autio_import_parse_release($pq_row->find('td')->html());
-
-  dsm('press, single mp3');
-  $pq_row = pq($rows->get(10));
-  dsm($pq_row->find('td')->html());
-
-  dsm('press, multiple mp3');
-  $pq_row = pq($rows->get(40));
-  dsm($pq_row->find('td')->html());
-  autio_import_parse_release($pq_row->find('td')->html());
-  //  dsm('press, single mp3');
-  //  $pq_row = pq($rows[0]);
-  //  dsm($pq_row->find('td')->html());
-
-//  dsm('FULL');
-//  foreach ($rows as $delta => $row) {
-//    $pq_row = pq($row);
-//    dsm($pq_row->find('td')->html(), $delta);
-//  }
 }
 
-function audio_import_save_file_test() {
-  $file_url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac20190305a1.mp3';
+function audio_import_test_service() {
+  $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac201903.htm';
+  dsm(\Drupal::getContainer()->get('import_audio.parser')->parseAudioReleases($url));
+}
+
+
+/**
+ * @param        $file_url
+ * @param string $file_desc
+ *
+ * @return \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\EntityInterface[]|mixed
+ * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+ * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+ * @throws \Drupal\Core\Entity\EntityStorageException
+ */
+function audio_import_save_file($file_url, $file_desc = '') {
+
+  $media = \Drupal::entityTypeManager()
+    ->getStorage('media')
+    ->loadByProperties(['field_media_audio_old_url' => $file_url]);
+
+  $media = reset($media);
+  if(!empty($media)) {
+    return $media;
+  }
 
   $file_url_info = basename($file_url);
-
   $folder = 'public://press_release_audio';
-
   $file_uri = $folder . '/' . $file_url_info;
 
-  dsm($file_uri);
+  $files = \Drupal::entityTypeManager()
+    ->getStorage('file')
+    ->loadByProperties(['uri' => $file_uri]);
+  $file = reset($files);
 
+  if(empty($file)) {
+    //Download and save
+    dsm(pathinfo($file_uri, PATHINFO_EXTENSION));
 
-  dsm(pathinfo($file_uri, PATHINFO_EXTENSION));
-  \Drupal::service('file_system')->prepareDirectory($folder, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+    file_prepare_directory($folder, FILE_CREATE_DIRECTORY);
 
-  $image_request = Drupal::httpClient()->get($file_url);
-  $data = $image_request->getBody(TRUE);
+    $image_request = Drupal::httpClient()->get(
+      $file_url, [
+        'connect_timeout' => 600,
+        'read_timeout' => 600,
+        'timeout' => 600,
+        'verify' => FALSE,
+      ]
+    );
 
+    $data = $image_request->getBody(TRUE);
 
-
-  // Save the thumbnail and add to Drupal managed files.
-  $file = file_save_data($data, $file_uri, FILE_EXISTS_REPLACE);
-  dsm($file);
-
-  dsm(\Drupal::service('file_system')->realpath($file_uri), 'realpath');
-
-
-  if (!file_exists(\Drupal::service('file_system')->realpath($file_uri))) {
-    dsm('Not exist');
-
-    $filesystem = \Drupal::service('file_system');
-    /*
-    $image = File::create();
-    $image->setFileUri($file_uri);
-    $image->setOwnerId(\Drupal::currentUser()->id());
-    $image->setMimeType('image/' . pathinfo($file_uri, PATHINFO_EXTENSION));
-    $image->setFileName($filesystem->basename($file_uri));
-    $image->setPermanent();
-    $image->save();
-    dsm($image);
-    */
-  } else {
-    dsm('exist');
-  }
-}
-function audio_import_save_file() {
-
-  //$file_url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac20190305a1.mp3';
-  $file_url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac20190305a1.mp3';
-
-  $file_url_info = basename($file_url);
-
-  $folder = 'public://press_release_audio';
-
-  $file_uri = $folder . '/' . $file_url_info;
-
-  dsm($file_uri);
-
-
-  dsm(pathinfo($file_uri, PATHINFO_EXTENSION));
-
-  file_prepare_directory($folder, FILE_CREATE_DIRECTORY);
-
-  $image_request = Drupal::httpClient()->get(
-    $file_url, [
-    'connect_timeout' => 600,
-    'read_timeout' => 600,
-    'timeout' => 600,
-    'verify' => FALSE,
-  ]
-  );
-
-  $data = $image_request->getBody(TRUE);
-
-  // Save the thumbnail and add to Drupal managed files.
-  $file = file_save_data($data, $file_uri, FileSystemInterface::EXISTS_REPLACE);
-
-  dsm($file);
-  dsm($file->uri);
-}
-
-
-function autio_import_parse_release($html) {
-  dsm($html, 'html');
-  $parts = ['title' => '', 'url' => '', 'date' => '', 'files' => []];
-  $rows = explode('<br>', $html);
-  dsm($rows);
-  $parts['title'] = strip_tags(trim(preg_replace('/\s\s+/', ' ', $rows[0])));
-
-  preg_match('/<a href="(.+)">/', $rows[0], $match);
-  $parts['url'] = $match[1] ?? '';
-  $parts['url_origin'] = $parts['url'];
-
-  $base_url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac201903.htm';
-
-  $parts['url'] = audio_import_get_absolute_url($base_url, $parts['url']);
-
-
-  //$parts['url'] = 'test';
-  //$parts['url'] = pq($rows[0])->find('a')->attr('href');
-
-  //DATE
-  preg_match("/(0[1-9]|1[0-2])\.(0[1-9]|[1-2][0-9]|3[0-1])\.[0-9]{2}/", $rows[1], $matches);
-  dsm($matches, 'matches');
-  if(!empty($matches[0])) {
-    $parts['date'] = $matches[0];
-  } else {
-    preg_match("/(0[1-9]|1[0-2])\.(0[1-9]|[1-2][0-9]|3[0-1])\.[0-9]{2}/", $rows[0], $matches);
-    if(!empty($matches[0])) {
-      $parts['date'] = $matches[0];
-    }
+    // Save the thumbnail and add to Drupal managed files.
+    $file = file_save_data($data, $file_uri, FileSystemInterface::EXISTS_REPLACE);
   }
 
-  $files_rows = array_splice($rows, 2);
-  dsm($files_rows, '$files_rows');
+  $audio_media = Media::create([
+    'bundle' => 'audio',
+    'uid' => \Drupal::currentUser()->id(),
+    'langcode' => \Drupal::languageManager()->getDefaultLanguage()->getId(),
+    'status' => 1,
+    'field_media_audio_old_url' => $file_url,
+    'field_audio_title' => $file_desc,
+    'field_media_audio_file' => [
+      'target_id' => $file->id(),
+    ],
+  ]);
+  $audio_media->save();
 
-  foreach ($files_rows as $filesRow) {
-    $file_info = ['url' => '', 'desc' => ''];
-    $file_info['desc'] = strip_tags($filesRow);
-    $file_info['desc'] = str_replace(['mp3', ')', '('], '', $file_info['desc']);
-    $file_info['desc'] = trim(preg_replace('/\s\s+/', ' ', $file_info['desc']));
-    $file_info['url'] = audio_import_get_absolute_url($base_url, audio_import_get_first_href($filesRow));
-    $file_info['url1'] = audio_import_get_first_href($filesRow);
-
-
-    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['field_media_audio_old_url' => $file_info['url']]);
-    $file_info['media'] = $media;
-    if(empty($media)) {
-
-      $image = File::create();
-
-      $media = Media::create([
-        'bundle' => 'audio',
-        'field_audio_title' => $file_info['desc'],
-      ]);
-
-
-    }
-
-      $parts['files'][] = $file_info;
-  }
-
-  //
-
-
-  dsm($parts, 'parts');
+  return $audio_media;
 }
 
-function audio_import_get_first_href($html) {
-  preg_match('/<a href="(.+)">/', $html, $match);
-  return $match[1] ?? '';
-}
-
-function audio_import_get_absolute_url($base_url, $relative_url) {
-  if (preg_match('#^[a-z]+://[^/]+$#', $base_url)) {
-    $base_url .= '/';
-  }
-
-  return !empty($relative_url) ? phpUri::parse($base_url)->join($relative_url) : '';
-}
-
-function audio_import_test2() {
-
-  $start = new DateTime(IMPORT_AUDIO_START_DATE);
-  $current = $start;
-  $end =  new DateTime();
-
-  $diff = $end->diff($start);
-
-  dsm($start);
-  dsm($end);
-
-  while($current <= $end) {
-    $current->add(new DateInterval('P1M'));
-    dsm(get_month_url($current));
-    //dsm($current->format('Y-m-d'));
-  }
-
-  dsm(($diff->format('%y') * 12) + $diff->format('%m'));
-  dsm( $current->add(new DateInterval('P1M')));
-}
-
-function get_month_url($date) {
-  $url = IMPORT_AUDIO_MONTH_URL;
-
-  $url = str_replace(':Y', $date->format('Y'), $url);
-  return str_replace(':M', $date->format('m'), $url);
-}
