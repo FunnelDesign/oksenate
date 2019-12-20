@@ -79,12 +79,12 @@
       display: none;
 
       &_show {
-        display: block;
+        display: table-row;
       }
 
-      #{$this}_open & {
-        display: block;
-      }
+      //#{$this}_open & {
+      //  display: block;
+      //}
     }
   }
 }
