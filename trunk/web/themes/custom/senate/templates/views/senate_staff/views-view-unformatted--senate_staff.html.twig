@@ -18,8 +18,8 @@
  */
 #}
 <div class="bTb__tBody">
-  {% for row in rows %}
-    <div class="bTb__tr bStaff__it" data-letter="b">
+  {% for key, row in rows %}
+    <div class="bTb__tr bStaff__it" data-letter="{{ letters[key] }}">
       {{- row.content -}}
     </div>
   {% endfor %}
