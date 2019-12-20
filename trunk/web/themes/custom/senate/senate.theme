@@ -745,6 +745,21 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           $form["statutes"]['#placeholder'] = t('Search by keyword(s)');
         }
       }
+      elseif ($view_name == 'senate_staff') {
+        $form["#attributes"]["class"][] = 'bSelect bSelect_a bSelect_filter bSelect_filter_a bSelect_inline bSelect_size_b bSelect_gap_a';
+
+        if (!empty($form["division"])) {
+          $options = _senate_get_staff_options();
+          $division_options = array_combine($options, $options);
+          $division_options = array_merge(['' => t('Showing All')], $division_options);
+
+          $form["division"] = [
+            '#type' => 'select',
+            '#options' => $division_options,
+            '#default_value' => '',
+          ];
+        }
+      }
       break;
   }
 }
@@ -1398,4 +1413,20 @@ function senate_preprocess_views_view_field(&$vars) {
       }
       break;
   }
+}
+
+function _senate_get_staff_options() {
+  $query = \Drupal::database()->select('paragraphs_item_field_data', 'pifd')
+    ->condition('pifd.type', 'staff')
+    ->condition('pifd.status', 1);
+  $query->innerJoin('node__field_staff', 'nfs', 'pifd.id = nfs.field_staff_target_id AND nfs.deleted = 0');
+  $query->innerJoin('node_field_data', 'nfd', 'nfs.entity_id = nfd.nid AND nfd.status = 1 AND nfd.type = \'staff\'');
+  $query->innerJoin('paragraph__field_staff_division', 'pfsd', 'pifd.id = pfsd.entity_id AND pfsd.deleted = 0');
+  $query->fields('pfsd', ['field_staff_division_value']);
+
+  $query->orderBy('field_staff_division_value', 'asc')->distinct();
+
+  $result = $query->execute()->fetchCol();
+
+  return !empty($result) ? $result : [];
 }
