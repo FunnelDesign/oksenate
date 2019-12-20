@@ -715,14 +715,19 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         $form["#attributes"]["class"][] = 'bSelect bSelect_a bSelect_size_d  bSelect_gap_b';
       }
       elseif ($view_name == 'search_statutes_constitutions') {
-        $form["#attributes"]["class"][] = 'bTiles__items';
         if (!empty($form["constitutions"])) {
-          $form["constitutions"]['#prefix'] = '<div class="bTiles__item">';
-          $form["constitutions"]['#suffix'] = '</div>';
+          $form["constitutions"]['#placeholder'] = t('Search by keyword(s)');
+          $form['constitutions_submit'] = [
+            '#type' => 'submit',
+            '#button_type' => 'primary',
+            '#value' => t('submit'),
+            '#attributes' => [
+              'class' => ['form-actions']
+            ]
+          ];
         }
         if (!empty($form["statutes"])) {
-          $form["statutes"]['#prefix'] = '<div class="bTiles__item">';
-          $form["statutes"]['#suffix'] = '</div>';
+          $form["statutes"]['#placeholder'] = t('Search by keyword(s)');
         }
       }
       break;

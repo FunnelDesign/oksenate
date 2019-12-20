@@ -76,20 +76,21 @@
 
     <div class="bContainer">
 
-      <div class="bTitle bTitle_gap_c">
-        <div class="bTitle__sub bTitle__sub_b">
-          <p>Documents 1 to 1 of 1 matching the query "1-2".</p>
-        </div>
-      </div>
-
       {% if rows -%}
-      <div class="bColumns bColumns_2 bWrap bWrap_size_b bColumns_gap_a">
-        <div class="bListLinks bListLinks_btnArr">
-        {{ rows }}
+        <div class="bTitle bTitle_gap_c">
+          <div class="bTitle__sub bTitle__sub_b">
+            <p>Documents 1 to 1 of 1 matching the query "1-2".</p>
+          </div>
         </div>
-      </div>
+        <div class="bColumns bColumns_2 bWrap bWrap_size_b bColumns_gap_a">
+          <div class="bListLinks bListLinks_btnArr">
+          {{ rows }}
+          </div>
+        </div>
       {% elseif empty -%}
-        {{ empty }}
+        <div class="pageIn__noRes">
+          {{ empty }}
+        </div>
       {% endif %}
       {{ pager }}
 
