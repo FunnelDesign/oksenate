@@ -73,17 +73,13 @@
   &__it {
     margin: 0 0 20px;
     @include cr-last-child;
-    display: none;
+    display: table-row;
 
-    &_active {
+    #{$this}_filter & {
       display: none;
 
-      &_show {
-        display: block;
-      }
-
-      #{$this}_open & {
-        display: block;
+      &_active {
+        display: table-row;
       }
     }
   }
