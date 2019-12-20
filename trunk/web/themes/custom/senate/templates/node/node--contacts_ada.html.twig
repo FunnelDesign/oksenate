@@ -73,25 +73,71 @@
  */
 #}
 <article{{ attributes }}>
-    <section class="section section_ind_j section_bg-color_c">
+    <section class="section section_bg-color_f section_inner-v-centered">
+   {#TODO: add breadrcrumbs#}
 
-        {#TODO: add breadcrumbs#}
-
-        <div class="bContainer">
-            {{ content.field_contact_top_logo }}
-            <div class="bTitle bTitle_wSub_a bTitle_gap_b">
-                {{ title_prefix }}
-                <h1>{{ label }}</h1>
-                {{ title_suffix }}
-            </div>
-            <div class="form fSignUp">
-                <div class="fSignUp__desc">
-                    {{ content.body }}
-                </div>
-                <div class="fSignUp__items">
-                    {{ content.field_contact_webform }}
+        <div class="section__v-inner section__v-inner_d">
+            <div class="bContainer">
+                {{ content.field_basic_top_logo_image }}
+                <div class="bTitle bTitle_wSub_a">
+                    {{ title_prefix }}
+                    <h1>{{ label }}</h1>
+                    {{ title_suffix }}
                 </div>
             </div>
         </div>
+    </section>
+
+    <section class="section section_ind_c section_bg-color_c">
+
+        <div class="bContainer">
+            {{ content.field_contacts_ada_staff_title }}
+            <div class="pageIn__info pageIn__info_a pageIn__info_gap_a pageIn__info_cent">
+                {{ content.field_contacts_ada_staff_text }}
+            </div>
+            {{ content.field_contacts_ada_parking_title }}
+            <div class="bWrap bWrap_size_c bWrap_cl_a bWrap_f_a bWrap_f_a_17 bWrap_gap_a">
+                <div class="bList bList_a">
+                    {{ content.field_contacts_ada_parking_text }}
+                </div>
+            </div>
+            {{ content.field_contacts_ada_wheel_title }}
+
+            <div class="pageIn__notice pageIn__notice_a">
+          <span class="pageIn__notice-m">
+            <span class="pageIn__notice-ico">
+               {{ content.field_contacts_ada_wheel_icon }}
+            </span>
+              {{ content.field_contacts_ada_wheel_text }}
+          </span>
+            </div>
+            {{ content.field_contacts_ada_wheel_files }}
+            {{ content.field_contacts_hearing_title }}
+            <div class="bWrap bWrap_size_c bWrap_cl_a bWrap_f_a bWrap_f_a_17 bWrap_gap_d">
+                <div class="bList bList_a">
+                    <div class="bList bList_a">
+                        {{ content.field_contacts_ada_hearing_text }}
+                    </div>
+                </div>
+            </div>
+
+            {{ content.field_contacts_ada_seeng_title }}
+
+            <div class="bWrap bWrap_size_c bWrap_cl_a bWrap_f_a bWrap_f_a_17 bWrap_gap_d">
+                <div class="bList bList_a">
+                    {{ content.field_contacts_ada_seeing_text }}
+                </div>
+            </div>
+
+            {{ content.field_contacts_ada_info_title }}
+
+            <div class="bWrap bWrap_size_c bWrap_cl_a bWrap_f_a bWrap_f_a_17 bWrap_gap_c">
+                <div class="bList bList_a">
+                    {{ content.field_contacts_ada_info_text }}
+                </div>
+            </div>
+            {{ content.field_contacts_ada_info_file }}
+        </div>
+
     </section>
 </article>
