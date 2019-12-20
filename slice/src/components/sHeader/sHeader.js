@@ -36,7 +36,7 @@ window.sHeader = class {
 		addPadding();
 		addAccessibilityCookie();
 
-		window.addEventListener('load', () => {
+		$(window).on('load', () => {
 			adminPadding();
 		});
 
