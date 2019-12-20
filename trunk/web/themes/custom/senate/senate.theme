@@ -1353,7 +1353,10 @@ function senate_preprocess_views_view_field(&$vars) {
         $files = !empty($parent_node) ? $parent_node->field_statutes_constit_files->getValue() : [];
         foreach ($files as $file) {
           if (!empty($file["target_id"]) && ($file["target_id"] == $fid)) {
-            $items[0]["rendered"]["#title"] = $file["description"];
+            $file_name = !empty($items[0]["rendered"]["#title"]) ? pathinfo($items[0]["rendered"]["#title"]) : '';
+            $file_name = !empty($file_name['filename']) ? $file_name['filename'] : '';
+            $file_name = !empty($file["description"]) ? $file["description"] : $file_name;
+            $items[0]["rendered"]["#title"] = $file_name;
           }
         }
         $vars["output"] = $items[0]["rendered"];
