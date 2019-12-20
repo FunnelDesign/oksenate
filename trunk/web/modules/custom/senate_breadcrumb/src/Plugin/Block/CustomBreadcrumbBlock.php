@@ -179,6 +179,7 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
       switch ($node->bundle()) {
         case 'senate_votes':
         case 'edu_indiv_art_work':
+        case 'contact':
           $color = 'navy';
           break;
       }
