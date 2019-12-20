@@ -1,15 +1,6 @@
 @import "../bContainer/bContainer";
 .pageIn {
   $this: &;
-  padding-top: 83px;
-
-  @include sm {
-    padding-top: 152px;
-  }
-
-  @include md {
-    padding-top: 152px;
-  }
 
   .path-search & {
     @include padding(30px 0, 58px 0);

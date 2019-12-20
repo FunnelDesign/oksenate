@@ -1,4 +1,5 @@
 import {checkInit} from "../helper";
+
 const $ = jQuery;
 
 window.sHeader = class {
@@ -35,6 +36,10 @@ window.sHeader = class {
 		addPadding();
 		addAccessibilityCookie();
 
+		window.addEventListener('load', () => {
+			adminPadding();
+		});
+
 		$(window).on('resize', () => {
 			addPadding();
 		});
@@ -66,9 +71,25 @@ window.sHeader = class {
 		}
 
 		function addPadding() {
-			let $pageIn = $(`.pageIn`);
-			if (!$pageIn.length) return;
-			$pageIn.css(`padding-top`, $elm.outerHeight());
+			let $pageWr = $(`.pageWr`);
+			if (!$pageWr.length) return;
+			$pageWr.css(`padding-top`, $elm.outerHeight());
+		}
+
+		function adminPadding() {
+			let $toolbarBar = $(`#toolbar-bar`);
+			let $body = $('body');
+
+			if (!$toolbarBar.length) return;
+
+			$toolbarBar.on('click touch', () => {
+
+				setTimeout(() => {
+					console.log($body.css('padding-top'));
+					$elm.css('top', $body.css('padding-top'));
+				}, 200)
+
+			});
 		}
 	}
 };
