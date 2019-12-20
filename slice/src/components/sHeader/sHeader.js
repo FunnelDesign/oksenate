@@ -1,4 +1,5 @@
 import {checkInit} from "../helper";
+
 const $ = jQuery;
 
 window.sHeader = class {
@@ -80,7 +81,10 @@ window.sHeader = class {
 
 			$toolbarBar.on('click touch', () => {
 
-				console.log($body.css('padding-top'));
+				setTimeout(() => {
+					console.log($body.css('padding-top'))
+				}, 500)
+
 			})
 		}
 	}
