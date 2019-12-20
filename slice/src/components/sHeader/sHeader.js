@@ -34,6 +34,7 @@ window.sHeader = class {
 
 		addPadding();
 		addAccessibilityCookie();
+		adminPadding();
 
 		$(window).on('resize', () => {
 			addPadding();
@@ -69,6 +70,18 @@ window.sHeader = class {
 			let $pageWr = $(`.pageWr`);
 			if (!$pageWr.length) return;
 			$pageWr.css(`padding-top`, $elm.outerHeight());
+		}
+
+		function adminPadding() {
+			let $toolbarBar = $(`#toolbar-bar`);
+			let $body = $('body');
+
+			if (!$toolbarBar.length) return;
+
+			$toolbarBar.on('click touch', () => {
+
+				console.log($body.css('padding-top'));
+			})
 		}
 	}
 };
