@@ -94,7 +94,7 @@
             </div>
           </div>
 
-          <div class="bTb bTb_a">
+          <div class="bTb bTb_a bTb_a_staff">
 
             <div class="bTb__tHead">
               <div class="bTb__tr">
@@ -116,7 +116,7 @@
 
             <div class="bTb__tBody">
 
-              <div class="bTb__tr bStaff__it" data-letter="a" >
+              <div class="bTb__tr bStaff__it" data-letter="b" >
 
                 <div class="bTb__td">
                   <strong>Keith Beall</strong>
@@ -124,7 +124,143 @@
 
                 <div class="bTb__td">
                   Redistricting Director <br>
-                  <em>Administration Division</em>
+                  <span>Administration Division</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="b" >
+
+                <div class="bTb__td">
+                  <strong>Megan Bednarz</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Subject Index Clerk/Agenda Clerk<br>
+                  <span>Chief Operating Officer</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="b" >
+
+                <div class="bTb__td">
+                  <strong>Malia Bennett</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Communications Director<br>
+                  <span>Communications Division</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="b" >
+
+                <div class="bTb__td">
+                  <strong>Keith Beall</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Redistricting Director <br>
+                  <span>Administration Division</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="b" >
+
+                <div class="bTb__td">
+                  <strong>Megan Bednarz</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Subject Index Clerk/Agenda Clerk<br>
+                  <span>Chief Operating Officer</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="b" >
+
+                <div class="bTb__td">
+                  <strong>Malia Bennett</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Communications Director<br>
+                  <span>Communications Division</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="c" >
+
+                <div class="bTb__td">
+                  <strong>Keith CCCCCeall</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Redistricting Director <br>
+                  <span>Administration Division</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="g" >
+
+                <div class="bTb__td">
+                  <strong>Megan GGGGGGGednarz</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Subject Index Clerk/Agenda Clerk<br>
+                  <span>Chief Operating Officer</span>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+              <div class="bTb__tr bStaff__it" data-letter="z" >
+
+                <div class="bTb__td">
+                  <strong>Malia ZZZZZennett</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Communications Director<br>
+                  <span>Communications Division</span>
                 </div>
 
                 <div class="bTb__td">
@@ -137,298 +273,6 @@
 
           </div>
 
-          <div class="bStaff__itsWr">
-            <div class="bStaff__its">
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Absolute Majority
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>See “Majority.”</p>
-                </div>
-
-              </div>
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Absolute Majority
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>See “Majority.”</p>
-                </div>
-
-              </div>
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Absolute Majority
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>See “Majority.”</p>
-                </div>
-
-              </div>
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Absolute Majority
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>See “Majority.”</p>
-                </div>
-
-              </div>
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Absolute Majority
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>See “Majority.”</p>
-                </div>
-
-              </div>
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Absolute Majority
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>See “Majority.”</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Absolute Majority
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>See “Majority.”</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Act
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>A measure which has become law after:  (1) being passed by both houses and approved by the Governor, (2) being passed over the Governor's veto, or (3) becoming effective without the Governor's signature.</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Action
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>Disposition of any question before the legislature.</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Adjournment
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>Termination of a daily session; occurring at the close of each legislative day upon the completion of business, with the hour and day of the next meeting being set prior to adjournment.  (See also "Sine Die".)</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Adoption
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>Approval or acceptance; usually applied to amendments, resolutions or conference committee reports.</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Advancement
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>Approval or acceptance; usually applied to amendments, resolutions or conference committee reports.</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Advise and Consent
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>Confirmation by the Senate of certain appointees of the Governor or other appointing authority.</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="a">
-
-                <div class="bStaff__bTitle">
-                  Agenda (Committee)
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>a list of legislative measures, by number and short title, arranged according to the order of business, to be considered in a committee meeting.</p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="c">
-
-                <div class="bStaff__bTitle">
-                  Committee
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>A group of members of a legislative body to which is assigned a special task.</p>
-                </div>
-
-                <div class="bStaff__bSub">
-
-                  <div class="bStaff__subIt">
-                    <div class="bStaff__bTitle">
-                      Standing Committee
-                    </div>
-                    <div class="bStaff__bBody">
-                      <p>A permanent committee set up to handle legislation in a certain field.</p>
-                    </div>
-                  </div>
-                  <div class="bStaff__subIt">
-                    <div class="bStaff__bTitle">
-                      Special or Select Committee
-                    </div>
-                    <div class="bStaff__bBody">
-                      <p>A temporary committee set up to deal with a specific issue.</p>
-                    </div>
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="c">
-
-                <div class="bStaff__bTitle">
-                  Committee Report
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p>The report of an action of a majority of the members of a certain com­mittee on any measure.  The committee report is transmitted to the floor.  A committee re­port shows a recommendation for action, all committee amendments and any authorship changes.  Recommendations for action are limited to "do pass" or "do pass as amended".  The latter can include a committee substitute for the measure.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it" data-letter="d">
-
-                <div class="bStaff__bTitle">
-                  D Lorem
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores enim eveniet iure, nam perferendis quasi qui quisquam recusandae repellendus tempore. Delectus dolorum eos, illo magni molestias numquam porro praesentium suscipit.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it"  data-letter="d">
-
-                <div class="bStaff__bTitle">
-                  D Lorem
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores enim eveniet iure, nam perferendis quasi qui quisquam recusandae repellendus tempore. Delectus dolorum eos, illo magni molestias numquam porro praesentium suscipit.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it"  data-letter="d">
-
-                <div class="bStaff__bTitle">
-                  D Lorem
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores enim eveniet iure, nam perferendis quasi qui quisquam recusandae repellendus tempore. Delectus dolorum eos, illo magni molestias numquam porro praesentium suscipit.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it"  data-letter="d">
-
-                <div class="bStaff__bTitle">
-                  D Lorem
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores enim eveniet iure, nam perferendis quasi qui quisquam recusandae repellendus tempore. Delectus dolorum eos, illo magni molestias numquam porro praesentium suscipit.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it"  data-letter="d">
-
-                <div class="bStaff__bTitle">
-                  D Lorem
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores enim eveniet iure, nam perferendis quasi qui quisquam recusandae repellendus tempore. Delectus dolorum eos, illo magni molestias numquam porro praesentium suscipit.
-                  </p>
-                </div>
-
-              </div>
-
-              <div class="bStaff__it"  data-letter="d">
-
-                <div class="bStaff__bTitle">
-                  D Lorem
-                </div>
-
-                <div class="bStaff__bBody">
-                  <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores enim eveniet iure, nam perferendis quasi qui quisquam recusandae repellendus tempore. Delectus dolorum eos, illo magni molestias numquam porro praesentium suscipit.
-                  </p>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
         </div>
 
       </div>

@@ -17,7 +17,7 @@
     display: table-row;
     border: 1px solid #cbcbcb;
 
-    &:first-child {
+    &:first-child, &_first {
 
       #{$this}__td {
         border-top: 1px solid #cbcbcb;
@@ -32,7 +32,7 @@
       }
     }
 
-    &:last-child {
+    &:last-child, &_last  {
 
       #{$this}__td {
 
@@ -120,7 +120,7 @@
         vertical-align: bottom;
 
         &:last-child {
-         text-align: center;
+          text-align: center;
         }
       }
 
@@ -139,8 +139,6 @@
 
     &_vo {
       border-spacing: 0 12px;
-
-
 
       #{$this}__th {
         padding: 0 10px;
@@ -205,6 +203,35 @@
 
         &_a {
           text-transform: uppercase;
+        }
+      }
+    }
+
+    &_staff {
+
+      #{$this}__td {
+        vertical-align: middle;
+
+        &:first-child {
+          white-space: normal;
+          text-align: left;
+
+          @include sm {
+            width: 180px;
+          }
+        }
+
+        &:nth-child(2) {
+
+          span {
+            color: #8f8f8f;
+            font-family: $Roboto-Regular;
+            font-size: 12px;
+          }
+        }
+
+        &:last-child {
+          padding-right: 16px;
         }
       }
     }
