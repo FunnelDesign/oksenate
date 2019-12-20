@@ -18,6 +18,7 @@
   &__item {
     margin-right: 7px;
     transition: opacity .3s;
+    white-space: nowrap;
 
     &:hover {
       opacity: .7;
@@ -27,7 +28,7 @@
       margin-right: 0;
     }
 
-    &:nth-child(1) {
+    &_facebook {
 
       a:before {
         background: url('facebool-soc-img-1.png') no-repeat;
@@ -35,7 +36,7 @@
       }
     }
 
-    &:nth-child(2) {
+    &_twitter {
 
       a:before {
         background: url('twitter-soc-img-2.png') no-repeat;
@@ -43,10 +44,18 @@
       }
     }
 
-    &:nth-child(3) {
+    &_instagram {
 
       a:before {
         background: url('insta-img-soc-3.png') no-repeat;
+        background-size: contain;
+      }
+    }
+
+    &_linkedin {
+
+      a:before {
+        background: url('linkedin-img-soc-4.png') no-repeat;
         background-size: contain;
       }
     }

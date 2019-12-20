@@ -109,6 +109,7 @@
     font-size: 14px;
     color: $color-dark-blue;
     @include margin-bottom(15px, 0);
+    white-space: nowrap;
   }
 
   &__infoIt {
