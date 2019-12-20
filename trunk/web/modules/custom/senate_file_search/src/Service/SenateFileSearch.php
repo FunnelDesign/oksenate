@@ -62,27 +62,8 @@ class SenateFileSearch extends FileSearch {
    * {@inheritdoc}
    */
   public function updateIndex($fids = []) {
-    $limit = (int) $this->config_factory->get('search.settings')->get('index.cron_limit');
 
-    $query = $this->database->select('file_managed', 'f');
-    $query->leftJoin('search_dataset', 'sd', 'sd.sid = f.fid AND sd.type = \'' . $this->getPluginId() . '\'');
-    $query->addExpression('MAX (sd.reindex)', 'max_reindex');
-    $query->fields('f', ['fid']);
-
-    if (!empty($fids)) {
-      $query->condition('f.fid', $fids, 'IN');
-    }
-
-    $or = new Condition('OR');
-    $query->condition(
-      $or->condition('sd.sid', NULL, 'IS')
-        ->condition('sd.reindex', 0, '<>')
-    );
-    $query->groupBy('f.fid')->range(0, $limit);
-//    $a = $query->__toString();
-    $fids = $query->execute()->fetchCol();
-
-    if (!$fids) {
+    if (empty($fids)) {
       return;
     }
 
@@ -97,5 +78,32 @@ class SenateFileSearch extends FileSearch {
    */
   public function getPluginId() {
     return $this->pluginId;
+  }
+
+  /**
+   * Get not indexed files.
+   * @param $fids
+   *
+   * @return array
+   */
+  public function getFilesNotIndexedFiles($fids) {
+    $query = $this->database->select('file_managed', 'f');
+    $query->leftJoin('search_dataset', 'sd', 'sd.sid = f.fid AND sd.type = \'' . $this->getPluginId() . '\'');
+    $query->addExpression('MAX (sd.reindex)', 'max_reindex');
+    $query->fields('f', ['fid']);
+
+    if (!empty($fids)) {
+      $query->condition('f.fid', $fids, 'IN');
+    }
+
+    $or = new Condition('OR');
+    $query->condition(
+      $or->condition('sd.sid', NULL, 'IS')
+        ->condition('sd.reindex', 0, '<>')
+    );
+    $query->groupBy('f.fid');
+    //    $a = $query->__toString();
+    $not_indexed_fids = $query->execute()->fetchCol();
+    return !empty($not_indexed_fids) ? $not_indexed_fids : [];
   }
 }

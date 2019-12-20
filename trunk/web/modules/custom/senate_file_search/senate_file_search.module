@@ -47,7 +47,93 @@ function _senate_file_search_index_files($node) {
     }
 
     if (!empty($fids) && !empty($file_search)) {
-      $file_search->updateIndex($fids);
+      $fids = $file_search->getFilesNotIndexedFiles($fids);
+
+      if (!empty($fids)) {
+        $batch = _senate_file_search_generate_batch($fids);
+        batch_set($batch);
+      }
     }
+  }
+}
+
+function _senate_file_search_generate_batch($fids) {
+  $operations[] = [
+    'senate_file_search_batch_op',
+    [$fids],
+  ];
+
+  $batch = [
+    'operations' => $operations,
+    'finished' => 'senate_file_search_batch_finished',
+    'title' => t('Processing batch'),
+    'init_message' => t('Batch is starting.'),
+    'progress_message' => t('Processed @current out of @total.'),
+    'error_message' => t('Batch has encountered an error.'),
+  ];
+
+  return $batch;
+}
+
+/**
+ * Batch operation.
+ */
+function senate_file_search_batch_op(array $items, &$context) {
+  $file_search = \Drupal::hasService('senate_file_search.senate_file_search') ?
+    \Drupal::service('senate_file_search.senate_file_search') : '';
+  $limit = 1;
+
+  if (empty($context['sandbox']['progress'])) {
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['max'] = count($items);
+  }
+
+  if (empty($context['sandbox']['items'])) {
+    $context['sandbox']['items'] = $items;
+  }
+
+  $counter = 0;
+  if (!empty($context['sandbox']['items'])) {
+    if ($context['sandbox']['progress'] != 0) {
+      array_splice($context['sandbox']['items'], 0, $limit);
+    }
+
+    foreach ($context['sandbox']['items'] as $item) {
+      if ($counter != $limit) {
+        $file_search->updateIndex([$item]);
+
+        $counter++;
+        $context['sandbox']['progress']++;
+
+        $context['message'] = t('Now processing file :progress of :count', [
+          ':progress' => $context['sandbox']['progress'],
+          ':count' => $context['sandbox']['max'],
+        ]);
+
+        $context['results']['processed'] = $context['sandbox']['progress'];
+      }
+    }
+  }
+
+  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+}
+
+function senate_file_search_batch_finished($success, $results, $operations) {
+  $messenger = \Drupal::messenger();
+  if ($success) {
+    $messenger->addMessage(t('Number of files affected by batch: @count', ['@count' => count($results)]));
+  }
+  else {
+    $error_operation = reset($operations);
+    $messenger->addMessage(
+      t('An error occurred while processing @operation with arguments : @args',
+        [
+          '@operation' => $error_operation[0],
+          '@args' => print_r($error_operation[0], TRUE),
+        ]
+      )
+    );
   }
 }
