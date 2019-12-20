@@ -47,7 +47,7 @@ function _senate_file_search_index_files($node) {
     }
 
     if (!empty($fids) && !empty($file_search)) {
-      $fids = $file_search->getFilesNotIndexedFiles($fids);
+      $fids = $file_search->getNotIndexedFiles($fids);
 
       if (!empty($fids)) {
         $batch = _senate_file_search_generate_batch($fids);

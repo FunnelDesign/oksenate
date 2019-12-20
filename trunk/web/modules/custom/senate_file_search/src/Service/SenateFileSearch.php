@@ -86,7 +86,7 @@ class SenateFileSearch extends FileSearch {
    *
    * @return array
    */
-  public function getFilesNotIndexedFiles($fids) {
+  public function getNotIndexedFiles($fids) {
     $query = $this->database->select('file_managed', 'f');
     $query->leftJoin('search_dataset', 'sd', 'sd.sid = f.fid AND sd.type = \'' . $this->getPluginId() . '\'');
     $query->addExpression('MAX (sd.reindex)', 'max_reindex');
