@@ -66,6 +66,8 @@ function senate_preprocess_node(array &$vars) {
           $vars["content"]["field_home_top_slider_turn_on"]['#items']->getValue() : '';
         $vars['top_slider_enabled'] = (!empty($top_slider_enabled) && !empty($top_slider_enabled[0])) ?
           $top_slider_enabled[0]["value"] : '';
+
+        $vars['week_events'] = _senate_get_view('home_committee_events', 'block_1');
         break;
       case 'committee':
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
@@ -171,7 +173,8 @@ function senate_preprocess_node(array &$vars) {
             }
           }
         }
-        if (!empty($vars['content']['field_senator_video_link_video'])) {
+        if (!empty($vars['content']['field_senator_video_link_video']) &&
+          !empty($vars['content']['field_senator_video_link_video']['#items'])) {
           $items = $vars['content']['field_senator_video_link_video']['#items'];
           $value = !empty($items) ? $items->getValue() : '';
           if (!empty($value)) {
@@ -236,6 +239,7 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'senate_votes':
       case 'history':
+      case 'contact':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
     }
@@ -338,7 +342,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-instagram');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_instagram';
         $vars['items'][$key]['content']['#title'] = "instagram";
       }
       break;
@@ -347,7 +351,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-facebook');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_facebook';
         $vars['items'][$key]['content']['#title'] = "facebook";
       }
       break;
@@ -355,7 +359,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-twitter');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_twitter';
         $vars['items'][$key]['content']['#title'] = "twitter";
 
       }
@@ -371,6 +375,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_menu_icon':
     case 'field_calendar_up_ddl_icon':
     case 'field_home_top_slider_icon':
+    case 'field_contacts_ada_wheel_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -582,6 +587,13 @@ function senate_preprocess_field(array &$vars, $hook) {
         }
       }
       break;
+    case 'field_senator_social_linkin_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_linkedin';
+        $vars['items'][$key]['content']['#title'] = "linkedin";
+      }
+      break;
   }
 }
 
@@ -617,6 +629,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_senator_social_inst_link':
     case 'field_senator_social_tw_link':
     case 'field_senator_address_txt':
+    case 'field_senator_social_linkin_link':
       $suggestions[] = 'field__with_custom_wrapper';
       break;
 
@@ -625,6 +638,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_home_finder_right_image':
     case 'field_home_finder_left_image':
     case 'field_webform_block_icon':
+    case 'field_contacts_ada_wheel_icon':
     case 'field_par_publications_page_icon':
       $suggestions[] = 'field__src_srcset_images';
       break;
@@ -722,9 +736,6 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
             '#type' => 'submit',
             '#button_type' => 'primary',
             '#value' => 'constitutions_submit',
-            '#attributes' => [
-              'class' => ['form-actions']
-            ]
           ];
         }
         if (!empty($form["statutes"])) {
