@@ -150,6 +150,38 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $table_node['join']->field = 'nid';
     $table_node["join"]->configuration["field"] = 'nid';
   }
+  if ($view->id() == 'search_statutes_constitutions' && $view->getDisplay()->display['id'] == 'page_1') {
+    $configuration = [
+      'type'       => 'LEFT',
+      'table'      => 'search_index',
+      'field'      => 'sid',
+      'left_table' => 'file_managed',
+      'left_field' => 'fid',
+      'operator'   => '=',
+      'extra' => [
+        0 => [
+          'field' => 'type',
+          'value' => 'file_search',
+        ],
+      ],
+    ];
+
+    $join = \Drupal\views\Views::pluginManager('join')
+      ->createInstance('standard', $configuration);
+    $rel = $query->addRelationship('search', $join, 'file_managed');
+    $query->addTable('search_index', $rel, $join, 'search_index');
+
+    foreach ($query->where as $key => &$condition_group) {
+      foreach ($condition_group['conditions'] as &$condition) {
+        $field_str = is_object($condition['field']) ? $condition['field']->conditions() : '';
+        if (!empty($field_str) && strpos($field_str[0]['field'], 'file_managed') !== FALSE) {
+          $condition['field']->condition('search.word', $field_str[0]["value"], $field_str[0]["operator"]);
+        }
+      }
+    }
+
+//    $a = $query->query()->__toString();
+  }
 }
 
 /**
