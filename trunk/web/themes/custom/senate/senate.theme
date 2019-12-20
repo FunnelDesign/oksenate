@@ -66,6 +66,8 @@ function senate_preprocess_node(array &$vars) {
           $vars["content"]["field_home_top_slider_turn_on"]['#items']->getValue() : '';
         $vars['top_slider_enabled'] = (!empty($top_slider_enabled) && !empty($top_slider_enabled[0])) ?
           $top_slider_enabled[0]["value"] : '';
+
+        $vars['week_events'] = _senate_get_view('home_committee_events', 'block_1');
         break;
       case 'committee':
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
