@@ -66,9 +66,9 @@ window.sHeader = class {
 		}
 
 		function addPadding() {
-			let $pageIn = $(`.pageIn`);
-			if (!$pageIn.length) return;
-			$pageIn.css(`padding-top`, $elm.outerHeight());
+			let $pageWr = $(`.pageWr`);
+			if (!$pageWr.length) return;
+			$pageWr.css(`padding-top`, $elm.outerHeight());
 		}
 	}
 };
