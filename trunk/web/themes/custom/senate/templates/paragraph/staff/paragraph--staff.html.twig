@@ -50,13 +50,13 @@
   {% block content %}
     <div class="bTb__td">
       <strong>
-        {% if content.field_staff_email %}
-          <a href="mailto:{{ content.field_staff_email }}">
+        {% if email %}
+          <a href="{{ 'mailto:' ~ email }}">
         {% endif %}
 
         {{ content.field_staff_name }}
 
-        {% if content.field_staff_email %}
+        {% if email %}
           </a>
         {% endif %}
       </strong>

@@ -1125,6 +1125,12 @@ function senate_preprocess_paragraph(array &$vars) {
         $vars['date'] = $date_obj->format('F j, Y');
       }
       break;
+    case 'staff':
+      $email = (!empty($vars["content"]["field_staff_email"]) &&
+        !empty($vars["content"]["field_staff_email"]['#items'])) ?
+        $vars["content"]["field_staff_email"]['#items']->getValue() : '';
+      $vars['email'] = !empty($email) && !empty($email[0]) ? $email[0]["value"] : '';
+      break;
   }
 }
 
