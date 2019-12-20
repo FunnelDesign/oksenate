@@ -180,7 +180,38 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
 
-//    $a = $query->query()->__toString();
+    $exposed_input = $view->getExposedInput();
+    if (!empty($exposed_input)) {
+      $type = !empty($exposed_input["constitutions"]) && !empty($exposed_input["op"]) &&
+        ($exposed_input["op"] == 'constitutions_submit') ? 'constitutions' : '';
+      $type = empty($type) && !empty($exposed_input["statutes"]) ? 'statutes' : $type;
+
+      if (!empty($type)) {
+        $configuration = [
+          'type'       => 'LEFT',
+          'table'      => 'node__field_statutes_constit_type',
+          'field'      => 'entity_id',
+          'left_table' => 'field_statutes_constit_files_file_managed',
+          'left_field' => 'nid',
+          'operator'   => '=',
+          'extra' => [
+            0 => [
+              'field' => 'bundle',
+              'value' => 'statutes_constit',
+            ],
+          ],
+        ];
+
+        $join = \Drupal\views\Views::pluginManager('join')
+          ->createInstance('standard', $configuration);
+        $rel = $query->addRelationship('constit_type', $join, 'field_statutes_constit_files_file_managed');
+        $query->addTable('node__field_statutes_constit_type', $rel, $join, 'constit');
+
+        $query->addWhere('', 'constit_type.field_statutes_constit_type_value', $type, '=');
+
+        //      $a = $query->query()->__toString();
+      }
+    }
   }
 }
 
