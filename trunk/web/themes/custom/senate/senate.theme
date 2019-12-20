@@ -720,7 +720,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           $form['constitutions_submit'] = [
             '#type' => 'submit',
             '#button_type' => 'primary',
-            '#value' => t('submit'),
+            '#value' => 'constitutions_submit',
             '#attributes' => [
               'class' => ['form-actions']
             ]
