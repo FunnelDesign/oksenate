@@ -66,6 +66,8 @@ function senate_preprocess_node(array &$vars) {
           $vars["content"]["field_home_top_slider_turn_on"]['#items']->getValue() : '';
         $vars['top_slider_enabled'] = (!empty($top_slider_enabled) && !empty($top_slider_enabled[0])) ?
           $top_slider_enabled[0]["value"] : '';
+
+        $vars['week_events'] = _senate_get_view('home_committee_events', 'block_1');
         break;
       case 'committee':
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
@@ -171,7 +173,8 @@ function senate_preprocess_node(array &$vars) {
             }
           }
         }
-        if (!empty($vars['content']['field_senator_video_link_video'])) {
+        if (!empty($vars['content']['field_senator_video_link_video']) &&
+          !empty($vars['content']['field_senator_video_link_video']['#items'])) {
           $items = $vars['content']['field_senator_video_link_video']['#items'];
           $value = !empty($items) ? $items->getValue() : '';
           if (!empty($value)) {
@@ -187,6 +190,8 @@ function senate_preprocess_node(array &$vars) {
           }
           $vars['preview_image'] = Markup::create("<span class=\"bMedia__preview\" style=\"background-image: url('$img_file_uri')\"></span>");
         }
+
+        $vars['nid'] = $node->id();
         break;
       case 'reports':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
@@ -234,6 +239,7 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'senate_votes':
       case 'history':
+      case 'contact':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
     }
@@ -336,7 +342,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-instagram');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_instagram';
         $vars['items'][$key]['content']['#title'] = "instagram";
       }
       break;
@@ -345,7 +351,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-facebook');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_facebook';
         $vars['items'][$key]['content']['#title'] = "facebook";
       }
       break;
@@ -353,7 +359,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-twitter');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_twitter';
         $vars['items'][$key]['content']['#title'] = "twitter";
 
       }
@@ -364,10 +370,12 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_finder_right_image':
     case 'field_webform_block_icon':
     case 'field_basic_top_logo_image':
+    case 'field_contact_top_logo':
     case 'field_par_publications_page_icon':
     case 'field_menu_icon':
     case 'field_calendar_up_ddl_icon':
     case 'field_home_top_slider_icon':
+    case 'field_contacts_ada_wheel_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -579,6 +587,13 @@ function senate_preprocess_field(array &$vars, $hook) {
         }
       }
       break;
+    case 'field_senator_social_linkin_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_linkedin';
+        $vars['items'][$key]['content']['#title'] = "linkedin";
+      }
+      break;
   }
 }
 
@@ -614,6 +629,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_senator_social_inst_link':
     case 'field_senator_social_tw_link':
     case 'field_senator_address_txt':
+    case 'field_senator_social_linkin_link':
       $suggestions[] = 'field__with_custom_wrapper';
       break;
 
@@ -622,6 +638,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_home_finder_right_image':
     case 'field_home_finder_left_image':
     case 'field_webform_block_icon':
+    case 'field_contacts_ada_wheel_icon':
     case 'field_par_publications_page_icon':
       $suggestions[] = 'field__src_srcset_images';
       break;
@@ -711,6 +728,19 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           $form['#attached']['drupalSettings']['senate']['view_journals'] = $options;
         }
         $form["#attributes"]["class"][] = 'bSelect bSelect_a bSelect_size_d  bSelect_gap_b';
+      }
+      elseif ($view_name == 'search_statutes_constitutions') {
+        if (!empty($form["constitutions"])) {
+          $form["constitutions"]['#placeholder'] = t('Search by keyword(s)');
+          $form['constitutions_submit'] = [
+            '#type' => 'submit',
+            '#button_type' => 'primary',
+            '#value' => 'constitutions_submit',
+          ];
+        }
+        if (!empty($form["statutes"])) {
+          $form["statutes"]['#placeholder'] = t('Search by keyword(s)');
+        }
       }
       break;
   }
@@ -1049,6 +1079,15 @@ function senate_preprocess_views_view(&$vars) {
     case 'senate_votes':
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
       break;
+    case 'search_statutes_constitutions':
+      $exposed_input = $view->getExposedInput();
+      if (!empty($exposed_input)) {
+        $query = !empty($exposed_input["constitutions"]) && !empty($exposed_input["op"]) &&
+          ($exposed_input["op"] == 'constitutions_submit') ? $exposed_input["constitutions"] : '';
+        $vars['query_text'] = empty($query) && !empty($exposed_input["statutes"]) ?
+          $exposed_input["statutes"] : $query;
+      }
+      break;
   }
 }
 
@@ -1315,4 +1354,39 @@ function _senate_votes_get_grouped_items($pr_ids) {
   }
 
   return !empty($grouped) ? $grouped : [];
+}
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ */
+function senate_preprocess_views_view_field(&$vars) {
+  $view = $vars['view'];
+  $id = $view->id();
+  $display_id = $view->current_display;
+
+  switch ($id) {
+    case 'search_statutes_constitutions':
+      $items = $vars['field']->getItems($vars["row"]);
+      if (!empty($items) && !empty($items[0])) {
+        $options = ['class' => ['bListLinks__link']];
+        $options['target'] = '_blank';
+        $items[0]["rendered"]["#url"]->setOption('attributes', $options);
+
+        $parent_node = !empty($vars["row"]->_relationship_entities) &&
+          !empty($vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"]) ?
+          $vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"] : '';
+        $fid = !empty($vars["row"]->fid) ? $vars["row"]->fid : '';
+        $files = !empty($parent_node) ? $parent_node->field_statutes_constit_files->getValue() : [];
+        foreach ($files as $file) {
+          if (!empty($file["target_id"]) && ($file["target_id"] == $fid)) {
+            $file_name = !empty($items[0]["rendered"]["#title"]) ? pathinfo($items[0]["rendered"]["#title"]) : '';
+            $file_name = !empty($file_name['filename']) ? $file_name['filename'] : '';
+            $file_name = !empty($file["description"]) ? $file["description"] : $file_name;
+            $items[0]["rendered"]["#title"] = $file_name;
+          }
+        }
+        $vars["output"] = $items[0]["rendered"];
+      }
+      break;
+  }
 }

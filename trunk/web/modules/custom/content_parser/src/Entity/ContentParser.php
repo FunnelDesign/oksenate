@@ -645,6 +645,7 @@ class ContentParser extends ConfigEntityBase {
               continue;
             }
             else{
+              $contactInfo = [];
               $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
               $all = preg_match($regexp, $html['value'], $matches);
               if(!empty($matches)){
@@ -653,14 +654,22 @@ class ContentParser extends ConfigEntityBase {
                     continue;
                   }
                   else{
-                    $contactInfo[] = trim(strip_tags($match));
+                    $contactInfo[] = ['value' => trim(strip_tags($match))];
                   }
                 }
+              }else{
+                $message = 'Cant identify contact data'.$base_url . '<br>' . $href . '<br>';
+                \Drupal::logger('not_parsed_contact_data')->notice($message);
               }
               $html['value'] = preg_replace($regexp, '', $html['value']);
               $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
               if($this->makeSummary($html['value'], $text)){
-                $html['value'] = $this->makeSummary($html['value'], $text);
+                $bodyHeader = ['value'=>$this->makeSummary($html['value'], $text)['head'], 'format'=>'full_html'];
+                $html['value'] = $this->makeSummary($html['value'], $text)['body'];
+              }
+              else{
+                $message = 'Cant separate header and body'.$base_url . '<br>' . $href . '<br>';
+                \Drupal::logger('not_parsed_body')->notice($message);
               }
             }
             if(empty($date)){
@@ -702,6 +711,8 @@ class ContentParser extends ConfigEntityBase {
             $entity->set('field_press_release_old_url', $href);
             $entity->set('title', $text);
             $entity->set('body', $html);
+            $entity->set('field_press_release_header', isset($bodyHeader)?$bodyHeader:'');
+            $entity->set('field_press_release_contact_info', $contactInfo);
             $entity->set('field_senator', isset($senator)?$senator:[]);
             try {
               $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
@@ -803,6 +814,7 @@ class ContentParser extends ConfigEntityBase {
           continue;
         }
         else{
+          $contactInfo = [];
           $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
           $all = preg_match($regexp, $html['value'], $matches);
           if(!empty($matches)){
@@ -814,10 +826,18 @@ class ContentParser extends ConfigEntityBase {
                 $contactInfo[] = ['value' => trim(strip_tags($match))];
               }
             }
+          }else{
+            $message = 'Cant identify contact data'.$base_url . '<br>' . $href . '<br>';
+            \Drupal::logger('not_parsed_contact_data')->notice($message);
           }
           $html['value'] = preg_replace($regexp, '', $html['value']);
           if($this->makeSummary($html['value'], $text)){
-            $html['value'] = $this->makeSummary($html['value'], $text);
+            $bodyHeader = ['value'=>$this->makeSummary($html['value'], $text)['head'], 'format'=>'full_html'];
+            $html['value'] = $this->makeSummary($html['value'], $text)['body'];
+          }
+          else{
+            $message = 'Cant separate header and body'.$base_url . '<br>' . $href . '<br>';
+            \Drupal::logger('not_parsed_body')->notice($message);
           }
         }
         // Remove hash
@@ -862,7 +882,8 @@ class ContentParser extends ConfigEntityBase {
           $entity->set('field_press_release_old_url', $href);
           $entity->set('title', $text);
           $entity->set('body', $html);
-          $entity->set('field_press_release_contact_info', isset($contactInfo)?:[]);
+          $entity->set('field_press_release_contact_info', $contactInfo);
+          $entity->set('field_press_release_header', isset($bodyHeader)?$bodyHeader:'');
           $entity->set('field_senator', isset($senator) ? $senator : []);
           $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
           $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
@@ -1168,8 +1189,14 @@ class ContentParser extends ConfigEntityBase {
   public function makeSummary($text, $title){
     $len = (int) strlen($title);
     $strpos = (int) strpos($text, $title);
-    $targetString = substr($text, $strpos+$len);
-    return $targetString?$targetString:$text;
+    $headerString = substr($text, 0, $strpos);
+    $bodyString = substr($text, $strpos+$len);
+    if($bodyString && $headerString){
+      return ['body' => $bodyString,'head'=>$headerString];
+    }else{
+      return FALSE;
+    }
+
 //    $regexp = "/($title)(?s)(.*$)/";
 //    $all = preg_match($regexp, $text, $matches);
 //    if(!empty($matches)){

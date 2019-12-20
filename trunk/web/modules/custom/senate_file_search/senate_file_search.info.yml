@@ -1,0 +1,7 @@
+name: 'Senate File search'
+type: module
+description: 'Senate File search module.'
+package: 'Custom'
+core: 8.x
+dependencies:
+  - drupal:search_file_attachments

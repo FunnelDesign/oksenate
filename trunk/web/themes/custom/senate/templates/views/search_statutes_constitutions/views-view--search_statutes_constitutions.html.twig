@@ -1,0 +1,110 @@
+{#
+/**
+ * @file
+ * Default theme implementation for main view template.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ * - css_name: A css-safe version of the view name.
+ * - css_class: The user-specified classes names, if any.
+ * - header: The optional header.
+ * - footer: The optional footer.
+ * - rows: The results of the view query, if any.
+ * - empty: The content to display if there are no rows.
+ * - pager: The optional pager next/prev links to display.
+ * - exposed: Exposed widget form/info to display.
+ * - feed_icons: Optional feed icons to display.
+ * - more: An optional link to the next page of results.
+ * - title: Title of the view, only used when displaying in the admin preview.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the view title.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the view title.
+ * - attachment_before: An optional attachment view to be displayed before the
+ *   view content.
+ * - attachment_after: An optional attachment view to be displayed after the
+ *   view content.
+ * - dom_id: Unique id for every view being printed to give unique class for
+ *   Javascript.
+ *
+ * @see template_preprocess_views_view()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+{%
+ set matching = query_text ? ' matching the query "' ~ query_text ~ '"'
+%}
+<div{{ attributes.addClass(classes) }}>
+
+  <section class="section section_bg-color_f section_inner-v-centered">
+
+    <div class="section__v-inner section__v-inner_d">
+      <div class="bContainer">
+
+        <div class="pageIn__ico">
+          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-14.png"
+               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-14-2x.png 2x">
+        </div>
+
+        <div class="bTitle bTitle_wSub_a">
+          {{ title_prefix }}
+          <h1>{{ "Search Statutes & Constitutions"|t }}</h1>
+          {{ title_suffix }}
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="section">
+    <div class="bTiles bTiles_search">
+      {{ exposed }}
+      {{ attachment_before }}
+    </div>
+  </section>
+
+  <section class="section section_ind_c section_bg-color_c">
+
+    <div class="bContainer">
+
+      {% if rows -%}
+        <div class="bTitle bTitle_gap_c">
+          <div class="bTitle__sub bTitle__sub_b">
+            {% if header %}
+              {{ header }} {{ matching }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="bColumns bColumns_2 bWrap bWrap_size_b bColumns_gap_a">
+          <div class="bListLinks bListLinks_btnArr">
+          {{ rows }}
+          </div>
+        </div>
+      {% elseif empty -%}
+        <div class="pageIn__noRes">
+          {{ empty }}
+        </div>
+      {% endif %}
+      {{ pager }}
+
+    </div>
+
+  </section>
+
+  {{ attachment_after }}
+  {{ more }}
+
+  {% if footer %}
+    <footer>
+      {{ footer }}
+    </footer>
+  {% endif %}
+
+  {{ feed_icons }}
+</div>

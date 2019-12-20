@@ -47,21 +47,28 @@
                   <div class="bSoc bSenBio__bSoc">
 
                       <div class="bSoc__items">
-                        <div class="bSoc__item">
+                        <div class="bSoc__item bSoc__item_facebook">
                           <a target="_blank" href="#">facebook
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-facebook"></i>-->
 
                           </a>
                         </div>
-                        <div class="bSoc__item">
+                        <div class="bSoc__item bSoc__item_twitter">
                           <a target="_blank" href="#">twitter
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-twitter"></i>-->
 
                           </a>
                         </div>
-                        <div class="bSoc__item">
+                        <div class="bSoc__item bSoc__item_instagram">
                           <a target="_blank" href="#">instagram
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-instagram"></i>-->
+
+                          </a>
+                        </div>
+
+                        <div class="bSoc__item bSoc__item_linkedin">
+                          <a target="_blank" href="#">linkedin
+                            <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-instagram"></i>-->
 
                           </a>
                         </div>
