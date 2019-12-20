@@ -1068,6 +1068,15 @@ function senate_preprocess_views_view(&$vars) {
     case 'senate_votes':
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
       break;
+    case 'search_statutes_constitutions':
+      $exposed_input = $view->getExposedInput();
+      if (!empty($exposed_input)) {
+        $query = !empty($exposed_input["constitutions"]) && !empty($exposed_input["op"]) &&
+          ($exposed_input["op"] == 'constitutions_submit') ? $exposed_input["constitutions"] : '';
+        $vars['query_text'] = empty($query) && !empty($exposed_input["statutes"]) ?
+          $exposed_input["statutes"] : $query;
+      }
+      break;
   }
 }
 
