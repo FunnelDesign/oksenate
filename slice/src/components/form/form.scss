@@ -48,6 +48,11 @@ textarea {
     box-sizing: border-box;
   }
 
+  fieldset {
+    padding: 0;
+    border: none;
+  }
+
   .form-item {
     margin-bottom: 10px;
     margin-top: 0;

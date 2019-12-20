@@ -94,6 +94,49 @@
             </div>
           </div>
 
+          <div class="bTb bTb_a">
+
+            <div class="bTb__tHead">
+              <div class="bTb__tr">
+
+                <div class="bTb__th">
+                  name
+                </div>
+
+                <div class="bTb__th">
+                  title
+                </div>
+
+                <div class="bTb__th">
+                  phone
+                </div>
+
+              </div>
+            </div>
+
+            <div class="bTb__tBody">
+
+              <div class="bTb__tr bStaff__it" data-letter="a" >
+
+                <div class="bTb__td">
+                  <strong>Keith Beall</strong>
+                </div>
+
+                <div class="bTb__td">
+                  Redistricting Director <br>
+                  <em>Administration Division</em>
+                </div>
+
+                <div class="bTb__td">
+                  <strong>521.5520</strong>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
           <div class="bStaff__itsWr">
             <div class="bStaff__its">
               <div class="bStaff__it" data-letter="a">
