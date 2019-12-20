@@ -583,6 +583,13 @@ function senate_preprocess_field(array &$vars, $hook) {
         }
       }
       break;
+    case 'field_senator_social_linkin_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['content']['#title'] = "linkedin";
+      }
+      break;
   }
 }
 
@@ -618,6 +625,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_senator_social_inst_link':
     case 'field_senator_social_tw_link':
     case 'field_senator_address_txt':
+    case 'field_senator_social_linkin_link':
       $suggestions[] = 'field__with_custom_wrapper';
       break;
 
