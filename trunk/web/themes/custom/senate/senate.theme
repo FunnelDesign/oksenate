@@ -340,7 +340,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-instagram');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_instagram';
         $vars['items'][$key]['content']['#title'] = "instagram";
       }
       break;
@@ -349,7 +349,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-facebook');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_facebook';
         $vars['items'][$key]['content']['#title'] = "facebook";
       }
       break;
@@ -357,7 +357,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-twitter');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_twitter';
         $vars['items'][$key]['content']['#title'] = "twitter";
 
       }
@@ -587,7 +587,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_senator_social_linkin_link':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_linkedin';
         $vars['items'][$key]['content']['#title'] = "linkedin";
       }
       break;
