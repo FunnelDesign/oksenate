@@ -35,7 +35,10 @@ window.sHeader = class {
 
 		addPadding();
 		addAccessibilityCookie();
-		adminPadding();
+
+		window.addEventListener('load', () => {
+			adminPadding();
+		});
 
 		$(window).on('resize', () => {
 			addPadding();
@@ -82,10 +85,11 @@ window.sHeader = class {
 			$toolbarBar.on('click touch', () => {
 
 				setTimeout(() => {
-					console.log($body.css('padding-top'))
-				}, 500)
+					console.log($body.css('padding-top'));
+					$elm.css('top', $body.css('padding-top'));
+				}, 200)
 
-			})
+			});
 		}
 	}
 };
