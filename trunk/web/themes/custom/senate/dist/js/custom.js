@@ -20,6 +20,19 @@
           _this.submit();
         });
       });
+
+      $('#views-exposed-form-search-statutes-constitutions-page-1', context).once('statutes').each(function () {
+        var constitutions = this.elements['edit-constitutions'];
+        var statutes = this.elements['edit-statutes'];
+
+        constitutions.addEventListener("focus", function () {
+          statutes.value = '';
+        });
+
+        statutes.addEventListener("focus", function () {
+          constitutions.value = '';
+        });
+      });
     }
   };
 })(jQuery, Drupal, drupalSettings);
