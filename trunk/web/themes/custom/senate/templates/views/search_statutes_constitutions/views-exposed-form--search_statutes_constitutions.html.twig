@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Default theme implementation of a views exposed form.
+ *
+ * Available variables:
+ * - form: A render element representing the form.
+ *
+ * @see template_preprocess_views_exposed_form()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if q is not empty %}
+  {#
+    This ensures that, if clean URLs are off, the 'q' is added first,
+    as a hidden form element, so that it shows up first in the POST URL.
+  #}
+{{ q }}
+{% endif %}
+<div class="bTiles__items">
+  <div class="bTiles__item">
+    <div class="bTiles__title">
+      {{ "Constitutions"|t }}
+    </div>
+    <div class="form f-search f-search_min f-search_s_a f-search_throbber_show">
+      {{ form.constitutions }}
+      {{ form.constitutions_submit }}
+    </div>
+  </div>
+
+  <div class="bTiles__item">
+    <div class="bTiles__title">
+      {{ "Statutes"|t }}
+    </div>
+    <div class="form f-search f-search_min f-search_s_a f-search_throbber_show">
+      {{ form.statutes }}
+      {{ form.actions }}
+    </div>
+  </div>
+  {{ form|without('constitutions','statutes','actions','constitutions_submit') }}
+</div>
