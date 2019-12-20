@@ -49,8 +49,7 @@ window.sHeader = class {
 		});
 
 		$(document).on('drupalViewportOffsetChange.toolbar', function (event, offsets) {
-
-			console.log('offsets', offsets);
+			$elm.css('top', offsets.top);
 		});
 
 		function addAccessibilityCookie() {
@@ -79,22 +78,6 @@ window.sHeader = class {
 			let $pageWr = $(`.pageWr`);
 			if (!$pageWr.length) return;
 			$pageWr.css(`padding-top`, $elm.outerHeight());
-		}
-
-		function adminPadding() {
-			let $toolbarBar = $(`#toolbar-bar`);
-			let $body = $('body');
-
-			if (!$toolbarBar.length) return;
-
-			$toolbarBar.on('click touch', () => {
-
-				setTimeout(() => {
-					console.log($body.css('padding-top'));
-					$elm.css('top', $body.css('padding-top'));
-				}, 200)
-
-			});
 		}
 	}
 };
