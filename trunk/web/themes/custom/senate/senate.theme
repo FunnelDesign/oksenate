@@ -366,6 +366,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_finder_right_image':
     case 'field_webform_block_icon':
     case 'field_basic_top_logo_image':
+    case 'field_contact_top_logo':
     case 'field_par_publications_page_icon':
     case 'field_menu_icon':
     case 'field_calendar_up_ddl_icon':
