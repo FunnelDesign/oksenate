@@ -67,7 +67,10 @@ function senate_preprocess_node(array &$vars) {
         $vars['top_slider_enabled'] = (!empty($top_slider_enabled) && !empty($top_slider_enabled[0])) ?
           $top_slider_enabled[0]["value"] : '';
 
-        $vars['week_events'] = _senate_get_view('home_committee_events', 'block_1');
+        $first_day_obj = new DrupalDateTime("this week");
+        $last_day_obj = new DrupalDateTime("this week +6 days");
+        $params = [$first_day_obj->format('Y-m-d'), $last_day_obj->format('Y-m-d')];
+        $vars['week_events'] = _senate_get_view('home_committee_events', 'block_1', $params);
         break;
       case 'committee':
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
