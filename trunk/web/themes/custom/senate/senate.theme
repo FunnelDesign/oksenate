@@ -243,6 +243,7 @@ function senate_preprocess_node(array &$vars) {
       case 'senate_votes':
       case 'history':
       case 'contact':
+      case 'meeting_notice':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
     }
@@ -462,6 +463,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_agencies_doc_doc':
     case 'field_reports_files':
     case 'field_session_summary_file':
+    case 'field_meeting_notice_files':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {
@@ -595,6 +597,16 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
         $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_linkedin';
         $vars['items'][$key]['content']['#title'] = "linkedin";
+      }
+      break;
+    case 'field_meeting_notice_date':
+      $date = !empty($vars["element"]["#items"]) ? $vars["element"]["#items"]->get(0)->value : [];
+      if (!empty($date)) {
+        $utc_timezone = new \DateTimeZone('UTC');
+        $site_timezone = new DateTimeZone(date_default_timezone_get());
+        $date_obj = new DrupalDateTime($date, $utc_timezone);
+        $date_obj->setTimezone($site_timezone);
+        $vars['time'] = $date_obj->format('g:ia');
       }
       break;
   }
