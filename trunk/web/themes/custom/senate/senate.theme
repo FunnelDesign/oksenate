@@ -1008,9 +1008,7 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         $name = !empty($name) ? $name->get(0)->value : '';
         $letter = substr($name, 0, 1);
         $letter = strtolower($letter);
-        if (!in_array($letter, $letters)) {
-          $letters[$key] = $letter;
-        }
+        $letters[$key] = $letter;
       }
       $vars['letters'] = $letters;
       break;
