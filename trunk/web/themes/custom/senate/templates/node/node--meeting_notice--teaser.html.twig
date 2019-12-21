@@ -72,32 +72,23 @@
  * @ingroup themeable
  */
 #}
-<div class="bPostList__header">
-    <div class="bPostList__date">
-        {{ content.field_date }}
-    </div>
-{% set is_audio = (node.field_press_release_type.value == 'only_audio') %}
-  {% if is_audio %}
-    {{ label }}
-  {% else %}
-    <a href="{{ url }}" class="bPostList__title">
-      {{ label }}
-    </a>
-  {% endif %}
 
-</div>
-<div class="bPostList__text">
-    {{ content.body }}
-  {% if not is_audio %}
-    <a href="{{ url }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
-  {% endif %}
-</div>
-{% if content.field_press_release_audio %}
-  <div class="bPostList__bAudio bAudio">
-    <div class="bAudio__its">
-      {{ content.field_press_release_audio }}
-    </div>
+  {{ content.field_meeting_notice_lnd_bill }}
+
+  <div class="bTb__td">
+    {{ title_prefix }}
+      {{ label }} <br>
+    {{ title_suffix }}
+
+    {{ content.field_meeting_notice_requestor }}
+    {{ content.field_meeting_notice_pres_rep }}
+    {{ content.field_meeting_notice_committee }}
   </div>
-{% endif %}
 
-{{ content.sharethis }}
+  <div class="bTb__td">
+    {{ content.field_meeting_notice_date }}
+  </div>
+
+  <div class="bTb__td">
+    {{ content.field_meeting_notice_lnd_st_asg }}
+  </div>

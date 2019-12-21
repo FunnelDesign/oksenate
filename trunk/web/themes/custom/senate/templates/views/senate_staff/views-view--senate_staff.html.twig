@@ -1,0 +1,154 @@
+{#
+/**
+ * @file
+ * Default theme implementation for main view template.
+ *
+ * Available variables:
+ * - attributes: Remaining HTML attributes for the element.
+ * - css_name: A css-safe version of the view name.
+ * - css_class: The user-specified classes names, if any.
+ * - header: The optional header.
+ * - footer: The optional footer.
+ * - rows: The results of the view query, if any.
+ * - empty: The content to display if there are no rows.
+ * - pager: The optional pager next/prev links to display.
+ * - exposed: Exposed widget form/info to display.
+ * - feed_icons: Optional feed icons to display.
+ * - more: An optional link to the next page of results.
+ * - title: Title of the view, only used when displaying in the admin preview.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the view title.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the view title.
+ * - attachment_before: An optional attachment view to be displayed before the
+ *   view content.
+ * - attachment_after: An optional attachment view to be displayed after the
+ *   view content.
+ * - dom_id: Unique id for every view being printed to give unique class for
+ *   Javascript.
+ *
+ * @see template_preprocess_views_view()
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+
+  <section class="section section_bg-color_f section_inner-v-centered">
+
+    {{ breadcrumbs }}
+
+    <div class="section__v-inner section__v-inner_c">
+      <div class="bContainer">
+        <div class="pageIn__ico">
+          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-49.png"
+               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-49-2x.png 2x"
+               alt="">
+        </div>
+
+        <div class="bTitle bTitle_wSub_a bTitle_gap_a">
+          {{ title_prefix }}
+          <h1>{{ "Senate Staff Directory"|t }}</h1>
+          {{ title_suffix }}
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section section_ind_c section_bg-color_c">
+
+    <div class="bContainer">
+
+      {% if header %}
+        <header>
+          {{ header }}
+        </header>
+      {% endif %}
+
+      {{ exposed }}
+      {{ attachment_before }}
+
+      <div class="bStaff">
+        <div class="bStaff__fil">
+          <div class="bStaff__filTitle">
+            {{ "jump to letter"|t }}
+          </div>
+          <div class="bStaff__filLetters">
+            <a href="#letter-a">A</a>
+            <a href="#letter-b">B</a>
+            <a href="#letter-c">C</a>
+            <a href="#letter-d">D</a>
+            <a href="#letter-e">E</a>
+            <a href="#letter-f">F</a>
+            <a href="#letter-g">G</a>
+            <a href="#letter-h">H</a>
+            <a href="#letter-i">I</a>
+            <a href="#letter-j">J</a>
+            <a href="#letter-k">K</a>
+            <a href="#letter-l">L</a>
+            <a href="#letter-m">M</a>
+            <a href="#letter-n">N</a>
+            <a href="#letter-o">O</a>
+            <a href="#letter-p">P</a>
+            <a href="#letter-q">Q</a>
+            <a href="#letter-r">R</a>
+            <a href="#letter-s">S</a>
+            <a href="#letter-t">T</a>
+            <a href="#letter-u">U</a>
+            <a href="#letter-v">V</a>
+            <a href="#letter-w">W</a>
+            <a href="#letter-x">X</a>
+            <a href="#letter-y">Y</a>
+            <a href="#letter-z">Z</a>
+          </div>
+        </div>
+
+        <div class="bTb bTb_a bTb_a_staff">
+
+          <div class="bTb__tHead">
+            <div class="bTb__tr">
+
+              <div class="bTb__th">
+                {{ "name"|t }}
+              </div>
+
+              <div class="bTb__th">
+                {{ "title"|t }}
+              </div>
+
+              <div class="bTb__th">
+                {{ "phone"|t }}
+              </div>
+
+            </div>
+          </div>
+
+          {% if rows -%}
+            {{ rows }}
+          {% elseif empty -%}
+            {{ empty }}
+          {% endif %}
+          {{ pager }}
+
+          {{ attachment_after }}
+          {{ more }}
+
+          {% if footer %}
+            <footer>
+              {{ footer }}
+            </footer>
+          {% endif %}
+
+          {{ feed_icons }}
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>

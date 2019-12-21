@@ -72,32 +72,58 @@
  * @ingroup themeable
  */
 #}
-<div class="bPostList__header">
-    <div class="bPostList__date">
-        {{ content.field_date }}
-    </div>
-{% set is_audio = (node.field_press_release_type.value == 'only_audio') %}
-  {% if is_audio %}
-    {{ label }}
-  {% else %}
-    <a href="{{ url }}" class="bPostList__title">
-      {{ label }}
-    </a>
-  {% endif %}
+<article{{ attributes }}>
 
-</div>
-<div class="bPostList__text">
-    {{ content.body }}
-  {% if not is_audio %}
-    <a href="{{ url }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
-  {% endif %}
-</div>
-{% if content.field_press_release_audio %}
-  <div class="bPostList__bAudio bAudio">
-    <div class="bAudio__its">
-      {{ content.field_press_release_audio }}
-    </div>
-  </div>
-{% endif %}
+  <section class="section section_bg-color_f section_inner-v-centered">
+    {{ breadcrumbs }}
 
-{{ content.sharethis }}
+    <div class="section__bg-wrap">
+      <div class="section__bg" style="background-image: url('{{ theme_path }}/dist/images/tmp/section-bg-img-12.jpg')"></div>
+    </div>
+    <div class="section__v-inner section__v-inner_d">
+      <div class="bContainer">
+        <div class="bTitle bTitle_wSub_a">
+          <h1>{{ "Meeting Notice"|t }}</h1>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section_ind_c section_bg-color_c">
+
+    <div class="bContainer">
+      {{ title_prefix }}
+      <h2>{{ label }}</h2>
+      {{ title_suffix }}
+      <div class="pageIn__info pageIn__info_gap_a">
+        {{ content.field_meeting_notice_subject }}
+        {{ content.field_meeting_notice_date }}
+
+        <div class="pageIn__infoIt">
+          {{"Location"|t}} <strong>{{ content.field_meeting_notice_room }}, {{ content.field_meeting_notice_loc }}</strong>
+        </div>
+      </div>
+
+      <div class="bWrap bWrap_size_a bWrap_cl_a bWrap_f_a bWrap_gap_a">
+        {{ content.field_meeting_notice_agenda }}
+
+        {{ content.field_meeting_notice_cm_title }}
+        {{ content.field_meeting_notice_cm }}
+        {{ content.field_meeting_notice_st_req }}
+        {{ content.field_meeting_notice_sen_staff }}
+      </div>
+
+      <div class="bWrap bWrap_size_a bWrap_cl_a bWrap_f_a">
+        <div class="bTitle bTitle_wSub_a bTitle_gap_b">
+          <h2>{{ "Meeting Related Materials"|t }}</h2>
+
+          {{ content.field_meeting_notice_rel_ma_date }}
+        </div>
+
+        {{ content.field_meeting_notice_files }}
+      </div>
+
+    </div>
+  </section>
+
+</article>

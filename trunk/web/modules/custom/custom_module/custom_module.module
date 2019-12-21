@@ -106,7 +106,7 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
-  if ($view->id() == 'press_releases' && $view->getDisplay()->display['id'] == 'page_1') {
+  if (in_array($view->id(), ['press_releases', 'press_releases_audio']) && $view->getDisplay()->display['id'] == 'page_1') {
     foreach ($query->where as $key => &$condition_group) {
       foreach ($condition_group['conditions'] as &$condition) {
         if (strpos($condition['field'], 'DATE_FORMAT((node__field_date.field_date_value') !== FALSE) {
@@ -210,6 +210,18 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
         $query->addWhere('', 'constit_type.field_statutes_constit_type_value', $type, '=');
 
         //      $a = $query->query()->__toString();
+      }
+    }
+  }
+  if ($view->id() == 'home_committee_events') {
+    $end_date = FALSE;
+    foreach ($query->where as $key => &$condition_group) {
+      foreach ($condition_group['conditions'] as &$condition) {
+        if (strpos($condition['field'], 'DATE_FORMAT((node__field_comt_evt_date.field_comt_evt_date_value') !== FALSE) {
+          $sign = $end_date ? '<=' : '>=';
+          $condition['field'] = str_replace('=', $sign, $condition['field']);
+          $end_date = TRUE;
+        }
       }
     }
   }

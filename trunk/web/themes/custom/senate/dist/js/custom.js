@@ -33,6 +33,29 @@
           constitutions.value = '';
         });
       });
+
+      $('#views-exposed-form-senators-page-1', context).once('senators').each(function () {
+        var formElements = this.elements;
+        var formElementsLength = formElements.length;
+
+        this.addEventListener('focus', function (event) {
+          for (var i = 0; i < formElementsLength; i++) {
+            if (formElements[i] !== event.target && formElements[i].type !== "submit") {
+              switch (formElements[i].type) {
+                case 'text':
+                  formElements[i].value = '';
+                  break;
+                case 'select-one':
+                  if (formElements[i].value !== 'All') {
+                    formElements[i].value = 'All';
+                    $(formElements[i]).trigger('change.select2');
+                  }
+                  break;
+              }
+            }
+          }
+        }, true);
+      });
     }
   };
 })(jQuery, Drupal, drupalSettings);
