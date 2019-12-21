@@ -246,6 +246,13 @@ function senate_preprocess_node(array &$vars) {
       case 'meeting_notice':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
+      case 'senate_studies':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        $year = !empty($vars["content"]["field_senate_studies_year"]) &&
+          !empty($vars["content"]["field_senate_studies_year"]["#items"]) ?
+          $vars["content"]["field_senate_studies_year"]["#items"]->get(0)->value : '';
+        $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', [$year]);
+        break;
     }
   }
 }
@@ -607,6 +614,26 @@ function senate_preprocess_field(array &$vars, $hook) {
         $date_obj = new DrupalDateTime($date, $utc_timezone);
         $date_obj->setTimezone($site_timezone);
         $vars['time'] = $date_obj->format('g:ia');
+      }
+      break;
+    case 'field_senate_studies_links':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' =>
+          ['btn', 'btn_s_f']
+        ];
+      }
+      break;
+    case 'field_meeting_notice_pres_rep':
+      $available = !empty($vars["element"]["#items"]) ?
+        $vars["element"]["#items"]->get(0)->value : '';
+      if ($available == 'Available') {
+        $parent_nid = $vars["element"]["#object"]->id();
+        $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $parent_nid);
+        $vars["items"][0]["content"]["#markup"] = '<a href="' . $alias . '">' . $vars["items"][0]["content"]["#markup"] . '</a>';
+      }
+      elseif ($available == 'Not Available') {
+        $vars["items"][0]["content"]["#markup"] = '<span class="pageIn_cl_b">' . $vars["items"][0]["content"]["#markup"] . '</span>';
       }
       break;
   }
