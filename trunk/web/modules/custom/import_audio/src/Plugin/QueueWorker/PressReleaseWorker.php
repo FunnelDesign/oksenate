@@ -17,11 +17,7 @@ use Drupal\Core\Queue\QueueWorkerBase;
 class PressReleaseWorker extends QueueWorkerBase {
 
   public function processItem($data) {
-
-
-
-      \Drupal::logger('audio_import_press')->notice(t('No releases for page @url', ['@url' => $data]));
-
+      \Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data);
   }
 
 }

@@ -1074,13 +1074,15 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'press_releases_audio':
     case 'press_releases':
-      $archive = _senate_get_archive_press_releases_review();
+      $is_audio = ($id === 'press_releases_audio');
+      $archive = _senate_get_archive_press_releases_review($is_audio);
       $current_path = \Drupal::service('path.current')->getPath();
 
       $vars['sidebar'] = [
         '#theme' => 'senate_press_release_sidebar',
         '#archive' => $archive,
         '#current_path' => $current_path,
+        '#is_audio' => $is_audio
       ];
       $date = $view->args;
       if (!empty($date) && !empty($date[0])) {
@@ -1260,6 +1262,7 @@ function senate_theme($existing, $type, $theme, $path) {
       'variables' => [
         'archive' => NULL,
         'current_path' => NULL,
+        'is_audio' => false,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
@@ -1307,7 +1310,7 @@ function _senate_get_archive_week_review() {
   return !empty($archive) ? $archive : [];
 }
 
-function _senate_get_archive_press_releases_review() {
+function _senate_get_archive_press_releases_review($only_with_audio = FALSE) {
   $query = \Drupal::database()->select('node_field_data', 'nfd')
     ->condition('nfd.type', 'press_release')
     ->condition('nfd.status', 1);
@@ -1316,6 +1319,10 @@ function _senate_get_archive_press_releases_review() {
   $query->addExpression("DATE_FORMAT(field_date_value, '%M')", 'month');
   $query->addExpression("DATE_FORMAT(field_date_value, '%m')", 'month_digits');
   $query->addExpression("DATE_FORMAT(field_date_value, '%Y')", 'year');
+
+  if($only_with_audio) {
+    $query->innerJoin('node__field_press_release_audio', 'audio', 'nfd.nid= audio.entity_id');
+  }
 
   $query->groupBy('year');
   $query->groupBy('month_digits');
