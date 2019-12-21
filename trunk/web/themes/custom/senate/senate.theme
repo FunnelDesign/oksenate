@@ -630,7 +630,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       if ($available == 'Available') {
         $parent_nid = $vars["element"]["#object"]->id();
         $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $parent_nid);
-        $vars["items"][0]["content"]["#markup"] = '<a href="' . $alias . '">' . $vars["items"][0]["content"]["#markup"] . '</a>';
+        $vars["items"][0]["content"]["#markup"] = '<a href="' . $alias . '" class="pageIn_cl_a">' . $vars["items"][0]["content"]["#markup"] . '</a>';
       }
       elseif ($available == 'Not Available') {
         $vars["items"][0]["content"]["#markup"] = '<span class="pageIn_cl_b">' . $vars["items"][0]["content"]["#markup"] . '</span>';
