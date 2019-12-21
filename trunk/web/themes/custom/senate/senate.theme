@@ -1094,6 +1094,7 @@ function senate_preprocess_views_view(&$vars) {
       }
       break;
     case 'journals':
+    case 'senate_staff':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
     case 'calendar_lt_st_journals':
