@@ -126,11 +126,6 @@ class ImportBatch {
         );
       }
 
-//      $message .= \Drupal::translation()->formatPlural(
-//        $results['videos_count'] ?? 0,
-//        '@count video imported.', '@count videos imported.'
-//      );
-
       \Drupal::messenger()->addStatus($message);
     }
     else {

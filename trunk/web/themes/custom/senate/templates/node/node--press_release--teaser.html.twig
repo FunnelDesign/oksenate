@@ -77,12 +77,12 @@
         {{ content.field_date }}
     </div>
 
-    <a href="{{ url }}" class="bPostList__title">
+    <a href="{{ url_with_back_param }}" class="bPostList__title">
         {{ label }}
     </a>
 </div>
 <div class="bPostList__text">
     {{ content.body }}
-    <a href="{{ url }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
+    <a href="{{ url_with_back_param }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
 </div>
 {{ content.sharethis }}

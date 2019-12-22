@@ -4,15 +4,16 @@
  * @file
  * Functions to support theming in the senate theme.
  */
-use Drupal\image\Entity\ImageStyle;
-use Drupal\Core\Url;
-use Drupal\Core\Link;
-use Drupal\Core\Render\Markup;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\Views;
+
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\views\Views;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
@@ -209,9 +210,31 @@ function senate_preprocess_node(array &$vars) {
       case 'press_release':
         $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
         $vars['title'] = $node->getTitle();
-        if($view_mode == 'audio_teaser') {
+          $vars['url_with_back_param'] =  Url::fromRoute(
+            'entity.node.canonical', ['node' => $node->id()],
+            ['query' => ['back' => \Drupal::destination()->get()]]
+          );
 
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back to press releases'),
+          '#url' => Url::fromUserInput('/press-releases'),
+          '#attributes' => [
+            'class' => ['btn', 'btn_a', 'section__btnBack'],
+          ],
+        ];
+
+        if (!empty(\Drupal::request()->get('back'))
+          && strpos(\Drupal::request()->get('back'), '/press-releases-audio') !== FALSE
+        ) {
+          $vars['back_link']['#title'] = t('back to audio & podcasts');
+          $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
+        } else if (!empty(\Drupal::request()->get('back'))
+          && strpos(\Drupal::request()->get('back'), '/press-releases') !== FALSE
+        ) {
+          $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
         }
+
 
         if (!empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"])) {
           $sharethis = [

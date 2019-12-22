@@ -99,6 +99,7 @@ class AudioCreatorService {
    * @return mixed \Drupal\node\Entity\Node|boolen
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\import_audio\Exceptions\ImportParseError
    */
   public function loadPressByDateTitle($title, $date) {
 

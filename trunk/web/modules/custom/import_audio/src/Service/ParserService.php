@@ -37,7 +37,6 @@ class ParserService {
     $body = $this->getPageHtml($url);
   }
 
-
     $pq = PhpQuery::newDocument($body);
 
     $rows = $pq->find('table table table table tr');
@@ -46,7 +45,6 @@ class ParserService {
       $row_html = pq($row)->find('td:first')->html();
 
       if(!$this->isEmptyReleaseDividerRow($row_html)) {
-
         $releases[] = $this->parseAudioRelease($row_html);
       }
     }
