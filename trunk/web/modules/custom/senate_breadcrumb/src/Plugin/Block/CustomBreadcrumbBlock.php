@@ -6,6 +6,7 @@ use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\easy_breadcrumb\EasyBreadcrumbConstants;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\TitleResolverInterface;
 use Drupal\Core\Url;
@@ -98,6 +99,9 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
 
     $request = \Drupal::request();
     $page_title = $this->titleResolver->getTitle($request, $this->routeMatch->getRouteObject());
+
+    $page_title = $this->replaceTitle($page_title);
+
     if (!empty($page_title) && !empty($last) && ($page_title == $last->getText())) {
       array_pop($breadcrumbs);
     }
@@ -186,5 +190,25 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     }
 
     return !empty($color_map[$color]) ? $color_map[$color] : [];
+  }
+
+  /**
+   * Replace title.
+   * @param $title
+   *
+   * @return mixed
+   */
+  public function replaceTitle($title) {
+    $config = \Drupal::config('easy_breadcrumb.settings');
+    $mapValues = preg_split('/[\r\n]+/', $config->get(EasyBreadcrumbConstants::REPLACED_TITLES));
+
+    foreach ($mapValues as $mapValue) {
+      $values = explode("::", $mapValue);
+      if ((count($values) == 2) && ($values[0] == $title)) {
+        $title = $values[1];
+      }
+    }
+
+    return $title;
   }
 }
