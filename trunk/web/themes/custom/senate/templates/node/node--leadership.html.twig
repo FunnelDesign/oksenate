@@ -92,7 +92,7 @@
   <section class="section section_ind_c section_bg-color_c">
     <div class="bContainer">
       <div class="pageIn__btnWr pageIn__btnWr_gap_b">{{ content.field_historical_members }}</div>
-      {{ content|without('field_historical_members') }}
+      {{ content|without('field_historical_members', 'field_basic_top_logo_image', 'field_basic_top_image') }}
     </div>
   </section>
 </article>
