@@ -243,7 +243,16 @@ function senate_preprocess_node(array &$vars) {
       case 'senate_votes':
       case 'history':
       case 'contact':
+      case 'meeting_notice':
+      case 'contacts_ada':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
+      case 'senate_studies':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        $year = !empty($vars["content"]["field_senate_studies_year"]) &&
+          !empty($vars["content"]["field_senate_studies_year"]["#items"]) ?
+          $vars["content"]["field_senate_studies_year"]["#items"]->get(0)->value : '';
+        $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', [$year]);
         break;
     }
   }
@@ -462,6 +471,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_agencies_doc_doc':
     case 'field_reports_files':
     case 'field_session_summary_file':
+    case 'field_meeting_notice_files':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {
@@ -564,6 +574,24 @@ function senate_preprocess_field(array &$vars, $hook) {
         }
       }
       break;
+    case 'field_contacts_ada_wheel_files':
+    case 'field_contacts_ada_info_file':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('View file');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = $file->url();
+          $url = Url::fromUri($url);
+          $options = ['class' => ['bListLinks__link']];
+          $options['target'] = '_blank';
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+        }
+      }
+      break;
     case 'field_senate_votes':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $pr_ids = [];
@@ -611,6 +639,36 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
         $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_linkedin';
         $vars['items'][$key]['content']['#title'] = "linkedin";
+      }
+      break;
+    case 'field_meeting_notice_date':
+      $date = !empty($vars["element"]["#items"]) ? $vars["element"]["#items"]->get(0)->value : [];
+      if (!empty($date)) {
+        $utc_timezone = new \DateTimeZone('UTC');
+        $site_timezone = new DateTimeZone(date_default_timezone_get());
+        $date_obj = new DrupalDateTime($date, $utc_timezone);
+        $date_obj->setTimezone($site_timezone);
+        $vars['time'] = $date_obj->format('g:ia');
+      }
+      break;
+    case 'field_senate_studies_links':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' =>
+          ['btn', 'btn_s_f']
+        ];
+      }
+      break;
+    case 'field_meeting_notice_pres_rep':
+      $available = !empty($vars["element"]["#items"]) ?
+        $vars["element"]["#items"]->get(0)->value : '';
+      if ($available == 'Available') {
+        $parent_nid = $vars["element"]["#object"]->id();
+        $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $parent_nid);
+        $vars["items"][0]["content"]["#markup"] = '<a href="' . $alias . '" class="pageIn_cl_a">' . $vars["items"][0]["content"]["#markup"] . '</a>';
+      }
+      elseif ($available == 'Not Available') {
+        $vars["items"][0]["content"]["#markup"] = '<span class="pageIn_cl_b">' . $vars["items"][0]["content"]["#markup"] . '</span>';
       }
       break;
   }
@@ -1090,13 +1148,15 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'press_releases_audio':
     case 'press_releases':
-      $archive = _senate_get_archive_press_releases_review();
+      $is_audio = ($id === 'press_releases_audio');
+      $archive = _senate_get_archive_press_releases_review($is_audio);
       $current_path = \Drupal::service('path.current')->getPath();
 
       $vars['sidebar'] = [
         '#theme' => 'senate_press_release_sidebar',
         '#archive' => $archive,
         '#current_path' => $current_path,
+        '#is_audio' => $is_audio
       ];
       $date = $view->args;
       if (!empty($date) && !empty($date[0])) {
@@ -1276,6 +1336,7 @@ function senate_theme($existing, $type, $theme, $path) {
       'variables' => [
         'archive' => NULL,
         'current_path' => NULL,
+        'is_audio' => false,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
@@ -1323,7 +1384,7 @@ function _senate_get_archive_week_review() {
   return !empty($archive) ? $archive : [];
 }
 
-function _senate_get_archive_press_releases_review() {
+function _senate_get_archive_press_releases_review($only_with_audio = FALSE) {
   $query = \Drupal::database()->select('node_field_data', 'nfd')
     ->condition('nfd.type', 'press_release')
     ->condition('nfd.status', 1);
@@ -1332,6 +1393,10 @@ function _senate_get_archive_press_releases_review() {
   $query->addExpression("DATE_FORMAT(field_date_value, '%M')", 'month');
   $query->addExpression("DATE_FORMAT(field_date_value, '%m')", 'month_digits');
   $query->addExpression("DATE_FORMAT(field_date_value, '%Y')", 'year');
+
+  if($only_with_audio) {
+    $query->innerJoin('node__field_press_release_audio', 'audio', 'nfd.nid= audio.entity_id');
+  }
 
   $query->groupBy('year');
   $query->groupBy('month_digits');

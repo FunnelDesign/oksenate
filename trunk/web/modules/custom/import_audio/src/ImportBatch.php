@@ -29,9 +29,10 @@ class ImportBatch {
 
   public static function processMonthPagesQueue(&$context) {
     $queue_name = 'audio_import_month_parse';
-    $queue = \Drupal::queue('audio_import_month_parse');
+    $queue = \Drupal::queue($queue_name);
 
     $context['finished'] = 0;
+    $context['results'][$queue_name] = $context['results'][$queue_name] ?? 0;
 
     $title = t('Process import %name queue %count items remaining', [
       '%name' => $queue_name,
@@ -39,7 +40,7 @@ class ImportBatch {
     ]);
 
     if ($item = $queue->claimItem()) {
-
+//      dsm($item);
       $context['message'] = $title;
 
       // Process and delete item
@@ -50,7 +51,7 @@ class ImportBatch {
         $context['results'][$queue_name] += 1;
         $queue->deleteItem($item);
       } catch (\Exception $e) {
-        \Drupal::logger('audio_import_month_parse_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
+        \Drupal::logger('audio_import_month_parse_page_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
       }
 
     }
@@ -59,6 +60,42 @@ class ImportBatch {
       $context['finished'] = 1;
     }
   }
+
+  public static function processImportPressReleseQueue(&$context) {
+    $queue_name = 'audio_import_press_release';
+    $queue = \Drupal::queue($queue_name);
+
+    $context['finished'] = 0;
+    $context['results'][$queue_name] = $context['results'][$queue_name] ?? 0;
+
+    $title = t('Process import %name queue %count items remaining', [
+      '%name' => $queue_name,
+      '%count' => $queue->numberOfItems(),
+    ]);
+
+    if ($item = $queue->claimItem()) {
+      $context['message'] = $title;
+
+      // Process and delete item
+      /** @var $queue_manager \Drupal\Core\Queue\QueueWorkerManagerInterface */
+      $queue_worker = \Drupal::getContainer()->get('plugin.manager.queue_worker')->createInstance($queue_name);
+      try {
+        $queue_worker->processItem($item->data);
+        $context['results'][$queue_name] += 1;
+        $queue->deleteItem($item);
+      } catch (\Exception $e) {
+        $safe_data_string = audio_import_fix_encoding('<code><pre>' . print_r($item->data, TRUE)  .  '</pre></code>');
+        \Drupal::logger('audio_import_create_audio_error')
+          ->error(t('Error parse ' . $safe_data_string . ' @message', ['@message' => $e->getMessage()]));
+      }
+
+    }
+    else {
+      // If we cannot claim an item we must be done processing this queue.
+      $context['finished'] = 1;
+    }
+  }
+
 
 
 
@@ -77,6 +114,13 @@ class ImportBatch {
         $message .= \Drupal::translation()->formatPlural(
           $results['audio_import_month_parse'] ?? 0,
           '@count Month pages parsed. ', '@count Month pages parsed. '
+        );
+      }
+
+      if(!empty($results['audio_import_press_release'])) {
+        $message .= \Drupal::translation()->formatPlural(
+          $results['audio_import_press_release'] ?? 0,
+          '@count Audio imported. ', '@count Audio imported. '
         );
       }
 

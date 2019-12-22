@@ -6,13 +6,19 @@
  */
 
 define('IMPORT_AUDIO_START_DATE', '2003-01-01');
-define('IMPORT_AUDIO_MONTH_URL', 'http://www.oksenate.gov/news/press_releases_audio_clips/:Y_audio_clips/prac:Y:M.htm');
+define('IMPORT_AUDIO_MONTH_URL', 'http://www.oksenate.gov/news/press_releases_audio_clips/:Y_audio_clips/prac:Y:M.html');
 
-use Drupal\Core\File\FileSystemInterface;
-use Drupal\file\Entity\File;
-use Drupal\media\Entity\Media;
-use phpQuery as phpQuery;
-use phpUri as phpUri;
+function audio_work_single_page() {
+  $array = [];
+  \Drupal\import_audio\ImportBatch::processMonthPagesQueue($array);
+
+}
+
+function audio_work_single_audio() {
+  $array = [];
+  \Drupal\import_audio\ImportBatch::processImportPressReleseQueue($array);
+
+}
 
 function audio_import_test_creation() {
 
@@ -31,68 +37,14 @@ function audio_import_test_creation() {
     ],
   ];
 
-  dsm($data);
+//  $data['title'] = 'Senate President Pro Tem Bingman\'s Q &amp; A (Week 4)';
+//  $data['url'] = '';
+//  $data['date'] = '02.28.13';
+//  $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130228b.MP3';
+//  $data['files'][0]['desc'] = '';
 
-  //fix url
-  if(strpos($data['url'], 'press_releases_audio_clips') !== FALSE) {
+  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
 
-    preg_match('/press_releases_audio_clips\/pr(20[1-9]{2})/', $data['url'], $matches);
-
-    //find year and replase
-    if(!empty($matches[1])) {
-      $data['url'] = str_replace('press_releases_audio_clips', 'press_releases/press_releases_' . $matches[1], $data['url']);
-      dsm($data['url']);
-    }
-
-  }
-
-  $node = reset(\Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['field_press_release_old_url' => $data['url']]));
-
-  if(empty($node)) {
-    \Drupal::logger('audio_import_no_release_error')->error('<pre><code>' . print_r($data, TRUE)  .  '</code></pre>');
-    return;
-  }
-
-  if(empty($data['files'])) {
-    \Drupal::logger('audio_import_no_files_error')->error('<pre><code>' . print_r($data, TRUE)  .  '</code></pre>');
-    return;
-  }
-
-  $drupal_audio_medias = [];
-
-  foreach ($data['files'] as $file_info) {
-
-    try {
-      $audio_media = audio_import_save_file($file_info['url'], $file_info['desc']);
-      $drupal_audio_medias[$audio_media->id()] = $audio_media;
-    } catch (Exception $e) {
-      $info = [
-        'file' => $file_info,
-        'error' => $e->getMessage(),
-        'data' => $data
-      ];
-      \Drupal::logger('audio_import_save_file_error')->error('<pre><code>' . print_r($info, TRUE)  .  '</code></pre>');
-    }
-  }
-
-  if(!empty($node->field_press_release_audio)) {
-    foreach($node->field_press_release_audio as $audio) {
-      //remove exist values
-      if(isset($drupal_audio_medias[$audio->target_id])) {
-        unset($drupal_audio_medias[$audio->target_id]);
-      }
-    }
-  }
-
-  if(!empty($drupal_audio_medias)) {
-    foreach ($drupal_audio_medias as $id => $drupal_media) {
-      $node->field_press_release_audio->appendItem($id);
-    }
-    dsm('save');
-    $node->save();
-  }
-
-  dsm($node);
 }
 
 
@@ -100,85 +52,36 @@ function audio_import_test_creation_only_audio() {
   $data['title'] = 'Senate President Pro Tem Bingman\'s Q &amp; A (Week 4)';
   $data['url'] = '';
   $data['date'] = '02.28.13';
-  $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/prac20130228b.MP3';
+  $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130228b.MP3';
   $data['files'][0]['desc'] = '';
 
-//  $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['field_media_audio_old_url' => $file_info['url']]);
-//
-//  \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['field_media_audio_old_url' => $file_info['url']]);
+  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
+}
 
+function audio_import_test_load_only_audio() {
+  $data['title'] = 'Senate President Pro Tem Bingman\'s Q &amp; A (Week 4)';
+  $data['url'] = '';
+  $data['date'] = '02.28.13';
+  $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130228b.MP3';
+  $data['files'][0]['desc'] = '';
 
+  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->loadPressByDateTitle($data['title'], $data['date']));
 }
 
 function audio_import_test_service() {
-  $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac201903.htm';
+  //$url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac201903.htm';
+  $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac200802.html';
+//http://www.oksenate.gov/news/press_releases/press_releases_2008/2008_audio_clips/prac200802.html
+//  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->fixPressReleaseUrl('http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac200802.html'));
+
+  //parsed http://www.oksenate.gov/news/press_releases_audio_clips/prac20080227c.mp3
+  //valid http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac20080227c.mp3
   dsm(\Drupal::getContainer()->get('import_audio.parser')->parseAudioReleases($url));
 }
 
-
-/**
- * @param        $file_url
- * @param string $file_desc
- *
- * @return \Drupal\Core\Entity\EntityInterface|\Drupal\Core\Entity\EntityInterface[]|mixed
- * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
- * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
- * @throws \Drupal\Core\Entity\EntityStorageException
- */
-function audio_import_save_file($file_url, $file_desc = '') {
-
-  $media = \Drupal::entityTypeManager()
-    ->getStorage('media')
-    ->loadByProperties(['field_media_audio_old_url' => $file_url]);
-
-  $media = reset($media);
-  if(!empty($media)) {
-    return $media;
-  }
-
-  $file_url_info = basename($file_url);
-  $folder = 'public://press_release_audio';
-  $file_uri = $folder . '/' . $file_url_info;
-
-  $files = \Drupal::entityTypeManager()
-    ->getStorage('file')
-    ->loadByProperties(['uri' => $file_uri]);
-  $file = reset($files);
-
-  if(empty($file)) {
-    //Download and save
-    dsm(pathinfo($file_uri, PATHINFO_EXTENSION));
-
-    file_prepare_directory($folder, FILE_CREATE_DIRECTORY);
-
-    $image_request = Drupal::httpClient()->get(
-      $file_url, [
-        'connect_timeout' => 600,
-        'read_timeout' => 600,
-        'timeout' => 600,
-        'verify' => FALSE,
-      ]
-    );
-
-    $data = $image_request->getBody(TRUE);
-
-    // Save the thumbnail and add to Drupal managed files.
-    $file = file_save_data($data, $file_uri, FileSystemInterface::EXISTS_REPLACE);
-  }
-
-  $audio_media = Media::create([
-    'bundle' => 'audio',
-    'uid' => \Drupal::currentUser()->id(),
-    'langcode' => \Drupal::languageManager()->getDefaultLanguage()->getId(),
-    'status' => 1,
-    'field_media_audio_old_url' => $file_url,
-    'field_audio_title' => $file_desc,
-    'field_media_audio_file' => [
-      'target_id' => $file->id(),
-    ],
-  ]);
-  $audio_media->save();
-
-  return $audio_media;
+function audio_import_fix_encoding($val) {
+  return mb_check_encoding($val, 'UTF-8') ? $val : utf8_encode($val);
 }
 
+//audio_import_test_service();
+//dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->fixPressReleaseUrl('http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac200802.html'));
