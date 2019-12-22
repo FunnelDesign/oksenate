@@ -247,6 +247,7 @@ function senate_preprocess_node(array &$vars) {
       case 'history':
       case 'contact':
       case 'meeting_notice':
+      case 'contacts_ada':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'senate_studies':
@@ -529,6 +530,22 @@ function senate_preprocess_field(array &$vars, $hook) {
         ];
       }
       break;
+    case 'field_historical_members':
+			$items = !empty($vars['items']) ? $vars['items'] : [];
+			foreach ($items as $key => $item) {
+				$title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+				$title = !empty($title) ? $title : t('see historical members');
+				$file = $item["content"]["#file"];
+				if (!empty($file)) {
+					$url = $file->url();
+					$url = Url::fromUri($url);
+					$options = ['class' => ['btn', 'btn_a']];
+					$options['target'] = '_blank';
+					$url->setOption('attributes', $options);
+					$vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+				}
+			}
+      break;
     case 'field_calendar_up_ddl_date':
       if (!empty($vars['items']) && !empty($vars["items"][0])) {
         $vars["date"] = $vars["items"][0]["content"]["#text"];
@@ -553,6 +570,24 @@ function senate_preprocess_field(array &$vars, $hook) {
           $url = $file->url();
           $url = Url::fromUri($url);
           $options = ['class' => ['bTb__text', 'bTb__text_a', 'pageIn_cl_c']];
+          $options['target'] = '_blank';
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+        }
+      }
+      break;
+    case 'field_contacts_ada_wheel_files':
+    case 'field_contacts_ada_info_file':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('View file');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = $file->url();
+          $url = Url::fromUri($url);
+          $options = ['class' => ['bListLinks__link']];
           $options['target'] = '_blank';
 
           $url->setOption('attributes', $options);
