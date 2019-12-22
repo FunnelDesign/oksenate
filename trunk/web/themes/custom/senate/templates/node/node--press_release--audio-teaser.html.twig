@@ -78,7 +78,9 @@
     </div>
 {% set is_audio = (node.field_press_release_type.value == 'only_audio') %}
   {% if is_audio %}
-    {{ label }}
+    <div class="bPostList__title">
+      {{ label }}
+    </div>
   {% else %}
     <a href="{{ url }}" class="bPostList__title">
       {{ label }}

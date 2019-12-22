@@ -25,25 +25,23 @@ class AudioCreatorService {
   public function saveAudio(array $data) {
 
     if (empty($data['url'])) {
-      $node = $this->loadPressByDateTitle($data['title'], $data['date']);
+      //$node = $this->loadPressByDateTitle($data['title'], $data['date']);
       if (empty($node)) {
-        $node = $this->createOnlyAudioNode($data);
+        //$node = $this->createOnlyAudioNode($data);
       }
     }
     else {
       //fix url
       $data['url'] = $this->fixPressReleaseUrl($data['url']);
 
-      $node = reset(\Drupal::entityTypeManager()
+      $nodes = \Drupal::entityTypeManager()
         ->getStorage('node')
-        ->loadByProperties(['field_press_release_old_url' => $data['url']]));
+        ->loadByProperties(['field_press_release_old_url' => $data['url']]);
+      $node = !empty($nodes) ? reset($nodes) : NULL;
     }
 
 
-      if (empty($node)) {
-        \Drupal::logger('audio_import_no_node_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
-        return;
-      }
+
 
       if (empty($data['files'])) {
         \Drupal::logger('audio_import_no_files_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
@@ -66,6 +64,11 @@ class AudioCreatorService {
           ];
           \Drupal::logger('audio_import_save_file_error')->error('<pre><code>' . print_r($info, TRUE) . '</code></pre>');
         }
+      }
+
+      if (empty($node)) {
+        \Drupal::logger('audio_import_no_node_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
+        return;
       }
 
       if (!empty($node->field_press_release_audio)) {
@@ -200,7 +203,7 @@ class AudioCreatorService {
 
       file_prepare_directory($folder, FILE_CREATE_DIRECTORY);
 
-      $image_request = Drupal::httpClient()->get(
+      $file_request = Drupal::httpClient()->get(
         $file_url, [
           'connect_timeout' => 600,
           'read_timeout' => 600,
@@ -209,7 +212,7 @@ class AudioCreatorService {
         ]
       );
 
-      $data = $image_request->getBody(TRUE);
+      $data = $file_request->getBody(TRUE);
 
       // Save the audio file and add to Drupal managed files.
       $file = file_save_data(

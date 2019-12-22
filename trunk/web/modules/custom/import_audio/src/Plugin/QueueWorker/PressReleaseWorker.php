@@ -10,7 +10,7 @@ use Drupal\Core\Queue\QueueWorkerBase;
  *
  * @QueueWorker(
  *   id = "audio_import_press_release",
- *   title = @Translation("Press relese import Worker"),
+ *   title = @Translation("Press release import Worker"),
  *   cron = {"time" = 60}
  * )
  */

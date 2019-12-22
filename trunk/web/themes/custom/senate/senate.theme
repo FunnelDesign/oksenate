@@ -209,6 +209,9 @@ function senate_preprocess_node(array &$vars) {
       case 'press_release':
         $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
         $vars['title'] = $node->getTitle();
+        if($view_mode == 'audio_teaser') {
+
+        }
 
         if (!empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"])) {
           $sharethis = [

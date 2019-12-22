@@ -26,15 +26,18 @@ class ParserService {
 
   public function parseAudioReleases($url) {
     $this->url = $url;
-    $this->base_url = pathinfo($url)['dirname'] ?? '';
+    $this->base_url = pathinfo($url)['dirname'] . '/' ?? '';
     $releases = [];
 
-    $body = (string) \Drupal::httpClient()
-      ->get($url, [
-        'timeout' => 0,
-        'headers' => [],
-      ])
-      ->getBody();
+  try{
+    $body = $this->getPageHtml($url);
+  } catch(\Exception $e) {
+    //try to get from second variant of url
+    $url = str_replace('.html', '.htm', $url);
+    $body = $this->getPageHtml($url);
+  }
+
+
     $pq = PhpQuery::newDocument($body);
 
     $rows = $pq->find('table table table table tr');
@@ -60,20 +63,28 @@ class ParserService {
     $rows = explode('<br>', $html);
 
     $info['title'] = strip_tags(trim(preg_replace('/\s\s+/', ' ', $rows[0])));
+    $info['title'] = html_entity_decode($this->fixEncoding($info['title']));
+
     $info['url'] =  $this->getAbsoluteUrl($this->grepFirstHref($rows[0]));
     $info['date'] = $this->grepDate($rows);
 
-    $files_rows = array_splice($rows, 2);
+    if(empty($info['date'])) {
+      $info['date'] = $this->grepDateFromLastRow($rows);
+      if(!empty($info['date'])) {
+        //date in the last row remove first and last element to get mp3 arrays
+        $files_rows = array_splice($rows, 1, -1);
+      }
+    }
+    //Default mp3 location, skip 2 first rows
+    $files_rows = (empty($files_rows)) ? array_splice($rows, 2) : $files_rows;
 
     foreach ($files_rows as $filesRow) {
       $file_info = ['url' => '', 'desc' => ''];
       $file_info['desc'] = strip_tags($filesRow);
       $file_info['desc'] = str_replace(['mp3', ')', '('], '', $file_info['desc']);
       $file_info['desc'] = trim(preg_replace('/\s\s+/', ' ', $file_info['desc']));
-      $file_info['url'] = $this->getAbsoluteUrl($this->grepFirstHref($filesRow));
 
-//    $media = \Drupal::entityTypeManager()->getStorage('media')->loadByProperties(['field_media_audio_old_url' => $file_info['url']]);
-//    $file_info['media'] = $media[0] ?? NULL;
+      $file_info['url'] = $this->getAbsoluteUrl($this->grepFirstHref($filesRow));
 
       $info['files'][] = $file_info;
     }
@@ -89,14 +100,30 @@ class ParserService {
    */
   protected function grepDate(array $rows) {
     $date = '';
+    $matches = [];
     $pattern = "/(0[1-9]|1[0-2])\.(0[1-9]|[1-2][0-9]|3[0-1])\.[0-9]{2}/";
-    preg_match($pattern, $rows[1], $matches);
+    if(!empty($rows[1])) {
+      preg_match($pattern, $rows[1], $matches);
+    }
+
     if (!empty($matches[0])) {
       $date = $matches[0];
     }
     else {
       preg_match($pattern, $rows[0], $matches);
       $date = $matches[0] ?? '';
+    }
+
+    return $date;
+  }
+
+  protected function grepDateFromLastRow(array $rows) {
+    $date = '';
+
+    $pattern = "/(0[1-9]|1[0-2])\.(0[1-9]|[1-2][0-9]|3[0-1])\.[0-9]{2}/";
+    preg_match($pattern, end($rows), $matches);
+    if (!empty($matches[0])) {
+      $date = $matches[0];
     }
 
     return $date;
@@ -112,7 +139,23 @@ class ParserService {
   }
 
   protected function grepFirstHref($html) {
-      preg_match('/<a href="(.+)">/', $html, $match);
+      preg_match('/<a href="(.+)">/U', $html, $match);
       return $match[1] ?? '';
   }
+
+  public function fixEncoding($val) {
+    return mb_check_encoding($val, 'UTF-8') ? $val : utf8_encode($val);
+  }
+
+  /**
+   * @param $url
+   *
+   * @return string
+   */
+  protected function getPageHtml($url): string {
+    $body = (string) \Drupal::httpClient()
+      ->get($url, ['timeout' => 0, 'headers' => [],])
+      ->getBody();
+    return $body;
+}
 }
