@@ -517,6 +517,22 @@ function senate_preprocess_field(array &$vars, $hook) {
         ];
       }
       break;
+    case 'field_historical_members':
+			$items = !empty($vars['items']) ? $vars['items'] : [];
+			foreach ($items as $key => $item) {
+				$title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+				$title = !empty($title) ? $title : t('see historical members');
+				$file = $item["content"]["#file"];
+				if (!empty($file)) {
+					$url = $file->url();
+					$url = Url::fromUri($url);
+					$options = ['class' => ['btn', 'btn_a']];
+					$options['target'] = '_blank';
+					$url->setOption('attributes', $options);
+					$vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+				}
+			}
+      break;
     case 'field_calendar_up_ddl_date':
       if (!empty($vars['items']) && !empty($vars["items"][0])) {
         $vars["date"] = $vars["items"][0]["content"]["#text"];
