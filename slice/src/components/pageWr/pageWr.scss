@@ -14,6 +14,10 @@
     padding-top: 152px;
   }
 
+  .page-authorization.path-user & {
+    padding-top: 0;
+  }
+
   .path-search & {
     background: #f0f0f0;
   }
