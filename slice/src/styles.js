@@ -73,3 +73,6 @@ import './components/bTerms/bTerms.scss'
 import './components/bAudio/bAudio.scss'
 import './components/bStaff/bStaff.scss'
 import './components/s404/s404.scss'
+
+
+import './common/accessibility.scss'

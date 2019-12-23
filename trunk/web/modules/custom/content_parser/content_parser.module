@@ -397,7 +397,7 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
     if ($file) {
       $elements[] = [
        'target_id' => $file->id(),
-       'alt' => $element->attr('alt') ?: null
+       'alt' => $element->attr('alt') ? substr($element->attr('alt'), 0,254) : null
      ];
     }
   }
