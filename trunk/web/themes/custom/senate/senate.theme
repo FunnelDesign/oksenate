@@ -485,7 +485,10 @@ function senate_preprocess_field(array &$vars, $hook) {
         $markup = Markup::create($img_markup . $link_title); //prepared content for render
 
         $url = Url::fromUri($row['field_paragraph_tiles_link'][0]['uri']);
-        $options = ['class' => ['bTiles__item',], 'target' => ['_blank']];
+        $options = !empty($row["field_paragraph_tiles_link"][0]["options"]) &&
+          !empty($row["field_paragraph_tiles_link"][0]["options"]["attributes"]) ?
+          $row["field_paragraph_tiles_link"][0]["options"]["attributes"] : [];
+        $options['class'] = ['bTiles__item'];
         $url->setOption('attributes', $options);
 
         $vars['elements'][$key]['element'] = Link::fromTextAndUrl($markup, $url);
