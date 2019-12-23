@@ -1130,6 +1130,9 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         $name = !empty($paragraph) && $paragraph->hasField('field_staff_name') ?
           $paragraph->get('field_staff_name') : '';
         $name = !empty($name) ? $name->get(0)->value : '';
+        $name_arr = explode(' ', $name);
+        $name = end($name_arr);
+
         $letter = substr($name, 0, 1);
         $letter = strtolower($letter);
         $letters[$key] = $letter;
