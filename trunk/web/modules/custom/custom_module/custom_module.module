@@ -225,6 +225,15 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
+  if ($view->id() == 'senate_staff' && $view->getDisplay()->display['id'] == 'page_1') {
+    $table_files = $query->getTableInfo('node__field_staff');
+    $table_files['join']->field = 'field_staff_target_id';
+    $table_files["join"]->configuration["field"] = 'field_staff_target_id';
+
+    $table_node = $query->getTableInfo('field_staff_paragraphs_item_field_data');
+    $table_node['join']->field = 'nid';
+    $table_node["join"]->configuration["field"] = 'nid';
+  }
 }
 
 /**
