@@ -14,6 +14,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\views\Views;
+use Drupal\Core\Template\Attribute;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
@@ -1269,6 +1270,13 @@ function senate_preprocess_paragraph(array &$vars) {
       if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
         $vars['icon_attributes'] = ' bTiles__ico_a';
       }
+
+      $link = !empty($vars["content"]["field_par_publications_page_link"]) &&
+        !empty($vars["content"]["field_par_publications_page_link"]["#items"]) ?
+        $vars["content"]["field_par_publications_page_link"]["#items"]->getValue() : '';
+      $link_att = !empty($link) && !empty($link[0]["options"]) ? $link[0]["options"]["attributes"] : [];
+      $link_att['class'] = ['bTiles__item'];
+      $vars['link_attr'] = new Attribute($link_att);
       break;
     case 'journals_files':
       $date = (!empty($vars["content"]["field_journals_files_date"]) &&
