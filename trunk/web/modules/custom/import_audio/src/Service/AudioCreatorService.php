@@ -228,7 +228,7 @@ class AudioCreatorService {
         'langcode' => \Drupal::languageManager()->getDefaultLanguage()->getId(),
         'status' => 1,
         'field_media_audio_old_url' => $file_url,
-        'field_audio_title' => $file_desc,
+        'field_audio_description' => $file_desc,
         'field_media_audio_file' => [
           'target_id' => $file->id(),
         ],

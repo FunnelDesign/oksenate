@@ -14,6 +14,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\views\Views;
+use Drupal\Core\Template\Attribute;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
@@ -431,6 +432,30 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
 
       break;
+    case 'field_contacts_paragraph_slider':
+      $vars['elements'] = array();
+      $style = 'rockdevels_defaults_imagemagick';
+
+      $elements = _rows_from_paragraphs($vars, array(
+        'field_contacts_par_sli_image',
+        'field_contacts_par_sli_thumb_img',
+      ));
+      foreach ($elements as $key => $row) {
+        $image = '';
+        $thumb = '';
+        if (!empty($row['field_contacts_par_sli_image'][0]['uri'])) {
+          $image = ImageStyle::load($style)
+            ->buildUrl($row['field_contacts_par_sli_image'][0]['uri']);
+        }
+        if (!empty($row['field_contacts_par_sli_thumb_img'][0]['uri'])) {
+          $thumb = ImageStyle::load($style)
+            ->buildUrl($row['field_contacts_par_sli_thumb_img'][0]['uri']);
+        }
+
+        $vars['elements'][$key]['large_img'] = $image;
+        $vars['elements'][$key]['thumb_img'] = $thumb;
+      }
+      break;
     case 'field_home_tiles_paragraph':
       $vars['elements'] = array();
       $style = 'rockdevels_defaults_imagemagick';
@@ -461,7 +486,10 @@ function senate_preprocess_field(array &$vars, $hook) {
         $markup = Markup::create($img_markup . $link_title); //prepared content for render
 
         $url = Url::fromUri($row['field_paragraph_tiles_link'][0]['uri']);
-        $options = ['class' => ['bTiles__item',], 'target' => ['_blank']];
+        $options = !empty($row["field_paragraph_tiles_link"][0]["options"]) &&
+          !empty($row["field_paragraph_tiles_link"][0]["options"]["attributes"]) ?
+          $row["field_paragraph_tiles_link"][0]["options"]["attributes"] : [];
+        $options['class'] = ['bTiles__item'];
         $url->setOption('attributes', $options);
 
         $vars['elements'][$key]['element'] = Link::fromTextAndUrl($markup, $url);
@@ -1106,6 +1134,9 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         $name = !empty($paragraph) && $paragraph->hasField('field_staff_name') ?
           $paragraph->get('field_staff_name') : '';
         $name = !empty($name) ? $name->get(0)->value : '';
+        $name_arr = explode(' ', $name);
+        $name = end($name_arr);
+
         $letter = substr($name, 0, 1);
         $letter = strtolower($letter);
         $letters[$key] = $letter;
@@ -1239,6 +1270,13 @@ function senate_preprocess_paragraph(array &$vars) {
       if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
         $vars['icon_attributes'] = ' bTiles__ico_a';
       }
+
+      $link = !empty($vars["content"]["field_par_publications_page_link"]) &&
+        !empty($vars["content"]["field_par_publications_page_link"]["#items"]) ?
+        $vars["content"]["field_par_publications_page_link"]["#items"]->getValue() : '';
+      $link_att = !empty($link) && !empty($link[0]["options"]) ? $link[0]["options"]["attributes"] : [];
+      $link_att['class'] = ['bTiles__item'];
+      $vars['link_attr'] = new Attribute($link_att);
       break;
     case 'journals_files':
       $date = (!empty($vars["content"]["field_journals_files_date"]) &&

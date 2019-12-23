@@ -641,13 +641,13 @@ class ContentParser extends ConfigEntityBase {
             //          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
             if($html == 'empty'){
               $message = 'Empty Body '.'<br>'.$base_url . '<br>' . $href . '<br>'."\r\n";
-              file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+              file_put_contents('parse_errors_empty_body.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
             else{
               $contactInfo = [];
-              $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
+              $regexp = "/(For more information, contact:|For more information,contact|For more information|For more information contact:)(?s)(.*$)/";
               $all = preg_match($regexp, $html['value'], $matches);
               if(!empty($matches)){
                 foreach ($matches as $matchKey=>$match){
@@ -660,7 +660,7 @@ class ContentParser extends ConfigEntityBase {
                 }
               }else{
                 $message = 'Cant identify contact data '.$base_url . '<br>' . $href . '<br>'."\r\n";
-                file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+                file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
                 \Drupal::logger('not_parsed_contact_data')->notice($message);
               }
               $html['value'] = preg_replace($regexp, '', $html['value']);
@@ -723,12 +723,12 @@ class ContentParser extends ConfigEntityBase {
               $entity->save();
             }catch (\Error $exception){
               $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
-              file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+              file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }catch (\Exception $exception){
               $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
-              file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+              file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
@@ -815,13 +815,13 @@ class ContentParser extends ConfigEntityBase {
         }
         if($html == 'empty'){
           $message = 'Empty Body '.'<br>'.$base_url . '<br>' . $href . '<br>'."\r\n";
-          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+          file_put_contents('parse_errors_empty_body.txt', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }
         else{
           $contactInfo = [];
-          $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
+          $regexp = "/(For more information, contact:|For more information,contact|For more information|For more information contact:)(?s)(.*$)/";
           $all = preg_match($regexp, $html['value'], $matches);
           if(!empty($matches)){
             foreach ($matches as $matchKey=>$match){
@@ -834,7 +834,7 @@ class ContentParser extends ConfigEntityBase {
             }
           }else{
             $message = 'Cant identify contact data '.$base_url . '<br>' . $href . '<br>'."\r\n";
-            file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+            file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
             \Drupal::logger('not_parsed_contact_data')->notice($message);
           }
           $html['value'] = preg_replace($regexp, '', $html['value']);
@@ -1196,7 +1196,20 @@ class ContentParser extends ConfigEntityBase {
     }
   }
 
+//  public function makeBody($text, $title){
+//    $len = (int) strlen($title);
+//    $strpos = (int) strpos($text, $title);
+//    $bodyString = substr($text, $strpos+$len);
+//    if($bodyString){
+//      return $bodyString;
+//    }else{
+//      return $text;
+//    }
+//  }
+
   public function makeSummary($text, $title){
+    $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+    $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
     $len = (int) strlen($title);
     $strpos = (int) strpos($text, $title);
     $headerString = substr($text, 0, $strpos);
