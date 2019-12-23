@@ -640,7 +640,8 @@ class ContentParser extends ConfigEntityBase {
             $date = preg_replace("/[^.0-9]/", '', $date);
             //          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
             if($html == 'empty'){
-              $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
+              $message = 'Empty Body '.'<br>'.$base_url . '<br>' . $href . '<br>'."\r\n";
+              file_put_contents('parse_errors.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
@@ -658,7 +659,8 @@ class ContentParser extends ConfigEntityBase {
                   }
                 }
               }else{
-                $message = 'Cant identify contact data'.$base_url . '<br>' . $href . '<br>';
+                $message = 'Cant identify contact data '.$base_url . '<br>' . $href . '<br>'."\r\n";
+                file_put_contents('parse_errors.txt', $message, FILE_APPEND);
                 \Drupal::logger('not_parsed_contact_data')->notice($message);
               }
               $html['value'] = preg_replace($regexp, '', $html['value']);
@@ -668,7 +670,8 @@ class ContentParser extends ConfigEntityBase {
                 $html['value'] = $this->makeSummary($html['value'], $text)['body'];
               }
               else{
-                $message = 'Cant separate header and body'.$base_url . '<br>' . $href . '<br>';
+                $message = 'Cant separate header and body '.$base_url . '<br>' . $href . '<br>'."\r\n";
+                file_put_contents('parse_errors.txt', $message, FILE_APPEND);
                 \Drupal::logger('not_parsed_body')->notice($message);
               }
             }
@@ -719,11 +722,13 @@ class ContentParser extends ConfigEntityBase {
               $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
               $entity->save();
             }catch (\Error $exception){
-              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
+              file_put_contents('parse_errors.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }catch (\Exception $exception){
-              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
+              file_put_contents('parse_errors.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
@@ -809,7 +814,8 @@ class ContentParser extends ConfigEntityBase {
           }
         }
         if($html == 'empty'){
-          $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
+          $message = 'Empty Body '.'<br>'.$base_url . '<br>' . $href . '<br>'."\r\n";
+          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }
@@ -827,7 +833,8 @@ class ContentParser extends ConfigEntityBase {
               }
             }
           }else{
-            $message = 'Cant identify contact data'.$base_url . '<br>' . $href . '<br>';
+            $message = 'Cant identify contact data '.$base_url . '<br>' . $href . '<br>'."\r\n";
+            file_put_contents('parse_errors.txt', $message, FILE_APPEND);
             \Drupal::logger('not_parsed_contact_data')->notice($message);
           }
           $html['value'] = preg_replace($regexp, '', $html['value']);
@@ -836,7 +843,8 @@ class ContentParser extends ConfigEntityBase {
             $html['value'] = $this->makeSummary($html['value'], $text)['body'];
           }
           else{
-            $message = 'Cant separate header and body'.$base_url . '<br>' . $href . '<br>';
+            $message = 'Cant separate header and body '.$base_url . '<br>' . $href . '<br>'."\r\n";
+            file_put_contents('parse_errors.txt', $message, FILE_APPEND);
             \Drupal::logger('not_parsed_body')->notice($message);
           }
         }
@@ -889,11 +897,13 @@ class ContentParser extends ConfigEntityBase {
           $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
           $entity->save();
         }catch (\Error $exception){
-          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
+          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }catch (\Exception $exception){
-          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
+          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }
