@@ -81,6 +81,7 @@ class ParserService {
       $file_info['desc'] = strip_tags($filesRow);
       $file_info['desc'] = str_replace(['mp3', ')', '('], '', $file_info['desc']);
       $file_info['desc'] = trim(preg_replace('/\s\s+/', ' ', $file_info['desc']));
+      $file_info['desc'] = html_entity_decode($this->fixEncoding($file_info['desc']));
 
       $file_info['url'] = $this->getAbsoluteUrl($this->grepFirstHref($filesRow));
 
