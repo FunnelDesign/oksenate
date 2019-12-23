@@ -200,6 +200,13 @@
       left: 0;
       top: 0;
     }
+
+    &_a {
+
+      @include xs-only {
+        top: -40px;
+      }
+    }
   }
 
   .bContainer {
