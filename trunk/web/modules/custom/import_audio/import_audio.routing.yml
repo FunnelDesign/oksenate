@@ -5,3 +5,17 @@ import_audio.import_form:
     _title: 'Import Press releases audio'
   requirements:
     _access: 'TRUE'
+import_audio.week_import_form:
+  path: '/admin/import-week-in-review'
+  defaults:
+    _form: '\Drupal\import_audio\Form\WeekImportForm'
+    _title: 'Import Week In Review'
+  requirements:
+    _access: 'TRUE'
+import_audio.test_controller_test:
+  path: '/admin/test'
+  defaults:
+    _controller: '\Drupal\import_audio\Controller\TestController::test'
+    _title: 'test'
+  requirements:
+    _permission: 'access content'

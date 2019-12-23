@@ -2,6 +2,7 @@
 
 namespace Drupal\import_audio\Service;
 
+use Drupal\import_audio\ParserHelper;
 use phpQuery;
 use phpUri;
 
@@ -30,11 +31,11 @@ class ParserService {
     $releases = [];
 
   try{
-    $body = $this->getPageHtml($url);
+    $body = ParserHelper::getPageHtml($url);
   } catch(\Exception $e) {
     //try to get from second variant of url
     $url = str_replace('.html', '.htm', $url);
-    $body = $this->getPageHtml($url);
+    $body = ParserHelper::getPageHtml($url);
   }
 
     $pq = PhpQuery::newDocument($body);
@@ -61,9 +62,11 @@ class ParserService {
     $rows = explode('<br>', $html);
 
     $info['title'] = strip_tags(trim(preg_replace('/\s\s+/', ' ', $rows[0])));
-    $info['title'] = html_entity_decode($this->fixEncoding($info['title']));
+    $info['title'] = html_entity_decode(
+      ParserHelper::fixEncoding($info['title'])
+    );
 
-    $info['url'] =  $this->getAbsoluteUrl($this->grepFirstHref($rows[0]));
+    $info['url'] =  $this->getAbsoluteUrl(ParserHelper::grepFirstHref($rows[0]));
     $info['date'] = $this->grepDate($rows);
 
     if(empty($info['date'])) {
@@ -81,9 +84,13 @@ class ParserService {
       $file_info['desc'] = strip_tags($filesRow);
       $file_info['desc'] = str_replace(['mp3', ')', '('], '', $file_info['desc']);
       $file_info['desc'] = trim(preg_replace('/\s\s+/', ' ', $file_info['desc']));
-      $file_info['desc'] = html_entity_decode($this->fixEncoding($file_info['desc']));
+      $file_info['desc'] = html_entity_decode(
+        ParserHelper::fixEncoding($file_info['desc'])
+      );
 
-      $file_info['url'] = $this->getAbsoluteUrl($this->grepFirstHref($filesRow));
+      $file_info['url'] = $this->getAbsoluteUrl(
+        ParserHelper::grepFirstHref($filesRow)
+      );
 
       $info['files'][] = $file_info;
     }
@@ -129,32 +136,7 @@ class ParserService {
   }
 
   protected function getAbsoluteUrl($relative_url) {
-    $base_url = $this->base_url;
-    if (preg_match('#^[a-z]+://[^/]+$#', $base_url)) {
-      $base_url .= '/';
-    }
-
-    return !empty($relative_url) ? phpUri::parse($base_url)->join($relative_url) : '';
+    ParserHelper::getAbsoluteUrl($this->base_url, $relative_url);
   }
 
-  protected function grepFirstHref($html) {
-      preg_match('/<a href="(.+)">/U', $html, $match);
-      return $match[1] ?? '';
-  }
-
-  public function fixEncoding($val) {
-    return mb_check_encoding($val, 'UTF-8') ? $val : utf8_encode($val);
-  }
-
-  /**
-   * @param $url
-   *
-   * @return string
-   */
-  protected function getPageHtml($url): string {
-    $body = (string) \Drupal::httpClient()
-      ->get($url, ['timeout' => 0, 'headers' => [],])
-      ->getBody();
-    return $body;
-}
 }

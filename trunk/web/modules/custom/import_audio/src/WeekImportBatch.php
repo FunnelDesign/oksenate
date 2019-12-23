@@ -1,0 +1,154 @@
+<?php
+
+namespace Drupal\import_audio;
+
+use phpQuery;
+
+class WeekImportBatch {
+
+  const START_PAGE = 'http://www.oksenate.gov/news/wir_index.html';
+
+  const RESULT_KEYS = [
+    'get_pages'
+  ];
+
+  public static function parsePage() {
+     $url = 'http://www.oksenate.gov/news/week_in_review/week_in_review_2018/wir201804300503.htm';
+
+     $html = ParserHelper::getPageHtml($url);
+
+
+
+  }
+
+
+  public static function getImportPages(&$context) {
+
+    $week_urls = \Drupal::state()->get('import.week_review');
+
+    if(!empty($week_urls)) {
+      dsm($week_urls, 'saved');
+      return ;
+    }
+
+
+    $year_urls = [];
+    $week_urls = [];
+
+    $context['message'] = t('Get import Urls');
+
+
+    $body = ParserHelper::getPageHtml(self::START_PAGE);
+
+    $pq = PhpQuery::newDocument($body);
+    $links = $pq->find('a');
+
+    foreach ($links as $link) {
+      $pq_link = pq($link);
+      $url = $pq_link->attr('href');
+      $absolute_url = ParserHelper::getAbsoluteUrl(self::START_PAGE, $url);
+      if(self::isYearPage($url)) {
+        $year_urls[] = $absolute_url;
+      } else {
+        $week_urls[] = self::urlBugFixer($absolute_url);
+      }
+    }
+
+
+    foreach ($year_urls as $yearUrl) {
+      $body = ParserHelper::getPageHtml($yearUrl);
+
+      $pq = PhpQuery::newDocument($body);
+      $links = $pq->find('a');
+      foreach ($links as $link) {
+        $pq_link = pq($link);
+        $url = $pq_link->attr('href');
+        $absolute_url = ParserHelper::getAbsoluteUrl($yearUrl, $url);
+        if(!self::isYearPage($url)) {
+          $week_urls[] = self::urlBugFixer($absolute_url);
+        }
+      }
+    }
+
+
+    //dsm($week_urls, 'week');
+    dsm($year_urls, 'year');
+
+    $week_urls = array_unique($week_urls);
+
+    \Drupal::state()->set('import.week_review', $week_urls);
+
+    dsm($week_urls, 'week uniq');
+
+    $context['results']['get_pages'] = count($week_urls);
+  }
+
+  protected static function urlBugFixer($url) {
+    $replaces = [
+    'week_in_review/week_in_review_2016/week_in_review/week_in_review_2017' => 'week_in_review/week_in_review_2017'
+   ];
+    foreach ($replaces as $from => $to) {
+      $url = str_replace($from, $to, $url);
+    }
+    return $url;
+  }
+
+  protected static function isYearPage($url) {
+    return preg_match('/\/(.*)(index|Index)(.*)\.htm/U', $url);
+  }
+
+  public static function processMonthPagesQueue(&$context) {
+    $queue_name = 'audio_import_month_parse';
+    $queue = \Drupal::queue($queue_name);
+
+    $context['finished'] = 0;
+    $context['results'][$queue_name] = $context['results'][$queue_name] ?? 0;
+
+    $title = t('Process import %name queue %count items remaining', [
+      '%name' => $queue_name,
+      '%count' => $queue->numberOfItems(),
+    ]);
+
+    if ($item = $queue->claimItem()) {
+//      dsm($item);
+      $context['message'] = $title;
+
+      // Process and delete item
+      /** @var $queue_manager \Drupal\Core\Queue\QueueWorkerManagerInterface */
+      $queue_worker = \Drupal::getContainer()->get('plugin.manager.queue_worker')->createInstance($queue_name);
+      try {
+        $queue_worker->processItem($item->data);
+        $context['results'][$queue_name] += 1;
+        $queue->deleteItem($item);
+      } catch (\Exception $e) {
+        \Drupal::logger('audio_import_month_parse_page_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
+      }
+
+    }
+    else {
+      // If we cannot claim an item we must be done processing this queue.
+      $context['finished'] = 1;
+    }
+  }
+
+
+
+  public static function FinishedCallback($success, $results, $operations) {
+
+    if ($success) {
+      $message = '';
+      foreach (self::RESULT_KEYS as $key) {
+
+        if(!empty($results[$key])) {
+          $message .= t('Processed @key - @number', ['@key' => $key, '@number' => $results[$key]]);
+        }
+      }
+
+      \Drupal::messenger()->addStatus($message);
+    }
+    else {
+      \Drupal::messenger()->addError(t('Finished with an error.'));
+    }
+  }
+
+}

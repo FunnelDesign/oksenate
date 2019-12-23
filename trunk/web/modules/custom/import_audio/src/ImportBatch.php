@@ -84,7 +84,7 @@ class ImportBatch {
         $context['results'][$queue_name] += 1;
         $queue->deleteItem($item);
       } catch (\Exception $e) {
-        $safe_data_string = \Drupal::getContainer()->get('import_audio.parser')->fixEncoding(
+        $safe_data_string = ParserHelper::fixEncoding(
           '<code><pre>' . print_r($item->data, TRUE) . '</pre></code>'
         );
         \Drupal::logger('audio_import_create_audio_error')
