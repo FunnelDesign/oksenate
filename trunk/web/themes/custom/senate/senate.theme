@@ -431,6 +431,30 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
 
       break;
+    case 'field_contacts_paragraph_slider':
+      $vars['elements'] = array();
+      $style = 'rockdevels_defaults_imagemagick';
+
+      $elements = _rows_from_paragraphs($vars, array(
+        'field_contacts_par_sli_image',
+        'field_contacts_par_sli_thumb_img',
+      ));
+      foreach ($elements as $key => $row) {
+        $image = '';
+        $thumb = '';
+        if (!empty($row['field_contacts_par_sli_image'][0]['uri'])) {
+          $image = ImageStyle::load($style)
+            ->buildUrl($row['field_contacts_par_sli_image'][0]['uri']);
+        }
+        if (!empty($row['field_contacts_par_sli_thumb_img'][0]['uri'])) {
+          $thumb = ImageStyle::load($style)
+            ->buildUrl($row['field_contacts_par_sli_thumb_img'][0]['uri']);
+        }
+
+        $vars['elements'][$key]['large_img'] = $image;
+        $vars['elements'][$key]['thumb_img'] = $thumb;
+      }
+      break;
     case 'field_home_tiles_paragraph':
       $vars['elements'] = array();
       $style = 'rockdevels_defaults_imagemagick';

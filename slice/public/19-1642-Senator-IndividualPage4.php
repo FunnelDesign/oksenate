@@ -10,7 +10,7 @@
     <section class="section section_ind_c section_bg-color_b">
 
       <div class="bContainer">
-        <a href="#" class="btn btn_a section__btnBack">
+        <a href="#" class="btn btn_a section__btnBack section__btnBack_a">
           back to senators
         </a>
 

@@ -13,12 +13,21 @@
   &__items {
     display: flex;
     align-items: center;
+
+    @include xs-only {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
 
   &__item {
     margin-right: 7px;
     transition: opacity .3s;
     white-space: nowrap;
+
+    @include xs-only {
+      margin: 0 4px 7px !important;
+    }
 
     &:hover {
       opacity: .7;
