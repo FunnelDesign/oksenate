@@ -5,7 +5,8 @@
 <script type="text/javascript" src="../dist/vendor/slick/slick.min.js"></script>
 <script type="text/javascript" src="../dist/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
 <script type="text/javascript" src="../dist/vendor/flexslider/jquery.flexslider.min.js"></script>
-<!--<script type="text/javascript" src="../dist/vendor/fancybox/jquery.fancybox.min.js"></script>-->
+<script type="text/javascript"
+  src="../dist/vendor/lightSlider/lightslider.min.js"></script>
 
 <script type="text/javascript" src="../dist/js/index.js?t=<?php  print $timestamp?>"></script>
 <!--<script type="text/javascript" src="../dist/js/index.min.js?t=--><?php // print $timestamp?><!--"></script>-->

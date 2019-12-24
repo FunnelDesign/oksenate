@@ -38,22 +38,12 @@
  */
 #}
 <div class="bWrap bWrap_size_a bWrap_gap_b">
-    <div class="slider-thumb">
-        <div class="slider-thumb__slider flexslider">
-            <ul class="slides">
+    <div class="bLightSlider bLightSlider_gap_b">
+        <div class="bLightSlider__slider">
+            <ul class="bLightSlider__slides">
                 {% for item in elements %}
-                    <li>
+                    <li data-thumb="{{ item.thumb_img }}">
                         <img src="{{ item.large_img }}"/>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-
-        <div class="slider-thumb__thumb flexslider">
-            <ul class="slides">
-                {% for item in elements %}
-                    <li>
-                        <img src="{{ item.thumb_img }}"/>
                     </li>
                 {% endfor %}
             </ul>

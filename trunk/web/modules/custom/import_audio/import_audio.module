@@ -5,8 +5,13 @@
  * Contains import_audio.module.
  */
 
+use Drupal\import_audio\WeekImportBatch;
+
 define('IMPORT_AUDIO_START_DATE', '2003-01-01');
 define('IMPORT_AUDIO_MONTH_URL', 'http://www.oksenate.gov/news/press_releases_audio_clips/:Y_audio_clips/prac:Y:M.html');
+
+
+
 
 function audio_work_single_page() {
   $array = [];
@@ -86,6 +91,3 @@ function audio_import_test_service2() {
   $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2012_audio_clips/prac201202.html';
   dsm(\Drupal::getContainer()->get('import_audio.parser')->parseAudioReleases($url));
 }
-
-//audio_import_test_service();
-//dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->fixPressReleaseUrl('http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac200802.html'));

@@ -6,11 +6,11 @@ import BlockVideo from "./components/bMedia/video";
 import bSort from "./components/bSort/bSort";
 import navSelect from "./components/navSelect/navSelect";
 import SliderThumb from "./components/slider-thumb/SliderThumb";
-import FancyBox from "./components/fancybox/FancyBox";
 import SliderTypeA from "./components/slider-type-a/SliderTypeA";
 import sHeader from "./components/sHeader/sHeader";
 import bTerms from "./components/bTerms/bTerms";
 import bStaff from "./components/bStaff/bStaff";
+import lightSlider from "./components/bLightSlider/lightSlider";
 
 const $ = jQuery;
 
@@ -41,10 +41,10 @@ function init() {
 	new bSort();
 	new SliderThumb();
 	new SliderTypeA();
-	// new FancyBox();
 	new sHeader();
 	new bTerms();
 	new bStaff();
+	new lightSlider();
 	initSelect();
 
 
