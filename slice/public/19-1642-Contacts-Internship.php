@@ -32,6 +32,30 @@
         </div>
 
         <div class="bWrap bWrap_size_a bWrap_gap_b">
+          <div class="bLightSlider bLightSlider_gap_a">
+
+            <div class="bLightSlider__slider">
+              <ul class="bLightSlider__slides">
+                <?php $SliderThumb = array(
+                  array("slider-thumb-img-1.jpg"),
+                  array("creek_council_oak_tree.jpg"),
+                  array("slider-thumb-img-1.jpg"),
+                  array("slider-thumb-img-1.jpg"),
+                  array("slider-thumb-img-1.jpg"),
+                  array("slider-thumb-img-1.jpg")
+                )
+                ?>
+                <?php foreach($SliderThumb as $key => $element): ?>
+                  <li data-thumb="../dist/images/tmp/<?php print $element[0]; ?>">
+                    <img src="../dist/images/tmp/<?php print $element[0]; ?>" />
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+
+          </div>
+
+
           <div class="slider-thumb">
 <!--            <div class="slider-thumb__slider flexslider fancybox">-->
             <div class="slider-thumb__slider flexslider">
