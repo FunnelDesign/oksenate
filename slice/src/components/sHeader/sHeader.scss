@@ -162,7 +162,7 @@
     }
   }
 
-  #{$fist-li--hover} {
+  #{$fist-li--hover}, #{$fist-li}.hover {
 
     & > ul {
 
@@ -283,7 +283,7 @@
     }
   }
 
-  #{$second-li--hover} {
+  #{$second-li--hover}, #{$second-li}.hover {
 
     & > ul {
 

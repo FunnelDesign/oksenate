@@ -46,6 +46,8 @@ function init() {
 	new bStaff();
 	new lightSlider();
 	initSelect();
+	initAccessibility();
+	initHeaderHover();
 
 
 	new BlockVideo();
@@ -65,5 +67,60 @@ function initSelect() {
 			scrollStep: 160
 		});
 	});
+}
+
+
+function initAccessibility() {
+	if ($('body').hasClass('accessibility')) {
+		$('select[tabindex="-1"]').removeAttr('tabindex').removeAttr('aria-hidden');
+	}
+}
+
+function initHeaderHover() {
+	var $wrapper = $('.sHeader__menu-wrap');
+	var $listDesktopWrap = $wrapper.find(' > ul.menu');
+	var $listDesktopWrapLi = $listDesktopWrap.find('li');
+	var $listDesktopWrapA = $listDesktopWrap.find('a');
+
+	if ($wrapper.hasClass('sHeader__menu-processed')) return;
+	$wrapper.addClass('sHeader__menu-processed');
+
+	if (!$('body').hasClass('accessibility')) return;
+
+	$listDesktopWrapLi.on('mouseenter', function () {
+		removeBlur();
+		getMenuWrap(this);
+	});
+
+	$listDesktopWrapLi.on('mouseleave', function () {
+		$(this).removeClass('hover');
+	});
+
+	$listDesktopWrapA.on('focus', function () {
+		getMenuWrap(this.parentNode);
+		$(this.parentNode).siblings('li').removeClass('hover');
+	});
+
+	$listDesktopWrapA.on('blur', function () {
+		if (this === $listDesktopWrapA[$listDesktopWrapA.length - 1]) {
+			$listDesktopWrapLi.removeClass('hover');
+		}
+	});
+
+	function removeBlur() {
+		$listDesktopWrapLi.removeClass('hover');
+		$listDesktopWrapA.blur();
+	}
+
+	function getMenuWrap(elm) {
+
+		if (elm.classList.contains('sHeader__menu-wrap')) {
+			return;
+		}
+
+		elm.classList.add('hover');
+
+		getMenuWrap(elm.parentNode);
+	}
 }
 
