@@ -72,19 +72,28 @@
  * @ingroup themeable
  */
 #}
-<div class="sSen__item">
-  <a class="sSen__sLink" href="{{ url }}">
-    <span class="sSen__sImgWrap">
-      {{ content.field_senator_photo }}
-      {{ content.field_party }}
-      <span class="sSen__sDis">{{ content.field_senator_district_taxonomy }}</span>
-    </span>
-    <span class="sSen__sName">
-      {{ title_prefix }}
-      {{ label }} <br>
-      {{ content.field_senator_leadersh_role_txt }}
-    </span>
-    {{ title_suffix }}
-  </a>
-</div>
+<article{{ attributes }}>
+  <section class="section section_ind_d section_bg-color_c">
 
+    <div class="bContainer">
+      <a href="/publications/issue-papers" class="btn btn_a section__btnBack">
+        back to issue papers
+      </a>
+
+      <div class="bPost bPost_a">
+        <div class="bPost__header">
+          <div class="bPost__title">
+            {{ content.field_issue_long_title }}
+          </div>
+        </div>
+        <div class="bPost__body">
+          <div class="bPost__text">
+            {{ content.body }}
+          </div>
+        </div>
+        {{ content.sharethis }}
+      </div>
+    </div>
+
+  </section>
+</article>

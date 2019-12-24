@@ -6,11 +6,11 @@ import BlockVideo from "./components/bMedia/video";
 import bSort from "./components/bSort/bSort";
 import navSelect from "./components/navSelect/navSelect";
 import SliderThumb from "./components/slider-thumb/SliderThumb";
-import FancyBox from "./components/fancybox/FancyBox";
 import SliderTypeA from "./components/slider-type-a/SliderTypeA";
 import sHeader from "./components/sHeader/sHeader";
 import bTerms from "./components/bTerms/bTerms";
 import bStaff from "./components/bStaff/bStaff";
+import lightSlider from "./components/bLightSlider/lightSlider";
 
 const $ = jQuery;
 
@@ -41,11 +41,13 @@ function init() {
 	new bSort();
 	new SliderThumb();
 	new SliderTypeA();
-	// new FancyBox();
 	new sHeader();
 	new bTerms();
 	new bStaff();
+	new lightSlider();
 	initSelect();
+	initAccessibility();
+	initHeaderHover();
 
 
 	new BlockVideo();
@@ -65,5 +67,60 @@ function initSelect() {
 			scrollStep: 160
 		});
 	});
+}
+
+
+function initAccessibility() {
+	if ($('body').hasClass('accessibility')) {
+		$('select[tabindex="-1"]').removeAttr('tabindex').removeAttr('aria-hidden');
+	}
+}
+
+function initHeaderHover() {
+	var $wrapper = $('.sHeader__menu-wrap');
+	var $listDesktopWrap = $wrapper.find(' > ul.menu');
+	var $listDesktopWrapLi = $listDesktopWrap.find('li');
+	var $listDesktopWrapA = $listDesktopWrap.find('a');
+
+	if ($wrapper.hasClass('sHeader__menu-processed')) return;
+	$wrapper.addClass('sHeader__menu-processed');
+
+	if (!$('body').hasClass('accessibility')) return;
+
+	$listDesktopWrapLi.on('mouseenter', function () {
+		removeBlur();
+		getMenuWrap(this);
+	});
+
+	$listDesktopWrapLi.on('mouseleave', function () {
+		$(this).removeClass('hover');
+	});
+
+	$listDesktopWrapA.on('focus', function () {
+		getMenuWrap(this.parentNode);
+		$(this.parentNode).siblings('li').removeClass('hover');
+	});
+
+	$listDesktopWrapA.on('blur', function () {
+		if (this === $listDesktopWrapA[$listDesktopWrapA.length - 1]) {
+			$listDesktopWrapLi.removeClass('hover');
+		}
+	});
+
+	function removeBlur() {
+		$listDesktopWrapLi.removeClass('hover');
+		$listDesktopWrapA.blur();
+	}
+
+	function getMenuWrap(elm) {
+
+		if (elm.classList.contains('sHeader__menu-wrap')) {
+			return;
+		}
+
+		elm.classList.add('hover');
+
+		getMenuWrap(elm.parentNode);
+	}
 }
 

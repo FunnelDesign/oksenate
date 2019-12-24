@@ -64,3 +64,8 @@
 
   </div>
 </footer>
+
+
+<!--only for slice!!!-->
+<?php include 'tpl/includes/accessibilityCheck.inc'; ?>
+<!--only for slice!!!-->

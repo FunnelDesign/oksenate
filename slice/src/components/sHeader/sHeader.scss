@@ -162,7 +162,7 @@
     }
   }
 
-  #{$fist-li--hover} {
+  #{$fist-li--hover}, #{$fist-li}.hover {
 
     & > ul {
 
@@ -283,7 +283,7 @@
     }
   }
 
-  #{$second-li--hover} {
+  #{$second-li--hover}, #{$second-li}.hover {
 
     & > ul {
 
@@ -404,6 +404,8 @@
       overflow-y: auto;
       height: calc(100vh - 84px);
       z-index: 1;
+      background: #121e32;
+      padding-bottom: 50px;
     }
   }
 
