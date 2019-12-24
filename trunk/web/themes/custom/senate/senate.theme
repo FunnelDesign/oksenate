@@ -11,10 +11,10 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\views\Views;
-use Drupal\Core\Template\Attribute;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
@@ -208,13 +208,24 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'week_review':
-      case 'press_release':
-        $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
         $vars['title'] = $node->getTitle();
-          $vars['url_with_back_param'] =  Url::fromRoute(
-            'entity.node.canonical', ['node' => $node->id()],
-            ['query' => ['back' => \Drupal::destination()->get()]]
-          );
+        _senate_add_share_this($vars);
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back to week in review'),
+          '#url' => Url::fromUserInput('/news'),
+          '#attributes' => [
+            'class' => ['btn', 'btn_a', 'section__btnBack'],
+          ],
+        ];
+        break;
+      case 'press_release':
+
+        $vars['title'] = $node->getTitle();
+        $vars['url_with_back_param'] = Url::fromRoute(
+          'entity.node.canonical', ['node' => $node->id()],
+          ['query' => ['back' => \Drupal::destination()->get()]]
+        );
 
         $vars['back_link'] = [
           '#type' => 'link',
@@ -236,17 +247,8 @@ function senate_preprocess_node(array &$vars) {
           $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
         }
 
-
-        if (!empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"])) {
-          $sharethis = [
-            '#theme' => 'senate_news_sharethis',
-            '#url' => $vars["content"]["sharethis"]["#content"]["m_path"],
-            '#title' => $vars["content"]["sharethis"]["#content"]["m_title"],
-            '#current_path' => $path_to_theme,
-          ];
-          $vars["content"]["sharethis"]["#content"]["st_spans"] = render($sharethis);
-        }
-        break;
+      _senate_add_share_this($vars);
+      break;
       case 'publications':
         if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
           $vars['leadersip'] = _senate_get_block('leadership');
@@ -282,6 +284,24 @@ function senate_preprocess_node(array &$vars) {
         $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', [$year]);
         break;
     }
+  }
+}
+
+/**
+ * @param array $vars
+ */
+function _senate_add_share_this(array &$vars) {
+  $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
+  if (!empty($vars["content"]["sharethis"])
+    && !empty($vars["content"]["sharethis"]["#content"])
+  ) {
+    $sharethis = [
+      '#theme' => 'senate_news_sharethis',
+      '#url' => $vars["content"]["sharethis"]["#content"]["m_path"],
+      '#title' => $vars["content"]["sharethis"]["#content"]["m_title"],
+      '#current_path' => $path_to_theme,
+    ];
+    $vars["content"]["sharethis"]["#content"]["st_spans"] = render($sharethis);
   }
 }
 

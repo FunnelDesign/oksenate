@@ -136,7 +136,7 @@ class ParserService {
   }
 
   protected function getAbsoluteUrl($relative_url) {
-    ParserHelper::getAbsoluteUrl($this->base_url, $relative_url);
+    return ParserHelper::getAbsoluteUrl($this->base_url, $relative_url);
   }
 
 }

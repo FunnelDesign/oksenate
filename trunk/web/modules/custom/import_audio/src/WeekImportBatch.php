@@ -2,6 +2,7 @@
 
 namespace Drupal\import_audio;
 
+use Drupal\import_audio\Exceptions\ImportParseError;
 use phpQuery;
 
 class WeekImportBatch {
@@ -9,28 +10,20 @@ class WeekImportBatch {
   const START_PAGE = 'http://www.oksenate.gov/news/wir_index.html';
 
   const RESULT_KEYS = [
-    'get_pages'
+    'get_pages',
+    'week_import',
   ];
 
-  public static function parsePage() {
-     $url = 'http://www.oksenate.gov/news/week_in_review/week_in_review_2018/wir201804300503.htm';
-
-     $html = ParserHelper::getPageHtml($url);
-
-
-
-  }
 
 
   public static function getImportPages(&$context) {
 
-    $week_urls = \Drupal::state()->get('import.week_review');
-
-    if(!empty($week_urls)) {
-      dsm($week_urls, 'saved');
-      return ;
-    }
-
+//    $week_urls = \Drupal::state()->get('import.week_review');
+//
+//    if(!empty($week_urls)) {
+//      dsm($week_urls, 'saved');
+//      return ;
+//    }
 
     $year_urls = [];
     $week_urls = [];
@@ -54,7 +47,6 @@ class WeekImportBatch {
       }
     }
 
-
     foreach ($year_urls as $yearUrl) {
       $body = ParserHelper::getPageHtml($yearUrl);
 
@@ -72,15 +64,19 @@ class WeekImportBatch {
 
 
     //dsm($week_urls, 'week');
-    dsm($year_urls, 'year');
+//    dsm($year_urls, 'year');
 
     $week_urls = array_unique($week_urls);
+    //\Drupal::week_import
+    $queue = \Drupal::queue('week_import');
+    foreach ($week_urls as $week_url) {
+      $queue->createItem($week_url);
+    }
 
-    \Drupal::state()->set('import.week_review', $week_urls);
-
-    dsm($week_urls, 'week uniq');
+//    \Drupal::state()->set('import.week_review', $week_urls);
 
     $context['results']['get_pages'] = count($week_urls);
+
   }
 
   protected static function urlBugFixer($url) {
@@ -97,8 +93,8 @@ class WeekImportBatch {
     return preg_match('/\/(.*)(index|Index)(.*)\.htm/U', $url);
   }
 
-  public static function processMonthPagesQueue(&$context) {
-    $queue_name = 'audio_import_month_parse';
+  public static function processImportQueue(&$context) {
+    $queue_name = 'week_import';
     $queue = \Drupal::queue($queue_name);
 
     $context['finished'] = 0;
@@ -110,7 +106,6 @@ class WeekImportBatch {
     ]);
 
     if ($item = $queue->claimItem()) {
-//      dsm($item);
       $context['message'] = $title;
 
       // Process and delete item
@@ -120,8 +115,10 @@ class WeekImportBatch {
         $queue_worker->processItem($item->data);
         $context['results'][$queue_name] += 1;
         $queue->deleteItem($item);
+      } catch (ImportParseError $e) {
+        //skip logging, loggs inside parser
       } catch (\Exception $e) {
-        \Drupal::logger('audio_import_month_parse_page_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
+        \Drupal::logger('week_preview_unknown_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
       }
 
     }

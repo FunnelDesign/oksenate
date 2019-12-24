@@ -8,3 +8,6 @@ services:
   import_audio.audio_creator:
     class: Drupal\import_audio\Service\AudioCreatorService
     arguments: []
+  import_audio.week_parser:
+    class: Drupal\import_audio\Service\WeekParserService
+    arguments: []

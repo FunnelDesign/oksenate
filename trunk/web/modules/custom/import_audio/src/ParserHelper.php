@@ -35,4 +35,8 @@ class ParserHelper {
 
     return !empty($relative_url) ? phpUri::parse($base_url)->join($relative_url) : '';
   }
+
+  public static function removeNewLines($string) {
+    return str_replace(["\n", "\r"], '', $string);
+  }
 }
