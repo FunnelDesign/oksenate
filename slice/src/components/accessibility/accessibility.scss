@@ -42,17 +42,35 @@
     display: none !important;
   }
 
+  .bMedia {
+    display: none;
+  }
+
   select {
     position: relative !important;
     width: auto !important;
     height: auto !important;
     clip: auto !important;
     border: 1px solid #000 !important;
-    padding: 10px 20px !important
+    padding: 10px 20px !important;
+    clip-path: none !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 50px !important;
+    -webkit-appearance: menulist-button !important;
+    -moz-appearance: menulist-button !important;
+    appearance: menulist-button !important;
   }
 
   .select2 {
     display: none !important;
+  }
+
+  .am-row {
+
+    &:before, &:after {
+      display: table !important;
+    }
   }
 
   .contrast-only {
@@ -87,6 +105,11 @@
     }
   }
 
+  .section {
+    padding: 20px 0 !important;
+    margin: 0 !important;
+  }
+
   div[class*='__imgWrap'],
   span[class*='__imgWrap'],
   div[class*='__ico'],
@@ -96,8 +119,37 @@
     display: none;
   }
 
+  div[class*='_gap'] {
+    margin-bottom: 20px !important;
+  }
+
+  .sSen__sImg {
+    display: none;
+  }
+
+  .sSen__sImgWrap {
+    padding-bottom: 20% !important;
+  }
+
+  .bLightSlider {
+    display: none;
+  }
+
+  .section__sNav {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+  }
+
   .pageWr {
     padding-top: 0 !important;
+  }
+
+
+  .btn, .form-submit {
+    border: 1px solid #000 !important;
   }
 
 }
