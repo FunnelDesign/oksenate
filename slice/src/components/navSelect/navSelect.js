@@ -39,7 +39,7 @@ window.navSelect = class {
 
 			window.location.hash = prefix + val;
 
-			let headerHeight = $('.sHeader').outerHeight();
+			let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
 
 			$body.animate({scrollTop: $target.offset().top - 10 - headerHeight}, speed);
 		}
