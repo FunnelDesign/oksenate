@@ -394,8 +394,6 @@
       right: 0;
       width: 100%;
       margin: 0 !important;
-      background: #121e32;
-      padding-bottom: 50px;
     }
 
     @include sm-only {
@@ -406,6 +404,8 @@
       overflow-y: auto;
       height: calc(100vh - 84px);
       z-index: 1;
+      background: #121e32;
+      padding-bottom: 50px;
     }
   }
 
