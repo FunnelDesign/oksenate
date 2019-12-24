@@ -55,51 +55,6 @@
 
           </div>
 
-
-          <div class="slider-thumb">
-<!--            <div class="slider-thumb__slider flexslider fancybox">-->
-            <div class="slider-thumb__slider flexslider">
-              <ul class="slides">
-                <?php $SliderThumb = array(
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg"),
-                  array("slider-thumb-img-1.jpg")
-                )
-                ?>
-                <?php foreach($SliderThumb as $key => $element): ?>
-                  <li>
-<!--                    <a href="../dist/images/tmp/--><?php //print $element[0]; ?><!--" class="slider-thumb__btn fancybox__item" data-fancybox="images" rel="group">-->
-                      <img src="../dist/images/tmp/<?php print $element[0]; ?>" />
-<!--                    </a>-->
-                  </li>
-                <?php endforeach; ?>
-              </ul>
-            </div>
-
-            <div class="slider-thumb__thumb flexslider">
-              <ul class="slides">
-
-                <?php $SliderThumbMin = array(
-                  array("slider-thumb-img-thumb-tmp-1.jpg"),
-                  array("slider-thumb-img-thumb-tmp-1.jpg"),
-                  array("slider-thumb-img-thumb-tmp-1.jpg"),
-                  array("slider-thumb-img-thumb-tmp-1.jpg"),
-                  array("slider-thumb-img-thumb-tmp-1.jpg"),
-                  array("slider-thumb-img-thumb-tmp-1.jpg")
-                )
-                ?>
-                <?php foreach($SliderThumbMin as $key => $element): ?>
-                  <li>
-                    <img src="../dist/images/tmp/<?php print $element[0]; ?>" />
-                  </li>
-                <?php endforeach; ?>
-              </ul>
-            </div>
-
-          </div>
         </div>
 
         <div class="bWrap bWrap_size_a bWrap_f_a bWrap_f_a_16 bWrap_cl_a bWrap_gap_b">
