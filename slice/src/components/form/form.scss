@@ -240,9 +240,13 @@ textarea {
   }
 }
 
-#webform-submission-contact-intership-form-ajax {
+#webform-submission-contact-intership-form-ajax, #webform-submission-reserve-a-form-ajax {
 
   .webform-confirmation {
-    padding-top: 250px;
+    padding-top: 100px;
+
+    @include sm {
+      padding-top: 200px;
+    }
   }
 }

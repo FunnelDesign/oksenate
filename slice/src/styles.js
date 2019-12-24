@@ -76,4 +76,4 @@ import './components/s404/s404.scss'
 import './components/bLightSlider/lightSlider.scss'
 
 
-import './common/accessibility.scss'
+import './components/accessibility/accessibility.scss'

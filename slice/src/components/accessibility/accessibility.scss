@@ -14,6 +14,7 @@
     transition: none !important;
     border-radius: 0 !important;
     border-color: #000000 !important;
+    min-height: auto !important;
 
     &:before, &:after {
       display: none !important;
@@ -60,6 +61,43 @@
 
   .non-contrast {
     display: none !important;
+  }
+
+  .bMessage {
+    display: none;
+  }
+
+  .sHeader {
+    position: relative;
+
+    &__searchForm {
+      position: relative;
+      top: auto;
+      right: auto;
+      transform: none;
+      z-index: auto;
+    }
+
+    &__searchBtn {
+      display: none;
+    }
+
+    &__menu-wrap > ul.menu > li > ul {
+      width: auto !important;
+    }
+  }
+
+  div[class*='__imgWrap'],
+  span[class*='__imgWrap'],
+  div[class*='__ico'],
+  span[class*='__ico'],
+  div[class*='__img'],
+  span[class*='__img'] {
+    display: none;
+  }
+
+  .pageWr {
+    padding-top: 0 !important;
   }
 
 }

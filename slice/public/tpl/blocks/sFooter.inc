@@ -67,5 +67,5 @@
 
 
 <!--only for slice!!!-->
-<?php include '../includes/accessibilityCheck.inc'; ?>
+<?php include 'tpl/includes/accessibilityCheck.inc'; ?>
 <!--only for slice!!!-->
