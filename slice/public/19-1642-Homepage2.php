@@ -3,11 +3,6 @@
 <?php $title = '19-1642-Homepage2'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="front">
-
-<!--only for slice!!!-->
-<?php include 'tpl/includes/accessibilityCheck.inc'; ?>
-<!--only for slice!!!-->
-
 <div class="pageWr">
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
