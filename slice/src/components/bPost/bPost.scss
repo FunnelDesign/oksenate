@@ -24,6 +24,14 @@
     margin-bottom: 7px;
   }
 
+  &__headTitle {
+    margin: 0 0 30px;
+    font-family: $FreightTextProMedium-Regular;
+    color: $color-blue-3;
+    @include font-size(30px, 40px, 50px);
+    text-align: center;
+  }
+
   &__title {
 
     h1 {

@@ -16,6 +16,9 @@
         
         <div class="bPost">
           <div class="bPost__header">
+            <div class="bPost__headTitle">
+              Week In Review
+            </div>
             <div class="bPost__date">
               March 19, 2019 |  9:00am
             </div>
