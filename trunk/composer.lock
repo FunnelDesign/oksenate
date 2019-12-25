@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98348b2eac41c9d571ac76d696d53282",
+    "content-hash": "c82fdd8c465212b4ac4b743561f32cb0",
     "packages": [
         {
             "name": "adubovskoy/phpquery",
@@ -3415,6 +3415,112 @@
             "homepage": "https://www.drupal.org/project/devel_php",
             "support": {
                 "source": "https://git.drupalcode.org/project/devel_php"
+            }
+        },
+        {
+            "name": "drupal/domain",
+            "version": "1.0.0-alpha16",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/domain.git",
+                "reference": "8.x-1.0-alpha16"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/domain-8.x-1.0-alpha16.zip",
+                "reference": "8.x-1.0-alpha16",
+                "shasum": "d0088936af09e922ec873080d7960a1dc020bef8"
+            },
+            "require": {
+                "drupal/core": "^8.5"
+            },
+            "require-dev": {
+                "drupal/domain_access": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-alpha16",
+                    "datestamp": "1561126081",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "agentrickard",
+                    "homepage": "https://www.drupal.org/user/20975"
+                },
+                {
+                    "name": "nonsie",
+                    "homepage": "https://www.drupal.org/user/29899"
+                }
+            ],
+            "description": "Creates domain records within a Drupal installation.",
+            "homepage": "https://www.drupal.org/project/domain",
+            "support": {
+                "source": "https://git.drupalcode.org/project/domain"
+            }
+        },
+        {
+            "name": "drupal/domain_theme_switch",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/domain_theme_switch.git",
+                "reference": "8.x-1.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/domain_theme_switch-8.x-1.4.zip",
+                "reference": "8.x-1.4",
+                "shasum": "5a7208bd3d741233ffe74f6cedf2b177e2a1cc2a"
+            },
+            "require": {
+                "drupal/core": "~8.0",
+                "drupal/domain": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.4",
+                    "datestamp": "1537687085",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "abramm",
+                    "homepage": "https://www.drupal.org/user/3216035"
+                },
+                {
+                    "name": "aloknarwaria",
+                    "homepage": "https://www.drupal.org/user/906640"
+                }
+            ],
+            "description": "Theme switch for different domains",
+            "homepage": "https://www.drupal.org/project/domain_theme_switch",
+            "support": {
+                "source": "https://git.drupalcode.org/project/domain_theme_switch"
             }
         },
         {
