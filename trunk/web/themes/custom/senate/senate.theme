@@ -281,7 +281,7 @@ function senate_preprocess_node(array &$vars) {
         $year = !empty($vars["content"]["field_senate_studies_year"]) &&
           !empty($vars["content"]["field_senate_studies_year"]["#items"]) ?
           $vars["content"]["field_senate_studies_year"]["#items"]->get(0)->value : '';
-        $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', [$year]);
+        $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', ['all']);
         break;
     }
   }
