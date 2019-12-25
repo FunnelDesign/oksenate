@@ -49,7 +49,7 @@ class WeekParserService {
     }
 
 
-    $parts['title'] = ParserHelper::removeNewLines($parts['title']);
+    $parts['title'] = trim(ParserHelper::removeNewLines($parts['title']));
 
     list($parts['start_date'], $parts['end_date']) = $this->grepDatesFromTitle($parts['title']);
 
@@ -60,7 +60,7 @@ class WeekParserService {
   }
 
   public function grepTitle($html) {
-    preg_match('/(For the|Mon)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)[\r\n](.*)(to|-)(.*)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)\d{4}/i', $html, $matches);
+    preg_match('/(For the|Mon)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)[\r\n]?(.*)(to|-)(.*)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)\d{4}/i', $html, $matches);
     return $matches[0] ?? '';
   }
 
@@ -76,7 +76,6 @@ class WeekParserService {
 
     if(!empty($parts[1])) {
       $end_date_parsed = date_parse($parts[1]);
-
     }
 
     if(!empty($parts[0])) {
