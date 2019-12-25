@@ -3,6 +3,7 @@
 namespace Drupal\import_audio\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\import_audio\JournalImportBatch;
 use Drupal\import_audio\WeekImportBatch;
 
 /**
@@ -18,10 +19,7 @@ class TestController extends ControllerBase {
    */
   public function test() {
 
-//    $c = [];
-//    WeekImportBatch::getImportPages($c);
-    $url = 'http://www.oksenate.gov/news/week_in_review/week_in_review_2018/wir2018041619.htm';
-    dsm(\Drupal::getContainer()->get('import_audio.week_parser')->parseAndSave($url));
+    dsm(JournalImportBatch::getUrls());
 
     return [
       '#type' => 'markup',
@@ -37,14 +35,9 @@ class TestController extends ControllerBase {
       \Drupal::state()->set('import_audio.web_week_urls', $web_week_urls);
     }
 
-
-    $out = '<h2>Not found</h2>';
-
     $urls = \Drupal::database()->select('node__field_old_url', 'u')
-      //->fields('u')
       ->fields('u', ['field_old_url_value'])
       ->execute()
-      //->fetchCol();
       ->fetchCol();
 
 
@@ -58,8 +51,7 @@ class TestController extends ControllerBase {
 
     return [
       '#type' => 'markup',
-      '#markup' => $out,
+      '#markup' => 'test',
     ];
-
   }
 }

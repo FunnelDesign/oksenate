@@ -11,3 +11,6 @@ services:
   import_audio.week_parser:
     class: Drupal\import_audio\Service\WeekParserService
     arguments: []
+  import_audio.journal_parser:
+    class: Drupal\import_audio\Service\JournalParserService
+    arguments: []
