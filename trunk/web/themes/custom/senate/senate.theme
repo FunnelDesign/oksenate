@@ -650,7 +650,8 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_contacts_ada_wheel_files':
     case 'field_contacts_ada_info_file':
-      $items = !empty($vars['items']) ? $vars['items'] : [];
+    case 'field_issue_files':
+    $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
         $title = !empty($title) ? $title : t('View file');
@@ -713,6 +714,13 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
         $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_linkedin';
         $vars['items'][$key]['content']['#title'] = "linkedin";
+      }
+      break;
+
+    case 'field_issue_links':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' => 'bListLinks__link'];
       }
       break;
     case 'field_meeting_notice_date':
