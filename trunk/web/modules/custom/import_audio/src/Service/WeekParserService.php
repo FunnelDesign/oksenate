@@ -81,7 +81,7 @@ class WeekParserService {
    * @return mixed|string
    */
   public function grepTitleOnlyWithFromDate($html) {
-    preg_match('/(For the|Mon)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)\d{4}/i', $html, $matches);
+    preg_match('/(For the|Mon)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)\d{4}/iU', $html, $matches);
     return $matches[0] ?? '';
   }
 
