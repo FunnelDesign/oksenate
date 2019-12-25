@@ -39,7 +39,10 @@ class WeekParserService {
       $content = $pq_html->find('body')->html();
     }
 
-    $parts['title'] = $this->grepTitle($content);
+    $parts['title'] = $this->grepFullTitle($content);
+    if(empty($parts['title'])) {
+      $parts['title'] = $this->grepTitleOnlyWithFromDate($content);
+    }
 
     $content_parts = explode($parts['title'], $content);
     //remove header
@@ -49,23 +52,41 @@ class WeekParserService {
     }
 
 
-    $parts['title'] = trim(ParserHelper::removeNewLines($parts['title']));
+    $parts['title'] = trim(strip_tags(ParserHelper::removeNewLines($parts['title'])));
 
     list($parts['start_date'], $parts['end_date']) = $this->grepDatesFromTitle($parts['title']);
 
-
+//    dsm($parts);
     $this->validateParts($parts);
 
     $this->saveNode($parts);
+    return $parts;
   }
 
-  public function grepTitle($html) {
-    preg_match('/(For the|Mon)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)[\r\n]?(.*)(to|-)(.*)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)\d{4}/i', $html, $matches);
+  /**
+   * Grep title with text like Monday, Mar. 14, to Thursday, Mar. 17, 2016
+   * @param $html
+   *
+   * @return mixed|string
+   */
+  public function grepFullTitle($html) {
+    preg_match('/(For the|Mon)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)[\r\n]?(.*)(to|-|through)(.*)[\r\n]?(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)[\r\n]?(.*)\d{4}/iU', $html, $matches);
+    return $matches[0] ?? '';
+  }
+
+  /**
+   * Grep title with text like Monday, Mar. 14, to Thursday, Mar. 17, 2016
+   * @param $html
+   *
+   * @return mixed|string
+   */
+  public function grepTitleOnlyWithFromDate($html) {
+    preg_match('/(For the|Mon)(.*)(jan|feb|mar|apr|may|june|july|aug|sep|nov|dec)(.*)\d{4}/i', $html, $matches);
     return $matches[0] ?? '';
   }
 
   public function grepDatesFromTitle($html) {
-    $splitters = [' to ', ',to', '-'];
+    $splitters = [' to ', ',to', '-', 'through'];
 
     foreach ($splitters as $splitter) {
       $parts = explode($splitter, $html);
@@ -79,8 +100,9 @@ class WeekParserService {
     }
 
     if(!empty($parts[0])) {
-      $start_date_parsed = date_parse($parts[0]);
-      if(empty($start_date_parsed['year'] && !empty($end_date_parsed['year']))) {
+      $start_date_parsed = date_parse(trim($parts[0]));
+
+      if(empty($start_date_parsed['year']) && !empty($end_date_parsed['year'])) {
         $start_date_parsed['year'] = $end_date_parsed['year'];
       }
     }
@@ -114,16 +136,19 @@ class WeekParserService {
 
   private function validateParts(array $parts) {
     $errors = [];
+    $exclude_optional_keys = ['end_date'];
 
     foreach ($parts as $key => $value) {
-      if(empty($value)) {
+      if(empty($value) && !in_array($key, $exclude_optional_keys)) {
         $errors[] = 'Empty ' . $key;
       }
     }
 
     if(!empty($errors)) {
-      \Drupal::logger('week_preview_parser_errror')->error('<pre><code>' . print_r(['errors' => $errors, 'url' => $url], TRUE)  .  '</code></pre>');
+      \Drupal::logger('week_preview_parser_errror')->error('<pre><code>' . print_r(['errors' => $errors, 'url' => $parts['url']], TRUE)  .  '</code></pre>');
 //      dsm(['errors' => $errors, 'url' => $parts['url']]);
+      $message = '<a href="' . $parts['url'] . '">' . $parts['url'] ."</a><br>\r\n";
+      file_put_contents('week_preview_parse_errors.html', $message, FILE_APPEND);
       throw new ImportParseError('Parse error');
     }
   }
@@ -147,7 +172,7 @@ class WeekParserService {
           'body' => ['value' => $parts['body'], 'format' => 'full_html'],
           'field_old_url' => $parts['url'],
           'field_week_review_date' => $parts['start_date'],
-          'field_week_review_end_date' => $parts['end_date'],
+          'field_week_review_end_date' => $parts['end_date'] ?? NULL,
         ]
       );
 
@@ -159,7 +184,7 @@ class WeekParserService {
     pq('a:content(Index)')->remove();
     pq('img')->remove();
 
-    return $pq_body->html();
+    return ParserHelper::fixEncoding($pq_body->html());
   }
 
 }
