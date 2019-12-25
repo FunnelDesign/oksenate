@@ -1163,9 +1163,56 @@ function senate_preprocess_views_view_unformatted(&$vars) {
       }
       $vars['letters'] = $letters;
       break;
+
+    case 'issue_papers':
+      $row = !empty($vars["rows"]) ? current($vars["rows"]) : '';
+      $nid = (!empty($row) && !empty($row["content"]) &&
+        !empty($row["content"]["#row"]->nid)) ?
+        $row["content"]["#row"]->nid : '';
+      if (!empty($nid)) {
+        $node = \Drupal\node\Entity\Node::load($nid);
+        if ($node->hasField('field_issue_page_type')) {
+          $type = $node->get('field_issue_page_type');
+          $type = $type->getValue();
+
+          $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($type[0]['target_id']);
+          $term_type = $term_obj->getName();
+          $vars['wrapper'] = [''];
+          switch ($term_type){
+            case "Text":
+              $vars['wrapper'][] = 'bTiles bTiles_rel bTiles_rel_b bTiles_hLeft bTiles_gap_a';
+              $vars['inner_wrapper'] = new Attribute(['class' => ['bTiles__items']]);
+              break;
+            case "Links":
+            case "Files":
+              $vars['wrapper'][] = 'bListItems__items';
+              break;
+          }
+        }
+      }
+      break;
   }
 }
+function senate_preprocess_views_view_fields(&$vars) {
 
+  $fields = $vars['fields'];
+
+  if (!empty($fields['field_issue_page_type'])) {
+
+    $type = $fields['field_issue_page_type']->content;
+    switch ($type){
+      case "Text":
+        $vars['type'] = 'text';
+        break;
+      case "Links":
+        $vars['type'] = 'link';
+      break;
+      case "Files":
+      $vars['type'] = 'files';
+      break;
+    }
+  }
+}
 /**
  * Implements hook_preprocess_views_view();
  */
