@@ -50,9 +50,9 @@ class TestController extends ControllerBase {
 
     dsm(array_diff($web_week_urls, $urls), 'NOT FOUND');
 
-    dsm($web_week_urls, 'web');
+    dsm($web_week_urls, 'Old web');
 
-    dsm($urls);
+    dsm($urls, 'Imported');
 
 
 
