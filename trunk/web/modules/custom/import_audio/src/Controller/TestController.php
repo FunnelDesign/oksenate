@@ -20,8 +20,8 @@ class TestController extends ControllerBase {
 
 //    $c = [];
 //    WeekImportBatch::getImportPages($c);
-    $url = 'http://www.oksenate.gov/news/week_in_review/week_in_review_2016/wir2016031417.htm';
-    \Drupal::getContainer()->get('import_audio.week_parser')->parseAndSave($url);
+    $url = 'http://www.oksenate.gov/news/week_in_review/week_in_review_2018/wir2018041619.htm';
+    dsm(\Drupal::getContainer()->get('import_audio.week_parser')->parseAndSave($url));
 
     return [
       '#type' => 'markup',

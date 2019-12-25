@@ -119,6 +119,8 @@ class WeekImportBatch {
         //skip logging, loggs inside parser
       } catch (\Exception $e) {
         \Drupal::logger('week_preview_unknown_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
+        $message = '<a href="' . $item->data . '">' . $item->data ."</a><br>\r\n";
+        file_put_contents('week_preview_parse_errors.html', $message, FILE_APPEND);
       }
 
     }

@@ -1,5 +1,5 @@
 name: 'import_audio'
 type: module
-description: 'Import audio'
+description: 'Import press releases audio, weeks in review'
 core: 8.x
 package: 'Custom'
