@@ -1,0 +1,12 @@
+.bIsPapers {
+
+  &__its {
+
+  }
+
+  &__it {
+    @include margin-bottom(30px, 50px, 70px);
+    @include cr-last-item;
+    @include cr-last-child;
+  }
+}

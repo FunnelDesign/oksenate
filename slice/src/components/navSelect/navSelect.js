@@ -15,7 +15,7 @@ window.navSelect = class {
 
 	init($elm) {
 
-		let $select = $(`.${this.name} select`);
+		let $select = $elm.find(`select`);
 
 		if(!$select.length) return;
 

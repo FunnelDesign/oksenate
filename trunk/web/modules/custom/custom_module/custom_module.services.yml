@@ -3,4 +3,8 @@ services:
     class: Drupal\custom_module\EventSubscriber\RedirectAnonymousSubscriber
     arguments: []
     tags:
-      - {name: event_subscriber}  
+      - {name: event_subscriber}
+  custom_module.route_subscriber:
+    class: Drupal\custom_module\Routing\ManageCustomRoutes
+    tags:
+      - { name: event_subscriber }
