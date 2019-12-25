@@ -1252,6 +1252,14 @@ function senate_preprocess_views_view(&$vars) {
         '#archive' => $archive,
       ];
       break;
+    case 'issue_papers':
+      $archive = _senate_get_issue_type_terms();
+      $vars['select_issue'] = [
+        '#theme' => 'senate_issue_type_select',
+        '#archive' => $archive,
+      ];
+      break;
+
     case 'week_review':
       $archive = _senate_get_archive_week_review();
       $current_path = \Drupal::service('path.current')->getPath();
@@ -1512,6 +1520,13 @@ function senate_theme($existing, $type, $theme, $path) {
       ],
       'path' => $theme_path . '/templates/theme',
     ],
+    'senate_issue_type_select' => [
+      'variables' => [
+        'archive' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
     'senate_news_sharethis' => [
       'variables' => [
         'url' => NULL,
@@ -1694,4 +1709,43 @@ function _senate_get_staff_options() {
   $result = $query->execute()->fetchCol();
 
   return !empty($result) ? $result : [];
+}
+
+/**
+ * Used issue type terms
+ * @param $tid
+ *
+ * @return array
+ */
+function _senate_get_issue_type_terms() {
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'issue')
+    ->condition('nfd.status', 1);
+  $query->innerJoin('node__field_issue_type_term', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'issue\'');
+  $query->addExpression("field_issue_type_term_target_id", 'term');
+
+  $result = $query->execute()->fetchAll();
+
+  $archive = [];
+  $used_tids = [];
+  foreach ($result as $key => $row) {
+    $term_obj = Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->load($row->term);
+    $term_name = $term_obj->getName();
+    if (!in_array($term_name, $used_tids)) {
+      $archive[$key]['term_name'] = $term_name;
+      $archive[$key]['term_id'] = strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', $term_name));;
+      $used_tids[] = $term_name;
+    }
+  }
+  array_unshift($archive, ['term_name' => 'Select a paper', 'term_id' => '']);
+  return !empty($archive) ? $archive : [];
+}
+
+function senate_preprocess_views_view_grouping(&$vars) {
+  $view = $vars['view'];
+  if ($view->id() == 'issue_papers') {
+    $vars['id'] = strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', $vars['title']));
+  }
 }
