@@ -1330,7 +1330,9 @@ function senate_preprocess_views_view(&$vars) {
         $node_storage = \Drupal::entityTypeManager()->getStorage('node');
         $node = $node_storage->load($nid);
         $name = !empty($node) ? $node->get('title')->value : '';
-        $vars['title'] = $name . t('’s Press Releases');
+        $vars['title'] = t("Sen. @name’s Press Releases", [
+          '@name' => $name,
+        ]);
 
         $archive = _senate_get_archive_press_releases_review(FALSE, $nid);
         $current_path = \Drupal::service('path.current')->getPath();
