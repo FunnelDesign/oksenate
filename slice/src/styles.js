@@ -74,6 +74,6 @@ import './components/bAudio/bAudio.scss'
 import './components/bStaff/bStaff.scss'
 import './components/s404/s404.scss'
 import './components/bLightSlider/lightSlider.scss'
-
+import './components/bIsPapers/bIsPapers.scss'
 
 import './components/accessibility/accessibility.scss'

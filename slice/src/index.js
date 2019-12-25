@@ -34,6 +34,11 @@ if (window.Drupal?.behaviors) {
 document.addEventListener('DOMContentLoaded', () => {
 	new Observer();
 	new navSelect();
+	new navSelect({
+		name: 'navSelectIssuePapers',
+		prefix: 'category-',
+		prefixContent: 'id-',
+	});
 });
 
 function init() {
