@@ -12,3 +12,20 @@ function senate_accessible_preprocess_html(array &$vars) {
 
   $vars['attributes']['class'][] = 'accessibility';
 }
+
+/**
+ * Implements hook_theme_suggestions_block_alter().
+ */
+function senate_accessible_theme_suggestions_block_alter(array &$suggestions, array $vars) {
+  $elements = !empty($vars["elements"]) ? $vars["elements"] : '';
+  $id = !empty($elements) && !empty($elements["#id"]) ? $elements["#id"] : '';
+
+  switch ($id) {
+    case 'senate_accessible_main_menu':
+      $suggestions[] = 'block__senate_main_menu';
+      break;
+    case 'senate_accessible_footer_menu':
+      $suggestions[] = 'block__footer_menu';
+      break;
+  }
+}
