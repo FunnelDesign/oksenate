@@ -33,19 +33,18 @@
 #}
 {% if type == 'text' %}
     <a href="{{ fields.view_node.content }}" class="bTiles__item" target="_blank">
-               <span class="bTiles__date">
-               {{ fields.field_issue_date.content }}
-              </span>
+        <span class="bTiles__date">
+            {{ fields.field_issue_date.content }}
+        </span>
         <span class="bTiles__title">
               {{ fields.title.content }}
-              </span>
+        </span>
         <span class="bTiles__btnWrap">
-                <span class="btn">
-                  read more
-                </span>
-              </span>
+            <span class="btn">
+                read more
+            </span>
+        </span>
     </a>
-
 {% elseif type == 'link' %}
     {#make html edits here: /admin/structure/views/view/issue_papers#}
     {{ fields.field_issue_links.content }}

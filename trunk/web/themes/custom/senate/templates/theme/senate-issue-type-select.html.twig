@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * Issue select
+ *
+ */
+#}
+<div class="navSelectIssuePapers bSelect bSelect_a bSelect_size_c">
+    <div class="form-item form-type-select">
+        <select class="form-select">
+            {% if archive %}
+                {% for term in archive %}>
+                    <option value="{{ term.term_id }}">{{ term.term_name }}</option>
+                {% endfor %}
+            {% endif %}
+        </select>
+    </div>
+</div>

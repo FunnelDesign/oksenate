@@ -49,20 +49,7 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
                         <p>Select a paper below to jump to.</p>
                     </div>
                 </div>
-
-                <div class="navSelect bSelect bSelect_a bSelect_size_c">
-                    <div class="form-item form-type-select">
-                        <select class="form-select">
-                            <option>Select a paper</option>
-                            <option>Indian Land Tax Credit Issues</option>
-                            <option>Oklahoma Highway Spending in Perspective</option>
-                            <option>Oklahoma Highway Spending in Perspective</option>
-                            <option>Oklahoma Highway Spending in Perspective</option>
-                            <option>Workers’ Compensation</option>
-                        </select>
-                    </div>
-                </div>
-
+                {{ select_issue }}
             </div>
         </div>
 
@@ -70,7 +57,11 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
     {% if rows -%}
         <section class="section section_ind_f section_bg-color_c">
             <div class="bContainer">
-                {{ rows }}
+                <div class="bIsPapers">
+                    <div class="bIsPapers__its">
+                        {{ rows }}
+                    </div>
+                </div>
             </div>
         </section>
     {% elseif empty -%}
