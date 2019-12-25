@@ -19,3 +19,10 @@ import_audio.test_controller_test:
     _title: 'test'
   requirements:
     _permission: 'access content'
+import_audio.test_controller_test_week_import:
+  path: '/admin/test-week-import'
+  defaults:
+    _controller: '\Drupal\import_audio\Controller\TestController::testWeekImport'
+    _title: 'test'
+  requirements:
+    _permission: 'access content'

@@ -106,7 +106,7 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
-  if (in_array($view->id(), ['press_releases', 'press_releases_audio']) && $view->getDisplay()->display['id'] == 'page_1') {
+  if (in_array($view->id(), ['press_releases', 'press_releases_audio', 'senator_press_release']) && $view->getDisplay()->display['id'] == 'page_1') {
     foreach ($query->where as $key => &$condition_group) {
       foreach ($condition_group['conditions'] as &$condition) {
         if (strpos($condition['field'], 'DATE_FORMAT((node__field_date.field_date_value') !== FALSE) {

@@ -36,6 +36,9 @@ class ParserHelper {
     return !empty($relative_url) ? phpUri::parse($base_url)->join($relative_url) : '';
   }
 
+  public static function removeNewLinesAndMultiSpaces($string) {
+    return str_replace("\r\n", NULL, preg_replace('/\s{2,}/', ' ',trim($string)));
+  }
   public static function removeNewLines($string) {
     return str_replace(["\n", "\r"], '', $string);
   }

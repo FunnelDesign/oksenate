@@ -52,7 +52,7 @@ class WeekParserService {
     }
 
 
-    $parts['title'] = trim(strip_tags(ParserHelper::removeNewLines($parts['title'])));
+    $parts['title'] = trim(strip_tags(ParserHelper::removeNewLinesAndMultiSpaces($parts['title'])));
 
     list($parts['start_date'], $parts['end_date']) = $this->grepDatesFromTitle($parts['title']);
 
@@ -184,7 +184,7 @@ class WeekParserService {
     pq('a:content(Index)')->remove();
     pq('img')->remove();
 
-    return ParserHelper::fixEncoding($pq_body->html());
+    return ParserHelper::fixEncoding(ParserHelper::removeNewLinesAndMultiSpaces($pq_body->html()));
   }
 
 }

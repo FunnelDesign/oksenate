@@ -17,8 +17,10 @@ use Drupal\Core\Queue\QueueWorkerBase;
 class MonthPageParseWorker extends QueueWorkerBase {
 
   public function processItem($data) {
-    $parser = \Drupal::getContainer()->get('import_audio.parser');
-    $audio_releases = $parser->parseAudioReleases($data);
+    $audio_releases = \Drupal::getContainer()
+      ->get('import_audio.parser')
+      ->parseAudioReleases($data);
+
     $queue = \Drupal::queue('audio_import_press_release');
 
     if(!empty($audio_releases)) {

@@ -1329,6 +1329,39 @@ function senate_preprocess_views_view(&$vars) {
           $exposed_input["statutes"] : $query;
       }
       break;
+    case 'senator_press_release':
+      $args = !empty($view->args) ? $view->args : [];
+      $nid = !empty($args[0]) ? $args[0] : '';
+      $date = !empty($args[1]) ? $args[1] : '';
+
+      if (!empty($nid)) {
+        $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+        $node = $node_storage->load($nid);
+        $name = !empty($node) ? $node->get('title')->value : '';
+        $vars['title'] = t("Sen. @name’s Press Releases", [
+          '@name' => $name,
+        ]);
+
+        $archive = _senate_get_archive_press_releases_review(FALSE, $nid);
+        $current_path = \Drupal::service('path.current')->getPath();
+
+        $vars['sidebar'] = [
+          '#theme' => 'senate_press_release_sidebar',
+          '#archive' => $archive,
+          '#current_path' => $current_path,
+          '#is_audio' => FALSE,
+          '#senator_nid' => $nid,
+        ];
+      }
+
+      if (!empty($date)) {
+        $date_obj = new DrupalDateTime($date);
+        $vars['showing'] = $date_obj->format('F, Y');
+      }
+      else {
+        $vars['showing'] = t('All');
+      }
+      break;
   }
 }
 
@@ -1476,6 +1509,7 @@ function senate_theme($existing, $type, $theme, $path) {
         'archive' => NULL,
         'current_path' => NULL,
         'is_audio' => false,
+        'senator_nid' => false,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
@@ -1530,7 +1564,7 @@ function _senate_get_archive_week_review() {
   return !empty($archive) ? $archive : [];
 }
 
-function _senate_get_archive_press_releases_review($only_with_audio = FALSE) {
+function _senate_get_archive_press_releases_review($only_with_audio = FALSE, $senator_nid = FALSE) {
   $query = \Drupal::database()->select('node_field_data', 'nfd')
     ->condition('nfd.type', 'press_release')
     ->condition('nfd.status', 1);
@@ -1543,6 +1577,9 @@ function _senate_get_archive_press_releases_review($only_with_audio = FALSE) {
   if($only_with_audio) {
     $query->innerJoin('node__field_press_release_audio', 'audio', 'nfd.nid= audio.entity_id');
   }
+  if (!empty($senator_nid)) {
+    $query->innerJoin('node__field_senator', 'senator', 'nfd.nid = senator.entity_id AND senator.field_senator_target_id = ' . $senator_nid);
+  }
 
   $query->groupBy('year');
   $query->groupBy('month_digits');
@@ -1551,6 +1588,7 @@ function _senate_get_archive_press_releases_review($only_with_audio = FALSE) {
   $query->orderBy('month_digits', 'desc');
 
   $result = $query->execute()->fetchAll();
+//  $a = $query->__toString();
 
   $archive = [];
   foreach ($result as $row) {

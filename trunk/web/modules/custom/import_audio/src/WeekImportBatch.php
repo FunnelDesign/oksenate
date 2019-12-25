@@ -15,7 +15,6 @@ class WeekImportBatch {
   ];
 
 
-
   public static function getImportPages(&$context) {
 
 //    $week_urls = \Drupal::state()->get('import.week_review');
@@ -24,49 +23,10 @@ class WeekImportBatch {
 //      dsm($week_urls, 'saved');
 //      return ;
 //    }
-
-    $year_urls = [];
-    $week_urls = [];
-
     $context['message'] = t('Get import Urls');
 
 
-    $body = ParserHelper::getPageHtml(self::START_PAGE);
-
-    $pq = PhpQuery::newDocument($body);
-    $links = $pq->find('a');
-
-    foreach ($links as $link) {
-      $pq_link = pq($link);
-      $url = $pq_link->attr('href');
-      $absolute_url = ParserHelper::getAbsoluteUrl(self::START_PAGE, $url);
-      if(self::isYearPage($url)) {
-        $year_urls[] = $absolute_url;
-      } else {
-        $week_urls[] = self::urlBugFixer($absolute_url);
-      }
-    }
-
-    foreach ($year_urls as $yearUrl) {
-      $body = ParserHelper::getPageHtml($yearUrl);
-
-      $pq = PhpQuery::newDocument($body);
-      $links = $pq->find('a');
-      foreach ($links as $link) {
-        $pq_link = pq($link);
-        $url = $pq_link->attr('href');
-        $absolute_url = ParserHelper::getAbsoluteUrl($yearUrl, $url);
-        if(!self::isYearPage($url)) {
-          $week_urls[] = self::urlBugFixer($absolute_url);
-        }
-      }
-    }
-
-
-    //dsm($week_urls, 'week');
-//    dsm($year_urls, 'year');
-
-    $week_urls = array_unique($week_urls);
+    $week_urls = self::getWeekUrls();
     //\Drupal::week_import
     $queue = \Drupal::queue('week_import');
     foreach ($week_urls as $week_url) {
@@ -76,7 +36,6 @@ class WeekImportBatch {
 //    \Drupal::state()->set('import.week_review', $week_urls);
 
     $context['results']['get_pages'] = count($week_urls);
-
   }
 
   protected static function urlBugFixer($url) {
@@ -130,8 +89,6 @@ class WeekImportBatch {
     }
   }
 
-
-
   public static function FinishedCallback($success, $results, $operations) {
 
     if ($success) {
@@ -148,6 +105,50 @@ class WeekImportBatch {
     else {
       \Drupal::messenger()->addError(t('Finished with an error.'));
     }
+  }
+
+  /**
+   * @return array
+   */
+  public static function getWeekUrls(): array {
+    $year_urls = [];
+    $week_urls = [];
+
+
+    $body = ParserHelper::getPageHtml(self::START_PAGE);
+
+    $pq = PhpQuery::newDocument($body);
+    $links = $pq->find('a');
+
+    foreach ($links as $link) {
+      $pq_link = pq($link);
+      $url = $pq_link->attr('href');
+      $absolute_url = ParserHelper::getAbsoluteUrl(self::START_PAGE, $url);
+      if (self::isYearPage($url)) {
+        $year_urls[] = $absolute_url;
+      }
+      else {
+        $week_urls[] = self::urlBugFixer($absolute_url);
+      }
+    }
+
+    foreach ($year_urls as $yearUrl) {
+      $body = ParserHelper::getPageHtml($yearUrl);
+
+      $pq = PhpQuery::newDocument($body);
+      $links = $pq->find('a');
+      foreach ($links as $link) {
+        $pq_link = pq($link);
+        $url = $pq_link->attr('href');
+        $absolute_url = ParserHelper::getAbsoluteUrl($yearUrl, $url);
+        if (!self::isYearPage($url)) {
+          $week_urls[] = self::urlBugFixer($absolute_url);
+        }
+      }
+    }
+
+    $week_urls = array_unique($week_urls);
+    return $week_urls;
   }
 
 }

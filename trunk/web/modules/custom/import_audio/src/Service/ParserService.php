@@ -4,7 +4,6 @@ namespace Drupal\import_audio\Service;
 
 use Drupal\import_audio\ParserHelper;
 use phpQuery;
-use phpUri;
 
 /**
  * Class ParserService.

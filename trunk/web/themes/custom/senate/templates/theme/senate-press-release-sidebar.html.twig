@@ -21,6 +21,8 @@
                 {% for month_name, data in months %}
                   {% if is_audio %}
                     {% set url = '/press-releases-audio/' ~ year ~ '-' ~ data.month_digits %}
+                  {% elseif senator_nid %}
+                    {% set url = '/senator-press-release/' ~ senator_nid ~ '/' ~ year ~ '-' ~ data.month_digits %}
                   {% else %}
                     {% set url = '/press-releases/' ~ year ~ '-' ~ data.month_digits %}
                   {% endif %}
