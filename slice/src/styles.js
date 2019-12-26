@@ -76,4 +76,6 @@ import './components/s404/s404.scss'
 import './components/bLightSlider/lightSlider.scss'
 import './components/bIsPapers/bIsPapers.scss'
 
+
+import './common/drupal-styles.scss'
 import './components/accessibility/accessibility.scss'
