@@ -86,7 +86,8 @@
   }
 
   .sHeader {
-    position: relative;
+    //position: relative;
+    background: #fff !important;
 
     &__searchForm {
       position: relative;
@@ -144,9 +145,9 @@
     bottom: auto !important;
   }
 
-  .pageWr {
-    padding-top: 0 !important;
-  }
+  //.pageWr {
+  //  padding-top: 0 !important;
+  //}
 
 
   .btn, .form-submit {
