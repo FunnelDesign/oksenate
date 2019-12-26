@@ -1343,7 +1343,7 @@ function senate_preprocess_views_view(&$vars) {
       $nid = !empty($args[0]) ? $args[0] : '';
       $date = !empty($args[1]) ? $args[1] : '';
 
-      if (!empty($nid)) {
+      if (!empty($nid) && is_numeric($nid)) {
         $node_storage = \Drupal::entityTypeManager()->getStorage('node');
         $node = $node_storage->load($nid);
         $name = !empty($node) ? $node->get('title')->value : '';
@@ -1370,6 +1370,7 @@ function senate_preprocess_views_view(&$vars) {
       else {
         $vars['showing'] = t('All');
       }
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
   }
 }
