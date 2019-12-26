@@ -4,7 +4,6 @@
 
 <?php  $timestamp = time() ?>
 <link href="../dist/vendor/jquery.scrollbar/jquery.scrollbar.css" rel="stylesheet" type="text/css">
-<link href="../dist/vendor/flexslider/flexslider.css" rel="stylesheet" type="text/css">
 <link href="../dist/vendor/lightSlider/lightslider.min.css"
       rel="stylesheet" type="text/css">
 

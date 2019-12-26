@@ -5,12 +5,12 @@ import Observer from "./components/Observer/Observer";
 import BlockVideo from "./components/bMedia/video";
 import bSort from "./components/bSort/bSort";
 import navSelect from "./components/navSelect/navSelect";
-import SliderThumb from "./components/slider-thumb/SliderThumb";
 import SliderTypeA from "./components/slider-type-a/SliderTypeA";
 import sHeader from "./components/sHeader/sHeader";
 import bTerms from "./components/bTerms/bTerms";
 import bStaff from "./components/bStaff/bStaff";
 import lightSlider from "./components/bLightSlider/lightSlider";
+import Modal from "./components/modal/modal";
 
 const $ = jQuery;
 
@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function init() {
+	new Modal();
 	new bEvent();
 	new bSort();
-	new SliderThumb();
 	new SliderTypeA();
 	new sHeader();
 	new bTerms();
@@ -53,7 +53,6 @@ function init() {
 	initSelect();
 	initAccessibility();
 	initHeaderHover();
-
 
 	new BlockVideo();
 }
