@@ -33,5 +33,11 @@ function senate_accessible_theme_suggestions_block_alter(array &$suggestions, ar
     case 'senate_accessible_navigation_header':
       $suggestions[] = 'block__navigation_header_mobile';
       break;
+    case 'senate_accessible_footer_info':
+      $suggestions[] = 'block__footer_info';
+      break;
+    case 'senate_accessible_footer_find':
+      $suggestions[] = 'block__footer_find';
+      break;
   }
 }
