@@ -3,7 +3,6 @@ global-styling:
   css:
     theme:
       dist/vendor/jquery.scrollbar/jquery.scrollbar.css: {}
-      dist/vendor/flexslider/flexslider.css: {}
       dist/vendor/lightSlider/lightslider.min.css: {}
       dist/vendor/slick/slick.css: {}
       dist/css/styles.min.css: {}
@@ -12,7 +11,6 @@ global-styling:
       dist/vendor/jquery.cookie/jquery.cookie.js: {}
       dist/vendor/select2/select2.full.min.js: {}
       dist/vendor/slick/slick.min.js: {}
-      dist/vendor/flexslider/jquery.flexslider.min.js: {}
       dist/vendor/lightSlider/lightslider.min.js: {}
       dist/vendor/jquery.scrollbar/jquery.scrollbar.min.js: {}
       dist/vendor/bootstrap-modal/bootstrap-modal.min.js: {}
