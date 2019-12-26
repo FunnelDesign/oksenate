@@ -19,12 +19,43 @@ class TestController extends ControllerBase {
    */
   public function test() {
 
-    dsm(JournalImportBatch::getUrls());
+//    $this->journalUrls();
+
+    //dsm(\Drupal::getContainer()->get('import_audio.journal_parser')->parseFileDate('http://www.oksenate.gov/publications/senate_journals/sj2013/sj20130306.pdf'));
+
+//    dsm('Multiple');
+    $url = 'http://www.oksenate.gov/publications/senate_journals/sj2019/index_sj2019.html';
+//    $title = '2019 Senate Journals - 57th Legislature - First  Session';
+    //\Drupal::getContainer()->get('import_audio.journal_parser')->parseAndSaveSession($url, $title);
+    \Drupal::getContainer()->get('import_audio.journal_parser')->pushMultipleSessionFiles($url);
+//
+    $url = 'http://www.oksenate.gov/publications/senate_journals/archived/sj1991v1.pdf';
+    $title = '1991 Senate Journals - 43rd Legislature - First Regular Session';
+    dsm('Single');
+
+    //\Drupal::getContainer()->get('import_audio.journal_parser')->saveFile($url, $url);
+    //\Drupal::getContainer()->get('import_audio.journal_parser')->parseAndSaveSession($url, $title);
 
     return [
       '#type' => 'markup',
-      '#markup' => $this->t('')
+      '#markup' => $this->t('test')
     ];
+  }
+
+  public function journalUrls($ingnore_cache = FALSE) {
+    $urls = \Drupal::state()->get('import_audio.journal_links');
+    if(empty($urls) || $ingnore_cache) {
+      $urls = JournalImportBatch::getSessionLinks();
+      \Drupal::state()->set('import_audio.journal_links', $urls);
+    }
+    $urls_only = [];
+    foreach ($urls as $url) {
+      $urls_only[] = $url['url'];
+    }
+    dsm($urls_only);
+
+//    dsm($urls);
+    return $urls;
   }
 
   public function testWeekImport() {

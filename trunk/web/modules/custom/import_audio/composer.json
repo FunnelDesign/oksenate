@@ -12,6 +12,6 @@
     },
     "support": {
         "issues": "https://www.drupal.org/project/issues/import_audio",
-        "source": "http://cgit.drupalcode.org/import_audio",
-    },
+        "source": "http://cgit.drupalcode.org/import_audio"
+    }
 }

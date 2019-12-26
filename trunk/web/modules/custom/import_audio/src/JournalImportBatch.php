@@ -20,13 +20,13 @@ class JournalImportBatch {
     $context['message'] = t('Get import Urls');
 
 
-    $journal_urls = self::getUrls();
+    $journal_links = self::getSessionLinks();
     $queue = \Drupal::queue('journal_import');
-    foreach ($journal_urls as $journal_url) {
+    foreach ($journal_links as $journal_url) {
       $queue->createItem($journal_url);
     }
 
-    $context['results']['get_pages'] = count($journal_urls);
+    $context['results']['get_pages'] = count($journal_links);
   }
 
 
@@ -88,21 +88,29 @@ class JournalImportBatch {
   /**
    * @return array
    */
-  public static function getUrls(): array {
+  public static function getSessionLinks(): array {
+    $links = [];
     $urls = [];
 
     $body = ParserHelper::getPageHtml(self::START_PAGE);
 
     $pq = PhpQuery::newDocument($body);
-    $links = $pq->find('a');
+    $pq_links = $pq->find('a');
 
-    foreach ($links as $link) {
+    foreach ($pq_links as $link) {
       $pq_link = pq($link);
       $url = $pq_link->attr('href');
-      $urls[] = ParserHelper::getAbsoluteUrl(self::START_PAGE, $url);
-    }
 
-    return array_unique($urls);
+      if(!in_array($url, $urls)) {
+        $urls[] = $url;
+        $links[] = [
+          'url' => ParserHelper::getAbsoluteUrl(self::START_PAGE, $url),
+          'title' =>  ParserHelper::fixEncoding(ParserHelper::removeNewLinesAndMultiSpaces($pq_link->html())),
+        ];
+      }
+    }
+    dsm($links);
+    return $links;
   }
 
 }

@@ -157,7 +157,7 @@ class WeekParserService {
 
     $nodes = \Drupal::entityTypeManager()
       ->getStorage('node')
-      ->loadByProperties(['field_old_url' => $parts['url']]);
+      ->loadByProperties(['type' => 'week_review', 'field_old_url' => $parts['url']]);
     $node = !empty($nodes) ? reset($nodes) : NULL;
 
     if(!empty($node)) {
