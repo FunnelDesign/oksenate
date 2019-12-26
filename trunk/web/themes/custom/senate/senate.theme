@@ -1193,7 +1193,8 @@ function senate_preprocess_views_view_unformatted(&$vars) {
               break;
             case "Links":
             case "Files":
-              $vars['wrapper'][] = 'bListItems__items';
+              $vars['wrapper'][] = 'bListItems bListItems_a bListItems_gap_a';
+              $vars['inner_wrapper'][] = 'bListItems__items';
               break;
           }
         }
