@@ -10,6 +10,7 @@ import './common/grid.scss';
 import './common/helpers.scss';
 
 import './components/select2/select2.scss'
+import './modules/bootstrap-modal.scss'
 
 import './components/bTitle/bTitle.scss'
 import './components/form/form.scss'

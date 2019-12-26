@@ -11,6 +11,7 @@ import sHeader from "./components/sHeader/sHeader";
 import bTerms from "./components/bTerms/bTerms";
 import bStaff from "./components/bStaff/bStaff";
 import lightSlider from "./components/bLightSlider/lightSlider";
+import Modal from "./components/modal/modal";
 
 const $ = jQuery;
 
@@ -42,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function init() {
+	new Modal();
 	new bEvent();
 	new bSort();
 	new SliderThumb();
@@ -53,7 +55,6 @@ function init() {
 	initSelect();
 	initAccessibility();
 	initHeaderHover();
-
 
 	new BlockVideo();
 }
