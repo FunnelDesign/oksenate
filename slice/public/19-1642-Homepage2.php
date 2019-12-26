@@ -24,7 +24,7 @@
   <div class="pageIn">
 
     <!--only for slice!!!-->
-    <a href="#" class="btn" data-toggle="modal" data-target="#simpleModal">!ONLY FOR SLICE Launch modal</a>
+    <a href="#" class="btn" data-toggle="modal" data-target="#simpleModal" style="position: absolute">!ONLY FOR SLICE Launch modal</a>
     <?php include 'tpl/blocks/modals/simpleModal.inc'; ?>
     <!--only for slice!!!-->
 
