@@ -25,3 +25,20 @@
   </div>
 
 </div>
+
+
+<!--<div class="bSoc bSoc_min bSoc_min_a">-->
+<!---->
+<!--  <div class="bSoc__items">-->
+<!--    <div class="bSoc__item">-->
+<!--      <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>-->
+<!--    </div>-->
+<!--    <div class="bSoc__item">-->
+<!--      <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>-->
+<!--    </div>-->
+<!--    <div class="bSoc__item">-->
+<!--      <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-mail"></a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!---->
+<!--</div>-->

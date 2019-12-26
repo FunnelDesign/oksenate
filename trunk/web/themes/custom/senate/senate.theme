@@ -886,7 +886,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
           $form['#attached']['drupalSettings']['senate']['view_journals'] = $options;
         }
-        $form["#attributes"]["class"][] = 'bSelect bSelect_a bSelect_size_d  bSelect_gap_b';
+        $form["#attributes"]["class"][] = 'bSelect bSelect_filter bSelect_a bSelect_size_d  bSelect_gap_b';
       }
       elseif ($view_name == 'search_statutes_constitutions') {
         if (!empty($form["constitutions"])) {

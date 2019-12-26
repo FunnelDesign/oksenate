@@ -37,6 +37,18 @@
       margin-right: 0;
     }
 
+    &_facebook,&_twitter, &_instagram, &_linkedin  {
+
+      a:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;
+      }
+    }
+
     &_facebook {
 
       a:before {
@@ -83,14 +95,14 @@
     min-width: 94px;
     position: relative;
 
-    &:before {
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      width: 24px;
-      height: 24px;
-      margin-right: 4px;
-    }
+    //&:before {
+    //  content: '';
+    //  display: inline-block;
+    //  vertical-align: middle;
+    //  width: 24px;
+    //  height: 24px;
+    //  margin-right: 4px;
+    //}
   }
 
   &__ico {
@@ -118,6 +130,23 @@
         &:before {
           display: none;
         }
+      }
+    }
+
+    &_a {
+
+      #{$self}__item {
+
+        a {
+
+          &:before {
+            display: inline-block;
+          }
+        }
+      }
+
+      #{$self}__ico {
+        font-size: 18px;
       }
     }
   }
