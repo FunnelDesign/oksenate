@@ -56,6 +56,28 @@
           }
         }, true);
       });
+
+      this.setBackButtonUrl(context);
+    },
+
+    setBackButtonUrl: function (context) {
+      var _this = this;
+      $('.page-node-type-press-release .section__btnBack', context).once('backButton').each(function () {
+        var backUrl = _this.getQueryParameterByName('back');
+        if (backUrl) {
+          this.setAttribute("href", backUrl);
+        }
+      });
+    },
+
+    getQueryParameterByName: function (name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
   };
 })(jQuery, Drupal, drupalSettings);
