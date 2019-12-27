@@ -26,9 +26,9 @@ class AudioCreatorService {
   public function saveAudio(array $data) {
 
     if (empty($data['url'])) {
-      //$node = $this->loadPressByDateTitle($data['title'], $data['date']);
+      $node = $this->loadPressByDateTitle($data['title'], $data['date']);
       if (empty($node)) {
-        //$node = $this->createOnlyAudioNode($data);
+        $node = $this->createOnlyAudioNode($data);
       }
     }
     else {
