@@ -124,7 +124,7 @@ class AudioCreatorService {
    * @return string
    */
   protected function convertDateInDbFormat($date): string {
-    $date_obj = date_create_from_format('d.m.y', $date);
+    $date_obj = date_create_from_format('m.d.y', $date);
     if(empty($date_obj)) {
       throw new ImportParseError('Invalid date ' . $date);
     }
