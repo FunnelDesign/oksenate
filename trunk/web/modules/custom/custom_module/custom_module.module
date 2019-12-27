@@ -7,6 +7,9 @@
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+
 /**
  * Implements hook_form_alter().
  *
@@ -69,6 +72,24 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
           $form['elements']['mail_to']['#default_value'] = $email;
 
         }
+      }
+      break;
+    case 'node_senate_votes_edit_form':
+      $current_path = \Drupal::service('path.current')->getPath();
+      $path_args = explode('/', $current_path);
+      $arg_0 = !empty($path_args[1]) ? $path_args[1] : '';
+      $arg_1 = !empty($path_args[2]) ? $path_args[2] : '';
+      $nid = ($arg_0 == 'node') && is_numeric($arg_1) ? $arg_1 : '';
+
+      if (!empty($nid) && !empty($form["field_senate_votes"])) {
+        $options['target'] = '_blank';
+        $url = Url::fromUserInput('/manage/senate-votes/' . $nid);
+        $url->setOption('attributes', $options);
+        $manage_link = Link::fromTextAndUrl(t('Manage Senate Votes'), $url);
+        $form["field_senate_votes"] = [
+          '#theme' => 'markup',
+          '#markup' => $manage_link->toString(),
+        ];
       }
       break;
   }
@@ -231,6 +252,15 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $table_files["join"]->configuration["field"] = 'field_staff_target_id';
 
     $table_node = $query->getTableInfo('field_staff_paragraphs_item_field_data');
+    $table_node['join']->field = 'nid';
+    $table_node["join"]->configuration["field"] = 'nid';
+  }
+  if ($view->id() == 'manage_senate_votes' && $view->getDisplay()->display['id'] == 'page_1') {
+    $table_files = $query->getTableInfo('node__field_senate_votes');
+    $table_files['join']->field = 'field_senate_votes_target_id';
+    $table_files["join"]->configuration["field"] = 'field_senate_votes_target_id';
+
+    $table_node = $query->getTableInfo('field_senate_votes_paragraphs_item_field_data');
     $table_node['join']->field = 'nid';
     $table_node["join"]->configuration["field"] = 'nid';
   }
