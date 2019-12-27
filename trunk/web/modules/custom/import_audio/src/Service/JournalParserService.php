@@ -69,8 +69,15 @@ class JournalParserService {
       $file_url = $pq_link->attr('href');
       if(!in_array($file_url, $file_urls) && $this->isValidFileUrl($file_url)) {
         $file_urls[] = $file_url;
-        //$absolute_urls[] = ParserHelper::getAbsoluteUrl($url, $file_url);
+
+        $absolute_urls[] = ParserHelper::getAbsoluteUrl($url, $file_url);
         $queue->createItem(['file_url' => ParserHelper::getAbsoluteUrl($url, $file_url), 'parent_url' => $url]);
+
+//        \Drupal::database()->merge('import_audio_check_journals')
+//          ->insertFields(['file_url' => ParserHelper::getAbsoluteUrl($url, $file_url), 'parent_url' => $url])
+//          ->keys(['file_url' => ParserHelper::getAbsoluteUrl($url, $file_url), 'parent_url' => $url])
+//          ->execute();
+
       }
     }
 
@@ -81,6 +88,11 @@ class JournalParserService {
   private function pushToSaveFile($file_url, $parent_url) {
     \Drupal::queue('import_audio_save_journal_file')
       ->createItem(['file_url' => $file_url, 'parent_url' => $parent_url]);
+
+//    \Drupal::database()->merge('import_audio_check_journals')
+//      ->insertFields(['file_url' => ParserHelper::getAbsoluteUrl($parent_url, $file_url), 'parent_url' => $parent_url])
+//      ->keys(['file_url' => ParserHelper::getAbsoluteUrl($parent_url, $file_url), 'parent_url' => $parent_url])
+//      ->execute();
   }
 
   public function saveFile($file_url, $parent_url) {
