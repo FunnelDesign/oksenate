@@ -30,7 +30,7 @@
       {{ content.field_media_audio_file }}
     </div>
     {% if content %}
-      {{ content|without('field_audio_title', 'field_media_audio_file') }}
+      {{ content|without('field_audio_title', 'field_media_audio_file', 'field_audio_description') }}
     {% endif %}
   </article>
 </div>
