@@ -1126,6 +1126,18 @@ function senate_preprocess_views_view_unformatted(&$vars) {
       $rows = !empty($vars["rows"]) ? $vars["rows"] : [];
       $vars['unique_items'] = [];
       $vars['agency_doc_path'] = SENATE_AGENCIES_DOC_BASE_PATH;
+      $current_path = \Drupal::service('path.current')->getPath();
+      $path_args = explode('/', $current_path);
+      $arg_0 = !empty($path_args[1]) ? $path_args[1] : '';
+      $arg_1 = !empty($path_args[2]) ? $path_args[2] : '';
+      if (($arg_0 == 'node') && is_numeric($arg_1)) {
+        $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
+        $alias_args = explode('/', $alias);
+        $last = array_pop($alias_args);
+        if (!empty($last)) {
+          $vars['agency_doc_path'] = str_replace('/education/', '/' . $last . '/', $vars['agency_doc_path']);
+        }
+      }
 
       foreach ($rows as $key => $row) {
         $tid = (!empty($row["content"]) && !empty($row["content"]["#row"])) ?
@@ -1252,8 +1264,8 @@ function senate_preprocess_views_view(&$vars) {
       $vars['webform'] = _senate_get_block('webform_notification_block');
       break;
     case 'agencies_documents':
-      $tid = !empty($view->args) ? $view->args[0] : '';
-      if (!empty($tid)) {
+      $tid = !empty($view->args) ? $view->args[1] : '';
+      if (!empty($tid) && is_numeric($tid)) {
         $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
         $vars['title'] = $term_obj->getName();
       }
