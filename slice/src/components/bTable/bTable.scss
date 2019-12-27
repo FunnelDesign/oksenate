@@ -41,6 +41,7 @@
 
     &_a {
       @include margin-bottom(30px, 55px);
+      @include cr-last-item;
     }
   }
 }
