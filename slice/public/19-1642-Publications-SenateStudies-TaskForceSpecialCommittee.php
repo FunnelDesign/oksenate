@@ -68,7 +68,7 @@
 
               <h5>Business and Professional License Facilitation Task Force</h5>
 
-              <div class="bTable bTable_a bTable_s_a">
+              <div class="bTable bTable_a bTable_s_a bTable_gap_a">
                 <table>
                   <tbody>
                   <tr>
