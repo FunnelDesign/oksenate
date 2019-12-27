@@ -782,6 +782,14 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["items"][0]["content"]["#markup"] = '<span class="pageIn_cl_b">' . $vars["items"][0]["content"]["#markup"] . '</span>';
       }
       break;
+    case 'field_live_stream_iframe':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $iframe = Xss::filter(html_entity_decode($item["content"]["#context"]["value"]), ['iframe']);
+        $vars["items"][$key]["content"]["#context"]["value"] = $iframe;
+        $vars["items"][$key]["content"]["#template"] = '{{ value|raw }}';
+      }
+      break;
   }
 }
 
