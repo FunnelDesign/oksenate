@@ -48,21 +48,40 @@
 'field__label',
 label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
-{#{{ dump(items[0]) }}#}
+
 {% if label_hidden %}
   {% if multiple %}
 
-    {% for item in items %}
+    {% for delta,item in items %}
       <div class="bPost__img">
       {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
+        {% if element[delta]['#item'].title %}
+          <span class="bPost__imgCap">
+            {{ element[delta]['#item'].title }}
+          </span>
+        {% elseif element[delta]['#item'].alt %}
+          <span class="bPost__imgCap">
+            {{ element[delta]['#item'].alt }}
+          </span>
+        {% endif %}
+
       </div>
     {% endfor %}
 
   {% else %}
-    {% for item in items %}
-<div class="bPost__img">
-      {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
-</div>
+    {% for delta,item in items %}
+      <div class="bPost__img">
+          {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
+        {% if element[delta]['#item'].title%}
+          <span class="bPost__imgCap">
+                {{ element[delta]['#item'].title }}
+              </span>
+        {% elseif element[delta]['#item'].alt %}
+          <span class="bPost__imgCap">
+                {{ element[delta]['#item'].alt }}
+              </span>
+        {% endif %}
+      </div>
     {% endfor %}
   {% endif %}
 
