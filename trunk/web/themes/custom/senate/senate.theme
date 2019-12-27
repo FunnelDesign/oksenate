@@ -592,6 +592,23 @@ function senate_preprocess_field(array &$vars, $hook) {
         }
       }
       break;
+    case 'field_table_cell_file':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('Download');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = $file->url();
+          $url = Url::fromUri($url);
+          $options['target'] = '_blank';
+          $options['download'] = $title;
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+        }
+      }
+      break;
     case 'field_menu_link':
     case 'field_edu_indiv_art_work_btn':
     case 'field_education_gallery_artwork':
@@ -621,6 +638,11 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_calendar_up_ddl_date':
       if (!empty($vars['items']) && !empty($vars["items"][0])) {
         $vars["date"] = $vars["items"][0]["content"]["#text"];
+      }
+      break;
+    case 'field_tables_page_revised_date':
+      if (!empty($vars['items']) && !empty($vars["items"][0])) {
+        $vars['date_revised'] = "Revised:" .  $vars["items"][0]["content"]["#markup"];
       }
       break;
     case 'field_glossary_terms':
@@ -722,6 +744,12 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' => 'bListLinks__link'];
+      }
+      break;
+    case 'field_basic_back_button_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' => 'btn btn_a section__btnBack'];
       }
       break;
     case 'field_meeting_notice_date':
