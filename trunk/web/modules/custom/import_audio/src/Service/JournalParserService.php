@@ -25,10 +25,8 @@ class JournalParserService {
 
     if($this->isMultipleSession($url)) {
       $this->pushMultipleSessionFiles($url);
-      dsm('multiple!');
     } else {
       $this->pushToSaveFile($url, $url);
-      dsm('single!');
     }
   }
 
@@ -53,10 +51,7 @@ class JournalParserService {
       );
 
       $node->save();
-
     }
-
-
   }
 
   public function pushMultipleSessionFiles($url) {
@@ -66,16 +61,20 @@ class JournalParserService {
     $pq  = \phpQuery::newDocument($html);
 
     $file_urls = [];
+//    $absolute_urls = [];
     $pq_links = $pq->find('a');
     $queue = \Drupal::queue('import_audio_save_journal_file');
     foreach ($pq_links as $link) {
       $pq_link = pq($link);
       $file_url = $pq_link->attr('href');
       if(!in_array($file_url, $file_urls) && $this->isValidFileUrl($file_url)) {
-        $queue->createItem(['file_url' => $file_url, 'parent_url' => $url]);
+        $file_urls[] = $file_url;
+        //$absolute_urls[] = ParserHelper::getAbsoluteUrl($url, $file_url);
+        $queue->createItem(['file_url' => ParserHelper::getAbsoluteUrl($url, $file_url), 'parent_url' => $url]);
       }
     }
-    dsm($file_urls);
+
+//    dsm($absolute_urls);
     //return $files;
   }
 
@@ -121,8 +120,6 @@ class JournalParserService {
       }
 
       $paragraph->save();
-    } else {
-      dsm('!empty paragraph');
     }
 //    $node->field_content = array(
 //      array(
