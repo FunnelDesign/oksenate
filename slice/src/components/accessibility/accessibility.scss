@@ -64,6 +64,14 @@
 
   .select2 {
     display: none !important;
+
+    &.bDrop {
+      display: block !important;
+
+      .bDrop__body {
+        background: #fff !important;
+      }
+    }
   }
 
   .am-row {
