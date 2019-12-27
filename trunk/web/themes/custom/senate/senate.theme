@@ -1604,6 +1604,9 @@ function _senate_get_archive_press_releases_review($only_with_audio = FALSE, $se
 
   if($only_with_audio) {
     $query->innerJoin('node__field_press_release_audio', 'audio', 'nfd.nid= audio.entity_id');
+  } else {
+    $query->leftJoin('node_revision__field_press_release_type', 'pst', 'nfd.nid=pst.entity_id');
+    $query->isNull('pst.field_press_release_type_value');
   }
   if (!empty($senator_nid)) {
     $query->innerJoin('node__field_senator', 'senator', 'nfd.nid = senator.entity_id AND senator.field_senator_target_id = ' . $senator_nid);
