@@ -642,7 +642,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_tables_page_revised_date':
       if (!empty($vars['items']) && !empty($vars["items"][0])) {
-//        $vars["date"] = $vars["items"][0]["content"]["#text"];
+        $vars['date_revised'] = "Revised:" .  $vars["items"][0]["content"]["#markup"];
       }
       break;
     case 'field_glossary_terms':
