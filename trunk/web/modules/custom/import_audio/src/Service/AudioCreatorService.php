@@ -26,9 +26,9 @@ class AudioCreatorService {
   public function saveAudio(array $data) {
 
     if (empty($data['url'])) {
-      //$node = $this->loadPressByDateTitle($data['title'], $data['date']);
+      $node = $this->loadPressByDateTitle($data['title'], $data['date']);
       if (empty($node)) {
-        //$node = $this->createOnlyAudioNode($data);
+        $node = $this->createOnlyAudioNode($data);
       }
     }
     else {
@@ -124,7 +124,7 @@ class AudioCreatorService {
    * @return string
    */
   protected function convertDateInDbFormat($date): string {
-    $date_obj = date_create_from_format('d.m.y', $date);
+    $date_obj = date_create_from_format('m.d.y', $date);
     if(empty($date_obj)) {
       throw new ImportParseError('Invalid date ' . $date);
     }
