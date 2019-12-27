@@ -1739,6 +1739,7 @@ function _senate_get_issue_type_terms() {
     ->condition('nfd.status', 1);
   $query->innerJoin('node__field_issue_type_term', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'issue\'');
   $query->addExpression("field_issue_type_term_target_id", 'term');
+  $query->orderBy('field_issue_type_term_target_id', 'asc')->distinct();
 
   $result = $query->execute()->fetchAll();
 
