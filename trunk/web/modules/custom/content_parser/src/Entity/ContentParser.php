@@ -596,141 +596,151 @@ class ContentParser extends ConfigEntityBase {
     //    }
 
     foreach ($doc->find('a') as $key=>$a) {
-      $href = pq($a)->attr('href');
-      $href = parser_get_absolute_url($base_url, $href);
-      $href = preg_replace('/#.*$/', '', $href);
-      if(strpos($href, '/districts/dist') !== false){
-        if(strpos($href, 'population.html') !== false){
-          continue;
+      $secondBase = pq($a)->attr('href');
+      if($secondBase == '#top'){
+        continue;
+      }
+      $secondBase = parser_get_absolute_url($base_url, $secondBase);
+      $secondBase = preg_replace('/#.*$/', '', $secondBase);
+        $content = $this->loadUrl($secondBase);
+        $docYears = $this->getPhpQuery($content, $secondBase);
+        $monthPage = false;
+        foreach($docYears->find('a') as $top){
+          $href = pq($top)->attr('href');
+          if($href == '#top'){
+            ////this page contains href and dates
+            $monthPage = true;
+            break;
+          }
         }
-        $content = $this->loadUrl($href);
-        $docYears = $this->getPhpQuery($content, $href);
-        foreach ($docYears->find('a') as $key=>$a) {
-          $href = pq($a)->attr('href');
-          $href = parser_get_absolute_url($base_url, $href);
-
-          if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
-            $text = pq($a)->text();
-            //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2015/pr20150729a.htm'){
-            //            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
-            //          }
-            //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2017/pr20170119b.htm'){
-            //            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
-            //          }
-
-            $date = str_replace($text, '', pq($a)->parent()->text());
-            $content = $this->loadUrl($href);
-            $docNews = $this->getPhpQuery($content, $href);
-            $returnLinks = 'this table contains return links';
-            $mainContent = 'this table contains the main content of the page';
-            $html = 'empty';
-            foreach ($docNews['table'] as $table){
-              if(pq($table)->attr('summary') == $returnLinks){
-                pq($table)->remove();
-              }
-            }
-            foreach ($docNews['table'] as $key=>$table){
-              if(pq($table)->attr('summary') == $mainContent){
-                $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br>')), 'format'=>'full_html'];
-                $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
-              }
-            }
-            // Remove hash
-            $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-            $date = preg_replace("/[^.0-9]/", '', $date);
-            //          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
-            if($html == 'empty'){
-              $message = 'Empty Body '.'<br>'.$base_url . '<br>' . $href . '<br>'."\r\n";
-              file_put_contents('parse_errors_empty_body.txt', $message, FILE_APPEND);
-              \Drupal::logger('not_parsed')->notice($message);
+        if($monthPage) {
+          foreach ($docYears->find('a') as $key => $a) {
+            $href = pq($a)->attr('href');
+            if(empty($href)){
               continue;
             }
-            else{
-              $contactInfo = [];
-              $regexp = "/(For more information, contact:|For more information,contact|For more information|For more information contact:)(?s)(.*$)/";
-              $all = preg_match($regexp, $html['value'], $matches);
-              if(!empty($matches)){
-                foreach ($matches as $matchKey=>$match){
-                  if($matchKey === 0 || $matchKey === 1){
-                    continue;
-                  }
-                  else{
-                    $contactInfo[] = ['value' => trim(strip_tags($match))];
-                  }
+            if($href == '#top'){
+              continue;
+            }
+            $href = parser_get_absolute_url($secondBase, $href);
+            if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
+              $text = pq($a)->text();
+              //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2015/pr20150729a.htm'){
+              //            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
+              //          }
+              //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2017/pr20170119b.htm'){
+              //            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
+              //          }
+
+              $date        = str_replace($text, '', pq($a)->parent()->text());
+              $content     = $this->loadUrl($href);
+              $docNews     = $this->getPhpQuery($content, $href);
+              $returnLinks = 'this table contains return links';
+              $mainContent = 'this table contains the main content of the page';
+              $html        = 'empty';
+              foreach ($docNews['table'] as $table) {
+                if (pq($table)->attr('summary') == $returnLinks) {
+                  pq($table)->remove();
                 }
-              }else{
-                $message = 'Cant identify contact data '.$base_url . '<br>' . $href . '<br>'."\r\n";
-                file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
-                \Drupal::logger('not_parsed_contact_data')->notice($message);
               }
-              $html['value'] = preg_replace($regexp, '', $html['value']);
-              $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
-              if($this->makeSummary($html['value'], $text)){
-                $bodyHeader = ['value'=>$this->makeSummary($html['value'], $text)['head'], 'format'=>'full_html'];
-                $html['value'] = $this->makeSummary($html['value'], $text)['body'];
+              foreach ($docNews['table'] as $key => $table) {
+                if (pq($table)->attr('summary') == $mainContent) {
+                  $html          = [
+                    'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br>')),
+                    'format' => 'full_html'
+                  ];
+                  $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+                }
               }
-              else{
-                $message = 'Cant separate header and body '.$base_url . '<br>' . $href . '<br>'."\r\n";
-                file_put_contents('parse_errors.txt', $message, FILE_APPEND);
-                \Drupal::logger('not_parsed_body')->notice($message);
-              }
-            }
-            if(empty($date)){
-              $date = pq($a)->parent()->parent()->text();
-              $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
-              $date = trim(str_replace($text, '', $date));
-            }
-            if(strpos($base_url, '_bio.html') !== FALSE){
-
-              //        $news = \Drupal::entityTypeManager()
-              //          ->getStorage('node')
-              //          ->loadByProperties(['field_press_release_old_url' => 'test.html']);
-
-              ///get senator id
-              $nodes = \Drupal::entityTypeManager()
-                ->getStorage('node')
-                ->loadByProperties(['field_temp_old_url' => $base_url]);
-              $senator = $nodes[key($nodes)]->id();
-              //        foreach ( $nodes as $node ) {
-              //          $senator = $node->id();
-              //        }
-              $news = \Drupal::entityTypeManager()
-                ->getStorage('node')
-                ->loadByProperties(['field_press_release_old_url' => $href]);
-              if(is_array($news) && !empty($news)){
-                $entity = $news[key($news)];
-                $entity->field_senator[] = ['target_id' => $senator];
-                $entity->save();
+              // Remove hash
+              $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+              $date = preg_replace("/[^.0-9]/", '', $date);
+                        $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
+              if ($html == 'empty') {
+                $message = 'Empty Body ' . '<br>' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                file_put_contents('parse_errors_empty_body.txt', $message, FILE_APPEND);
+                \Drupal::logger('not_parsed')->notice($message);
                 continue;
               }
-              else{
-                $entity = _entity_create($this->entity_type, $this->bundle);
+              else {
+                $contactInfo = [];
+                $regexp      = "/(For more information, contact:|For more information,contact|For more information|For more information contact:)(?s)(.*$)/";
+                $all         = preg_match($regexp, $html['value'], $matches);
+                if (!empty($matches)) {
+                  foreach ($matches as $matchKey => $match) {
+                    if ($matchKey === 0 || $matchKey === 1) {
+                      continue;
+                    }
+                    else {
+                      $contactInfo[] = ['value' => trim(strip_tags($match))];
+                    }
+                  }
+                }
+                else {
+                  $message = 'Cant identify contact data ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                  file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
+                  \Drupal::logger('not_parsed_contact_data')->notice($message);
+                }
+                $html['value'] = preg_replace($regexp, '', $html['value']);
+                $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
+                if ($this->makeSummary($html['value'], $text)) {
+                  $bodyHeader    = [
+                    'value'  => $this->makeSummary($html['value'], $text)['head'],
+                    'format' => 'full_html'
+                  ];
+                  $html['value'] = $this->makeSummary($html['value'], $text)['body'];
+                }
+                else {
+                  $message = 'Cant separate header and body ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                  file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+                  \Drupal::logger('not_parsed_body')->notice($message);
+                }
               }
-            }
-            $mini = parser_download_images($docNews, $href);
+              if (empty($date)) {
+                $date = pq($a)->parent()->parent()->text();
+                $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
+                $date = trim(str_replace($text, '', $date));
+              }
+              $nodes   = \Drupal::entityTypeManager()
+                ->getStorage('node')
+                ->loadByProperties(['title' => $text]);
+                if (is_array($nodes) && !empty($nodes)) {
+                  $entity                  = $nodes[key($nodes)];
+                  continue;
+                }
+                else {
+                  $entity = _entity_create($this->entity_type, $this->bundle);
+                }
+              try {
+                $mini = parser_download_images($docNews, $href);
 
-            $entity->set('field_release_img', $mini);
+                $entity->set('field_release_img', $mini);
 
-            $entity->set('field_press_release_old_url', $href);
-            $entity->set('title', $text);
-            $entity->set('body', $html);
-            $entity->set('field_press_release_header', isset($bodyHeader)?$bodyHeader:'');
-            $entity->set('field_press_release_contact_info', $contactInfo);
-            $entity->set('field_senator', isset($senator)?$senator:[]);
-            try {
-              $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
-              $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-              $entity->save();
-            }catch (\Error $exception){
-              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
-              file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
-              \Drupal::logger('not_parsed')->notice($message);
-              continue;
-            }catch (\Exception $exception){
-              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
-              file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
-              \Drupal::logger('not_parsed')->notice($message);
-              continue;
+                $entity->set('field_press_release_old_url', $href);
+                $entity->set('title', $text);
+                $entity->set('body', $html);
+                $entity->set('field_press_release_header', isset($bodyHeader) ? $bodyHeader : '');
+                $entity->set('field_press_release_contact_info', $contactInfo);
+                $entity->set('field_senator', isset($senator) ? $senator : []);
+                $date = preg_replace('/[\x00-\x1F\x7F-\xA0\xAD]/u', '', $date);
+                $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
+                $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
+                $entity->save();
+              }
+              catch (\Error $exception) {
+                $message = $exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
+                \Drupal::logger('not_parsed')->notice($message);
+                continue;
+              }
+              catch (\Exception $exception) {
+                $message = $exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
+                \Drupal::logger('not_parsed')->notice($message);
+                continue;
+              }
+              }
+
             }
           }
         }
@@ -792,123 +802,123 @@ class ContentParser extends ConfigEntityBase {
         //      $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
         //      $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
         //      $entity->save();
-      }
-      if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
-        $text = pq($a)->text();
-        $date = str_replace($text, '', pq($a)->parent()->text());
-        $content = $this->loadUrl($href);
-        $docNews = $this->getPhpQuery($content, $href);
-        $returnLinks = 'this table contains return links';
-        $mainContent = 'this table contains the main content of the page';
-        $html = 'empty';
 
-        foreach ($docNews['table'] as $table){
-          if(pq($table)->attr('summary') == $returnLinks){
-            pq($table)->remove();
-          }
-        }
-
-        foreach ($docNews['table'] as $table){
-          if(pq($table)->attr('summary') == $mainContent){
-            $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
-          }
-        }
-        if($html == 'empty'){
-          $message = 'Empty Body '.'<br>'.$base_url . '<br>' . $href . '<br>'."\r\n";
-          file_put_contents('parse_errors_empty_body.txt', $message, FILE_APPEND);
-          \Drupal::logger('not_parsed')->notice($message);
-          continue;
-        }
-        else{
-          $contactInfo = [];
-          $regexp = "/(For more information, contact:|For more information,contact|For more information|For more information contact:)(?s)(.*$)/";
-          $all = preg_match($regexp, $html['value'], $matches);
-          if(!empty($matches)){
-            foreach ($matches as $matchKey=>$match){
-              if($matchKey === 0 || $matchKey === 1){
-                continue;
-              }
-              else{
-                $contactInfo[] = ['value' => trim(strip_tags($match))];
-              }
-            }
-          }else{
-            $message = 'Cant identify contact data '.$base_url . '<br>' . $href . '<br>'."\r\n";
-            file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
-            \Drupal::logger('not_parsed_contact_data')->notice($message);
-          }
-          $html['value'] = preg_replace($regexp, '', $html['value']);
-          if($this->makeSummary($html['value'], $text)){
-            $bodyHeader = ['value'=>$this->makeSummary($html['value'], $text)['head'], 'format'=>'full_html'];
-            $html['value'] = $this->makeSummary($html['value'], $text)['body'];
-          }
-          else{
-            $message = 'Cant separate header and body '.$base_url . '<br>' . $href . '<br>'."\r\n";
-            file_put_contents('parse_errors.txt', $message, FILE_APPEND);
-            \Drupal::logger('not_parsed_body')->notice($message);
-          }
-        }
-        // Remove hash
-        $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-        $date = preg_replace("/[^.0-9]/", '', $date);
-        if(empty($date)){
-          $date = pq($a)->parent()->parent()->text();
-          $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
-          $date = trim(str_replace($text, '', $date));
-        }
-        if(strpos($base_url, '_bio.html') !== FALSE){
-
-          //        $news = \Drupal::entityTypeManager()
-          //          ->getStorage('node')
-          //          ->loadByProperties(['field_press_release_old_url' => 'test.html']);
-
-          ///get senator id
-          $nodes = \Drupal::entityTypeManager()
-            ->getStorage('node')
-            ->loadByProperties(['field_temp_old_url' => $base_url]);
-          $senator = $nodes[key($nodes)]->id();
-          //        foreach ( $nodes as $node ) {
-          //          $senator = $node->id();
-          //        }
-          $news = \Drupal::entityTypeManager()
-            ->getStorage('node')
-            ->loadByProperties(['field_press_release_old_url' => $href]);
-          if(is_array($news) && !empty($news)){
-            $entity = $news[key($news)];
-            $entity->field_senator[] = ['target_id' => $senator];
-            $entity->save();
-            continue;
-          }
-          else{
-            $entity = _entity_create($this->entity_type, $this->bundle);
-          }
-        }
-        $mini = parser_download_images($docNews, $href);
-        try {
-          $entity->set('field_release_img', $mini);
-
-          $entity->set('field_press_release_old_url', $href);
-          $entity->set('title', $text);
-          $entity->set('body', $html);
-          $entity->set('field_press_release_contact_info', $contactInfo);
-          $entity->set('field_press_release_header', isset($bodyHeader)?$bodyHeader:'');
-          $entity->set('field_senator', isset($senator) ? $senator : []);
-          $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
-          $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-          $entity->save();
-        }catch (\Error $exception){
-          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
-          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
-          \Drupal::logger('not_parsed')->notice($message);
-          continue;
-        }catch (\Exception $exception){
-          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
-          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
-          \Drupal::logger('not_parsed')->notice($message);
-          continue;
-        }
-      }
-    }
+//      if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
+//        $text = pq($a)->text();
+//        $date = str_replace($text, '', pq($a)->parent()->text());
+//        $content = $this->loadUrl($href);
+//        $docNews = $this->getPhpQuery($content, $href);
+//        $returnLinks = 'this table contains return links';
+//        $mainContent = 'this table contains the main content of the page';
+//        $html = 'empty';
+//
+//        foreach ($docNews['table'] as $table){
+//          if(pq($table)->attr('summary') == $returnLinks){
+//            pq($table)->remove();
+//          }
+//        }
+//
+//        foreach ($docNews['table'] as $table){
+//          if(pq($table)->attr('summary') == $mainContent){
+//            $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
+//          }
+//        }
+//        if($html == 'empty'){
+//          $message = 'Empty Body '.'<br>'.$base_url . '<br>' . $href . '<br>'."\r\n";
+//          file_put_contents('parse_errors_empty_body.txt', $message, FILE_APPEND);
+//          \Drupal::logger('not_parsed')->notice($message);
+//          continue;
+//        }
+//        else{
+//          $contactInfo = [];
+//          $regexp = "/(For more information, contact:|For more information,contact|For more information|For more information contact:)(?s)(.*$)/";
+//          $all = preg_match($regexp, $html['value'], $matches);
+//          if(!empty($matches)){
+//            foreach ($matches as $matchKey=>$match){
+//              if($matchKey === 0 || $matchKey === 1){
+//                continue;
+//              }
+//              else{
+//                $contactInfo[] = ['value' => trim(strip_tags($match))];
+//              }
+//            }
+//          }else{
+//            $message = 'Cant identify contact data '.$base_url . '<br>' . $href . '<br>'."\r\n";
+//            file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
+//            \Drupal::logger('not_parsed_contact_data')->notice($message);
+//          }
+//          $html['value'] = preg_replace($regexp, '', $html['value']);
+//          if($this->makeSummary($html['value'], $text)){
+//            $bodyHeader = ['value'=>$this->makeSummary($html['value'], $text)['head'], 'format'=>'full_html'];
+//            $html['value'] = $this->makeSummary($html['value'], $text)['body'];
+//          }
+//          else{
+//            $message = 'Cant separate header and body '.$base_url . '<br>' . $href . '<br>'."\r\n";
+//            file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+//            \Drupal::logger('not_parsed_body')->notice($message);
+//          }
+//        }
+//        // Remove hash
+//        $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+//        $date = preg_replace("/[^.0-9]/", '', $date);
+//        if(empty($date)){
+//          $date = pq($a)->parent()->parent()->text();
+//          $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
+//          $date = trim(str_replace($text, '', $date));
+//        }
+//        if(strpos($base_url, '_bio.html') !== FALSE){
+//
+//          //        $news = \Drupal::entityTypeManager()
+//          //          ->getStorage('node')
+//          //          ->loadByProperties(['field_press_release_old_url' => 'test.html']);
+//
+//          ///get senator id
+//          $nodes = \Drupal::entityTypeManager()
+//            ->getStorage('node')
+//            ->loadByProperties(['field_temp_old_url' => $base_url]);
+//          $senator = $nodes[key($nodes)]->id();
+//          //        foreach ( $nodes as $node ) {
+//          //          $senator = $node->id();
+//          //        }
+//          $news = \Drupal::entityTypeManager()
+//            ->getStorage('node')
+//            ->loadByProperties(['field_press_release_old_url' => $href]);
+//          if(is_array($news) && !empty($news)){
+//            $entity = $news[key($news)];
+//            $entity->field_senator[] = ['target_id' => $senator];
+//            $entity->save();
+//            continue;
+//          }
+//          else{
+//            $entity = _entity_create($this->entity_type, $this->bundle);
+//          }
+//        }
+//        $mini = parser_download_images($docNews, $href);
+//        try {
+//          $entity->set('field_release_img', $mini);
+//
+//          $entity->set('field_press_release_old_url', $href);
+//          $entity->set('title', $text);
+//          $entity->set('body', $html);
+//          $entity->set('field_press_release_contact_info', $contactInfo);
+//          $entity->set('field_press_release_header', isset($bodyHeader)?$bodyHeader:'');
+//          $entity->set('field_senator', isset($senator) ? $senator : []);
+//          $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
+//          $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
+//          $entity->save();
+//        }catch (\Error $exception){
+//          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
+//          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+//          \Drupal::logger('not_parsed')->notice($message);
+//          continue;
+//        }catch (\Exception $exception){
+//          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>'."\r\n";
+//          file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+//          \Drupal::logger('not_parsed')->notice($message);
+//          continue;
+//        }
+//      }
+//    }
     return true;
 
     //    $mini = parser_download_images($doc, $base_url);
@@ -1181,6 +1191,33 @@ class ContentParser extends ConfigEntityBase {
     //    http://www.oksenate.gov/Senators/biographies/treat_bio.aspx
     //    http://www.oksenate.gov/Senators/biographies/weaver_bio.aspx
     //    http://www.oksenate.gov/Senators/biographies/young_bio.aspx
+
+
+//    http://www.oksenate.gov/news/press_releases/press_releases_2018/pr2018a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2017/pr2017a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2016/pr2016a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2015/pr2015a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2014/pr2014a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2013/pr2013a.htm
+//    http://www.oksenate.gov/news/press_releases/press_releases_2012/pr2012a.htm
+//    http://www.oksenate.gov/news/press_releases/press_releases_2011/pr2011a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2010/pr2010a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2009/pr2009a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2008/pr2008a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2007/pr2007a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2006/pr2006a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2005/pr2005a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2004/pr2004a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2003/pr2003a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2002/pr2002a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2001/pr2001a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_2000/pr2000a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_1999/pr1999a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_1998/pr1998a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_1997/pr1997a.html
+//    http://www.oksenate.gov/news/press_releases/press_releases_1996/pr1996a.html
+
+
     //    foreach($doc['img'] as $img){
     //      if(pq($img)->attr('src') == '../bandblue.gif'){
     //        return true;
