@@ -42,5 +42,8 @@ function senate_accessible_theme_suggestions_block_alter(array &$suggestions, ar
     case 'senate_accessible_navigation_header_mobile':
       $suggestions[] = 'block__navigation_header_mobile';
       break;
+    case 'senate_accessible_navigation_footer':
+      $suggestions[] = 'block__navigation_footer';
+      break;
   }
 }

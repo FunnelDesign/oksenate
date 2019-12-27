@@ -12,6 +12,13 @@ import_audio.week_import_form:
     _title: 'Import Week In Review'
   requirements:
     _access: 'TRUE'
+import_audio.journals_import_form:
+  path: '/admin/import-journals'
+  defaults:
+    _form: '\Drupal\import_audio\Form\JournalImportForm'
+    _title: 'Import Week In Review'
+  requirements:
+    _access: 'TRUE'
 import_audio.test_controller_test:
   path: '/admin/test'
   defaults:

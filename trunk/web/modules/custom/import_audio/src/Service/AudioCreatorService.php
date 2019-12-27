@@ -6,6 +6,7 @@ use Drupal;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\import_audio\Exceptions\ImportParseError;
+use Drupal\import_audio\ParserHelper;
 use Drupal\media\Entity\Media;
 use Drupal\node\Entity\Node;
 use Exception;
@@ -190,36 +191,8 @@ class AudioCreatorService {
       return $media;
     }
 
-    $file_url_info = basename($file_url);
     $folder = 'public://press_release_audio';
-    $file_uri = $folder . '/' . $file_url_info;
-
-    $files = \Drupal::entityTypeManager()
-      ->getStorage('file')
-      ->loadByProperties(['uri' => $file_uri]);
-    $file = reset($files);
-
-    if (empty($file)) {
-      //Download and save
-
-      file_prepare_directory($folder, FILE_CREATE_DIRECTORY);
-
-      $file_request = Drupal::httpClient()->get(
-        $file_url, [
-          'connect_timeout' => 600,
-          'read_timeout' => 600,
-          'timeout' => 600,
-          'verify' => FALSE,
-        ]
-      );
-
-      $data = $file_request->getBody(TRUE);
-
-      // Save the audio file and add to Drupal managed files.
-      $file = file_save_data(
-        $data, $file_uri, FileSystemInterface::EXISTS_REPLACE
-      );
-    }
+    $file = ParserHelper::saveExternalFile($file_url, $folder);
 
     $audio_media = Media::create(
       [
@@ -239,4 +212,5 @@ class AudioCreatorService {
 
     return $audio_media;
   }
+
 }
