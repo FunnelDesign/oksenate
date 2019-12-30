@@ -25,6 +25,10 @@
           padding-left: 170px;
         }
       }
+
+      & *:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 
