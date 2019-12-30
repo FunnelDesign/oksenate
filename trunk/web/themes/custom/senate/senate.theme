@@ -851,6 +851,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
 function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   if ($form_id == 'search_block_form') {
     $form['keys']['#attributes']['placeholder'] = t('search here');
+    $form["#cache"]["contexts"][] = 'url.path';
   }
   if ($form_id == 'search_api_page_block_form_find_legislation') {
     $form['keys']['#attributes']['placeholder'] = t('Enter Bill Number');
