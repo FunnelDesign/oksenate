@@ -33,13 +33,37 @@ class ParserService {
     $body = ParserHelper::getPageHtml($url);
   } catch(\Exception $e) {
     //try to get from second variant of url
-    $url = str_replace('.html', '.htm', $url);
+    if(strpos($url, '.html') !== FALSE) {
+      $url = str_replace('.html', '.htm', $url);
+    } else {
+      $url = str_replace('.htm', '.html', $url);
+    }
+
     $body = ParserHelper::getPageHtml($url);
   }
 
     $pq = PhpQuery::newDocument($body);
 
+    $pq_links = $pq->find('a');
+    foreach ($pq_links as $link) {
+      $pq_link = pq($link);
+      $file_url = $pq_link->attr('href');
+      if(strpos(strtolower($file_url), '.mp3') !== FALSE) {
+        $absolute_file_url = ParserHelper::getAbsoluteUrl($url, $file_url);
+        dsm($absolute_file_url);
+        \Drupal::database()->merge('import_audio_check')
+          ->insertFields(['audio' => $absolute_file_url, 'month_page' => $url])
+          ->keys(['audio' => $absolute_file_url, 'month_page' => $url])
+          ->execute();
+      }
+    }
+
+
+
+
     $rows = $pq->find('table table table table tr');
+
+
 
     foreach($rows as $delta => $row) {
       $row_html = pq($row)->find('td:first')->html();
@@ -47,6 +71,12 @@ class ParserService {
       if(!$this->isEmptyReleaseDividerRow($row_html)) {
         $releases[] = $this->parseAudioRelease($row_html);
       }
+    }
+
+    if(empty($releases)) {
+      $message = $url . "\n";
+      file_put_contents('import_logs/no_releases.log', $message, FILE_APPEND);
+      \Drupal::logger('audio_import_month_parse')->notice(t('No releases for page @url', ['@url' => $url]));
     }
 
     return $releases;
@@ -73,12 +103,18 @@ class ParserService {
       if(!empty($info['date'])) {
         //date in the last row remove first and last element to get mp3 arrays
         $files_rows = array_splice($rows, 1, -1);
+      } else {
+        $info['date'] = $this->grepDateFromFirstRow($rows);
+        if(!empty($info['date'])) {
+          //date in first row with title, skip 1st row
+          $files_rows = array_splice($rows, 1 );
+        }
       }
     }
     //Default mp3 location, skip 2 first rows
     $files_rows = (empty($files_rows)) ? array_splice($rows, 2) : $files_rows;
 
-    foreach ($files_rows as $filesRow) {
+    foreach ($files_rows as $delta => $filesRow) {
       $file_info = ['url' => '', 'desc' => ''];
       $file_info['desc'] = strip_tags($filesRow);
       $file_info['desc'] = str_replace(['mp3', ')', '('], '', $file_info['desc']);
@@ -91,8 +127,13 @@ class ParserService {
         ParserHelper::grepFirstHref($filesRow)
       );
 
-      $info['files'][] = $file_info;
+      if(empty($file_info['url']) && !empty($file_info['desc']) && !empty($info['files'][$delta-1]['desc'])) {
+        $info['files'][$delta-1]['desc'] .= $file_info['desc'];
+      } else if(!empty($file_info['url']) || !empty($file_info['desc'])) {
+        $info['files'][] = $file_info;
+      }
     }
+
     return $info;
   }
 
@@ -114,10 +155,6 @@ class ParserService {
     if (!empty($matches[0])) {
       $date = $matches[0];
     }
-    else {
-      preg_match($pattern, $rows[0], $matches);
-      $date = $matches[0] ?? '';
-    }
 
     return $date;
   }
@@ -127,6 +164,18 @@ class ParserService {
 
     $pattern = "/(0[1-9]|1[0-2])\.(0[1-9]|[1-2][0-9]|3[0-1])\.[0-9]{2}/";
     preg_match($pattern, end($rows), $matches);
+    if (!empty($matches[0])) {
+      $date = $matches[0];
+    }
+
+    return $date;
+  }
+
+  protected function grepDateFromFirstRow(array $rows) {
+    $date = '';
+
+    $pattern = "/(0[1-9]|1[0-2])\.(0[1-9]|[1-2][0-9]|3[0-1])\.[0-9]{2}/";
+    preg_match($pattern, reset($rows), $matches);
     if (!empty($matches[0])) {
       $date = $matches[0];
     }

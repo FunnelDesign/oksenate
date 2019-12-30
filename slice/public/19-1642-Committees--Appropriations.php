@@ -17,6 +17,8 @@
             <a href="#">Committees</a>
             <span>Appropriations</span>
           </div>
+
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

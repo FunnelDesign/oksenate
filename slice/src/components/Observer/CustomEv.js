@@ -20,8 +20,6 @@ class CustomEv {
 		$(document).on('click touch', (e) => {
 			let $ev = $(e.target);
 
-			console.log($ev);
-
 			if (!$ev.closest('.bDrop').length) {
 				$('.bDrop').removeClass('select2-container--open')
 			}
@@ -39,9 +37,11 @@ class CustomEv {
 
 				window.location.hash = prefix + val;
 
+				let adminMenu = parseInt($(`body`).css('padding-top'));
+
 				let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
 
-				$body.animate({scrollTop: $target.offset().top - 10 - headerHeight}, speed);
+				$body.animate({scrollTop: $target.offset().top - 10 - headerHeight - adminMenu}, speed);
 
 			}
 		});

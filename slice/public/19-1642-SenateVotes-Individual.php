@@ -18,6 +18,7 @@
             <a href="#">Senate Votes</a>
             <span>Oklahoma State Senate 2019 Votes</span>
           </div>
+          <?php include 'tpl/blocks/bShare-color-a.inc'; ?>
         </div>
 
       </div>

@@ -17,6 +17,7 @@
             <a href="#">Contacts</a>
             <span>Senate Staff Directory</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

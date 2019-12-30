@@ -16,6 +16,7 @@
             <a href="#">Calendar</a>
             <span>State Journals</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

@@ -48,7 +48,7 @@ function audio_import_test_creation() {
 //  $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130228b.MP3';
 //  $data['files'][0]['desc'] = '';
 
-  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
+//  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
 
 }
 
@@ -60,7 +60,7 @@ function audio_import_test_creation_only_audio() {
   $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130228b.MP3';
   $data['files'][0]['desc'] = '';
 
-  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
+//  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
 }
 
 function audio_import_test_load_only_audio() {

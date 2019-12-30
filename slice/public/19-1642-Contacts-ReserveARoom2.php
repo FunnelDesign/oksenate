@@ -17,6 +17,7 @@
             <a href="#">Contacts</a>
             <span>Reserve a Room</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>
