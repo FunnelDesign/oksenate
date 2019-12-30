@@ -37,11 +37,11 @@ class CustomEv {
 
 				window.location.hash = prefix + val;
 
-				console.log($(`body`).css('padding-top'));
+				let adminMenu = $(`body`).css('padding-top');
 
 				let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
 
-				$body.animate({scrollTop: $target.offset().top - 10 - headerHeight}, speed);
+				$body.animate({scrollTop: $target.offset().top - 10 - headerHeight - adminMenu}, speed);
 
 			}
 		});
