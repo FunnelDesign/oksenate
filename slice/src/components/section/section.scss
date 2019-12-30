@@ -129,6 +129,10 @@
 
     &_c {
       @include padding(58px 0 30px, 58px 0 75px);
+
+      .page-node-type-senator & {
+        @include padding(10px 0 30px, 58px 0 75px);
+      }
     }
 
     &_d {
@@ -162,6 +166,11 @@
 
     @include md {
       padding: 14px;
+    }
+
+    .page-node-type-senator & {
+      margin-bottom: 0;
+      z-index: 1;
     }
 
     .bContainer {
@@ -214,7 +223,14 @@
 
       @include xs-only {
         top: -40px;
+
+        .page-node-type-senator & {
+          position: relative;
+          top: auto;
+          margin-bottom: 20px;
+        }
       }
+
     }
   }
 
