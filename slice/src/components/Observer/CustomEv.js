@@ -37,7 +37,7 @@ class CustomEv {
 
 				window.location.hash = prefix + val;
 
-				let adminMenu = $(`body`).css('padding-top');
+				let adminMenu = parseInt($(`body`).css('padding-top'));
 
 				let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
 
