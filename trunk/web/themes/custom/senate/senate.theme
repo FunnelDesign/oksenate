@@ -1241,7 +1241,7 @@ function senate_preprocess_views_view_unformatted(&$vars) {
             $vars['wrapper'] = [''];
             switch ($term_type) {
               case "Text":
-                $vars['wrapper'][] = 'bTiles bTiles_rel bTiles_rel_b bTiles_hLeft bTiles_gap_a';
+                $vars['wrapper'][] = 'bTiles bTiles_rel bTiles_rel_b bTiles_gap_a';
                 $vars['inner_wrapper'] = new Attribute(['class' => ['bTiles__items']]);
                 break;
               case "Links":
