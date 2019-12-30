@@ -17,6 +17,7 @@
             <a href="#">Senate Artwork</a>
             <span>Art Treasures of the Oklahoma State Capitol</span>
           </div>
+          <?php include 'tpl/blocks/bShare-color-a.inc'; ?>
         </div>
 
       </div>

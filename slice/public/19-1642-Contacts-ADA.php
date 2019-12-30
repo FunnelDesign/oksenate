@@ -16,6 +16,7 @@
             <a href="#">Contacts</a>
             <span>ADA Information</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>
