@@ -605,14 +605,17 @@ class ContentParser extends ConfigEntityBase {
         $content = $this->loadUrl($secondBase);
         $docYears = $this->getPhpQuery($content, $secondBase);
         $monthPage = false;
-        foreach($docYears->find('a') as $top){
-          $href = pq($top)->attr('href');
-          if($href == '#top'){
-            ////this page contains href and dates
-            $monthPage = true;
-            break;
-          }
-        }
+      if(preg_match('/\b(?:[A-Za-z]+)?(?:\W+){1,6}?(?:[0-9]{4})?(?:\W+){1,6}?PRESS RELEASES\b/i', $content) === 1){
+        $monthPage = true;
+      }
+//      foreach($docYears->find('a') as $top){
+//        $href = pq($top)->attr('href');
+//        if($href == '#top'){
+//          ////this page contains href and dates
+//          $monthPage = true;
+//          break;
+//        }
+//      }
         if($monthPage) {
           foreach ($docYears->find('a') as $key => $a) {
             $href = pq($a)->attr('href');
@@ -655,7 +658,7 @@ class ContentParser extends ConfigEntityBase {
               // Remove hash
               $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
               $date = preg_replace("/[^.0-9]/", '', $date);
-                        $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
+              $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
               if ($html == 'empty') {
                 $message = 'Empty Body ' . '<br>' . $base_url . '<br>' . $href . '<br>' . "\r\n";
                 file_put_contents('parse_errors_empty_body.txt', $message, FILE_APPEND);
