@@ -34,8 +34,8 @@
     }
 
     &_d {
-      @include padding(20px 0, 50px 0);
-      @include min-height(150px, 244px);
+      @include padding(20px 0, 30px 0, 50px 0);
+      @include min-height(150px, 280px, 244px);
     }
 
     &_f {
@@ -156,26 +156,35 @@
     @include sm {
       position: absolute;
       left: 0;
-      top: 14px;
+      top: 0;
       width: 100%;
     }
 
+    @include md {
+      padding: 14px;
+    }
+
     .bContainer {
-      display: flex;
-      align-items: center;
-      padding: 0;
 
       @include sm {
         padding: 0 17px;
+        display: flex;
+        align-items: center;
       }
 
       & > * {
-        padding: 0 20px 0 0;
+        margin: 0 0 10px;
 
         @include sm {
           padding: 0 28px 0 0;
+          margin: 0;
         }
       }
+    }
+
+    #{$this}__bShare {
+      margin-left: auto;
+      padding: 0;
     }
 
     &_a {
