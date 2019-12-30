@@ -20,8 +20,6 @@ class CustomEv {
 		$(document).on('click touch', (e) => {
 			let $ev = $(e.target);
 
-			console.log($ev);
-
 			if (!$ev.closest('.bDrop').length) {
 				$('.bDrop').removeClass('select2-container--open')
 			}
@@ -38,6 +36,8 @@ class CustomEv {
 				if (!$target.length) return;
 
 				window.location.hash = prefix + val;
+
+				console.log($(`body`).css('padding-top'));
 
 				let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
 
