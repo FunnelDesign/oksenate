@@ -97,6 +97,27 @@
       text-decoration: none;
       color: currentColor;
     }
+
+    table {
+      width: auto;
+
+      font {
+        color: #575757;
+        font-family: $FreightTextProBook-Regular;
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      td {
+        padding: 5px;
+        @include cr-last-child;
+
+        @include sm {
+          padding: 15px;
+        }
+
+      }
+    }
   }
 
   &__btnWrap {
