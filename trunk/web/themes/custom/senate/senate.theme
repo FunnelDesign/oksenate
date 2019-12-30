@@ -56,6 +56,8 @@ function senate_preprocess_node(array &$vars) {
       ->getActiveTheme()
       ->getPath();
 
+  $vars['socials'] = _senate_set_socials();
+
   if (!empty($node)) {
 
     switch ($node->bundle()) {
@@ -1294,6 +1296,9 @@ function senate_preprocess_views_view(&$vars) {
   $view = $vars['view'];
   $id = $view->id();
   $display_id = $view->current_display;
+
+  $vars['socials'] = _senate_set_socials();
+
   switch ($id) {
     case 'senators':
       $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
@@ -1610,6 +1615,16 @@ function senate_theme($existing, $type, $theme, $path) {
       ],
       'path' => $theme_path . '/templates/theme',
     ],
+    'senate_socials' => [
+      'variables' => [
+        'url' => NULL,
+        'title' => NULL,
+        'socials' => NULL,
+        'printer' => NULL,
+        'color' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
   ];
 }
 
@@ -1827,4 +1842,26 @@ function senate_preprocess_views_view_grouping(&$vars) {
   if ($view->id() == 'issue_papers') {
     $vars['id'] = strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', $vars['title']));
   }
+}
+
+function _senate_set_socials($url = '', $title = '', $color = '') {
+  $social_class = [
+    'fb' => 'ss-facebook st_facebook_custom',
+    'in' => 'ss-instagram st_instagram_custom',
+    'tw' => 'ss-twitter st_twitter_custom',
+    'email' => 'ss-mail st_email_custom',
+  ];
+
+  $color = !empty($color) ? $color : 'white';
+
+  $socials = [
+    '#theme' => 'senate_socials',
+    '#url' => $url,
+    '#title' => $title,
+    '#socials' => $social_class,
+    '#printer' => TRUE,
+    '#color' => $color,
+  ];
+
+  return $socials;
 }
