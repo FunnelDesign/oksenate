@@ -790,6 +790,16 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["items"][$key]["content"]["#template"] = '{{ value|raw }}';
       }
       break;
+    case 'field_rooms_rooms':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' =>
+          ['btn', 'btn_b']
+        ];
+        $title = $vars["items"][$key]["content"]["#title"];
+        $vars["items"][$key]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);
+      }
+      break;
   }
 }
 

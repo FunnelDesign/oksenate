@@ -19,6 +19,8 @@
             <a href="#">Education</a>
             <span>Agencies Documents</span>
           </div>
+
+          <?php include 'tpl/blocks/bShare-color-a.inc'; ?>
         </div>
 
       </div>

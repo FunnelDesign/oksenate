@@ -18,6 +18,7 @@
             <a href="#">Contacts</a>
             <span>Senate Internship</span>
           </div>
+          <?php include 'tpl/blocks/bShare-color-a.inc'; ?>
         </div>
 
       </div>

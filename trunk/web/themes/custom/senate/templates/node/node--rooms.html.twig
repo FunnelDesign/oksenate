@@ -74,14 +74,40 @@
 #}
 <article{{ attributes }}>
 
-  {{ title_prefix }}
-    <h2{{ title_attributes }}>
-      {{ label }}
-    </h2>
-  {{ title_suffix }}
+  <section class="section section_bg-color_f section_inner-v-centered">
+    <div class="section__bg-wrap">
+      <div class="section__bg" style="background-image: url('{{ theme_path }}/dist/images/tmp/section-bg-img-8.jpg')"></div>
+    </div>
+    <div class="section__v-inner section__v-inner_d">
+      <div class="bContainer">
+        <div class="bTitle bTitle_wSub_a">
+          {{ title_prefix }}
+          <h1>{{ label }}</h1>
+          {{ title_suffix }}
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <div{{ content_attributes }}>
-    {{ content }}
-  </div>
+  <section class="section section_ind_md section_bg-color_b">
+
+    <div class="bContainer">
+      <div class="bTitle bTitle_gap_b">
+        <div class="bTitle__sub bTitle__sub_a">
+          {{ content.body }}
+        </div>
+      </div>
+
+      <div class="bWrap bWrap_size_b bWrap_centered bWrap_f_a_17 bWrap_gap_c">
+        {{ content.field_rooms_desc }}
+      </div>
+      {{ content.field_rooms_rooms }}
+
+      <div class="bWrap bWrap_size_b bWrap_centered bWrap_f_a_17">
+        {{ content.field_rooms_bottom_text }}
+      </div>
+    </div>
+
+  </section>
 
 </article>
