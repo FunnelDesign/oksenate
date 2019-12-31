@@ -50,8 +50,38 @@
   }
 
   div[class$='__item'],
-  div[class$='__it']{
+  div[class$='__it'],
+  .bTiles__item {
     page-break-inside: avoid !important;
+  }
+
+  .btn {
+    display: none;
+  }
+
+  .sSen__sImgWrap {
+    padding-bottom: 40% !important;
+  }
+
+  .bTerms__moreWr {
+    display: none !important;
+  }
+
+  //div[class*='__imgWrap'],
+  //span[class*='__imgWrap'],
+  //div[class*='__ico'],
+  //span[class*='__ico'],
+  //div[class*='__img'],
+  //span[class*='__img'] {
+  //  display: none !important;
+  //}
+
+  .bTiles__imgWrap {
+    padding: 0 !important;
+  }
+
+  .bTiles__item, .section__v-inner {
+    min-height: auto !important;
   }
 
 }
