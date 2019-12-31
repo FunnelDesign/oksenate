@@ -18,6 +18,7 @@ use Drupal\views\Views;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
+define('SENATE_RESERVE_ROOM_NID', '5808'); //first stage NID
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -276,10 +277,15 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'senate_votes':
       case 'history':
-      case 'contact':
       case 'meeting_notice':
       case 'contacts_ada':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
+      case 'contact':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        if ($node->id() == SENATE_RESERVE_ROOM_NID){
+
+        }
         break;
       case 'senate_studies':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
