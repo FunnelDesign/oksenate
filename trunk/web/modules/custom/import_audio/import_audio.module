@@ -96,12 +96,28 @@ function audio_import_test_service2() {
 
 function autio_import_create_senators() {
 
-  $user = User::create([
-    'name' => 'test senator',
-    'mail' => 'eldimateus@gmail.com',
-    'pass' => \Drupal\Component\Utility\Random::string(16),
-    'status' => 1,
-    'roles' => ['senator', 'authenticated'],
-  ]);
-  $user->save();
+  $nodes = \Drupal::entityTypeManager()
+    ->getStorage('node')
+    ->loadByProperties(['type' => 'senator']);
+
+  //dsm($nodes);
+  //$node = $nodes[1835];
+  foreach ($nodes as $node) {
+    $name = trim($node->label());
+    $name = strtolower(str_replace([' ', '  ', '   '], '.', $name));
+
+    $mail = $name . '@oksenate.gov';
+      dsm($mail);
+      $user = User::create([
+        'name' => $name,
+        'mail' => $mail,
+        'pass' => \Drupal\Component\Utility\Random::string(16),
+        'status' => 1,
+        'roles' => ['senator', 'authenticated'],
+      ]);
+      $user->save();
+  }
+
+
+
 }
