@@ -82,14 +82,12 @@
 
         <div class="pageIn__main">
           <div class="bPostList">
-            <div class="bPostList__items">
               {% if rows -%}
                 {{ rows }}
               {% elseif empty -%}
                 {{ empty }}
               {% endif %}
               {{ pager }}
-            </div>
           </div>
         </div>
       </div>

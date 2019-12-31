@@ -178,6 +178,8 @@ function senate_preprocess_node(array &$vars) {
               }
             }
           }
+          $vars['news_block'] = _senate_get_view('week_review', 'block_1');
+
         }
         if (!empty($vars['content']['field_senator_video_link_video']) &&
           !empty($vars['content']['field_senator_video_link_video']['#items'])) {
