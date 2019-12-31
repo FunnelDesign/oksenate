@@ -105,6 +105,7 @@ function autio_import_create_senators() {
   foreach ($nodes as $node) {
     $name = trim($node->label());
     $name = strtolower(str_replace([' ', '  ', '   '], '.', $name));
+    $name = str_replace('..', '.', $name);
 
     $mail = $name . '@oksenate.gov';
       dsm($mail);
