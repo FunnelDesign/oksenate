@@ -16,6 +16,7 @@
             <a href="#">Publications</a>
             <span>Legislative Briefs</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

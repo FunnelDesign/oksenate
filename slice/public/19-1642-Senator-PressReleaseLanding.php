@@ -17,8 +17,19 @@
           <a href="#" class="link link_cl_a link_back">back</a>
           <div class="breadcrumb">
             <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+            <a href="#">Senator Greg Treat </a>
+
             <span>Press Releases</span>
           </div>
+
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

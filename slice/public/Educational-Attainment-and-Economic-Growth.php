@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<?php $title = '19-1642-Publications-IssuePapers-Individual'; ?>
+<?php $title = 'Education and Income: The National Scene'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
 <body class="page">
 <div class="pageWr">
@@ -24,6 +24,10 @@
 
             <div class="bPost__text">
 
+              <a class="hashLink" href="#l-part1">
+                Percent of US Families in Income Ranges, by Educational Attainment
+              </a>
+
               <center>
                 <table border="0" width="100%"><tbody><tr><td>
                       <center>
@@ -42,14 +46,33 @@
 
                       <p><font face="Arial"><font face="Arial" size="-1">Craig Knutson, Chief Economist for Southwestern Bell, reiterated this message at a recent meeting of the Citizens' Task Force on Taxation. In the emerging economy, industries capable of generating the most capital will be those that depend on intellectual capacity to add value to raw materials. Mr. Knutson stated that we are shifting from a 'brawn'-based economy of raw materials and labor to a 'brain'-based economy fueled by a highly educated work force.</font></font></p>
 
-                      <p><font face="Arial"><font face="Arial" size="-1">This presentation continues as a </font><a href="#part1"><font face="Arial" size="-1">series of charts and explanatory bullets</font></a><font face="Arial" size="-1">.</font></font></p>
+                      <p><font face="Arial"><font face="Arial" size="-1">This presentation continues as a </font>
+
+
+
+
+                          <a href="#part1"><font face="Arial" size="-1">series of charts and explanatory bullets</font></a>
+
+
+
+                          <font face="Arial" size="-1">.</font></font></p>
 
                       <p><br><font face="Arial"><font face="Arial" size="-1"><a id="toc" name="toc"></a> </font></font></p>
 
                       <hr><font face="Arial"><font face="Arial"><b>Educational Attainment and Economic Growth<br>
                             Table Of Contents</b></font></font><br><br><b id="begin">Education and Income:&nbsp;&nbsp;The National Scene</b>
 
-                      <p><font face="Arial"><font face="Arial" size="-1"><b>1.&nbsp;<a href="#part1">Percent of US Families in Income Ranges, by Educational Attainment </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>2.&nbsp;<a href="#part2">Median and Mean Family Incomes, by Educational Attainment </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>3.&nbsp;<a href="#part3">Percent of Individuals in Income Ranges, by Educational Attainment </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>4.&nbsp;<a href="#part4">Individual Median Incomes, by Educational Attainment </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>5.&nbsp;<a href="#part5">Per Capita Personal Income and Percent of College Graduates</a></b></font></font><br><br><b>Educational Attainment:&nbsp;&nbsp;The Regional Scene</b></p>
+                      <p><font face="Arial"><font face="Arial" size="-1"><b>1.&nbsp;
+
+
+
+
+                              <a class="hashLink" href="#l-part1">
+                                Percent of US Families in Income Ranges, by Educational Attainment
+                              </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>2.&nbsp;<a href="#part2">Median and Mean Family Incomes, by Educational Attainment </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>3.&nbsp;<a href="#part3">Percent of Individuals in Income Ranges, by Educational Attainment </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>4.&nbsp;<a href="#part4">Individual Median Incomes, by Educational Attainment </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>5.&nbsp;<a href="#part5">Per Capita Personal Income and Percent of College Graduates</a></b></font></font><br><br><b>Educational Attainment:&nbsp;&nbsp;The Regional Scene</b></p>
+
+
+
                       <font face="Arial"> </font>
 
                       <p><font face="Arial"><font face="Arial" size="-1"><b>6.&nbsp;<a href="#part6">Percent of Total Population 25 Years or Older That Earned a High School Diploma</a></b></font><br><font face="Arial" size="-1"><b>(Details from main chart)</b></font> </font> <font face="Arial"> </font> <font face="Arial"> </font><br><font face="Arial"><font face="Arial" size="-1"><b>&nbsp; &nbsp;6a.&nbsp;<a href="#part6a">Proportion of Population That Earned a High School Diploma or More, U.S. and OK </a></b></font></font><br><font face="Arial"><font face="Arial" size="-1"><b>&nbsp; &nbsp;6b.&nbsp;<a href="#part6b">Change in Proportion of Population That Earned a High School Diploma or More, 1990 to 1996, U.S. and OK </a></b></font></font></p>

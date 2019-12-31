@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * Socials and Print.
+ *
+ */
+#}
+<div class="bShare section__bShare">
+  {% if socials %}
+    <div class="bShare__bSoc">
+      <div class="bShare__title">
+        {{ 'Share'|t }}
+      </div>
+      <div class="bSoc bSoc_min bSoc_min_share bSoc_cl_a">
+
+        <div class="bSoc__items sharethis-wrapper">
+          {% for social in socials %}
+            <div class="bSoc__item">
+              <span st_url="{{ url }}" st_title="{{ title }}" class="bSoc__ico ss-icon ss-social-circle ss-facebook {{ social }}"></span>
+            </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+  {% endif %}
+
+  {% if printer %}
+    <div class="bShare__print">
+      <a href="javascript:window.print()">
+        <i class="ss-icon ss-glyphish-outlined ss-print"></i>
+        {{ "Printer Friendly"|t }}
+      </a>
+    </div>
+  {% endif %}
+</div>
