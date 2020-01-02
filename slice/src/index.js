@@ -50,11 +50,26 @@ function init() {
 	new bTerms();
 	new bStaff();
 	new lightSlider();
+	initFormRedirect();
 	initSelect();
 	initAccessibility();
 	initHeaderHover();
 
 	new BlockVideo();
+}
+
+function initFormRedirect() {
+	var $form = $('.f-search-redirect');
+	var $input = $form.find('.form-text');
+
+	$form.on('submit', function(e) {
+		e.preventDefault();
+		var val = $input.val().trim();
+
+		if(val) {
+			location.href = 'http://www.oklegislature.gov/BillInfo.aspx?Bill=' + val;
+		}
+	});
 }
 
 function initSelect() {
