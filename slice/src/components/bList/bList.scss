@@ -2,7 +2,13 @@
   $this: &;
 
   &_a {
-    margin-left: 20px;
+
+    ul {
+
+      @include xs-only {
+        margin: 0 0 12px 20px;
+      }
+    }
 
     li {
       position: relative;
