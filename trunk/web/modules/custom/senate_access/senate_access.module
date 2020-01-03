@@ -1,0 +1,61 @@
+<?php
+
+use \Drupal\node\NodeInterface;
+use \Drupal\Core\Session\AccountInterface;
+use \Drupal\Core\Access\AccessResult;
+
+/**
+ * Implements hook_node_access().
+ */
+function senate_access_node_access($node, $op, $account) {
+  $type = $node->bundle();
+
+  switch ($op) {
+    case 'update':
+      if ($type == 'press_release') {
+        if ($node->hasField('field_senator')) {
+          $senators = $node->get('field_senator')->getValue();
+          $senators = !empty($senators) ? $senators : [];
+          $senator_nodes = [];
+          foreach ($senators as $value) {
+            if (!empty($value['target_id'])) {
+              $senator_nodes[] = $value['target_id'];
+            }
+          }
+
+          $uids = _senate_access_get_node_created_uid('senator', $senator_nodes);
+
+          return AccessResult::allowedIf($account
+              ->hasPermission('edit own ' . $type . ' content', $account) &&
+            (($account->id() == $node->getOwnerId()) || in_array($account->id(), $uids)))
+            ->cachePerPermissions()
+            ->cachePerUser()
+            ->addCacheableDependency($node);
+        }
+      }
+      break;
+  }
+}
+
+/**
+ * Get node created user.
+ * @param $node_type
+ * @param $senator_nodes
+ *
+ * @return string
+ */
+function _senate_access_get_node_created_uid($node_type, $senator_nodes) {
+  if (empty($node_type) || empty($senator_nodes)) {
+    return [];
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->fields('nfd', ['nid', 'uid'])
+    ->condition('nfd.type', $node_type)
+    ->condition('nfd.status', 1)
+    ->condition('nfd.nid', $senator_nodes, 'IN');
+
+  $result = $query->execute()->fetchAllKeyed();
+
+  return !empty($result) ? $result : [];
+}
