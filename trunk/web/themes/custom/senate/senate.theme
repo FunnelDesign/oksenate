@@ -57,7 +57,7 @@ function senate_preprocess_node(array &$vars) {
       ->getActiveTheme()
       ->getPath();
 
-  $vars['socials'] = _senate_set_socials();
+  $vars['socials'] = _senate_get_socials($node, 'node');
 
   if (!empty($node)) {
 
@@ -1305,7 +1305,7 @@ function senate_preprocess_views_view(&$vars) {
   $id = $view->id();
   $display_id = $view->current_display;
 
-  $vars['socials'] = _senate_set_socials();
+  $vars['socials'] = _senate_get_socials($view, 'view');
 
   switch ($id) {
     case 'senators':
@@ -1625,9 +1625,10 @@ function senate_theme($existing, $type, $theme, $path) {
     ],
     'senate_socials' => [
       'variables' => [
+        'entity' => NULL,
+        'entity_type' => NULL,
         'url' => NULL,
         'title' => NULL,
-        'socials' => NULL,
         'printer' => NULL,
         'color' => NULL,
       ],
@@ -1852,7 +1853,39 @@ function senate_preprocess_views_view_grouping(&$vars) {
   }
 }
 
-function _senate_set_socials($url = '', $title = '', $color = '') {
+/**
+ * Get socials.
+ * @param $entity
+ * @param $entity_type
+ * @param string $url
+ * @param string $title
+ * @param string $color
+ *
+ * @return array
+ */
+function _senate_get_socials($entity, $entity_type, $url = '', $title = '', $color = '') {
+
+  $socials = [
+    '#theme' => 'senate_socials',
+    '#entity' => $entity,
+    '#entity_type' => $entity_type,
+    '#url' => $url,
+    '#title' => $title,
+    '#printer' => TRUE,
+    '#color' => $color,
+  ];
+
+  return $socials;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ * @param $vars
+ */
+function senate_preprocess_senate_socials(&$vars) {
+  $entity = !empty($vars["entity"]) ? $vars["entity"] : '';
+  $entity_type = !empty($vars["entity_type"]) ? $vars["entity_type"] : '';
+
   $social_class = [
     'fb' => 'ss-facebook st_facebook_custom',
     'in' => 'ss-instagram st_instagram_custom',
@@ -1862,14 +1895,29 @@ function _senate_set_socials($url = '', $title = '', $color = '') {
 
   $color = !empty($color) ? $color : 'white';
 
-  $socials = [
-    '#theme' => 'senate_socials',
-    '#url' => $url,
-    '#title' => $title,
-    '#socials' => $social_class,
-    '#printer' => TRUE,
-    '#color' => $color,
-  ];
+  if (!empty($entity) && ($entity_type == 'node')) {
+    switch ($entity->bundle()) {
+      case 'press_release':
+        $color = 'navy';
+        break;
+    }
+  }
+  elseif (!empty($entity) && ($entity_type == 'view')) {
+    switch ($entity->id()) {
+      case 'homepage':
 
-  return $socials;
+        break;
+    }
+  }
+
+  $vars['socials'] = $social_class;
+  $vars['color'] = $color;
+  if ($color == 'white') {
+    $vars['wrapper_class'] = '';
+    $vars['icons_class'] = 'bSoc_cl_a';
+  }
+  elseif ($color == 'navy') {
+    $vars['wrapper_class'] = 'bShare_cl_a';
+    $vars['icons_class'] = 'bSoc_cl_b';
+  }
 }
