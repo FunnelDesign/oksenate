@@ -85,6 +85,10 @@
     color: #404040;
     font-size: 14px;
     line-height: 1.6;
+
+    br {
+      display: none;
+    }
   }
 
   &__readMore {

@@ -3,6 +3,13 @@
 
   &_a {
 
+    ul {
+
+      @include xs-only {
+        margin: 0 0 12px 20px;
+      }
+    }
+
     li {
       position: relative;
       list-style: none;
