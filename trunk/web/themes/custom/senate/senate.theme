@@ -1317,8 +1317,10 @@ function senate_preprocess_views_view(&$vars) {
         $tid = explode(',', $tid);
         $parent = Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadAllParents($tid[0]);
         $term_obj = reset($parent);
-        $vars['committee_name'] = Markup::create("<h2>Upcoming " . $term_obj->getName() ." Events</h2>");
-        $vars['events_url'] = "/upcoming-events/" . $view->args[0];
+        if (!empty($term_obj)) {
+          $vars['committee_name'] = Markup::create("<h2>Upcoming " . $term_obj->getName() ." Events</h2>");
+          $vars['events_url'] = "/upcoming-events/" . $view->args[0];
+        }
       }
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       $vars['webform'] = _senate_get_block('webform_notification_block');
@@ -1864,6 +1866,8 @@ function senate_preprocess_views_view_grouping(&$vars) {
  * @return array
  */
 function _senate_get_socials($entity, $entity_type, $url = '', $title = '', $color = '') {
+  $sharethis_manager = \Drupal::service('sharethis.manager');
+  $st_js = $sharethis_manager->sharethisIncludeJs();
 
   $socials = [
     '#theme' => 'senate_socials',
@@ -1873,6 +1877,16 @@ function _senate_get_socials($entity, $entity_type, $url = '', $title = '', $col
     '#title' => $title,
     '#printer' => TRUE,
     '#color' => $color,
+    '#attached' => [
+      'library' => [
+        'sharethis/sharethispickerexternalbuttonsws',
+        'sharethis/sharethispickerexternalbuttons',
+        'sharethis/sharethis',
+      ],
+      'drupalSettings' => [
+        'sharethis' => $st_js,
+      ],
+    ],
   ];
 
   return $socials;
@@ -1898,14 +1912,22 @@ function senate_preprocess_senate_socials(&$vars) {
   if (!empty($entity) && ($entity_type == 'node')) {
     switch ($entity->bundle()) {
       case 'press_release':
+      case 'contact':
+      case 'edu_indiv_art_work':
+      case 'issue':
+      case 'privacy_policy':
+      case 'senate_votes':
+      case 'senator':
+      case 'tables_page':
         $color = 'navy';
         break;
     }
   }
   elseif (!empty($entity) && ($entity_type == 'view')) {
     switch ($entity->id()) {
-      case 'homepage':
-
+      case 'subcommittee_events':
+      case 'agencies_documents':
+        $color = 'navy';
         break;
     }
   }

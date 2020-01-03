@@ -73,11 +73,13 @@
  */
 #}
 <section class="section section_ind_d section_bg-color_c">
-  <div class="section__sNav">
-    <div class="bContainer">
-      {{ socials }}
+  {% if socials %}
+    <div class="section__sNav">
+      <div class="bContainer">
+        {{ socials }}
+      </div>
     </div>
-  </div>
+  {% endif %}
 {#  <div class="bContainer">#}
 {#  {{ socials }}#}
 {#  </div>#}
