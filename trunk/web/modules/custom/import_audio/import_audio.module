@@ -118,4 +118,19 @@ function autio_import_create_senators() {
 //      ]);
 //      $user->save();
 //  }
+
+//  $users = \Drupal::entityTypeManager()
+//    ->getStorage('user')
+//    ->loadByProperties(['roles' => 'senator']);
+//  //dsm($users);
+//
+//  foreach($users as $user) {
+//    $password = \Drupal\Component\Utility\Random::name(16);
+//    $user->setPassword($password);
+//
+//    // Save the user
+//    $user->save();
+//    dsm($user->label() . "," . $password);
+//  }
+
 }
