@@ -1,4 +1,4 @@
-name: 'manage'
+name: 'Manage'
 type: module
 description: 'Additional management functionality'
 core: 8.x
