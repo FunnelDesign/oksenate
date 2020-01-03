@@ -103,6 +103,7 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'committee_events':
+//        kint($vars);
         if ($view_mode == 'teaser') {
           $vars["attributes"]["class"][] = 'bTiles__item';
         }
@@ -283,9 +284,6 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'contact':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
-        if ($node->id() == SENATE_RESERVE_ROOM_NID){
-
-        }
         break;
       case 'senate_studies':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
@@ -432,6 +430,14 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_twitter';
         $vars['items'][$key]['content']['#title'] = "twitter";
 
+      }
+      break;
+    case 'field_comt_evt_room_reference':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b btn_b_live');
+        $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
+        $vars['items'][$key]['content']['#title'] = Markup::create("<span><span>•</span></span> " . $vars['items'][$key]['content']['#title']);
       }
       break;
     case 'field_footer_find_senator_image':
@@ -890,7 +896,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       $view_name = !empty($view) ? $view->id() : '';
 
       if ($view_name == 'agencies_documents') {
-        $tid = !empty($view->args) ? $view->args[0] : '';
+        $tid = !empty($view->args) ? $view->args : '';
+        $tid = !empty($tid[1]) ? $tid[1] : '';
         $years = _senate_get_years_existing_nodes($tid);
         if (!empty($form["year"])) {
           foreach ($form["year"]["#options"] as $key => $value) {
