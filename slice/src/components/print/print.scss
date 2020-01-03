@@ -10,6 +10,7 @@
     width: auto !important;
     min-width: 0 !important;
     min-height: 0 !important;
+    padding: 0 !important;
   }
 
   h1 {
@@ -50,8 +51,71 @@
   }
 
   div[class$='__item'],
-  div[class$='__it']{
+  div[class$='__it'],
+  span[class$='__item'],
+  span[class$='__it'],
+  .bTiles__item {
     page-break-inside: avoid !important;
+  }
+
+  span.bTiles__item, .bTiles__date, .bTiles__title {
+    page-break-inside: avoid !important;
+    page-break-before: avoid;
+    page-break-after: avoid;
+  }
+
+  //.btn {
+  //  display: none;
+  //}
+
+  .sSen__sImgWrap {
+    padding-bottom: 40% !important;
+  }
+
+  .bTerms__moreWr {
+    display: none !important;
+  }
+
+  //div[class*='__imgWrap'],
+  //span[class*='__imgWrap'],
+  //div[class*='__ico'],
+  //span[class*='__ico'],
+  //div[class*='__img'],
+  //span[class*='__img'] {
+  //  display: none !important;
+  //}
+
+  .bTiles__imgWrap {
+    padding: 0 !important;
+  }
+
+  .bTiles__item, .section__v-inner {
+    min-height: auto !important;
+    padding: 7pt 3pt !important;
+  }
+
+  .pageIn__ico {
+    display: none;
+  }
+
+  .bAudio__au {
+    display: none;
+  }
+
+  #toolbar-administration {
+    display: none !important;
+  }
+
+  #block-senate-local-tasks {
+    display: none !important;
+  }
+
+  .section__btnBack {
+    display: none !important;
+  }
+
+  .bShare {
+    display: none !important;
   }
 
 }

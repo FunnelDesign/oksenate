@@ -268,6 +268,7 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
 
             $url = Url::fromUserInput('/node/' . $this::COMMITTEE_MAIN_PAGE_NID);
             $links[] = Link::fromTextAndUrl(t('Committees'), $url);
+            $nodes = !empty($nodes) ? $nodes : [];
 
             foreach ($nodes as $node) {
               $nid = !empty($node->nid) ? $node->nid : '';

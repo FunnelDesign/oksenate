@@ -50,11 +50,11 @@ class ParserService {
       $file_url = $pq_link->attr('href');
       if(strpos(strtolower($file_url), '.mp3') !== FALSE) {
         $absolute_file_url = ParserHelper::getAbsoluteUrl($url, $file_url);
-        dsm($absolute_file_url);
-        \Drupal::database()->merge('import_audio_check')
-          ->insertFields(['audio' => $absolute_file_url, 'month_page' => $url])
-          ->keys(['audio' => $absolute_file_url, 'month_page' => $url])
-          ->execute();
+        //dsm($absolute_file_url);
+//        \Drupal::database()->merge('import_audio_check')
+//          ->insertFields(['audio' => $absolute_file_url, 'month_page' => $url])
+//          ->keys(['audio' => $absolute_file_url, 'month_page' => $url])
+//          ->execute();
       }
     }
 
@@ -62,8 +62,6 @@ class ParserService {
 
 
     $rows = $pq->find('table table table table tr');
-
-
 
     foreach($rows as $delta => $row) {
       $row_html = pq($row)->find('td:first')->html();
@@ -127,8 +125,23 @@ class ParserService {
         ParserHelper::grepFirstHref($filesRow)
       );
 
-      if(empty($file_info['url']) && !empty($file_info['desc']) && !empty($info['files'][$delta-1]['desc'])) {
-        $info['files'][$delta-1]['desc'] .= $file_info['desc'];
+      if(empty($file_info['url']) && !empty($file_info['desc'])) {
+        $find_delta = $delta-1;
+        $found_position = FALSE;
+        while ($find_delta >= 0) {
+          if(!empty($info['files'][$find_delta]['desc']) && !empty($info['files'][$find_delta]['url'])) {
+            $info['files'][$find_delta]['desc'] .= ' ' . $file_info['desc'];
+            $info['files'][$find_delta]['desc'] = ParserHelper::removeNewLinesAndMultiSpaces($info['files'][$find_delta]['desc']);
+            $found_position = TRUE;
+            break;
+          } else {
+            $find_delta = $find_delta - 1;
+          }
+        }
+        if(!$found_position) {
+          \Drupal::logger('import_file_not_found_position')->notice('<pre><code>' . print_r([$file_info, $info], TRUE)  .  '</code></pre>');
+        }
+
       } else if(!empty($file_info['url']) || !empty($file_info['desc'])) {
         $info['files'][] = $file_info;
       }

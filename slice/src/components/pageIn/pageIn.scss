@@ -150,6 +150,10 @@
           @include pseudo-block($bottom: 0, $left: 5px, $right: 0);
           border-bottom: 1px solid #cbcbcb;
         }
+
+        p {
+          margin-bottom: 0;
+        }
       }
 
       #{$this}__notice-ico {

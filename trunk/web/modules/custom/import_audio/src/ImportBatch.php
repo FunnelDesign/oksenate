@@ -4,6 +4,7 @@ namespace Drupal\import_audio;
 
 use DateInterval;
 use DateTime;
+use Drupal\import_audio\Exceptions\ImportNoNodeError;
 
 class ImportBatch {
 
@@ -85,6 +86,8 @@ class ImportBatch {
         $queue_worker->processItem($item->data);
         $context['results'][$queue_name] += 1;
         $queue->deleteItem($item);
+      } catch (ImportNoNodeError $e) {
+        //skip logs inside parser
       } catch (\Exception $e) {
         $safe_data_string = ParserHelper::fixEncoding(
           '<code><pre>' . print_r($item->data, TRUE) . '</pre></code>'

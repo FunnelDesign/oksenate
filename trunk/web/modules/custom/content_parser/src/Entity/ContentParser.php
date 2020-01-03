@@ -639,20 +639,42 @@ class ContentParser extends ConfigEntityBase {
               $content     = $this->loadUrl($href);
               $docNews     = $this->getPhpQuery($content, $href);
               $returnLinks = 'this table contains return links';
+              $mainNavigation = 'this table contains the news navigation menu';
               $mainContent = 'this table contains the main content of the page';
               $html        = 'empty';
               foreach ($docNews['table'] as $table) {
                 if (pq($table)->attr('summary') == $returnLinks) {
                   pq($table)->remove();
                 }
+                if (pq($table)->attr('summary') == $mainNavigation) {
+                  pq($table)->remove();
+                }
               }
+              $hasMainContent = FALSE;
               foreach ($docNews['table'] as $key => $table) {
                 if (pq($table)->attr('summary') == $mainContent) {
+                  $hasMainContent = TRUE;
                   $html          = [
                     'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br>')),
                     'format' => 'full_html'
                   ];
                   $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br>'));
+                }
+              }
+              if(!$hasMainContent){
+                $parsed = parse_url($href, PHP_URL_PATH);
+                $urlDate = basename($parsed);
+                $trimmedHref = preg_replace("/[^0-9]/", '', $urlDate);
+                $urlDate = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $trimmedHref)))));
+                if(strlen($urlDate) > 6){
+                  $html          = [
+                    'value'  => str_replace($searchForReplace, '', strip_tags($content, '<br>')),
+                    'format' => 'full_html'
+                  ];
+                  $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br>'));
+
                 }
               }
               // Remove hash
@@ -720,6 +742,7 @@ class ContentParser extends ConfigEntityBase {
                 $entity->set('field_release_img', $mini);
 
                 $entity->set('field_press_release_old_url', $href);
+                $entity->set('field_press_release_is_archived', 1);
                 $entity->set('title', $text);
                 $entity->set('body', $html);
                 $entity->set('field_press_release_header', isset($bodyHeader) ? $bodyHeader : '');
@@ -1248,8 +1271,8 @@ class ContentParser extends ConfigEntityBase {
 //  }
 
   public function makeSummary($text, $title){
-    $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-    $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
+    $text = html_entity_decode(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text))));
+    $title = html_entity_decode(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title))));
     $len = (int) strlen($title);
     $strpos = (int) strpos($text, $title);
     $headerString = substr($text, 0, $strpos);

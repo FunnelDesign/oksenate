@@ -5,6 +5,7 @@ namespace Drupal\import_audio\Service;
 use Drupal;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\import_audio\Exceptions\ImportNoNodeError;
 use Drupal\import_audio\Exceptions\ImportParseError;
 use Drupal\import_audio\ParserHelper;
 use Drupal\media\Entity\Media;
@@ -76,7 +77,7 @@ class AudioCreatorService {
         file_put_contents('import_logs/save_file_error.log', $message, FILE_APPEND);
         \Drupal::logger('audio_import_no_node_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
 
-        throw new ImportParseError('No node');
+        throw new ImportNoNodeError('No node');
       }
 
       if (!empty($node->field_press_release_audio)) {
