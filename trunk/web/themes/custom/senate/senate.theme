@@ -896,7 +896,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       $view_name = !empty($view) ? $view->id() : '';
 
       if ($view_name == 'agencies_documents') {
-        $tid = !empty($view->args) ? $view->args[0] : '';
+        $tid = !empty($view->args) ? $view->args : '';
+        $tid = !empty($tid[1]) ? $tid[1] : '';
         $years = _senate_get_years_existing_nodes($tid);
         if (!empty($form["year"])) {
           foreach ($form["year"]["#options"] as $key => $value) {
