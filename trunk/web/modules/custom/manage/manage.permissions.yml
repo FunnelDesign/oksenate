@@ -1,3 +1,6 @@
 view toolbar search:
   title: 'View toolbar search'
   description: 'Allow access to the toolbar search'
+manage own senator page:
+  title: 'Edit own senator page'
+  description: 'Edit own senator page'
