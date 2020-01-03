@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Contains manage.module.
+ */
+
+
+/**
+ * Implements hook_toolbar_alter().
+ */
+function manage_toolbar_alter(&$items) {
+ if(!\Drupal::currentUser()->hasPermission('view toolbar search')) {
+   $items['administration']['#attached']['html_head'][] = [
+     [
+       '#tag' => 'style',
+       '#value' => '#admin-toolbar-search-tab {display:none;}',
+     ],
+     'hide-search-css',
+   ];
+ }
+}
