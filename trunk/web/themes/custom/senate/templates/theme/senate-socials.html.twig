@@ -5,13 +5,13 @@
  *
  */
 #}
-<div class="bShare section__bShare">
+<div class="bShare section__bShare {{ wrapper_class }}">
   {% if socials %}
     <div class="bShare__bSoc">
       <div class="bShare__title">
         {{ 'Share'|t }}
       </div>
-      <div class="bSoc bSoc_min bSoc_min_share bSoc_cl_a">
+      <div class="bSoc bSoc_min bSoc_min_share {{ icons_class }}">
 
         <div class="bSoc__items sharethis-wrapper">
           {% for social in socials %}
