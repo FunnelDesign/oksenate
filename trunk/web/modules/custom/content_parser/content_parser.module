@@ -241,7 +241,7 @@ function _parser_check_urls_host($url1, $url2) {
 function _parser_post_request($url, array $data, array $options = array()) {
   try {
     return  \Drupal::httpClient()
-      ->post($uri, $options + [
+      ->post($url, $options + [
         'headers' => ['Content-Type' => 'application/x-www-form-urlencoded'],
         'body' => $data
       ]);
@@ -366,6 +366,12 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
       continue;
     }
     if(strpos($src, 'bandblue') !== FALSE){
+      continue;
+    }
+    if(strpos($src, 'sidenews') !== FALSE){
+      continue;
+    }
+    if(strpos($src, 'barnews') !== FALSE){
       continue;
     }
     $base = file_create_url(file_default_scheme() . '://');
