@@ -50,26 +50,37 @@
     display: none !important;
   }
 
+  .sSen__items {
+    position: relative !important;
+   // display: block !important;
+  }
+
   div[class$='__item'],
   div[class$='__it'],
   span[class$='__item'],
   span[class$='__it'],
-  .bTiles__item {
-    page-break-inside: avoid !important;
-  }
-
-  span.bTiles__item, .bTiles__date, .bTiles__title {
-    page-break-inside: avoid !important;
-    page-break-before: avoid;
-    page-break-after: avoid;
-  }
-
-  //.btn {
-  //  display: none;
-  //}
-
+  .sSen__sLink,
+  .sSen__sName,
   .sSen__sImgWrap {
-    padding-bottom: 40% !important;
+    page-break-inside: avoid;
+    position: relative !important;
+
+   // display: inline-block !important;
+  }
+
+  .btn, .form {
+    display: none !important;
+  }
+
+  .sSen__sImgWrap,
+  .sSen__sImg,
+  .sSen__sMask,
+  .sSen__sDis,
+  .sSen__sName {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    //page-break-inside: avoid;
+    //position: relative;
   }
 
   .bTerms__moreWr {
