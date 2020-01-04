@@ -602,22 +602,6 @@ class ContentParser extends ConfigEntityBase {
       }
       $secondBase = parser_get_absolute_url($base_url, $secondBase);
       $secondBase = preg_replace('/#.*$/', '', $secondBase);
-        $content = $this->loadUrl($secondBase);
-        $docYears = $this->getPhpQuery($content, $secondBase);
-        $monthPage = false;
-      if(preg_match('/\b(?:[A-Za-z]+)?(?:\W+){1,6}?(?:[0-9]{4})?(?:\W+){1,6}?PRESS RELEASES\b/i', $content) === 1){
-        $monthPage = true;
-      }
-//      foreach($docYears->find('a') as $top){
-//        $href = pq($top)->attr('href');
-//        if($href == '#top'){
-//          ////this page contains href and dates
-//          $monthPage = true;
-//          break;
-//        }
-//      }
-        if($monthPage) {
-          foreach ($docYears->find('a') as $key => $a) {
             $href = pq($a)->attr('href');
             if(empty($href)){
               continue;
@@ -671,11 +655,10 @@ class ContentParser extends ConfigEntityBase {
                 }
               }
               if(!$hasMainContent){
-                $parsed = parse_url($href, PHP_URL_PATH);
-                $urlDate = basename($parsed);
-                $trimmedHref = preg_replace("/[^0-9]/", '', $urlDate);
-                $urlDate = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $trimmedHref)))));
-                if(strlen($urlDate) > 6){
+//                $parsed = parse_url($href, PHP_URL_PATH);
+//                $urlDate = basename($parsed);
+//                $trimmedHref = preg_replace("/[^0-9]/", '', $urlDate);
+//                $urlDate = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $trimmedHref)))));
                   $html          = [
                     'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<br>')),
                     'format' => 'full_html'
@@ -684,7 +667,7 @@ class ContentParser extends ConfigEntityBase {
                   $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
                   $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br>'));
                   $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,<br>:/!]~','',$html['value']);
-                }
+
               }
               // Remove hash
 //              $text = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
@@ -778,8 +761,6 @@ class ContentParser extends ConfigEntityBase {
               }
               }
 
-            }
-          }
         }
         //      $text = pq($a)->text();
         //      $date = str_replace($text, '', pq($a)->parent()->text());
