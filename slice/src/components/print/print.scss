@@ -1,6 +1,6 @@
 @media print {
 
-  @page{
+  @page {
     size: auto;
     margin: 5mm;
   }
@@ -50,28 +50,31 @@
     display: none !important;
   }
 
-  .sSen__items {
+  [class$='__items'],
+  [class$='__its'],
+  .bListLinks__links {
     position: relative !important;
-   // display: block !important;
+    display: block !important;
+
+    margin: 0 !important;
+    max-width: none !important;
   }
 
-  div[class$='__item'],
-  div[class$='__it'],
-  span[class$='__item'],
-  span[class$='__it'],
-  .sSen__sLink,
-  .sSen__sName,
-  .sSen__sImgWrap {
+  [class$='__item']:not(.bDateList__item),
+  [class$='__it']:not(.bTerms__it):not(.bStaff__it),
+  .bListLinks__link {
+    display: inline-block !important;
+    vertical-align: text-top;
     page-break-inside: avoid;
     position: relative !important;
 
-   // display: inline-block !important;
+    margin: 0 10px !important;
   }
 
-  .btn, .form {
-    display: none !important;
-  }
-
+  .senators__img,
+  .bTiles__img,
+  .bNews__imgWrap,
+  .bSenBio__imgWrap,
   .sSen__sImgWrap,
   .sSen__sImg,
   .sSen__sMask,
@@ -79,25 +82,111 @@
   .sSen__sName {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    //page-break-inside: avoid;
-    //position: relative;
+  }
+
+  .bStaff__filTitle,
+  .messages,
+  .bAudio,
+  .pager,
+  .bTiles_nav,
+  .bSelect,
+  .bTerms__filTitle,
+  .bNews__readMore,
+  .bDistrict h2 a ,
+  .bMedia,
+  .bSenBio__mail,
+  .bSenBio__mediaBtn,
+  .sSen__head,
+  .bSenBio__soc {
+    display: none !important;
+  }
+
+  .bMembership__item,
+  .bListLinks__link,
+  .bListItems__item,
+  .bSchedule__item,
+  .bPostList__item {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .bTiles_rel_c .bTiles__items,
+  .bListItems__item {
+    text-align: center !important;
+  }
+
+  .bTiles_rel_c .bTiles__item {
+    max-width: 48% !important;
+    min-width: 48% !important;
+  }
+
+  .sSen__items {
+    text-align: center;
+  }
+
+  .contextual {
+    display: none !important;
+  }
+
+  .bNews {
+
+    h2 {
+      page-break-before: always;
+    }
+  }
+
+  .bHist__desc,
+  .bHist__date,
+  .bTitle_b h2 {
+    color: $color-dark-blue !important;
+  }
+
+  .bSenBio__info {
+    text-align: center !important;
+
+    strong {
+      display: block;
+    }
+  }
+
+  .sSen__item {
+    margin: 0 10px !important;
+    padding-top: 10px !important;
+  }
+
+  .bHide {
+
+    &:after, &__moreWr {
+      display: none;
+    }
+  }
+
+  .bHide__cont {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bSenBio__con {
+    display: inline-block !important;
+  }
+
+  .bSenBio__col, .bNews__items {
+    text-align: center !important;
+  }
+
+  .bSenBio__address {
+
+    &:before {
+      display: none;
+    }
+  }
+
+  .btn, .form {
+    display: none !important;
   }
 
   .bTerms__moreWr {
     display: none !important;
-  }
-
-  //div[class*='__imgWrap'],
-  //span[class*='__imgWrap'],
-  //div[class*='__ico'],
-  //span[class*='__ico'],
-  //div[class*='__img'],
-  //span[class*='__img'] {
-  //  display: none !important;
-  //}
-
-  .bTiles__imgWrap {
-    padding: 0 !important;
   }
 
   .bTiles__item, .section__v-inner {

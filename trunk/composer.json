@@ -65,6 +65,7 @@
         "drupal/search_file_attachments": "^1.1",
         "drupal/select2": "^1.5",
         "drupal/sharethis": "^2.0@beta",
+        "drupal/simple_sitemap": "^3.5",
         "drupal/smtp": "^1.0@beta",
         "drupal/taxonomy_multidelete_terms": "^1.1",
         "drupal/time_field": "^1.13",

@@ -1950,4 +1950,14 @@ function senate_preprocess_senate_socials(&$vars) {
     $vars['wrapper_class'] = 'bShare_cl_a';
     $vars['icons_class'] = 'bSoc_cl_b';
   }
+
+  if (empty($vars["url"])) {
+    $vars["url"] = Url::fromRoute('<current>', [], ['query' => \Drupal::request()->query->all(), 'absolute' => 'true'])->toString();
+  }
+  if (empty($vars["title"])) {
+    $request = \Drupal::request();
+    if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+      $vars["title"] = \Drupal::service('title_resolver')->getTitle($request, $route);
+    }
+  }
 }
