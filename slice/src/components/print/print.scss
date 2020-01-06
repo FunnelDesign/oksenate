@@ -67,7 +67,7 @@
     page-break-inside: avoid;
     position: relative !important;
 
-    margin: 0 2px !important;
+    margin: 0 10px !important;
   }
 
   .senators__img,
@@ -83,6 +83,7 @@
     print-color-adjust: exact;
   }
 
+  .bStaff__filTitle,
   .messages,
   .bAudio,
   .pager,
@@ -99,7 +100,10 @@
     display: none !important;
   }
 
-  .bListLinks__link, .bListItems__item, .bSchedule__item {
+  .bListLinks__link,
+  .bListItems__item,
+  .bSchedule__item,
+  .bPostList__item {
     width: 100% !important;
     display: block !important;
   }
@@ -144,7 +148,8 @@
   }
 
   .sSen__item {
-    padding-top: 10px;
+    margin: 0 10px !important;
+    padding-top: 10px !important;
   }
 
   .bHide {
