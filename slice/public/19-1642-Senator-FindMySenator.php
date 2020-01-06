@@ -213,7 +213,12 @@
               array("s-sen-img-1.jpg", "r", "4", "Mark Allen"),
               array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
               array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
-              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett")
+              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
+              array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
+              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
+              array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks")
             )
             ?>
             <?php foreach($sSen__item as $key => $element): ?>
