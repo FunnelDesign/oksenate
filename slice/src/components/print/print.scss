@@ -55,17 +55,23 @@
   .bListLinks__links {
     position: relative !important;
     display: block !important;
+
+    margin: 0 !important;
   }
 
-  [class$='__item']:not(.bTerms__it),
-  [class$='__it']:not(.bTerms__it),
+  [class$='__item']:not(.bTerms__it):not(.bStaff__it),
+  [class$='__it']:not(.bDateList__item),
   .bListLinks__link {
     display: inline-block !important;
     vertical-align: text-top;
     page-break-inside: avoid;
     position: relative !important;
+
+    margin: 0 2px !important;
   }
 
+  .senators__img,
+  .bTiles__img,
   .bNews__imgWrap,
   .bSenBio__imgWrap,
   .sSen__sImgWrap,
@@ -77,6 +83,12 @@
     print-color-adjust: exact;
   }
 
+  .messages,
+  .bAudio,
+  .pager,
+  .bTiles_nav,
+  .bSelect,
+  .bTerms__filTitle,
   .bNews__readMore,
   .bDistrict h2 a ,
   .bMedia,
@@ -87,11 +99,13 @@
     display: none !important;
   }
 
-  .bListLinks__link {
-    width: 100%;
+  .bListLinks__link, .bListItems__item, .bSchedule__item {
+    width: 100% !important;
+    display: block !important;
   }
 
-  .bTiles_rel_c .bTiles__items {
+  .bTiles_rel_c .bTiles__items,
+  .bListItems__item {
     text-align: center !important;
   }
 
@@ -115,7 +129,9 @@
     }
   }
 
-  .bHist__desc, .bHist__date {
+  .bHist__desc,
+  .bHist__date,
+  .bTitle_b h2 {
     color: $color-dark-blue !important;
   }
 
