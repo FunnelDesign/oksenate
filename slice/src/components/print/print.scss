@@ -59,8 +59,8 @@
     margin: 0 !important;
   }
 
-  [class$='__item']:not(.bTerms__it):not(.bStaff__it),
-  [class$='__it']:not(.bDateList__item),
+  [class$='__item']:not(.bDateList__item),
+  [class$='__it']:not(.bTerms__it):not(.bStaff__it),
   .bListLinks__link {
     display: inline-block !important;
     vertical-align: text-top;
