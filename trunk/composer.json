@@ -147,6 +147,9 @@
             },
             "drupal/webform_mailchimp": {
                 "https://www.drupal.org/project/webform_mailchimp/issues/3036323": "https://www.drupal.org/files/issues/2019-10-05/3036323-interest-groups-predefined-options-15.patch"
+            },
+            "drupal/webform": {
+                "https://www.drupal.org/project/webform/issues/2859421": "https://www.drupal.org/files/issues/2019-10-11/webform-2859421-5.patch"
             }
         }
     }
