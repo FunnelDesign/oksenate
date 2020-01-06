@@ -50,18 +50,16 @@
     display: none !important;
   }
 
-  span[class$='__items'],
-  span[class$='__its'],
-  div[class$='__items'],
-  div[class$='__its'] {
+  [class$='__items'],
+  [class$='__its'],
+  .bListLinks__links {
     position: relative !important;
     display: block !important;
   }
 
-  span[class$='__item'],
-  span[class$='__it'],
-  div[class$='__item'],
-  div[class$='__it'] {
+  [class$='__item']:not(.bTerms__it),
+  [class$='__it']:not(.bTerms__it),
+  .bListLinks__link {
     display: inline-block !important;
     vertical-align: text-top;
     page-break-inside: avoid;
@@ -89,11 +87,36 @@
     display: none !important;
   }
 
+  .bListLinks__link {
+    width: 100%;
+  }
+
+  .bTiles_rel_c .bTiles__items {
+    text-align: center !important;
+  }
+
+  .bTiles_rel_c .bTiles__item {
+    max-width: 48% !important;
+    min-width: 48% !important;
+  }
+
+  .sSen__items {
+    text-align: center;
+  }
+
+  .contextual {
+    display: none !important;
+  }
+
   .bNews {
 
     h2 {
       page-break-before: always;
     }
+  }
+
+  .bHist__desc, .bHist__date {
+    color: $color-dark-blue !important;
   }
 
   .bSenBio__info {
