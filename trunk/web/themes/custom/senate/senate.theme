@@ -283,6 +283,7 @@ function senate_preprocess_node(array &$vars) {
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'contact':
+      case 'contact_reservation':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'senate_studies':
