@@ -50,7 +50,19 @@ textarea {
 
   fieldset {
     padding: 0;
+    margin: 0;
     border: none;
+
+    legend {
+      @include margin(0 0 10px);
+
+      .fieldset-legend {
+        text-align: center;
+        font-family: $RobotoCondensed-Light;
+        @include font-size(16px, 17px, 18px);
+        color: $color-dark-blue-1;
+      }
+    }
   }
 
   .form-item {
