@@ -215,7 +215,7 @@
               array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
               array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
               array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
-              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks cvgdfg fgdfg dftgdf dfghdfg dfghdf"),
               array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
               array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
               array("s-sen-img-3.jpg", "d", "44", "Michael Brooks")

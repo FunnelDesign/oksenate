@@ -60,6 +60,7 @@
   div[class$='__item'],
   div[class$='__it'] {
     display: inline-block;
+    vertical-align: text-top;
     padding-top: 10px;
     page-break-inside: avoid;
     position: relative !important;
