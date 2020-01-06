@@ -221,6 +221,8 @@
                 </span>
               </span>
             </div>
+
+
           </div>
           <div class="bNews__btnAll">
             <a href="#" class="btn">

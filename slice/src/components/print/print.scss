@@ -50,7 +50,10 @@
     display: none !important;
   }
 
-  .sSen__items {
+  span[class$='__items'],
+  span[class$='__its'],
+  div[class$='__items'],
+  div[class$='__its'] {
     position: relative !important;
     display: block !important;
   }
@@ -59,13 +62,14 @@
   span[class$='__it'],
   div[class$='__item'],
   div[class$='__it'] {
-    display: inline-block;
+    display: inline-block !important;
     vertical-align: text-top;
-    padding-top: 10px;
     page-break-inside: avoid;
     position: relative !important;
   }
 
+  .bNews__imgWrap,
+  .bSenBio__imgWrap,
   .sSen__sImgWrap,
   .sSen__sImg,
   .sSen__sMask,
@@ -75,8 +79,60 @@
     print-color-adjust: exact;
   }
 
-  .sSen__head {
+  .bNews__readMore,
+  .bDistrict h2 a ,
+  .bMedia,
+  .bSenBio__mail,
+  .bSenBio__mediaBtn,
+  .sSen__head,
+  .bSenBio__soc {
     display: none !important;
+  }
+
+  .bNews {
+
+    h2 {
+      page-break-before: always;
+    }
+  }
+
+  .bSenBio__info {
+    text-align: center !important;
+
+    strong {
+      display: block;
+    }
+  }
+
+  .sSen__item {
+    padding-top: 10px;
+  }
+
+  .bHide {
+
+    &:after, &__moreWr {
+      display: none;
+    }
+  }
+
+  .bHide__cont {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bSenBio__con {
+    display: inline-block !important;
+  }
+
+  .bSenBio__col, .bNews__items {
+    text-align: center !important;
+  }
+
+  .bSenBio__address {
+
+    &:before {
+      display: none;
+    }
   }
 
   .btn, .form {
