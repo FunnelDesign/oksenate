@@ -650,6 +650,12 @@ class ContentParser extends ConfigEntityBase {
                   pq($table)->remove();
                 }
               }
+              $searchForReplaceSpecial = [
+                '/[&#148;]/u' => '',
+                '/[&#147;]/u'=> '',
+                '/[&#146;]/u'=> '',
+                '/[&#145;]/u'=> ''
+              ];
               $hasMainContent = FALSE;
               foreach ($docNews['table'] as $key => $table) {
                 if (pq($table)->attr('summary') == $mainContent) {
@@ -658,8 +664,10 @@ class ContentParser extends ConfigEntityBase {
                     'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br>')),
                     'format' => 'full_html'
                   ];
-                  $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
                   $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br>'));
+                  $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,<br>:/!]~','',$html['value']);
                 }
               }
               if(!$hasMainContent){
@@ -669,16 +677,19 @@ class ContentParser extends ConfigEntityBase {
                 $urlDate = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $trimmedHref)))));
                 if(strlen($urlDate) > 6){
                   $html          = [
-                    'value'  => str_replace($searchForReplace, '', strip_tags($content, '<br>')),
+                    'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<br>')),
                     'format' => 'full_html'
                   ];
+                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
                   $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
                   $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br>'));
-
+                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,<br>:/!]~','',$html['value']);
                 }
               }
               // Remove hash
+//              $text = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
               $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+              $text = preg_replace('~[^A-Za-z0-9?.\s+,:;/!]~','',$text);
               $date = preg_replace("/[^.0-9]/", '', $date);
               $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
               if ($html == 'empty') {
@@ -754,13 +765,13 @@ class ContentParser extends ConfigEntityBase {
                 $entity->save();
               }
               catch (\Error $exception) {
-                $message = $exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
                 file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
                 \Drupal::logger('not_parsed')->notice($message);
                 continue;
               }
               catch (\Exception $exception) {
-                $message = $exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
                 file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
                 \Drupal::logger('not_parsed')->notice($message);
                 continue;
@@ -1271,12 +1282,20 @@ class ContentParser extends ConfigEntityBase {
 //  }
 
   public function makeSummary($text, $title){
-    $text = html_entity_decode(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text))));
-    $title = html_entity_decode(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title))));
+    $searchForReplace = [
+      '/[&#148;]/u' => '',
+      '/[&#147;]/u'=> '',
+      '/[&#146;]/u'=> '',
+      '/[&#145;]/u'=> ''
+    ];
+    $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+    $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
     $len = (int) strlen($title);
     $strpos = (int) strpos($text, $title);
     $headerString = substr($text, 0, $strpos);
     $bodyString = substr($text, $strpos+$len);
+    $headerString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $headerString);
+    $bodyString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $bodyString);
     if($bodyString && $headerString){
       return ['body' => $bodyString,'head'=>$headerString];
     }else{
