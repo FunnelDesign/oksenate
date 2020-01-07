@@ -47,12 +47,10 @@
 'field__label',
 label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
-<div class="bListLinks__items">
-  {% for file in files %}
-    <div class="bListLinks__item">
-      <a href="{{ file.url }}" class="bListLinks__link" target="_blank">
-        {{ file.title }}
-      </a>
-    </div>
-  {% endfor %}
-</div>
+{% for file in files %}
+  <div class="bListInline__item">
+    <a href="{{ file.url }}" class="bListInline__link" target="_blank">
+      {{ file.title }}
+    </a>
+  </div>
+{% endfor %}
