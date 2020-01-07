@@ -72,15 +72,16 @@
  * @ingroup themeable
  */
 #}
-<div class="senators__item">
+
+<div {{ attributes.addClass('senators__item') }}">
+  {{ title_prefix }}
+  {{ title_suffix }}
   <a class="senators__item" href="{{ url }}">
     <span class="senators__imgWrap">
       <span class="senators__img">{{ content.field_senator_photo }}</span>
     </span>
     <span class="senators__name">
-      {{ title_prefix }}
       {{ "Sen. "|t }} {{ label }}
-      {{ title_suffix }}
     </span>
     <span class="senators__position">
       <p>{{ content.field_senator_leadersh_role_txt }}</p>
