@@ -1,12 +1,17 @@
 .bListInline {
+  @include clearfix();
+  
+  .contextual-region {
+    @include clearfix();
+  }
+  
   &__item {
     width: 240px;
     text-align: center;
     margin: 0 auto 20px;
   
     @include sm {
-      display: inline-block;
-      vertical-align: top;
+      float: left;
       min-height: 100px;
       width: 33%;
       padding-left: 3%;
