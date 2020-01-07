@@ -41,32 +41,29 @@
           </div>
         </div>
 
-        <div class="bListLinks">
-          <div class="bListLinks__items">
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
-                FY’17 OEQA Budget to Actual
-              </a>
-            </div>
+        <div class="bListInline">
+          <div class="bListInline__item">
+            <a href="">
+              FY’17 OEQA Budget to Actual
+            </a>
+          </div>
 
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
-                FY’18 OEQA Mission and Governance Arts Council
-              </a>
-            </div>
+          <div class="bListInline__item">
+            <a href="">
+              FY’18 OEQA Mission and Governance Arts Council
+            </a>
+          </div>
 
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
-                FY’19 OEQA Budget and Performance Review
-              </a>
-            </div>
+          <div class="bListInline__item">
+            <a href="">
+              FY’19 OEQA Budget and Performance Review
+            </a>
+          </div>
 
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
-                OEQA Budget Powerpoint
-              </a>
-            </div>
-
+          <div class="bListInline__item">
+            <a href="">
+              OEQA Budget Powerpoint
+            </a>
           </div>
         </div>
 
