@@ -313,8 +313,8 @@
               <div class="senators">
 
                 <div class="senators__items">
-                  <span class="senators__item">
-                  <span class="senators__imgWrap">
+                  <a href="#" class="senators__item">
+                    <span class="senators__imgWrap">
                       <span class="senators__img" style="background-image: url('../dist/images/tmp/senators-img-1.jpg')"></span>
                     </span>
 
@@ -325,7 +325,7 @@
                       President Pro Tempore
                     </span>
 
-                  </span>
+                  </a>
 
                   <a href="#" class="senators__item">
                     <span class="senators__imgWrap">
