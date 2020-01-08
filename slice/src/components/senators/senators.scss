@@ -6,7 +6,7 @@
   &__img,
   &__name,
   &__position,
-  &__imgWrap{
+  &__imgWrap {
     display: block;
   }
 
@@ -23,12 +23,23 @@
     text-align: center;
   }
 
-  a#{$this}__item  {
+  a#{$this}__item {
     transition: opacity .3s;
     text-decoration: none;
 
     &:hover {
-      opacity: .7;
+
+      #{$this}__name,
+      #{$this}__position {
+        opacity: .7;
+      }
+
+      #{$this}__img {
+
+        &:before {
+          opacity: 1;
+        }
+      }
     }
   }
 
@@ -44,12 +55,22 @@
     @include stretch-block();
     background-size: cover;
     background-position: center;
+
+    &:before {
+      @include pseudo-block($top: 0, $left: 0);
+      width: 100%;
+      height: 100%;
+      background: rgba(#000, 0.3);
+      transition: opacity .3s;
+      opacity: 0;
+    }
   }
 
   &__name,
   &__position {
     color: $color-white;
     line-height: 1.2;
+    transition: opacity .3s;
   }
 
   &__name {
