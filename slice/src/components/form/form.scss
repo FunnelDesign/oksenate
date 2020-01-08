@@ -40,7 +40,7 @@ textarea {
     border-color: red;
   }
 
-  &.required {
+  &.required, &.required + .select2 .select2-selection.select2-selection--single {
     background-image: url("required.png");
     background-position: 6px 12px;
     background-repeat: no-repeat;

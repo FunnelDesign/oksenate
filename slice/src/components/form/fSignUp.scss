@@ -31,7 +31,11 @@
       width: 100%;
 
       .select2-selection--single .select2-selection__rendered {
-        padding: 16px 36px 16px 25px;
+        padding: 16px 36px 16px 16px;
+
+        @include sm {
+          padding: 16px 36px 16px 25px;
+        }
       }
 
       .select2-selection--single .select2-selection__arrow {

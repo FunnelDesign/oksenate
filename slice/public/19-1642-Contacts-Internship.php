@@ -72,7 +72,7 @@
           <div class="fSignUp__items">
 
             <div class="form-item form-type-select">
-              <select class="form-select">
+              <select class="form-select required">
                 <option>Dropdown Menu</option>
                 <option>Dropdown Menu</option>
                 <option>Dropdown Menu</option>
