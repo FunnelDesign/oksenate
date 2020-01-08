@@ -72,7 +72,7 @@
           <div class="fSignUp__items">
 
             <div class="form-item form-type-select">
-              <select class="form-select">
+              <select class="form-select required">
                 <option>Dropdown Menu</option>
                 <option>Dropdown Menu</option>
                 <option>Dropdown Menu</option>
@@ -84,8 +84,8 @@
             </div>
 
             <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="First Name"/>
+<!--              <label class="form-required"></label>-->
+              <input type="text" class="form-text required" placeholder="First Name"/>
             </div>
             <div class="form-item form-type-text">
               <label class="form-required"></label>

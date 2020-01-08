@@ -51,6 +51,10 @@
     select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
       padding-right: 50px;
     }
+
+    .btn_action {
+      margin-top: 10px;
+    }
   }
 
   &_throbber {

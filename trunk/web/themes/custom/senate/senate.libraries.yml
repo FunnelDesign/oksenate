@@ -14,6 +14,7 @@ global-styling:
       dist/vendor/lightSlider/lightslider.min.js: {}
       dist/vendor/jquery.scrollbar/jquery.scrollbar.min.js: {}
       dist/vendor/bootstrap-modal/bootstrap-modal.min.js: {}
+      dist/vendor/countUp/countUp.min.js: {}
       dist/js/index.min.js: {}
       dist/js/custom.js: {}
 

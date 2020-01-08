@@ -202,6 +202,16 @@
         top: 10px;
       }
     }
+
+    &_b {
+      background: $color-dark-blue;
+      margin-bottom: 0;
+      border-top: 1px solid #344b71;
+
+      & > * {
+        margin: 0;
+      }
+    }
   }
 
   &__btnBack {

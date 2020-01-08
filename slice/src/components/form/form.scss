@@ -1,10 +1,12 @@
-input:not([type=checkbox]):not([type=radio]), select, textarea {
+input:not([type=checkbox]):not([type=radio]),
+select:not(.ui-datepicker-month):not(.ui-datepicker-year),
+textarea {
   appearance: none;
   box-shadow: none;
   border-radius: 0;
 }
 
-select {
+select:not(.ui-datepicker-month):not(.ui-datepicker-year) {
   cursor: pointer;
   padding-right: 40px;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAJCAQAAACoRNXiAAAAK0lEQVQY02NgoA0w/mb8Hw6/oUuaIkmaYuotgEoVYDd6LVBqLW6bj5HsWAAv0Bfed1VYOwAAAABJRU5ErkJggg==');
@@ -13,7 +15,9 @@ select {
   opacity: 0;
 }
 
-select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
+select:not(.ui-datepicker-month):not(.ui-datepicker-year),
+input:not([type=submit]):not([type=checkbox]):not([type=radio]),
+textarea {
   transition: border-color .3s, box-shadow .3s;
   background-color: #fff;
   border: 1px solid $border-color-1;
@@ -34,6 +38,17 @@ select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textare
 
   &.error, &.mktoInvalid {
     border-color: red;
+  }
+
+  &.required, &.required + .select2 .select2-selection.select2-selection--single {
+    background-image: url("required.png");
+    background-position: 6px 12px;
+    background-repeat: no-repeat;
+    background-size: 6px auto;
+
+    @include sm {
+      background-position: 11px 16px;
+    }
   }
 }
 
@@ -125,6 +140,10 @@ textarea {
         margin: -3px 0 0 5px;
         font-size: 18px;
       }
+    }
+
+    & + input.required {
+      background-image: none !important;
     }
   }
 

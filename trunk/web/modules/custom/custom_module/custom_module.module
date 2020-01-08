@@ -35,44 +35,18 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
   }
   switch ($form_id){
     case 'webform_submission_contact_senator_node_3945_add_form':
-      $ajax = [
-        'callback' => 'custom_module_contact_form_ajax_callback',
-        'event' => 'change',
-        'effect' => 'fade',
-      ];
       $senator_nid = \Drupal::request()->query->get('sid');
-      $form["elements"]["select_your_senator"]['#ajax'] = $ajax;
-      $form["elements"]["mail_to"]['#ajax'] = $ajax;
-      $form["elements"]["mail_to"]['#attributes'] = array('id' => 'mail-to-ajax-wrapper');
       $form['elements']['mail_to']['#access'] = FALSE;
 
-      $values = $form_state->getValues();
-      $email = "change@default.email";
-
-      if (!empty($senator_nid)){
+      if (!empty($senator_nid) && is_numeric($senator_nid)) {
         $node = \Drupal\node\Entity\Node::load($senator_nid);
         if (!empty($node) && ($node->getType() == 'senator')){
-          if ($node->get('field_senator_contact_email')->getValue()){
-            $email = $node->get('field_senator_contact_email')->getValue();
-            $email = array_shift($email)['value'];
-          }
           $form['elements']['select_your_senator']['#default_value'] = $senator_nid;
           $form['elements']['select_your_senator']['#access'] = FALSE;
-          $form['elements']['mail_to']['#default_value'] = $email;
-
         }
       }
-      if(!empty($values) ) {
-        $node = \Drupal\node\Entity\Node::load($values['select_your_senator']);
-        if (!empty($node) && ($node->getType() == 'senator')){
-          if ($node->get('field_senator_contact_email')->getValue()){
-            $email = $node->get('field_senator_contact_email')->getValue();
-            $email = array_shift($email)['value'];
-          }
-          $form['elements']['mail_to']['#default_value'] = $email;
 
-        }
-      }
+      $form['actions']['submit']['#validate'][] = 'custom_module_contact_senator_validate';
       break;
     case 'node_senate_votes_edit_form':
       $current_path = \Drupal::service('path.current')->getPath();
@@ -278,4 +252,41 @@ function custom_module_contact_form_ajax_callback($form, &$form_state) {
   $response->addCommand(new ReplaceCommand('#mail-to-ajax-wrapper',$form["elements"]["mail_to"]["mail_to_ajax_wrapper"]));
 
   return $response;
+}
+
+/**
+ * Set senators mail.
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function custom_module_contact_senator_validate($form, FormStateInterface &$form_state) {
+  $user_input = $form_state->getValues();
+  $senator_nid = !empty($user_input['select_your_senator']) && is_numeric($user_input['select_your_senator']) ?
+    $user_input['select_your_senator'] : '';
+  if (!empty($senator_nid)) {
+    $email = _custom_module_get_senator_email($senator_nid);
+    if (!empty($email)) {
+      $form_state->setValue('mail_to', $email);
+    }
+    else {
+      \Drupal::logger('error')
+        ->error('See ' . __FUNCTION__ . '(). Empty senator email.');
+    }
+  }
+}
+
+function _custom_module_get_senator_email($nid) {
+  if (empty($nid)) {
+    return '';
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'senator')
+    ->condition('nfd.status', 1)
+    ->condition('nfd.nid', $nid);
+  $query->innerJoin('users_field_data', 'ufd', 'ufd.uid = nfd.uid AND ufd.status = 1');
+  $query->fields('ufd', ['mail']);
+
+  $result = $query->execute()->fetchCol();
+  return !empty($result) ? $result[0] : '';
 }

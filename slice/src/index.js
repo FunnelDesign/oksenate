@@ -54,8 +54,65 @@ function init() {
 	initSelect();
 	initAccessibility();
 	initHeaderHover();
+	initCounter($('.bSeats__cap'), false, 2);
+	initCounter($('.bSeats__countD'), false, 2);
+	initCounter($('.bSeats__countR'), false, 2);
 
 	new BlockVideo();
+}
+
+function initCounter(wrap, easing, speed) {
+	var $wrap = wrap.find('.count');
+
+	if (!$wrap.length) return;
+
+	if ($wrap.hasClass('processed')) return;
+	$wrap.addClass('processed');
+
+	var start = +$wrap.data('start');
+	var end = +$wrap.data('end');
+
+	var counter = new CountUp($wrap[0], start, end, 0, speed, {
+		useEasing: easing,
+		useGrouping: true,
+		separator: ','
+	});
+
+	checkPosition();
+
+	$(window).on('scroll', function() {
+		checkPosition();
+	});
+
+	$(window).on('resize', function() {
+		checkPosition();
+	});
+
+	function  checkPosition() {
+		if ($wrap.hasClass('active')) return;
+
+		if(($(window).outerHeight() + $(window).scrollTop()) > ($wrap.offset().top + $wrap.outerHeight() + 20)) {
+			$wrap.addClass('active');
+
+			counter.start(function () {
+				//counterRestart()
+			});
+		}
+	}
+
+	function counterRestart() {
+		setTimeout(function () {
+
+			counter.reset();
+			setTimeout(function () {
+
+				counter.start(function () {
+					counterRestart()
+				});
+			}, 200)
+
+		}, 1000);
+	}
 }
 
 function initFormRedirect() {
