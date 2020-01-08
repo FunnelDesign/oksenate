@@ -204,14 +204,11 @@
     }
 
     &_b {
+      background: $color-dark-blue;
+      margin-bottom: 0;
 
-      @include xs-only{
-        background: $color-dark-blue;
-        margin-bottom: 0;
-
-        & > * {
-          margin: 0;
-        }
+      & > * {
+        margin: 0;
       }
     }
   }
