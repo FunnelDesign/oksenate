@@ -244,11 +244,17 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $location = strtolower($location);
     $has_outer = (strpos($location, 'out') !== FALSE);
     $has_senate = (strpos($location, 'senate') !== FALSE);
-    $decline = [];
     $table_caption = $query->getTableInfo('node__field_edu_indiv_art_work_cap');
 
     if (!$has_outer && !empty($table_caption)) {
       $query->addWhere('', 'node__field_edu_indiv_art_work_cap.field_edu_indiv_art_work_cap_value', '%out%', 'NOT LIKE');
+    }
+    if ($has_senate) {
+      $location_exp = explode(' ', $location);
+      $word_count = count($location_exp);
+      if (($word_count < 3) && !empty($table_caption)) {
+        $query->addWhere('', 'node__field_edu_indiv_art_work_cap.field_edu_indiv_art_work_cap_value', '%' . $location . '%', 'LIKE');
+      }
     }
   }
 }
