@@ -160,7 +160,11 @@
             }
 
             &:first-child {
-              padding-left: 16px;
+              padding-left: 5px;
+
+              @include sm {
+                padding-left: 16px;
+              }
             }
 
             &:before {
