@@ -8,6 +8,8 @@
   src="../dist/vendor/lightSlider/lightslider.min.js"></script>
 <script type="text/javascript"
         src="../dist/vendor/bootstrap-modal/bootstrap-modal.min.js"></script>
+<script type="text/javascript"
+        src="../dist/vendor/countUp/countUp.min.js"></script>
 
 <script type="text/javascript" src="../dist/js/index.js?t=<?php  print $timestamp?>"></script>
 <!--<script type="text/javascript" src="../dist/js/index.min.js?t=--><?php // print $timestamp?><!--"></script>-->
