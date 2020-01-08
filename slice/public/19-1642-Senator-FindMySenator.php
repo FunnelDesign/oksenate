@@ -26,27 +26,30 @@
 <!--              search by zip code-->
 <!--            </div>-->
             <div class="sSen__opt">
-<!--              <div class="form f-search f-search_min">-->
-<!--                <div class="form-item">-->
-<!--                  <input type="text" class="form-text" placeholder="Enter Zip"/>-->
-<!--                </div>-->
-<!--                <div class="form-actions">-->
-<!--                  <input type="submit" class="form-submit" value="">-->
-<!--                  <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>-->
-<!--                </div>-->
-<!--              </div>-->
-
-              <div class="form f-search f-search_min">
+              <div  class="form f-search f-search_min">
                 <div class="js-form-item form-item js-form-type-entity-autocomplete form-type-entity-autocomplete js-form-item-zip form-item-zip">
                   <label for="edit-zip">search by zip code</label>
                   <input
+
                     data-drupal-selector="edit-zip"
                     class="form-autocomplete form-text ui-autocomplete-input"
                     data-autocomplete-path="/entity_reference_autocomplete/taxonomy_term/default/kLVypGEEaZEicbnexfCrIxnl21qjo0yEHO7q0PzdfnE"
-                    type="text" id="edit-zip" name="zip" value="" size="60" maxlength="128" autocomplete="off"
+                    type="text" id="edit-zip" name="zip" value="" size="60" maxlength="128"
+                    autocomplete="new-password"
                     placeholder="Enter Zip"
                   >
 
+                </div>
+                <a href="#" class="btn btn_action">go</a>
+              </div>
+
+              <div class="form f-search f-search_min">
+                <div class="form-item">
+                  <input type="text" class="form-text" placeholder="Enter Zip"/>
+                </div>
+                <div class="form-actions">
+                  <input type="submit" class="form-submit" value="">
+                  <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
                 </div>
               </div>
 
