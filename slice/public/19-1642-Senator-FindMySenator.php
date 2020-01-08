@@ -8,10 +8,11 @@
   <div class="pageIn">
 
     <section class="section sSen">
-      <?php include 'tpl/blocks/bShare-no-bread.inc'; ?>
 
       <div class="sSen__head">
         <div class="sSen__byAdd">
+          <?php include 'tpl/blocks/bShare-no-bread.inc'; ?>
+
           <a href="#" class="sSen__btnByAdd">search by address</a>
         </div>
         <div class="sSen__fil" id="views-exposed-form-senators-page-1">

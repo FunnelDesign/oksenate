@@ -57,8 +57,20 @@
 
   &__byAdd {
     background: $color-dark-blue-2;
-    padding: 22px 0;
+    padding: 0 0 22px;
     text-align: center;
+
+    @include sm {
+      padding: 38px 0 22px;
+    }
+
+    @include md {
+      padding: 22px 0;
+    }
+
+    .section__sNav {
+      margin-bottom: 0;
+    }
   }
 
   &__btnByAdd {
