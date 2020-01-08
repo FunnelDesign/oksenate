@@ -39,6 +39,17 @@ textarea {
   &.error, &.mktoInvalid {
     border-color: red;
   }
+
+  &.required, &.required + .select2 .select2-selection.select2-selection--single {
+    background-image: url("required.png");
+    background-position: 6px 12px;
+    background-repeat: no-repeat;
+    background-size: 6px auto;
+
+    @include sm {
+      background-position: 11px 16px;
+    }
+  }
 }
 
 textarea {
@@ -129,6 +140,10 @@ textarea {
         margin: -3px 0 0 5px;
         font-size: 18px;
       }
+    }
+
+    & + input.required {
+      background-image: none !important;
     }
   }
 
