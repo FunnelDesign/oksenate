@@ -84,8 +84,8 @@
             </div>
 
             <div class="form-item form-type-text">
-              <label class="form-required"></label>
-              <input type="text" class="form-text" placeholder="First Name"/>
+<!--              <label class="form-required"></label>-->
+              <input type="text" class="form-text required" placeholder="First Name"/>
             </div>
             <div class="form-item form-type-text">
               <label class="form-required"></label>
