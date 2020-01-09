@@ -72,6 +72,7 @@
     print-color-adjust: exact;
   }
 
+  .bSeats:before,
   .bPostList__readMore,
   .pageIn__ico,
   .bAudio__au,
@@ -100,7 +101,8 @@
   .bSenBio__mail,
   .bSenBio__mediaBtn,
   .sSen__head,
-  .bSenBio__soc {
+  .bSenBio__soc,
+  .print-hide{
     display: none !important;
   }
 
