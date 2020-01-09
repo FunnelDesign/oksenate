@@ -36,10 +36,19 @@ class AudioCreatorService {
       //fix url
       $data['url'] = $this->fixPressReleaseUrl($data['url']);
 
+
       $nodes = \Drupal::entityTypeManager()
         ->getStorage('node')
         ->loadByProperties(['field_press_release_old_url' => $data['url']]);
       $node = !empty($nodes) ? reset($nodes) : NULL;
+
+      if(empty($node)) {
+        $data['url'] = $this->fixPressReleaseUrl2($data['url']);
+        $nodes = \Drupal::entityTypeManager()
+          ->getStorage('node')
+          ->loadByProperties(['field_press_release_old_url' => $data['url']]);
+        $node = !empty($nodes) ? reset($nodes) : NULL;
+      }
     }
 
 
@@ -176,6 +185,11 @@ class AudioCreatorService {
         );
       }
     }
+    return $url;
+  }
+
+  public function fixPressReleaseUrl2($url) {
+    $url = preg_replace('/20[0-9]{2}_audio_clips/', '', $url);
     return $url;
   }
 
