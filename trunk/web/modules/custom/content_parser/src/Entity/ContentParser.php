@@ -687,6 +687,11 @@ class ContentParser extends ConfigEntityBase {
                 ->loadByProperties(['field_press_release_old_url' => $href]);
               if(is_array($news) && !empty($news)){
                 $entity = $news[key($news)];
+                foreach ($entity->field_senator as $existSenator){
+                  if($existSenator->target_id == $senator){
+                    continue 2;
+                  }
+                }
                 $entity->field_senator[] = ['target_id' => $senator];
                 $entity->save();
                 continue;
