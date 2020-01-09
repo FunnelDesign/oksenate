@@ -8,7 +8,7 @@
   <div class="pageIn">
 
     <section class="section section_ind_d section_bg-color_c">
-
+      <?php include 'tpl/blocks/bShare-color-a-no-bread.inc'; ?>
       <div class="bContainer">
         <a href="#" class="btn btn_a section__btnBack">
           back to senate studies
@@ -68,7 +68,7 @@
 
               <h5>Business and Professional License Facilitation Task Force</h5>
 
-              <div class="bTable bTable_a bTable_s_a">
+              <div class="bTable bTable_a bTable_s_a bTable_gap_a">
                 <table>
                   <tbody>
                   <tr>

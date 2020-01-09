@@ -40,7 +40,12 @@
 <section class="section section_ind_j section_bg-color_c">
   <div{{ attributes.addClass(classes) }}>
 
-    {{ breadcrumbs }}
+    <div class="section__sNav">
+      <div class="bContainer">
+        {{ breadcrumbs }}
+        {{ socials }}
+      </div>
+    </div>
 
     <div class="bContainer">
       {{ title_prefix }}
@@ -52,7 +57,7 @@
       </div>
 
       {% if rows -%}
-      <div class="bListLinks">
+      <div class="bListInline">
         {{ rows }}
       </div>
       {% elseif empty -%}

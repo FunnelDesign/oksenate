@@ -40,6 +40,7 @@
         height: 12px;
         background: url('white-arrow-1.png') no-repeat;
         background-size: contain;
+        pointer-events: none;
       }
 
       .ajax-progress {
@@ -49,6 +50,33 @@
 
     select, input:not([type=submit]):not([type=checkbox]):not([type=radio]), textarea {
       padding-right: 50px;
+    }
+
+    .btn_action {
+      margin-top: 10px;
+    }
+  }
+
+  &_throbber {
+
+    &_show {
+
+      .ajax-progress {
+        display: block !important;
+
+        top: 0;
+        right: auto;
+        left: 100%;
+        margin-left: 15px;
+      }
+    }
+  }
+
+  &_s {
+
+    &_a {
+      width: 100%;
+      max-width: 500px;
     }
   }
 }

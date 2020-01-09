@@ -17,6 +17,7 @@
             <a href="#">Education</a>
             <span>Senate Artwork</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

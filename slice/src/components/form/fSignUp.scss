@@ -7,6 +7,15 @@
     @include margin-bottom(30px, 46px);
   }
 
+  &__desc {
+
+    &_a {
+      font-family: $FreightTextProMedium-Regular;
+      color: #404040;
+      line-height: 1.6;
+    }
+  }
+
   &__items {
     max-width: 330px;
     margin: 0 auto 20px;
@@ -22,11 +31,46 @@
       width: 100%;
 
       .select2-selection--single .select2-selection__rendered {
-        padding: 16px 36px 16px 25px;
+        padding: 16px 36px 16px 16px;
+
+        @include sm {
+          padding: 16px 36px 16px 20px;
+        }
       }
 
       .select2-selection--single .select2-selection__arrow {
         right: 8px;
+      }
+    }
+  }
+
+  .container-inline,
+  .form-item.form-type-datetime .container-inline,
+  .form-item.form-type-datelist .container-inline {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    margin: 0 -5px;
+
+    & > * {
+      flex: 1;
+      margin: 0 5px;
+    }
+  }
+
+  .container-inline > * + *, .container-inline .details-wrapper > * + * {
+    padding: 0;
+  }
+
+  input:not([type=submit]):not([type=checkbox]):not([type=radio]),
+  select:not(.ui-datepicker-month):not(.ui-datepicker-year),
+  textarea {
+
+    &.webform-time {
+      padding: 10px 14px;
+
+      @include sm {
+        padding: 12px 20px;
       }
     }
   }

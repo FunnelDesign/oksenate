@@ -2,10 +2,31 @@
 <html>
 <?php $title = '19-1642-Homepage2'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
-<body class="front">
+<body class="front user-logged-in ">
 <div class="pageWr">
   <?php include 'tpl/blocks/sHeader.inc'; ?>
+
+  <div id="block-senate-local-tasks" class="contextual-region">
+
+    <div data-contextual-id="block:block=senate_local_tasks:langcode=en" data-contextual-token="s5_KDf1HgSLUKbIOKkNfbLTxAti1Tag4AgZyj8qvy-c" class="contextual" role="form"><button class="trigger focusable visually-hidden" type="button" aria-pressed="false">Open Primary tabs configuration options</button><ul class="contextual-links" hidden=""><li class="block-configure"><a href="/admin/structure/block/manage/senate_local_tasks?destination=/node/1278">Configure block</a></li><li class="sharethis-block-configure"><a href="/admin/config/services/sharethis?block=senate_local_tasks&amp;destination=/node/1278">Configure Sharethis block</a></li></ul></div>
+    <nav class="tabs" role="navigation" aria-label="Tabs">
+      <h2 class="visually-hidden">Primary tabs</h2>
+      <ul class="tabs primary"><li class="is-active"><a href="/node/1278" data-drupal-link-system-path="node/1278" class="is-active">View<span class="visually-hidden">(active tab)</span></a></li>
+        <li><a href="/node/1278/edit" data-drupal-link-system-path="node/1278/edit">Edit</a></li>
+        <li><a href="/node/1278/delete" data-drupal-link-system-path="node/1278/delete">Delete</a></li>
+        <li><a href="/node/1278/revisions" data-drupal-link-system-path="node/1278/revisions">Revisions</a></li>
+        <li><a href="/devel/node/1278" data-drupal-link-system-path="devel/node/1278">Devel</a></li>
+      </ul>
+
+    </nav>
+  </div>
+
   <div class="pageIn">
+
+    <!--only for slice!!!-->
+    <a href="#" class="btn" data-toggle="modal" data-target="#simpleModal" style="position: absolute">!ONLY FOR SLICE Launch modal</a>
+    <?php include 'tpl/blocks/modals/simpleModal.inc'; ?>
+    <!--only for slice!!!-->
 
     <section class="section sSlider">
       <div class="sSlider__in">
@@ -147,7 +168,7 @@
             <div class="sFinder__desc">
               <p>If you know the bill number, enter it below.</p>
             </div>
-            <div class="form f-search">
+            <form class="form f-search f-search-redirect">
               <div class="form-item">
                 <input type="text" class="form-text" placeholder="Enter Bill Number"/>
               </div>
@@ -155,7 +176,7 @@
                 <input type="submit" class="form-submit" value="search">
                 <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -223,19 +244,19 @@
             <div class="bEvent__slider-items">
               <?php
               $event_items = [
-                ['slider-tmp-img-1-a.jpg'],
-                ['slider-tmp-img-2-a.jpg'],
-                ['slider-tmp-img-1-a.jpg'],
-                ['slider-tmp-img-2-a.jpg'],
-                ['slider-tmp-img-1-a.jpg'],
-                ['slider-tmp-img-2-a.jpg']
-//                [' Monday, October 28, 2019', '19-28', 'Study on Reducing Poverty by Increasing Home Ownership and Entrepreneurship Opportunities'],
-//                [' Monday, October 28, 2019', ' ', 'Joint Meeting of the Senate Business, Commerce and Tourism Committee and the House Tourism Committee'],
-//
-//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
-//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
-//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
-//                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+//                ['slider-tmp-img-1-a.jpg'],
+//                ['slider-tmp-img-2-a.jpg'],
+//                ['slider-tmp-img-1-a.jpg'],
+//                ['slider-tmp-img-2-a.jpg'],
+//                ['slider-tmp-img-1-a.jpg'],
+//                ['slider-tmp-img-2-a.jpg']
+                [' Monday, October 28, 2019', '19-28', 'Study on Reducing Poverty by Increasing Home Ownership and Entrepreneurship Opportunities'],
+                [' Monday, October 28, 2019', ' ', 'Joint Meeting of the Senate Business, Commerce and Tourism Committee and the House Tourism Committee'],
+
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
+                ['Monday, October 28, 2019', ' ', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi deleniti distinctio dolor ducimus est et libero nostrum, placeat praesentium quos totam ullam. Alias autem dolore ducimus eum impedit sequi, vero.'],
 
 
               ]
@@ -247,24 +268,24 @@
                     <img src="../dist/images/<?php print $element[0]; ?>" alt="">
 
 
-<!--                  <div class="bEvent__header">-->
-<!--                    --><?php //print $element[0]; ?>
-<!--                  </div>-->
-<!--                  <div class="bEvent__body">-->
-<!--                    <div class="bEvent__time">-->
-<!--                      --><?php //print $element[1]; ?>
-<!--                    </div>-->
-<!--                    <div class="bEvent__text">-->
-<!---->
-<!--                      <p>-->
-<!--                        --><?php //print $element[2]; ?>
-<!--                      </p>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!---->
-<!--                  <div class="bEvent__btnWrap">-->
-<!--                    <a href="#" class="btn btn_a">get more information</a>-->
-<!--                  </div>-->
+                  <div class="bEvent__header">
+                    <?php print $element[0]; ?>
+                  </div>
+                  <div class="bEvent__body">
+                    <div class="bEvent__time">
+                      <?php print $element[1]; ?>
+                    </div>
+                    <div class="bEvent__text">
+
+                      <p>
+                        <?php print $element[2]; ?>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="bEvent__btnWrap">
+                    <a href="#" class="btn btn_a">get more information</a>
+                  </div>
                 </div>
 
               <?php endforeach; ?>
@@ -292,11 +313,11 @@
               <div class="senators">
 
                 <div class="senators__items">
-                  <span class="senators__item">
-                  <span class="senators__imgWrap">
+                  <a href="#" class="senators__item">
+                    <span class="senators__imgWrap">
                       <span class="senators__img" style="background-image: url('../dist/images/tmp/senators-img-1.jpg')"></span>
                     </span>
-                      
+
                     <span class="senators__name">
                       Sen. Greg Treat
                     </span>
@@ -304,7 +325,7 @@
                       President Pro Tempore
                     </span>
 
-                  </span>
+                  </a>
 
                   <a href="#" class="senators__item">
                     <span class="senators__imgWrap">

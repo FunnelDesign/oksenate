@@ -3,7 +3,7 @@
     <div class="sFooter__top">
       <div class="logo sFooter__logo">
         <a href="#">
-          <img src="../dist/images/logo.png" alt="logo">
+          <img src="../dist/images/logo-b.png" alt="logo">
           Oklahoma Senate
         </a>
       </div>
@@ -64,3 +64,8 @@
 
   </div>
 </footer>
+
+
+<!--only for slice!!!-->
+<?php include 'tpl/includes/accessibilityCheck.inc'; ?>
+<!--only for slice!!!-->

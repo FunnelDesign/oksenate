@@ -18,6 +18,7 @@
             <a href="#">Appropriations</a>
             <span>Education</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

@@ -17,6 +17,7 @@
             <a href="#">Publications</a>
             <span>Session Summary</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

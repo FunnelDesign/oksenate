@@ -1,5 +1,12 @@
 .bSelect {
 
+  &__item {
+
+    &_right {
+      margin-left: auto;
+    }
+  }
+
   &_a {
     text-align: center;
     display: flex;
@@ -39,15 +46,50 @@
         }
       }
     }
+  }
+
+  &_inline {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px;
+
+    & > * {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: 10px;
+      margin-top: 0;
+      @include cr-last-item;
+    }
+  }
+
+  &_filter {
 
     &.views-exposed-form {
 
-      //.form-item {
-      //  margin: 0;
-      //}
-
       .form-actions {
         display: none;
+      }
+    }
+
+    label {
+      font-family: $RobotoCondensed-LightItalic;
+      font-size: 14px;
+      color: #686868;
+      margin-right: 10px;
+      display: inline-block;
+    }
+
+    &_a {
+
+      label {
+        font-family: $RobotoCondensed-Regular;
+        font-size: 12px;
+        color: #808080;
+        margin-right: 18px;
+        display: inline-block;
       }
     }
   }
@@ -93,6 +135,14 @@
         margin: 0 auto;
       }
     }
+
+    &_f {
+
+      .select2-container {
+        width: 120px;
+        margin: 0 auto;
+      }
+    }
   }
 
   &_gap {
@@ -103,6 +153,10 @@
 
     &_b {
       @include margin-bottom(10px, 30px);
+    }
+
+    &_c {
+      @include margin-bottom(10px, 20px);
     }
 
   }

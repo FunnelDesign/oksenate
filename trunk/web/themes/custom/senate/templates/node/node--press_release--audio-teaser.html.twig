@@ -76,14 +76,23 @@
     <div class="bPostList__date">
         {{ content.field_date }}
     </div>
-
-    <a href="{{ url }}" class="bPostList__title">
-        {{ label }}
+{% set is_audio = (node.field_press_release_type.value == 'only_audio') %}
+  {% if is_audio %}
+    <div class="bPostList__title">
+      {{ label }}
+    </div>
+  {% else %}
+    <a href="{{ url_with_back_param }}" class="bPostList__title">
+      {{ label }}
     </a>
+  {% endif %}
+
 </div>
 <div class="bPostList__text">
     {{ content.body }}
-    <a href="{{ url }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
+  {% if not is_audio %}
+    <a href="{{ url_with_back_param }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
+  {% endif %}
 </div>
 {% if content.field_press_release_audio %}
   <div class="bPostList__bAudio bAudio">

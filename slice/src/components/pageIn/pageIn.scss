@@ -45,6 +45,7 @@
   &__ico {
     text-align: center;
     margin-bottom: 12px;
+    @include cr-last-child;
 
     &_a {
       margin-bottom: 20px;
@@ -67,6 +68,10 @@
 
       &_a {
         @include margin-bottom(40px, 50px, 77px);
+      }
+
+      &_b {
+        @include margin-bottom(25px, 35px, 44px);
       }
     }
   }
@@ -145,6 +150,10 @@
           @include pseudo-block($bottom: 0, $left: 5px, $right: 0);
           border-bottom: 1px solid #cbcbcb;
         }
+
+        p {
+          margin-bottom: 0;
+        }
       }
 
       #{$this}__notice-ico {
@@ -200,6 +209,15 @@
     &_a {
       line-height: 1.6;
       max-width: 300px;
+    }
+  }
+
+  &__noRes {
+    @include cr-last-child;
+    @include padding(100px 0, 50px 0);
+
+    h2 {
+      @include font-size(25px, 30px, 45px);
     }
   }
 

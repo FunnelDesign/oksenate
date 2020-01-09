@@ -75,7 +75,13 @@
 <article{{ attributes }}>
 
   <section class="section section_ind_j section_bg-color_c">
-    {{ breadcrumbs }}
+
+    <div class="section__sNav">
+      <div class="bContainer">
+        {{ breadcrumbs }}
+        {{ socials }}
+      </div>
+    </div>
 
     <div class="bContainer">
       <div class="bPost bPost_с">
@@ -95,9 +101,7 @@
               </span>
             </div>
           </div>
-          <div class="bPost__btnWrap">
-            {{ content.field_edu_indiv_art_work_btn }}
-          </div>
+          {{ content.field_edu_indiv_art_work_btn }}
           <div class="bPost__text">
             {{ content.body }}
           </div>

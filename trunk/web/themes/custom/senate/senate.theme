@@ -4,18 +4,21 @@
  * @file
  * Functions to support theming in the senate theme.
  */
-use Drupal\image\Entity\ImageStyle;
-use Drupal\Core\Url;
-use Drupal\Core\Link;
-use Drupal\Core\Render\Markup;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\Views;
+
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
+use Drupal\image\Entity\ImageStyle;
+use Drupal\views\Views;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
+define('SENATE_RESERVE_ROOM_NID', '5808'); //first stage NID
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -54,12 +57,25 @@ function senate_preprocess_node(array &$vars) {
       ->getActiveTheme()
       ->getPath();
 
+  $vars['socials'] = _senate_get_socials($node, 'node');
+
   if (!empty($node)) {
 
     switch ($node->bundle()) {
       case 'homepage':
         $vars['search'] = _senate_get_block('searchapi_find_legislation');
         $vars['leadersip'] = _senate_get_block('leadership');
+
+        $top_slider_enabled = (!empty($vars["content"]["field_home_top_slider_turn_on"]) &&
+          !empty($vars["content"]["field_home_top_slider_turn_on"]['#items'])) ?
+          $vars["content"]["field_home_top_slider_turn_on"]['#items']->getValue() : '';
+        $vars['top_slider_enabled'] = (!empty($top_slider_enabled) && !empty($top_slider_enabled[0])) ?
+          $top_slider_enabled[0]["value"] : '';
+
+        $first_day_obj = new DrupalDateTime("this week");
+        $last_day_obj = new DrupalDateTime("this week +6 days");
+        $params = [$first_day_obj->format('Y-m-d'), $last_day_obj->format('Y-m-d')];
+        $vars['week_events'] = _senate_get_view('home_committee_events', 'block_1', $params);
         break;
       case 'committee':
         $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
@@ -87,9 +103,11 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'committee_events':
+//        kint($vars);
         if ($view_mode == 'teaser') {
           $vars["attributes"]["class"][] = 'bTiles__item';
         }
+        $vars['title'] = $node->get('title')->value;
         break;
       case 'subcommittee':
         $commitee = (!empty($vars["content"]["field_subcomt"]) &&
@@ -164,8 +182,11 @@ function senate_preprocess_node(array &$vars) {
               }
             }
           }
+          $vars['news_block'] = _senate_get_view('week_review', 'block_1');
+
         }
-        if (!empty($vars['content']['field_senator_video_link_video'])) {
+        if (!empty($vars['content']['field_senator_video_link_video']) &&
+          !empty($vars['content']['field_senator_video_link_video']['#items'])) {
           $items = $vars['content']['field_senator_video_link_video']['#items'];
           $value = !empty($items) ? $items->getValue() : '';
           if (!empty($value)) {
@@ -181,6 +202,8 @@ function senate_preprocess_node(array &$vars) {
           }
           $vars['preview_image'] = Markup::create("<span class=\"bMedia__preview\" style=\"background-image: url('$img_file_uri')\"></span>");
         }
+
+        $vars['nid'] = $node->id();
         break;
       case 'reports':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
@@ -192,20 +215,47 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'week_review':
-      case 'press_release':
-        $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
         $vars['title'] = $node->getTitle();
-
-        if (!empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"])) {
-          $sharethis = [
-            '#theme' => 'senate_news_sharethis',
-            '#url' => $vars["content"]["sharethis"]["#content"]["m_path"],
-            '#title' => $vars["content"]["sharethis"]["#content"]["m_title"],
-            '#current_path' => $path_to_theme,
-          ];
-          $vars["content"]["sharethis"]["#content"]["st_spans"] = render($sharethis);
-        }
+        _senate_add_share_this($vars);
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back to week in review'),
+          '#url' => Url::fromUserInput('/news'),
+          '#attributes' => [
+            'class' => ['btn', 'btn_a', 'section__btnBack'],
+          ],
+        ];
         break;
+      case 'press_release':
+
+        $vars['title'] = $node->getTitle();
+        $vars['url_with_back_param'] = Url::fromRoute(
+          'entity.node.canonical', ['node' => $node->id()],
+          ['query' => ['back' => \Drupal::destination()->get()]]
+        );
+
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back to press releases'),
+          '#url' => Url::fromUserInput('/press-releases'),
+          '#attributes' => [
+            'class' => ['btn', 'btn_a', 'section__btnBack'],
+          ],
+        ];
+
+        if (!empty(\Drupal::request()->get('back'))
+          && strpos(\Drupal::request()->get('back'), '/press-releases-audio') !== FALSE
+        ) {
+          $vars['back_link']['#title'] = t('back to audio & podcasts');
+          $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
+        } else if (!empty(\Drupal::request()->get('back'))
+          && strpos(\Drupal::request()->get('back'), '/press-releases') !== FALSE
+        ) {
+          $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
+        }
+
+      _senate_add_share_this($vars);
+      break;
       case 'publications':
         if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
           $vars['leadersip'] = _senate_get_block('leadership');
@@ -227,9 +277,41 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'senate_votes':
+      case 'history':
+      case 'meeting_notice':
+      case 'contacts_ada':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
+      case 'contact':
+      case 'contact_reservation':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
+      case 'senate_studies':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        $year = !empty($vars["content"]["field_senate_studies_year"]) &&
+          !empty($vars["content"]["field_senate_studies_year"]["#items"]) ?
+          $vars["content"]["field_senate_studies_year"]["#items"]->get(0)->value : '';
+        $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', ['all']);
+        break;
     }
+  }
+}
+
+/**
+ * @param array $vars
+ */
+function _senate_add_share_this(array &$vars) {
+  $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
+  if (!empty($vars["content"]["sharethis"])
+    && !empty($vars["content"]["sharethis"]["#content"])
+  ) {
+    $sharethis = [
+      '#theme' => 'senate_news_sharethis',
+      '#url' => $vars["content"]["sharethis"]["#content"]["m_path"],
+      '#title' => $vars["content"]["sharethis"]["#content"]["m_title"],
+      '#current_path' => $path_to_theme,
+    ];
+    $vars["content"]["sharethis"]["#content"]["st_spans"] = render($sharethis);
   }
 }
 
@@ -329,7 +411,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-instagram');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_instagram';
         $vars['items'][$key]['content']['#title'] = "instagram";
       }
       break;
@@ -338,7 +420,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-facebook');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_facebook';
         $vars['items'][$key]['content']['#title'] = "facebook";
       }
       break;
@@ -346,9 +428,18 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-twitter');
-        $vars['items'][$key]['wrappers'] = 'bSoc__item';
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_twitter';
         $vars['items'][$key]['content']['#title'] = "twitter";
 
+      }
+      break;
+    case 'field_comt_evt_room_reference':
+    case 'field_comt_sched_event_room_ref':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b btn_b_live');
+        $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
+        $vars['items'][$key]['content']['#title'] = Markup::create("<span><span>•</span></span> " . $vars['items'][$key]['content']['#title']);
       }
       break;
     case 'field_footer_find_senator_image':
@@ -357,9 +448,12 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_finder_right_image':
     case 'field_webform_block_icon':
     case 'field_basic_top_logo_image':
+    case 'field_contact_top_logo':
     case 'field_par_publications_page_icon':
     case 'field_menu_icon':
     case 'field_calendar_up_ddl_icon':
+    case 'field_home_top_slider_icon':
+    case 'field_contacts_ada_wheel_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -376,6 +470,28 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars['img_src'] = Markup::create($image_html); //prepared image for render
       }
 
+      break;
+    case 'field_contacts_paragraph_slider':
+      $vars['elements'] = array();
+      $style = 'rockdevels_defaults_imagemagick';
+      $thumb_style = 'custom_contact_slider';
+
+      $elements = _rows_from_paragraphs($vars, array(
+        'field_contacts_par_sli_image',
+        'field_contacts_par_sli_thumb_img',
+      ));
+      foreach ($elements as $key => $row) {
+        $image = '';
+        $thumb = '';
+        if (!empty($row['field_contacts_par_sli_image'][0]['uri'])) {
+          $image = ImageStyle::load($style)
+            ->buildUrl($row['field_contacts_par_sli_image'][0]['uri']);
+          $thumb = ImageStyle::load($thumb_style)
+            ->buildUrl($row['field_contacts_par_sli_image'][0]['uri']);
+        }
+        $vars['elements'][$key]['large_img'] = $image;
+        $vars['elements'][$key]['thumb_img'] = $thumb;
+      }
       break;
     case 'field_home_tiles_paragraph':
       $vars['elements'] = array();
@@ -407,7 +523,10 @@ function senate_preprocess_field(array &$vars, $hook) {
         $markup = Markup::create($img_markup . $link_title); //prepared content for render
 
         $url = Url::fromUri($row['field_paragraph_tiles_link'][0]['uri']);
-        $options = ['class' => ['bTiles__item',], 'target' => ['_blank']];
+        $options = !empty($row["field_paragraph_tiles_link"][0]["options"]) &&
+          !empty($row["field_paragraph_tiles_link"][0]["options"]["attributes"]) ?
+          $row["field_paragraph_tiles_link"][0]["options"]["attributes"] : [];
+        $options['class'] = ['bTiles__item'];
         $url->setOption('attributes', $options);
 
         $vars['elements'][$key]['element'] = Link::fromTextAndUrl($markup, $url);
@@ -432,6 +551,10 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_subcomt_app_title':
+    case 'field_education_seats':
+    case 'field_education_democrat':
+    case 'field_education_republican':
+    case 'field_home_top_slider_title':
       if (!empty($vars['items'])) {
         $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';
       }
@@ -439,6 +562,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_agencies_doc_doc':
     case 'field_reports_files':
     case 'field_session_summary_file':
+    case 'field_meeting_notice_files':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {
@@ -484,17 +608,57 @@ function senate_preprocess_field(array &$vars, $hook) {
         }
       }
       break;
+    case 'field_table_cell_file':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('Download');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = $file->url();
+          $url = Url::fromUri($url);
+          $options['target'] = '_blank';
+          $options['download'] = $title;
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+        }
+      }
+      break;
     case 'field_menu_link':
     case 'field_edu_indiv_art_work_btn':
+    case 'field_education_gallery_artwork':
+    case 'field_home_top_slider_link':
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars["items"][0]["content"]["#options"]["attributes"] = [
           'class' => ['btn']
         ];
       }
       break;
+    case 'field_historical_members':
+			$items = !empty($vars['items']) ? $vars['items'] : [];
+			foreach ($items as $key => $item) {
+				$title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+				$title = !empty($title) ? $title : t('see historical members');
+				$file = $item["content"]["#file"];
+				if (!empty($file)) {
+					$url = $file->url();
+					$url = Url::fromUri($url);
+					$options = ['class' => ['btn', 'btn_a']];
+					$options['target'] = '_blank';
+					$url->setOption('attributes', $options);
+					$vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+				}
+			}
+      break;
     case 'field_calendar_up_ddl_date':
       if (!empty($vars['items']) && !empty($vars["items"][0])) {
         $vars["date"] = $vars["items"][0]["content"]["#text"];
+      }
+      break;
+    case 'field_tables_page_revised_date':
+      if (!empty($vars['items']) && !empty($vars["items"][0])) {
+        $vars['date_revised'] = "Revised:" .  $vars["items"][0]["content"]["#markup"];
       }
       break;
     case 'field_glossary_terms':
@@ -503,6 +667,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $letter = $node->hasField('field_glossary_letter') ?
           $node->field_glossary_letter->get(0)->value : '';
         $vars['id'] = 'item-' . strtolower($letter);
+        $vars['letter'] = strtolower($letter);
       }
       break;
     case 'field_senate_votes_action_file':
@@ -515,6 +680,25 @@ function senate_preprocess_field(array &$vars, $hook) {
           $url = $file->url();
           $url = Url::fromUri($url);
           $options = ['class' => ['bTb__text', 'bTb__text_a', 'pageIn_cl_c']];
+          $options['target'] = '_blank';
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+        }
+      }
+      break;
+    case 'field_contacts_ada_wheel_files':
+    case 'field_contacts_ada_info_file':
+    case 'field_issue_files':
+    $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('View file');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = $file->url();
+          $url = Url::fromUri($url);
+          $options = ['class' => ['bListLinks__link']];
           $options['target'] = '_blank';
 
           $url->setOption('attributes', $options);
@@ -536,6 +720,100 @@ function senate_preprocess_field(array &$vars, $hook) {
         foreach ($gr_items as $gr_item) {
           $vars['groups'][$key][] = array_search($gr_item, $pr_ids);
         }
+      }
+      break;
+    case 'field_education_senate_history':
+    case 'field_education_find_bills':
+    case 'field_education_contact':
+    case 'field_education_leg_terms':
+      if (!empty($vars["items"]) && !empty($vars["items"][0])) {
+        $vars['url'] = $vars["items"][0]["content"]["#url"]->toString();
+        $vars['title'] = $vars["items"][0]["content"]["#title"];
+      }
+      break;
+    case 'field_home_top_slider':
+      $vars['bg_images'] = [];
+      $vars['turn_on'] = [];
+      $bg_images = _rows_from_paragraphs($vars, ['field_home_top_slider_bg_img', 'field_home_top_slider_turn_on']);
+      foreach ($bg_images as $key => $value) {
+        $bg_img = !empty($value["field_home_top_slider_bg_img"]) && !empty($value["field_home_top_slider_bg_img"][0]) ?
+          $value["field_home_top_slider_bg_img"][0]["value"] : '';
+        $turn_on = !empty($value["field_home_top_slider_turn_on"]) && !empty($value["field_home_top_slider_turn_on"][0]) ?
+          $value["field_home_top_slider_turn_on"][0]["value"] : '';
+        if (!empty($bg_img)) {
+          $vars['bg_images'][$key] = $bg_img;
+        }
+        if (!empty($turn_on)) {
+          $vars['turn_on'][] = $key;
+        }
+      }
+      break;
+    case 'field_senator_social_linkin_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_linkedin';
+        $vars['items'][$key]['content']['#title'] = "linkedin";
+      }
+      break;
+
+    case 'field_issue_links':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' => 'bListLinks__link'];
+      }
+      break;
+    case 'field_basic_back_button_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' => 'btn btn_a section__btnBack'];
+      }
+      break;
+    case 'field_meeting_notice_date':
+      $date = !empty($vars["element"]["#items"]) ? $vars["element"]["#items"]->get(0)->value : [];
+      if (!empty($date)) {
+        $utc_timezone = new \DateTimeZone('UTC');
+        $site_timezone = new DateTimeZone(date_default_timezone_get());
+        $date_obj = new DrupalDateTime($date, $utc_timezone);
+        $date_obj->setTimezone($site_timezone);
+        $vars['time'] = $date_obj->format('g:ia');
+      }
+      break;
+    case 'field_senate_studies_links':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' =>
+          ['btn', 'btn_s_f']
+        ];
+      }
+      break;
+    case 'field_meeting_notice_pres_rep':
+      $available = !empty($vars["element"]["#items"]) ?
+        $vars["element"]["#items"]->get(0)->value : '';
+      if ($available == 'Available') {
+        $parent_nid = $vars["element"]["#object"]->id();
+        $alias = \Drupal::service('path.alias_manager')->getAliasByPath('/node/' . $parent_nid);
+        $vars["items"][0]["content"]["#markup"] = '<a href="' . $alias . '" class="pageIn_cl_a">' . $vars["items"][0]["content"]["#markup"] . '</a>';
+      }
+      elseif ($available == 'Not Available') {
+        $vars["items"][0]["content"]["#markup"] = '<span class="pageIn_cl_b">' . $vars["items"][0]["content"]["#markup"] . '</span>';
+      }
+      break;
+    case 'field_live_stream_iframe':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $iframe = Xss::filter(html_entity_decode($item["content"]["#context"]["value"]), ['iframe']);
+        $vars["items"][$key]["content"]["#context"]["value"] = $iframe;
+        $vars["items"][$key]["content"]["#template"] = '{{ value|raw }}';
+      }
+      break;
+    case 'field_rooms_rooms':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' =>
+          ['btn', 'btn_b']
+        ];
+        $title = $vars["items"][$key]["content"]["#title"];
+        $vars["items"][$key]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);
       }
       break;
   }
@@ -573,6 +851,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_senator_social_inst_link':
     case 'field_senator_social_tw_link':
     case 'field_senator_address_txt':
+    case 'field_senator_social_linkin_link':
       $suggestions[] = 'field__with_custom_wrapper';
       break;
 
@@ -581,6 +860,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_home_finder_right_image':
     case 'field_home_finder_left_image':
     case 'field_webform_block_icon':
+    case 'field_contacts_ada_wheel_icon':
     case 'field_par_publications_page_icon':
       $suggestions[] = 'field__src_srcset_images';
       break;
@@ -597,6 +877,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
 function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   if ($form_id == 'search_block_form') {
     $form['keys']['#attributes']['placeholder'] = t('search here');
+    $form["#cache"]["contexts"][] = 'url.path';
   }
   if ($form_id == 'search_api_page_block_form_find_legislation') {
     $form['keys']['#attributes']['placeholder'] = t('Enter Bill Number');
@@ -615,7 +896,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       $view_name = !empty($view) ? $view->id() : '';
 
       if ($view_name == 'agencies_documents') {
-        $tid = !empty($view->args) ? $view->args[0] : '';
+        $tid = !empty($view->args) ? $view->args : '';
+        $tid = !empty($tid[1]) ? $tid[1] : '';
         $years = _senate_get_years_existing_nodes($tid);
         if (!empty($form["year"])) {
           foreach ($form["year"]["#options"] as $key => $value) {
@@ -669,7 +951,35 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
           $form['#attached']['drupalSettings']['senate']['view_journals'] = $options;
         }
-        $form["#attributes"]["class"][] = 'bSelect bSelect_a bSelect_size_d  bSelect_gap_b';
+        $form["#attributes"]["class"][] = 'bSelect bSelect_filter bSelect_a bSelect_size_d  bSelect_gap_b';
+      }
+      elseif ($view_name == 'search_statutes_constitutions') {
+        if (!empty($form["constitutions"])) {
+          $form["constitutions"]['#placeholder'] = t('Search by keyword(s)');
+          $form['constitutions_submit'] = [
+            '#type' => 'submit',
+            '#button_type' => 'primary',
+            '#value' => 'constitutions_submit',
+          ];
+        }
+        if (!empty($form["statutes"])) {
+          $form["statutes"]['#placeholder'] = t('Search by keyword(s)');
+        }
+      }
+      elseif ($view_name == 'senate_staff') {
+        $form["#attributes"]["class"][] = 'bSelect bSelect_a bSelect_filter bSelect_filter_a bSelect_inline bSelect_size_b bSelect_gap_a';
+
+        if (!empty($form["division"])) {
+          $options = _senate_get_staff_options();
+          $division_options = array_combine($options, $options);
+          $division_options = array_merge(['' => t('Showing All')], $division_options);
+
+          $form["division"] = [
+            '#type' => 'select',
+            '#options' => $division_options,
+            '#default_value' => '',
+          ];
+        }
       }
       break;
   }
@@ -821,7 +1131,7 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-3.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-3-2x.png 2x\"  alt=\"\">
         </div>";
     $form['district']['#suffix'] = "<div class=\"sSen__filLink\">
-            <a href=\"$theme_path/dist/oklahoma_co.pdf\" target=\"_blank\">see district map</a>
+            <a href=\"$theme_path/dist/19-1642-OK Senate-District Maps_NoRoads.pdf\" target=\"_blank\">see district map</a>
         </div></div>";
   }
 
@@ -880,6 +1190,18 @@ function senate_preprocess_views_view_unformatted(&$vars) {
       $rows = !empty($vars["rows"]) ? $vars["rows"] : [];
       $vars['unique_items'] = [];
       $vars['agency_doc_path'] = SENATE_AGENCIES_DOC_BASE_PATH;
+      $current_path = \Drupal::service('path.current')->getPath();
+      $path_args = explode('/', $current_path);
+      $arg_0 = !empty($path_args[1]) ? $path_args[1] : '';
+      $arg_1 = !empty($path_args[2]) ? $path_args[2] : '';
+      if (($arg_0 == 'node') && is_numeric($arg_1)) {
+        $alias = \Drupal::service('path.alias_manager')->getAliasByPath($current_path);
+        $alias_args = explode('/', $alias);
+        $last = array_pop($alias_args);
+        if (!empty($last)) {
+          $vars['agency_doc_path'] = str_replace('/education/', '/' . $last . '/', $vars['agency_doc_path']);
+        }
+      }
 
       foreach ($rows as $key => $row) {
         $tid = (!empty($row["content"]) && !empty($row["content"]["#row"])) ?
@@ -909,9 +1231,79 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         }
       }
       break;
+    case 'senate_staff':
+      $rows = !empty($vars["rows"]) ? $vars["rows"] : [];
+      $letters = [];
+      foreach ($rows as $key => $row) {
+        $paragraph = !empty($row["content"]) ? $row["content"]["#paragraph"] : '';
+        $name = !empty($paragraph) && $paragraph->hasField('field_staff_name') ?
+          $paragraph->get('field_staff_name') : '';
+        $name = !empty($name) ? $name->get(0)->value : '';
+        $name_arr = explode(' ', $name);
+        $name = end($name_arr);
+
+        $letter = substr($name, 0, 1);
+        $letter = strtolower($letter);
+        $letters[$key] = $letter;
+      }
+      $vars['letters'] = $letters;
+      break;
+
+    case 'issue_papers':
+      $row = !empty($vars["rows"]) ? current($vars["rows"]) : '';
+      $nid = (!empty($row) && !empty($row["content"]) &&
+        !empty($row["content"]["#row"]->nid)) ?
+        $row["content"]["#row"]->nid : '';
+      if (!empty($nid)) {
+        $node = \Drupal\node\Entity\Node::load($nid);
+        if ($node->hasField('field_issue_page_type')) {
+          $type = $node->get('field_issue_page_type');
+          $type = $type->getValue();
+          if (!empty($type)) {
+
+          $term_obj = Drupal::entityTypeManager()
+            ->getStorage('taxonomy_term')
+            ->load($type[0]['target_id']);
+
+            $term_type = $term_obj->getName();
+            $vars['wrapper'] = [''];
+            switch ($term_type) {
+              case "Text":
+                $vars['wrapper'][] = 'bTiles bTiles_rel bTiles_rel_b bTiles_gap_a';
+                $vars['inner_wrapper'] = new Attribute(['class' => ['bTiles__items']]);
+                break;
+              case "Links":
+              case "Files":
+                $vars['wrapper'][] = 'bListItems bListItems_a bListItems_gap_a';
+                $vars['inner_wrapper'][] = 'bListItems__items';
+                break;
+            }
+          }
+        }
+      }
+      break;
   }
 }
+function senate_preprocess_views_view_fields(&$vars) {
 
+  $fields = $vars['fields'];
+
+  if (!empty($fields['field_issue_page_type'])) {
+
+    $type = $fields['field_issue_page_type']->content;
+    switch ($type){
+      case "Text":
+        $vars['type'] = 'text';
+        break;
+      case "Links":
+        $vars['type'] = 'link';
+      break;
+      case "Files":
+      $vars['type'] = 'files';
+      break;
+    }
+  }
+}
 /**
  * Implements hook_preprocess_views_view();
  */
@@ -919,6 +1311,9 @@ function senate_preprocess_views_view(&$vars) {
   $view = $vars['view'];
   $id = $view->id();
   $display_id = $view->current_display;
+
+  $vars['socials'] = _senate_get_socials($view, 'view');
+
   switch ($id) {
     case 'senators':
       $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
@@ -929,15 +1324,17 @@ function senate_preprocess_views_view(&$vars) {
         $tid = explode(',', $tid);
         $parent = Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadAllParents($tid[0]);
         $term_obj = reset($parent);
-        $vars['committee_name'] = Markup::create("<h2>Upcoming " . $term_obj->getName() ." Events</h2>");
-        $vars['events_url'] = "/upcoming-events/" . $view->args[0];
+        if (!empty($term_obj)) {
+          $vars['committee_name'] = Markup::create("<h2>Upcoming " . $term_obj->getName() ." Events</h2>");
+          $vars['events_url'] = "/upcoming-events/" . $view->args[0];
+        }
       }
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       $vars['webform'] = _senate_get_block('webform_notification_block');
       break;
     case 'agencies_documents':
-      $tid = !empty($view->args) ? $view->args[0] : '';
-      if (!empty($tid)) {
+      $tid = !empty($view->args) ? $view->args[1] : '';
+      if (!empty($tid) && is_numeric($tid)) {
         $term_obj = Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($tid);
         $vars['title'] = $term_obj->getName();
       }
@@ -951,6 +1348,14 @@ function senate_preprocess_views_view(&$vars) {
         '#archive' => $archive,
       ];
       break;
+    case 'issue_papers':
+      $archive = _senate_get_issue_type_terms();
+      $vars['select_issue'] = [
+        '#theme' => 'senate_issue_type_select',
+        '#archive' => $archive,
+      ];
+      break;
+
     case 'week_review':
       $archive = _senate_get_archive_week_review();
       $current_path = \Drupal::service('path.current')->getPath();
@@ -971,13 +1376,15 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'press_releases_audio':
     case 'press_releases':
-      $archive = _senate_get_archive_press_releases_review();
+      $is_audio = ($id === 'press_releases_audio');
+      $archive = _senate_get_archive_press_releases_review($is_audio);
       $current_path = \Drupal::service('path.current')->getPath();
 
       $vars['sidebar'] = [
         '#theme' => 'senate_press_release_sidebar',
         '#archive' => $archive,
         '#current_path' => $current_path,
+        '#is_audio' => $is_audio
       ];
       $date = $view->args;
       if (!empty($date) && !empty($date[0])) {
@@ -989,6 +1396,7 @@ function senate_preprocess_views_view(&$vars) {
       }
       break;
     case 'journals':
+    case 'senate_staff':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
     case 'calendar_lt_st_journals':
@@ -1008,6 +1416,49 @@ function senate_preprocess_views_view(&$vars) {
     case 'senate_votes':
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
       break;
+    case 'search_statutes_constitutions':
+      $exposed_input = $view->getExposedInput();
+      if (!empty($exposed_input)) {
+        $query = !empty($exposed_input["constitutions"]) && !empty($exposed_input["op"]) &&
+          ($exposed_input["op"] == 'constitutions_submit') ? $exposed_input["constitutions"] : '';
+        $vars['query_text'] = empty($query) && !empty($exposed_input["statutes"]) ?
+          $exposed_input["statutes"] : $query;
+      }
+      break;
+    case 'senator_press_release':
+      $args = !empty($view->args) ? $view->args : [];
+      $nid = !empty($args[0]) ? $args[0] : '';
+      $date = !empty($args[1]) ? $args[1] : '';
+
+      if (!empty($nid) && is_numeric($nid)) {
+        $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+        $node = $node_storage->load($nid);
+        $name = !empty($node) ? $node->get('title')->value : '';
+        $vars['title'] = t("Sen. @name’s Press Releases", [
+          '@name' => $name,
+        ]);
+
+        $archive = _senate_get_archive_press_releases_review(FALSE, $nid);
+        $current_path = \Drupal::service('path.current')->getPath();
+
+        $vars['sidebar'] = [
+          '#theme' => 'senate_press_release_sidebar',
+          '#archive' => $archive,
+          '#current_path' => $current_path,
+          '#is_audio' => FALSE,
+          '#senator_nid' => $nid,
+        ];
+      }
+
+      if (!empty($date)) {
+        $date_obj = new DrupalDateTime($date);
+        $vars['showing'] = $date_obj->format('F, Y');
+      }
+      else {
+        $vars['showing'] = t('All');
+      }
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      break;
   }
 }
 
@@ -1024,6 +1475,13 @@ function senate_preprocess_paragraph(array &$vars) {
       if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
         $vars['icon_attributes'] = ' bTiles__ico_a';
       }
+
+      $link = !empty($vars["content"]["field_par_publications_page_link"]) &&
+        !empty($vars["content"]["field_par_publications_page_link"]["#items"]) ?
+        $vars["content"]["field_par_publications_page_link"]["#items"]->getValue() : '';
+      $link_att = !empty($link) && !empty($link[0]["options"]) ? $link[0]["options"]["attributes"] : [];
+      $link_att['class'] = ['bTiles__item'];
+      $vars['link_attr'] = new Attribute($link_att);
       break;
     case 'journals_files':
       $date = (!empty($vars["content"]["field_journals_files_date"]) &&
@@ -1041,6 +1499,12 @@ function senate_preprocess_paragraph(array &$vars) {
       if ($vars["view_mode"] == 'calendar_landing') {
         $vars['date'] = $date_obj->format('F j, Y');
       }
+      break;
+    case 'staff':
+      $email = (!empty($vars["content"]["field_staff_email"]) &&
+        !empty($vars["content"]["field_staff_email"]['#items'])) ?
+        $vars["content"]["field_staff_email"]['#items']->getValue() : '';
+      $vars['email'] = !empty($email) && !empty($email[0]) ? $email[0]["value"] : '';
       break;
   }
 }
@@ -1141,10 +1605,19 @@ function senate_theme($existing, $type, $theme, $path) {
       'variables' => [
         'archive' => NULL,
         'current_path' => NULL,
+        'is_audio' => false,
+        'senator_nid' => false,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
     'senate_session_summary_select' => [
+      'variables' => [
+        'archive' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senate_issue_type_select' => [
       'variables' => [
         'archive' => NULL,
         'current_path' => NULL,
@@ -1156,6 +1629,17 @@ function senate_theme($existing, $type, $theme, $path) {
         'url' => NULL,
         'title' => NULL,
         'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senate_socials' => [
+      'variables' => [
+        'entity' => NULL,
+        'entity_type' => NULL,
+        'url' => NULL,
+        'title' => NULL,
+        'printer' => NULL,
+        'color' => NULL,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
@@ -1188,7 +1672,7 @@ function _senate_get_archive_week_review() {
   return !empty($archive) ? $archive : [];
 }
 
-function _senate_get_archive_press_releases_review() {
+function _senate_get_archive_press_releases_review($only_with_audio = FALSE, $senator_nid = FALSE) {
   $query = \Drupal::database()->select('node_field_data', 'nfd')
     ->condition('nfd.type', 'press_release')
     ->condition('nfd.status', 1);
@@ -1198,6 +1682,16 @@ function _senate_get_archive_press_releases_review() {
   $query->addExpression("DATE_FORMAT(field_date_value, '%m')", 'month_digits');
   $query->addExpression("DATE_FORMAT(field_date_value, '%Y')", 'year');
 
+  if($only_with_audio) {
+    $query->innerJoin('node__field_press_release_audio', 'audio', 'nfd.nid= audio.entity_id');
+  } else {
+    $query->leftJoin('node_revision__field_press_release_type', 'pst', 'nfd.nid=pst.entity_id');
+    $query->isNull('pst.field_press_release_type_value');
+  }
+  if (!empty($senator_nid)) {
+    $query->innerJoin('node__field_senator', 'senator', 'nfd.nid = senator.entity_id AND senator.field_senator_target_id = ' . $senator_nid);
+  }
+
   $query->groupBy('year');
   $query->groupBy('month_digits');
   $query->groupBy('month');
@@ -1205,6 +1699,7 @@ function _senate_get_archive_press_releases_review() {
   $query->orderBy('month_digits', 'desc');
 
   $result = $query->execute()->fetchAll();
+//  $a = $query->__toString();
 
   $archive = [];
   foreach ($result as $row) {
@@ -1274,4 +1769,194 @@ function _senate_votes_get_grouped_items($pr_ids) {
   }
 
   return !empty($grouped) ? $grouped : [];
+}
+
+/**
+ * Implements hook_preprocess_views_view_field().
+ */
+function senate_preprocess_views_view_field(&$vars) {
+  $view = $vars['view'];
+  $id = $view->id();
+  $display_id = $view->current_display;
+
+  switch ($id) {
+    case 'search_statutes_constitutions':
+      $items = $vars['field']->getItems($vars["row"]);
+      if (!empty($items) && !empty($items[0])) {
+        $options = ['class' => ['bListLinks__link']];
+        $options['target'] = '_blank';
+        $items[0]["rendered"]["#url"]->setOption('attributes', $options);
+
+        $parent_node = !empty($vars["row"]->_relationship_entities) &&
+          !empty($vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"]) ?
+          $vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"] : '';
+        $fid = !empty($vars["row"]->fid) ? $vars["row"]->fid : '';
+        $files = !empty($parent_node) ? $parent_node->field_statutes_constit_files->getValue() : [];
+        foreach ($files as $file) {
+          if (!empty($file["target_id"]) && ($file["target_id"] == $fid)) {
+            $file_name = !empty($items[0]["rendered"]["#title"]) ? pathinfo($items[0]["rendered"]["#title"]) : '';
+            $file_name = !empty($file_name['filename']) ? $file_name['filename'] : '';
+            $file_name = !empty($file["description"]) ? $file["description"] : $file_name;
+            $items[0]["rendered"]["#title"] = $file_name;
+          }
+        }
+        $vars["output"] = $items[0]["rendered"];
+      }
+      break;
+  }
+}
+
+function _senate_get_staff_options() {
+  $query = \Drupal::database()->select('paragraphs_item_field_data', 'pifd')
+    ->condition('pifd.type', 'staff')
+    ->condition('pifd.status', 1);
+  $query->innerJoin('node__field_staff', 'nfs', 'pifd.id = nfs.field_staff_target_id AND nfs.deleted = 0');
+  $query->innerJoin('node_field_data', 'nfd', 'nfs.entity_id = nfd.nid AND nfd.status = 1 AND nfd.type = \'staff\'');
+  $query->innerJoin('paragraph__field_staff_division', 'pfsd', 'pifd.id = pfsd.entity_id AND pfsd.deleted = 0');
+  $query->fields('pfsd', ['field_staff_division_value']);
+
+  $query->orderBy('field_staff_division_value', 'asc')->distinct();
+
+  $result = $query->execute()->fetchCol();
+
+  return !empty($result) ? $result : [];
+}
+
+/**
+ * Used issue type terms
+ * @param $tid
+ *
+ * @return array
+ */
+function _senate_get_issue_type_terms() {
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'issue')
+    ->condition('nfd.status', 1);
+  $query->innerJoin('node__field_issue_type_term', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'issue\'');
+  $query->addExpression("field_issue_type_term_target_id", 'term');
+  $query->orderBy('field_issue_type_term_target_id', 'asc')->distinct();
+
+  $result = $query->execute()->fetchAll();
+
+  $archive = [];
+  $used_tids = [];
+  foreach ($result as $key => $row) {
+    $term_obj = Drupal::entityTypeManager()
+      ->getStorage('taxonomy_term')
+      ->load($row->term);
+    $term_name = $term_obj->getName();
+    if (!in_array($term_name, $used_tids)) {
+      $archive[$key]['term_name'] = $term_name;
+      $archive[$key]['term_id'] = strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', $term_name));;
+      $used_tids[] = $term_name;
+    }
+  }
+  array_unshift($archive, ['term_name' => 'Select a paper', 'term_id' => '']);
+  return !empty($archive) ? $archive : [];
+}
+
+function senate_preprocess_views_view_grouping(&$vars) {
+  $view = $vars['view'];
+  if ($view->id() == 'issue_papers') {
+    $vars['id'] = strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', $vars['title']));
+  }
+}
+
+/**
+ * Get socials.
+ * @param $entity
+ * @param $entity_type
+ * @param string $url
+ * @param string $title
+ * @param string $color
+ *
+ * @return array
+ */
+function _senate_get_socials($entity, $entity_type, $url = '', $title = '', $color = '') {
+  $sharethis_manager = \Drupal::service('sharethis.manager');
+  $st_js = $sharethis_manager->sharethisIncludeJs();
+
+  $socials = [
+    '#theme' => 'senate_socials',
+    '#entity' => $entity,
+    '#entity_type' => $entity_type,
+    '#url' => $url,
+    '#title' => $title,
+    '#printer' => TRUE,
+    '#color' => $color,
+    '#attached' => [
+      'library' => [
+        'sharethis/sharethispickerexternalbuttonsws',
+        'sharethis/sharethispickerexternalbuttons',
+        'sharethis/sharethis',
+      ],
+      'drupalSettings' => [
+        'sharethis' => $st_js,
+      ],
+    ],
+  ];
+
+  return $socials;
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ * @param $vars
+ */
+function senate_preprocess_senate_socials(&$vars) {
+  $entity = !empty($vars["entity"]) ? $vars["entity"] : '';
+  $entity_type = !empty($vars["entity_type"]) ? $vars["entity_type"] : '';
+
+  $social_class = [
+    'fb' => 'ss-facebook st_facebook_custom',
+    'in' => 'ss-instagram st_instagram_custom',
+    'tw' => 'ss-twitter st_twitter_custom',
+    'email' => 'ss-mail st_email_custom',
+  ];
+
+  $color = !empty($color) ? $color : 'white';
+
+  if (!empty($entity) && ($entity_type == 'node')) {
+    switch ($entity->bundle()) {
+      case 'press_release':
+      case 'contact':
+      case 'edu_indiv_art_work':
+      case 'issue':
+      case 'privacy_policy':
+      case 'senate_votes':
+      case 'senator':
+      case 'tables_page':
+        $color = 'navy';
+        break;
+    }
+  }
+  elseif (!empty($entity) && ($entity_type == 'view')) {
+    switch ($entity->id()) {
+      case 'subcommittee_events':
+      case 'agencies_documents':
+        $color = 'navy';
+        break;
+    }
+  }
+
+  $vars['socials'] = $social_class;
+  $vars['color'] = $color;
+  if ($color == 'white') {
+    $vars['wrapper_class'] = '';
+    $vars['icons_class'] = 'bSoc_cl_a';
+  }
+  elseif ($color == 'navy') {
+    $vars['wrapper_class'] = 'bShare_cl_a';
+    $vars['icons_class'] = 'bSoc_cl_b';
+  }
+
+  if (empty($vars["url"])) {
+    $vars["url"] = Url::fromRoute('<current>', [], ['query' => \Drupal::request()->query->all(), 'absolute' => 'true'])->toString();
+  }
+  if (empty($vars["title"])) {
+    $request = \Drupal::request();
+    if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+      $vars["title"] = \Drupal::service('title_resolver')->getTitle($request, $route);
+    }
+  }
 }

@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the senate accessible theme.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function senate_accessible_preprocess_html(array &$vars) {
+
+  $vars['attributes']['class'][] = 'accessibility';
+}
+
+/**
+ * Implements hook_theme_suggestions_block_alter().
+ */
+function senate_accessible_theme_suggestions_block_alter(array &$suggestions, array $vars) {
+  $elements = !empty($vars["elements"]) ? $vars["elements"] : '';
+  $id = !empty($elements) && !empty($elements["#id"]) ? $elements["#id"] : '';
+
+  switch ($id) {
+    case 'senate_accessible_main_menu':
+      $suggestions[] = 'block__senate_main_menu';
+      break;
+    case 'senate_accessible_footer_menu':
+      $suggestions[] = 'block__footer_menu';
+      break;
+    case 'senate_accessible_search':
+      $suggestions[] = 'block__senate_search';
+      break;
+    case 'senate_accessible_navigation_header':
+      $suggestions[] = 'block__navigation_header';
+      break;
+    case 'senate_accessible_footer_info':
+      $suggestions[] = 'block__footer_info';
+      break;
+    case 'senate_accessible_footer_find':
+      $suggestions[] = 'block__footer_find';
+      break;
+    case 'senate_accessible_navigation_header_mobile':
+      $suggestions[] = 'block__navigation_header_mobile';
+      break;
+    case 'senate_accessible_navigation_footer':
+      $suggestions[] = 'block__navigation_footer';
+      break;
+  }
+}

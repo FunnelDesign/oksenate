@@ -1,0 +1,2 @@
+45 16 * * 1-5 sh /home/senate/senate/scripts/senate_demo.sh >/dev/null 2>&1
+0 8 * * 1-5 sh /home/senate/senate/scripts/demo_senate.sh >/dev/null 2>&1

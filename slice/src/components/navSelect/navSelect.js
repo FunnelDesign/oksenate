@@ -15,7 +15,7 @@ window.navSelect = class {
 
 	init($elm) {
 
-		let $select = $(`.${this.name} select`);
+		let $select = $elm.find(`select`);
 
 		if(!$select.length) return;
 
@@ -39,7 +39,11 @@ window.navSelect = class {
 
 			window.location.hash = prefix + val;
 
-			$body.animate({scrollTop: $target.offset().top - 10}, speed);
+			let adminMenu = parseInt($(`body`).css('padding-top'));
+
+			let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
+
+			$body.animate({scrollTop: $target.offset().top - 10 - headerHeight - adminMenu}, speed);
 		}
 	}
 };

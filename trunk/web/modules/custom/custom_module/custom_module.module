@@ -5,6 +5,10 @@
  */
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\ReplaceCommand;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_form_alter().
@@ -29,6 +33,41 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
       }
     }
   }
+  switch ($form_id){
+    case 'webform_submission_contact_senator_node_3945_add_form':
+      $senator_nid = \Drupal::request()->query->get('sid');
+      $form['elements']['mail_to']['#access'] = FALSE;
+
+      if (!empty($senator_nid) && is_numeric($senator_nid)) {
+        $node = \Drupal\node\Entity\Node::load($senator_nid);
+        if (!empty($node) && ($node->getType() == 'senator')){
+          $form['elements']['select_your_senator']['#default_value'] = $senator_nid;
+          $form['elements']['select_your_senator']['#access'] = FALSE;
+        }
+      }
+
+      $form['actions']['submit']['#validate'][] = 'custom_module_contact_senator_validate';
+      break;
+    case 'node_senate_votes_edit_form':
+      $current_path = \Drupal::service('path.current')->getPath();
+      $path_args = explode('/', $current_path);
+      $arg_0 = !empty($path_args[1]) ? $path_args[1] : '';
+      $arg_1 = !empty($path_args[2]) ? $path_args[2] : '';
+      $nid = ($arg_0 == 'node') && is_numeric($arg_1) ? $arg_1 : '';
+
+      if (!empty($nid) && !empty($form["field_senate_votes"])) {
+        $options['target'] = '_blank';
+        $url = Url::fromUserInput('/manage/senate-votes/' . $nid);
+        $url->setOption('attributes', $options);
+        $manage_link = Link::fromTextAndUrl(t('Manage Senate Votes'), $url);
+        $form["field_senate_votes"] = [
+          '#theme' => 'markup',
+          '#markup' => $manage_link->toString(),
+        ];
+      }
+      break;
+  }
+
 }
 
 function custom_module_add_committee($form, FormStateInterface $form_state) {
@@ -62,7 +101,7 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
-  if ($view->id() == 'press_releases' && $view->getDisplay()->display['id'] == 'page_1') {
+  if (in_array($view->id(), ['press_releases', 'press_releases_audio', 'senator_press_release']) && $view->getDisplay()->display['id'] == 'page_1') {
     foreach ($query->where as $key => &$condition_group) {
       foreach ($condition_group['conditions'] as &$condition) {
         if (strpos($condition['field'], 'DATE_FORMAT((node__field_date.field_date_value') !== FALSE) {
@@ -106,4 +145,167 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $table_node['join']->field = 'nid';
     $table_node["join"]->configuration["field"] = 'nid';
   }
+  if ($view->id() == 'search_statutes_constitutions' && $view->getDisplay()->display['id'] == 'page_1') {
+    $configuration = [
+      'type'       => 'LEFT',
+      'table'      => 'search_index',
+      'field'      => 'sid',
+      'left_table' => 'file_managed',
+      'left_field' => 'fid',
+      'operator'   => '=',
+      'extra' => [
+        0 => [
+          'field' => 'type',
+          'value' => 'file_search',
+        ],
+      ],
+    ];
+
+    $join = \Drupal\views\Views::pluginManager('join')
+      ->createInstance('standard', $configuration);
+    $rel = $query->addRelationship('search', $join, 'file_managed');
+    $query->addTable('search_index', $rel, $join, 'search_index');
+
+    foreach ($query->where as $key => &$condition_group) {
+      foreach ($condition_group['conditions'] as &$condition) {
+        $field_str = is_object($condition['field']) ? $condition['field']->conditions() : '';
+        if (!empty($field_str) && strpos($field_str[0]['field'], 'file_managed') !== FALSE) {
+          $condition['field']->condition('search.word', $field_str[0]["value"], $field_str[0]["operator"]);
+        }
+      }
+    }
+
+    $exposed_input = $view->getExposedInput();
+    if (!empty($exposed_input)) {
+      $type = !empty($exposed_input["constitutions"]) && !empty($exposed_input["op"]) &&
+        ($exposed_input["op"] == 'constitutions_submit') ? 'constitutions' : '';
+      $type = empty($type) && !empty($exposed_input["statutes"]) ? 'statutes' : $type;
+
+      if (!empty($type)) {
+        $configuration = [
+          'type'       => 'LEFT',
+          'table'      => 'node__field_statutes_constit_type',
+          'field'      => 'entity_id',
+          'left_table' => 'field_statutes_constit_files_file_managed',
+          'left_field' => 'nid',
+          'operator'   => '=',
+          'extra' => [
+            0 => [
+              'field' => 'bundle',
+              'value' => 'statutes_constit',
+            ],
+          ],
+        ];
+
+        $join = \Drupal\views\Views::pluginManager('join')
+          ->createInstance('standard', $configuration);
+        $rel = $query->addRelationship('constit_type', $join, 'field_statutes_constit_files_file_managed');
+        $query->addTable('node__field_statutes_constit_type', $rel, $join, 'constit');
+
+        $query->addWhere('', 'constit_type.field_statutes_constit_type_value', $type, '=');
+
+        //      $a = $query->query()->__toString();
+      }
+    }
+  }
+  if ($view->id() == 'home_committee_events') {
+    $end_date = FALSE;
+    foreach ($query->where as $key => &$condition_group) {
+      foreach ($condition_group['conditions'] as &$condition) {
+        if (strpos($condition['field'], 'DATE_FORMAT((node__field_comt_evt_date.field_comt_evt_date_value') !== FALSE) {
+          $sign = $end_date ? '<=' : '>=';
+          $condition['field'] = str_replace('=', $sign, $condition['field']);
+          $end_date = TRUE;
+        }
+      }
+    }
+  }
+  if ($view->id() == 'senate_staff' && $view->getDisplay()->display['id'] == 'page_1') {
+    $table_files = $query->getTableInfo('node__field_staff');
+    $table_files['join']->field = 'field_staff_target_id';
+    $table_files["join"]->configuration["field"] = 'field_staff_target_id';
+
+    $table_node = $query->getTableInfo('field_staff_paragraphs_item_field_data');
+    $table_node['join']->field = 'nid';
+    $table_node["join"]->configuration["field"] = 'nid';
+  }
+  if ($view->id() == 'manage_senate_votes' && $view->getDisplay()->display['id'] == 'page_1') {
+    $table_files = $query->getTableInfo('node__field_senate_votes');
+    $table_files['join']->field = 'field_senate_votes_target_id';
+    $table_files["join"]->configuration["field"] = 'field_senate_votes_target_id';
+
+    $table_node = $query->getTableInfo('field_senate_votes_paragraphs_item_field_data');
+    $table_node['join']->field = 'nid';
+    $table_node["join"]->configuration["field"] = 'nid';
+  }
+  if ($view->id() == 'senate_artwork' && $view->getDisplay()->display['id'] == 'page_1') {
+    $exposed_input = $view->getExposedInput();
+    $location = !empty($exposed_input["location"]) ? $exposed_input["location"] : '';
+    $location = strtolower($location);
+    $has_outer = (strpos($location, 'out') !== FALSE);
+    $has_senate = (strpos($location, 'senate') !== FALSE);
+    $table_caption = $query->getTableInfo('node__field_edu_indiv_art_work_cap');
+
+    if (!$has_outer && !empty($table_caption)) {
+      $query->addWhere('', 'node__field_edu_indiv_art_work_cap.field_edu_indiv_art_work_cap_value', '%out%', 'NOT LIKE');
+    }
+    if ($has_senate) {
+      $location_exp = explode(' ', $location);
+      $word_count = count($location_exp);
+      if (($word_count < 3) && !empty($table_caption)) {
+        $query->addWhere('', 'node__field_edu_indiv_art_work_cap.field_edu_indiv_art_work_cap_value', '%' . $location . '%', 'LIKE');
+      }
+    }
+  }
+}
+
+/**
+ * Register form ajax callback -  for validate classes
+ *
+ * @param $form
+ * @param $form_state
+ * @return mixed
+ */
+function custom_module_contact_form_ajax_callback($form, &$form_state) {
+  $response = new AjaxResponse();
+  $response->addCommand(new ReplaceCommand('#mail-to-ajax-wrapper',$form["elements"]["mail_to"]["mail_to_ajax_wrapper"]));
+
+  return $response;
+}
+
+/**
+ * Set senators mail.
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function custom_module_contact_senator_validate($form, FormStateInterface &$form_state) {
+  $user_input = $form_state->getValues();
+  $senator_nid = !empty($user_input['select_your_senator']) && is_numeric($user_input['select_your_senator']) ?
+    $user_input['select_your_senator'] : '';
+  if (!empty($senator_nid)) {
+    $email = _custom_module_get_senator_email($senator_nid);
+    if (!empty($email)) {
+      $form_state->setValue('mail_to', $email);
+    }
+    else {
+      \Drupal::logger('error')
+        ->error('See ' . __FUNCTION__ . '(). Empty senator email.');
+    }
+  }
+}
+
+function _custom_module_get_senator_email($nid) {
+  if (empty($nid)) {
+    return '';
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'senator')
+    ->condition('nfd.status', 1)
+    ->condition('nfd.nid', $nid);
+  $query->innerJoin('users_field_data', 'ufd', 'ufd.uid = nfd.uid AND ufd.status = 1');
+  $query->fields('ufd', ['mail']);
+
+  $result = $query->execute()->fetchCol();
+  return !empty($result) ? $result[0] : '';
 }

@@ -24,6 +24,14 @@
     margin-bottom: 7px;
   }
 
+  &__headTitle {
+    margin: 0 0 30px;
+    font-family: $FreightTextProMedium-Regular;
+    color: $color-blue-3;
+    @include font-size(30px, 40px, 50px);
+    text-align: center;
+  }
+
   &__title {
 
     h1 {
@@ -62,6 +70,11 @@
     color: #888888;
     text-align: center;
     display: block;
+
+    b, strong {
+      font-family: $Roboto-Bold;
+      font-weight: normal;
+    }
   }
 
   &__text {
@@ -71,6 +84,11 @@
     line-height: 1.9;
     @include cr-last-child;
 
+    b, strong {
+      font-family: $FreightTextProBold-Regular;
+      font-weight: normal;
+    }
+
     p {
       @include margin(0 0 16px, 0 0 28px);
     }
@@ -78,6 +96,27 @@
     a[href^="tel"] {
       text-decoration: none;
       color: currentColor;
+    }
+
+    table {
+      width: auto;
+
+      font {
+        color: #575757;
+        font-family: $FreightTextProBook-Regular;
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      td {
+        padding: 5px;
+        @include cr-last-child;
+
+        @include sm {
+          padding: 15px;
+        }
+
+      }
     }
   }
 
@@ -140,7 +179,12 @@
     #{$this}__sub {
       font-size: 14px;
       text-align: center;
-      font-family: $FreightTextProBook-Regular
+      font-family: $FreightTextProBook-Regular;
+
+      b, strong {
+        font-family: $FreightTextProBold-Regular;
+        font-weight: normal;
+      }
     }
 
     #{$this}__header {
@@ -166,6 +210,56 @@
 
     #{$this}__title {
       @include margin-bottom(30px, 40px, 60px);
+
+      h1, h2 {
+        text-align: center;
+        font-family: $RobotoCondensed-Light;
+        @include font-size(22px, 28px, 32px);
+      }
+
+      &_a {
+        @include margin-bottom(20px, 35px);
+      }
+    }
+
+    #{$this}__imgWrap {
+      margin-left: 10px;
+      margin-right: 10px;
+
+      #{$this}__img {
+        max-width: 320px;
+
+        img {
+          margin-bottom: 30px;
+        }
+      }
+    }
+
+    #{$this}__imgCap {
+      text-align: left;
+      color: #777777;
+      line-height: 2;
+    }
+
+    #{$this}__btnWrap {
+      margin-bottom: 40px;
+    }
+
+  }
+
+  &_simple {
+    max-width: 620px;
+    padding: 0;
+    margin: 0 auto;
+    border: none;
+
+    #{$this}__header {
+      @include margin-bottom(20px, 25px);
+      @include cr-last-child;
+    }
+
+    #{$this}__title {
+      @include margin-bottom(20px, 25px);
 
       h1, h2 {
         text-align: center;

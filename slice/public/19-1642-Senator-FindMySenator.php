@@ -11,6 +11,8 @@
 
       <div class="sSen__head">
         <div class="sSen__byAdd">
+          <?php include 'tpl/blocks/bShare-no-bread.inc'; ?>
+
           <a href="#" class="sSen__btnByAdd">search by address</a>
         </div>
         <div class="sSen__fil" id="views-exposed-form-senators-page-1">
@@ -25,27 +27,30 @@
 <!--              search by zip code-->
 <!--            </div>-->
             <div class="sSen__opt">
-<!--              <div class="form f-search f-search_min">-->
-<!--                <div class="form-item">-->
-<!--                  <input type="text" class="form-text" placeholder="Enter Zip"/>-->
-<!--                </div>-->
-<!--                <div class="form-actions">-->
-<!--                  <input type="submit" class="form-submit" value="">-->
-<!--                  <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>-->
-<!--                </div>-->
-<!--              </div>-->
-
-              <div class="form f-search f-search_min">
+              <div  class="form f-search f-search_min">
                 <div class="js-form-item form-item js-form-type-entity-autocomplete form-type-entity-autocomplete js-form-item-zip form-item-zip">
                   <label for="edit-zip">search by zip code</label>
                   <input
+
                     data-drupal-selector="edit-zip"
                     class="form-autocomplete form-text ui-autocomplete-input"
                     data-autocomplete-path="/entity_reference_autocomplete/taxonomy_term/default/kLVypGEEaZEicbnexfCrIxnl21qjo0yEHO7q0PzdfnE"
-                    type="text" id="edit-zip" name="zip" value="" size="60" maxlength="128" autocomplete="off"
+                    type="text" id="edit-zip" name="zip" value="" size="60" maxlength="128"
+                    autocomplete="new-password"
                     placeholder="Enter Zip"
                   >
 
+                </div>
+                <a href="#" class="btn btn_action">go</a>
+              </div>
+
+              <div class="form f-search f-search_min">
+                <div class="form-item">
+                  <input type="text" class="form-text" placeholder="Enter Zip"/>
+                </div>
+                <div class="form-actions">
+                  <input type="submit" class="form-submit" value="">
+                  <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
                 </div>
               </div>
 
@@ -212,24 +217,16 @@
               array("s-sen-img-1.jpg", "r", "4", "Mark Allen"),
               array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
               array("s-sen-img-3.jpg", "d", "44", "Michael Brooks"),
-              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett")
+              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
+              array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks cvgdfg fgdfg dftgdf dfghdfg dfghdf"),
+              array("s-sen-img-4.jpg", "d", "34", "J.J. Dossett"),
+              array("s-sen-img-2.jpg", "r", "1", "Micheal Bergstrom"),
+              array("s-sen-img-3.jpg", "d", "44", "Michael Brooks")
             )
             ?>
             <?php foreach($sSen__item as $key => $element): ?>
-              <div class="sSen__item">
-
-                <a class="sSen__sLink" href="#">
-                  <span class="sSen__sImgWrap">
-                    <span class="sSen__sImg" style="background-image: url('../dist/images/senImg/<?php print $element[0]; ?>')"></span>
-                    <span class="sSen__sMask sSen__sMask_<?php print $element[1]; ?>"><?php print $element[1]; ?></span>
-                    <span class="sSen__sDis">district <?php print $element[2]; ?></span>
-                  </span>
-                  <span class="sSen__sName">
-                    <?php print $element[3]; ?>
-                  </span>
-                </a>
-
-              </div>
+              <?php include 'tpl/blocks/senatorItem.inc'; ?>
             <?php endforeach; ?>
 
           </div>

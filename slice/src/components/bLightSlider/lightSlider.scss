@@ -1,0 +1,72 @@
+.bLightSlider {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include sm {
+    max-width: none;
+  }
+
+  &__slides {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+
+      a {
+        display: block;
+      }
+
+      img {
+        max-height: 400px;
+        width: auto;
+      }
+    }
+  }
+
+  .lSSlideOuter .lSPager.lSGallery {
+
+    li {
+      cursor: pointer;
+      backface-visibility: hidden;
+      position: relative;
+      filter: grayscale(100%);
+      transition: filter .3s;
+      height: 68px;
+      border-radius: 0;
+      margin: 0;
+
+      &:hover, &.active {
+        filter: none;
+        border-radius: 0;
+      }
+
+      a {
+        display: block;
+        height: 100% !important;
+        width: 100% !important;
+      }
+
+      img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      @include margin-bottom(20px, 40px);
+    }
+
+    &_b {
+      @include margin-bottom(30px, 44px);
+    }
+  }
+}

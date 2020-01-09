@@ -13,11 +13,21 @@
   &__items {
     display: flex;
     align-items: center;
+
+    @include xs-only {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
 
   &__item {
     margin-right: 7px;
     transition: opacity .3s;
+    white-space: nowrap;
+
+    @include xs-only {
+      margin: 0 4px 7px !important;
+    }
 
     &:hover {
       opacity: .7;
@@ -27,7 +37,19 @@
       margin-right: 0;
     }
 
-    &:nth-child(1) {
+    &_facebook, &_twitter, &_instagram, &_linkedin {
+
+      a:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;
+      }
+    }
+
+    &_facebook {
 
       a:before {
         background: url('facebool-soc-img-1.png') no-repeat;
@@ -35,7 +57,7 @@
       }
     }
 
-    &:nth-child(2) {
+    &_twitter {
 
       a:before {
         background: url('twitter-soc-img-2.png') no-repeat;
@@ -43,10 +65,18 @@
       }
     }
 
-    &:nth-child(3) {
+    &_instagram {
 
       a:before {
         background: url('insta-img-soc-3.png') no-repeat;
+        background-size: contain;
+      }
+    }
+
+    &_linkedin {
+
+      a:before {
+        background: url('linkedin-img-soc-4.png') no-repeat;
         background-size: contain;
       }
     }
@@ -65,14 +95,14 @@
     min-width: 94px;
     position: relative;
 
-    &:before {
-      content: '';
-      display: inline-block;
-      vertical-align: middle;
-      width: 24px;
-      height: 24px;
-      margin-right: 4px;
-    }
+    //&:before {
+    //  content: '';
+    //  display: inline-block;
+    //  vertical-align: middle;
+    //  width: 24px;
+    //  height: 24px;
+    //  margin-right: 4px;
+    //}
   }
 
   &__ico {
@@ -99,6 +129,75 @@
 
         &:before {
           display: none;
+        }
+      }
+    }
+
+    &_a {
+
+      #{$self}__item {
+
+        a {
+
+          &:before {
+            display: inline-block;
+          }
+        }
+      }
+
+      #{$self}__ico {
+        font-size: 18px;
+      }
+    }
+
+    &_share {
+
+      #{$self}__item {
+        margin-right: 9px;
+        margin-bottom: 0 !important;
+
+        @include sm {
+
+        }
+
+        a {
+
+          &:before {
+            display: inline-block;
+          }
+        }
+      }
+
+      #{$self}__ico {
+        font-size: 12px;
+      }
+    }
+  }
+
+  &_cl {
+
+    &_a {
+
+      a, span {
+        color: #fff;
+        cursor: pointer;
+
+        &:hover {
+          color: #fff;
+          opacity: .7;
+        }
+      }
+    }
+
+    &_b {
+
+      a, span  {
+        color: #253857;
+        cursor: pointer;
+
+        &:hover {
+          color: #253857;
+          opacity: .7;
         }
       }
     }

@@ -1,0 +1,57 @@
+.bShare {
+  display: flex;
+  align-items: center;
+  $this: &;
+
+  & > * {
+
+  }
+
+  &__title, &__print a {
+    font-family: $RobotoCondensed-LightItalic;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    color: #fff;
+  }
+
+  &__bSoc {
+    display: flex;
+    align-items: center;
+    margin: 0 -5px;
+
+    & > * {
+      margin: 0 5px;
+    }
+  }
+
+  &__print {
+    margin-left: 15px;
+
+    a {
+      white-space: nowrap;
+
+      &:hover {
+        opacity: .7;
+      }
+
+      .ss-icon {
+        margin-right: 5px;
+        font-size: 16px;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  &_cl {
+
+    &_a {
+
+      #{$this}__title,
+      #{$this}__print a {
+        color: #253857;
+      }
+    }
+  }
+}

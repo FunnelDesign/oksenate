@@ -8,6 +8,7 @@
   <div class="pageIn">
 
     <section class="section section_ind_d section_bg-color_c">
+      <?php include 'tpl/blocks/bShare-color-a-no-bread.inc'; ?>
 
       <div class="bContainer">
         <a href="#" class="btn btn_a section__btnBack">
@@ -16,6 +17,9 @@
         
         <div class="bPost">
           <div class="bPost__header">
+            <div class="bPost__headTitle">
+              Week In Review
+            </div>
             <div class="bPost__date">
               March 19, 2019 |  9:00am
             </div>

@@ -8,6 +8,7 @@
   <div class="pageIn">
 
     <section class="section section_bg-color_f section_inner-v-centered">
+      <?php include 'tpl/blocks/bShare-no-bread.inc'; ?>
       <div class="section__bg-wrap">
         <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-16.jpg')"></div>
       </div>
@@ -48,18 +49,24 @@
                  alt="">
 
             <div class="bSeats__cap">
-              <span>48</span>
+              <span class="count" data-start="1" data-end="48">
+                48
+              </span>
               Seats
             </div>
           </div>
 
           <div class="bSeats__count">
             <div class="bSeats__countD">
-              <span>9</span>
+              <span class="count" data-start="1" data-end="9">
+                9
+              </span>
               Democrat
             </div>
             <div class="bSeats__countR">
-              <span>39</span>
+              <span class="count" data-start="1" data-end="39">
+                39
+              </span>
               Republican
             </div>
           </div>

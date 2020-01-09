@@ -268,6 +268,7 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
 
             $url = Url::fromUserInput('/node/' . $this::COMMITTEE_MAIN_PAGE_NID);
             $links[] = Link::fromTextAndUrl(t('Committees'), $url);
+            $nodes = !empty($nodes) ? $nodes : [];
 
             foreach ($nodes as $node) {
               $nid = !empty($node->nid) ? $node->nid : '';
@@ -277,6 +278,23 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
                 $links[] = Link::fromTextAndUrl($title, $url);
               }
             }
+            $breadcrumb->setLinks($links);
+          }
+          break;
+        case 'senator_press_release':
+          $current_path = \Drupal::service('path.current')->getPath();
+          $arg = explode('/', $current_path);
+          $senator_nid = !empty($arg[2]) ? $arg[2] : '';
+          $links = [];
+
+          if (!empty($senator_nid) && is_numeric($senator_nid)) {
+            $this->useEasyBreadcrumb = FALSE;
+            $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+            $node = $node_storage->load($senator_nid);
+            $name = !empty($node) ? $node->get('title')->value : '';
+
+            $url = Url::fromUserInput('/node/' . $senator_nid);
+            $links[] = Link::fromTextAndUrl($name, $url);
             $breadcrumb->setLinks($links);
           }
           break;

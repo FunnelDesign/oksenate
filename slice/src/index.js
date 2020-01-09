@@ -5,11 +5,12 @@ import Observer from "./components/Observer/Observer";
 import BlockVideo from "./components/bMedia/video";
 import bSort from "./components/bSort/bSort";
 import navSelect from "./components/navSelect/navSelect";
-import SliderThumb from "./components/slider-thumb/SliderThumb";
-import FancyBox from "./components/fancybox/FancyBox";
 import SliderTypeA from "./components/slider-type-a/SliderTypeA";
 import sHeader from "./components/sHeader/sHeader";
 import bTerms from "./components/bTerms/bTerms";
+import bStaff from "./components/bStaff/bStaff";
+import lightSlider from "./components/bLightSlider/lightSlider";
+import Modal from "./components/modal/modal";
 
 const $ = jQuery;
 
@@ -33,20 +34,99 @@ if (window.Drupal?.behaviors) {
 document.addEventListener('DOMContentLoaded', () => {
 	new Observer();
 	new navSelect();
+	new navSelect({
+		name: 'navSelectIssuePapers',
+		prefix: 'category-',
+		prefixContent: 'id-',
+	});
 });
 
 function init() {
+	new Modal();
 	new bEvent();
 	new bSort();
-	new SliderThumb();
 	new SliderTypeA();
-	// new FancyBox();
 	new sHeader();
 	new bTerms();
+	new bStaff();
+	new lightSlider();
+	initFormRedirect();
 	initSelect();
-
+	initAccessibility();
+	initHeaderHover();
+	initCounter($('.bSeats__cap'), false, 2);
+	initCounter($('.bSeats__countD'), false, 2);
+	initCounter($('.bSeats__countR'), false, 2);
 
 	new BlockVideo();
+}
+
+function initCounter(wrap, easing, speed) {
+	var $wrap = wrap.find('.count');
+
+	if (!$wrap.length) return;
+
+	if ($wrap.hasClass('processed')) return;
+	$wrap.addClass('processed');
+
+	var start = +$wrap.data('start');
+	var end = +$wrap.data('end');
+
+	var counter = new CountUp($wrap[0], start, end, 0, speed, {
+		useEasing: easing,
+		useGrouping: true,
+		separator: ','
+	});
+
+	checkPosition();
+
+	$(window).on('scroll', function() {
+		checkPosition();
+	});
+
+	$(window).on('resize', function() {
+		checkPosition();
+	});
+
+	function  checkPosition() {
+		if ($wrap.hasClass('active')) return;
+
+		if(($(window).outerHeight() + $(window).scrollTop()) > ($wrap.offset().top + $wrap.outerHeight() + 20)) {
+			$wrap.addClass('active');
+
+			counter.start(function () {
+				//counterRestart()
+			});
+		}
+	}
+
+	function counterRestart() {
+		setTimeout(function () {
+
+			counter.reset();
+			setTimeout(function () {
+
+				counter.start(function () {
+					counterRestart()
+				});
+			}, 200)
+
+		}, 1000);
+	}
+}
+
+function initFormRedirect() {
+	var $form = $('.f-search-redirect');
+	var $input = $form.find('.form-text');
+
+	$form.on('submit', function(e) {
+		e.preventDefault();
+		var val = $input.val().trim();
+
+		if(val) {
+			location.href = 'http://www.oklegislature.gov/BillInfo.aspx?Bill=' + val;
+		}
+	});
 }
 
 function initSelect() {
@@ -63,5 +143,60 @@ function initSelect() {
 			scrollStep: 160
 		});
 	});
+}
+
+
+function initAccessibility() {
+	if ($('body').hasClass('accessibility')) {
+		$('select[tabindex="-1"]').removeAttr('tabindex').removeAttr('aria-hidden');
+	}
+}
+
+function initHeaderHover() {
+	var $wrapper = $('.sHeader__menu-wrap');
+	var $listDesktopWrap = $wrapper.find(' > ul.menu');
+	var $listDesktopWrapLi = $listDesktopWrap.find('li');
+	var $listDesktopWrapA = $listDesktopWrap.find('a');
+
+	if ($wrapper.hasClass('sHeader__menu-processed')) return;
+	$wrapper.addClass('sHeader__menu-processed');
+
+	if (!$('body').hasClass('accessibility')) return;
+
+	$listDesktopWrapLi.on('mouseenter', function () {
+		removeBlur();
+		getMenuWrap(this);
+	});
+
+	$listDesktopWrapLi.on('mouseleave', function () {
+		$(this).removeClass('hover');
+	});
+
+	$listDesktopWrapA.on('focus', function () {
+		getMenuWrap(this.parentNode);
+		$(this.parentNode).siblings('li').removeClass('hover');
+	});
+
+	$listDesktopWrapA.on('blur', function () {
+		if (this === $listDesktopWrapA[$listDesktopWrapA.length - 1]) {
+			$listDesktopWrapLi.removeClass('hover');
+		}
+	});
+
+	function removeBlur() {
+		$listDesktopWrapLi.removeClass('hover');
+		$listDesktopWrapA.blur();
+	}
+
+	function getMenuWrap(elm) {
+
+		if (elm.classList.contains('sHeader__menu-wrap')) {
+			return;
+		}
+
+		elm.classList.add('hover');
+
+		getMenuWrap(elm.parentNode);
+	}
 }
 

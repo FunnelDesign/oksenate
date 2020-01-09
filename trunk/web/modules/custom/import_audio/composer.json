@@ -1,0 +1,17 @@
+{
+    "name": "import_audio",
+    "type": "drupal-module",
+    "description": "Import audio",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/import_audio",
+    "minimum-stability": "dev",
+    "require": {
+        "adubovskoy/phpquery": "^1.0",
+        "pguardiario/phpuri": "^1.0"
+    },
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/import_audio",
+        "source": "http://cgit.drupalcode.org/import_audio"
+    }
+}

@@ -2,15 +2,16 @@
 <html>
 <?php $title = '19-1642-Senator-IndividualPage4'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
-<body class="page">
+<body class="page page-node-type-senator">
 <div class="pageWr">
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
     <section class="section section_ind_c section_bg-color_b">
+      <?php include 'tpl/blocks/bShare-color-a-no-bread.inc'; ?>
 
       <div class="bContainer">
-        <a href="#" class="btn btn_a section__btnBack">
+        <a href="#" class="btn btn_a section__btnBack section__btnBack_a">
           back to senators
         </a>
 
@@ -47,21 +48,28 @@
                   <div class="bSoc bSenBio__bSoc">
 
                       <div class="bSoc__items">
-                        <div class="bSoc__item">
+                        <div class="bSoc__item bSoc__item_facebook">
                           <a target="_blank" href="#">facebook
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-facebook"></i>-->
 
                           </a>
                         </div>
-                        <div class="bSoc__item">
+                        <div class="bSoc__item bSoc__item_twitter">
                           <a target="_blank" href="#">twitter
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-twitter"></i>-->
 
                           </a>
                         </div>
-                        <div class="bSoc__item">
+                        <div class="bSoc__item bSoc__item_instagram">
                           <a target="_blank" href="#">instagram
 <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-instagram"></i>-->
+
+                          </a>
+                        </div>
+
+                        <div class="bSoc__item bSoc__item_linkedin">
+                          <a target="_blank" href="#">linkedin
+                            <!--                            <i class="bSoc__ico ss-icon ss-social-circle ss-instagram"></i>-->
 
                           </a>
                         </div>
@@ -213,6 +221,8 @@
                 </span>
               </span>
             </div>
+
+
           </div>
           <div class="bNews__btnAll">
             <a href="#" class="btn">

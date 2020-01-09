@@ -20,6 +20,64 @@
           _this.submit();
         });
       });
+
+      $('#views-exposed-form-search-statutes-constitutions-page-1', context).once('statutes').each(function () {
+        var constitutions = this.elements['edit-constitutions'];
+        var statutes = this.elements['edit-statutes'];
+
+        constitutions.addEventListener("focus", function () {
+          statutes.value = '';
+        });
+
+        statutes.addEventListener("focus", function () {
+          constitutions.value = '';
+        });
+      });
+
+      $('#views-exposed-form-senators-page-1', context).once('senators').each(function () {
+        var formElements = this.elements;
+        var formElementsLength = formElements.length;
+
+        this.addEventListener('focus', function (event) {
+          for (var i = 0; i < formElementsLength; i++) {
+            if (formElements[i] !== event.target && formElements[i].type !== "submit") {
+              switch (formElements[i].type) {
+                case 'text':
+                  formElements[i].value = '';
+                  break;
+                case 'select-one':
+                  if (formElements[i].value !== 'All') {
+                    formElements[i].value = 'All';
+                    $(formElements[i]).trigger('change.select2');
+                  }
+                  break;
+              }
+            }
+          }
+        }, true);
+      });
+
+      this.setBackButtonUrl(context);
+    },
+
+    setBackButtonUrl: function (context) {
+      var _this = this;
+      $('.page-node-type-press-release .section__btnBack', context).once('backButton').each(function () {
+        var backUrl = _this.getQueryParameterByName('back');
+        if (backUrl) {
+          this.setAttribute("href", backUrl);
+        }
+      });
+    },
+
+    getQueryParameterByName: function (name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
   };
 })(jQuery, Drupal, drupalSettings);

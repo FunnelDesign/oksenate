@@ -1,0 +1,8 @@
+
+manage.senator_controller_editMyPage:
+  path: '/manage/edit-my-page'
+  defaults:
+    _controller: '\Drupal\manage\Controller\SenatorController::editMyPage'
+    _title: 'Edit my page'
+  requirements:
+    _permission: 'manage own senator page'
