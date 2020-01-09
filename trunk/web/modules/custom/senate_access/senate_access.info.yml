@@ -1,0 +1,5 @@
+name: 'Senate Access'
+type: module
+description: 'Senate Access module.'
+package: 'Custom'
+core: 8.x

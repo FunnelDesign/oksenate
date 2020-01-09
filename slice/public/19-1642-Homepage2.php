@@ -168,7 +168,7 @@
             <div class="sFinder__desc">
               <p>If you know the bill number, enter it below.</p>
             </div>
-            <div class="form f-search">
+            <form class="form f-search f-search-redirect">
               <div class="form-item">
                 <input type="text" class="form-text" placeholder="Enter Bill Number"/>
               </div>
@@ -176,7 +176,7 @@
                 <input type="submit" class="form-submit" value="search">
                 <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -313,11 +313,11 @@
               <div class="senators">
 
                 <div class="senators__items">
-                  <span class="senators__item">
-                  <span class="senators__imgWrap">
+                  <a href="#" class="senators__item">
+                    <span class="senators__imgWrap">
                       <span class="senators__img" style="background-image: url('../dist/images/tmp/senators-img-1.jpg')"></span>
                     </span>
-                      
+
                     <span class="senators__name">
                       Sen. Greg Treat
                     </span>
@@ -325,7 +325,7 @@
                       President Pro Tempore
                     </span>
 
-                  </span>
+                  </a>
 
                   <a href="#" class="senators__item">
                     <span class="senators__imgWrap">

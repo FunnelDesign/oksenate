@@ -4,6 +4,7 @@ namespace Drupal\import_audio;
 
 use DateInterval;
 use DateTime;
+use Drupal\import_audio\Exceptions\ImportNoNodeError;
 
 class ImportBatch {
 
@@ -51,6 +52,8 @@ class ImportBatch {
         $context['results'][$queue_name] += 1;
         $queue->deleteItem($item);
       } catch (\Exception $e) {
+        $message = $item->data . ' error ' .  $e->getMessage()  ."<br>\n";
+        file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/month_page_error.log', $message, FILE_APPEND);
         \Drupal::logger('audio_import_month_parse_page_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
       }
 
@@ -83,6 +86,8 @@ class ImportBatch {
         $queue_worker->processItem($item->data);
         $context['results'][$queue_name] += 1;
         $queue->deleteItem($item);
+      } catch (ImportNoNodeError $e) {
+        //skip logs inside parser
       } catch (\Exception $e) {
         $safe_data_string = ParserHelper::fixEncoding(
           '<code><pre>' . print_r($item->data, TRUE) . '</pre></code>'

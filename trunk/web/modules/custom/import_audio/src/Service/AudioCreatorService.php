@@ -5,6 +5,7 @@ namespace Drupal\import_audio\Service;
 use Drupal;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\import_audio\Exceptions\ImportNoNodeError;
 use Drupal\import_audio\Exceptions\ImportParseError;
 use Drupal\import_audio\ParserHelper;
 use Drupal\media\Entity\Media;
@@ -26,9 +27,9 @@ class AudioCreatorService {
   public function saveAudio(array $data) {
 
     if (empty($data['url'])) {
-      //$node = $this->loadPressByDateTitle($data['title'], $data['date']);
+      $node = $this->loadPressByDateTitle($data['title'], $data['date']);
       if (empty($node)) {
-        //$node = $this->createOnlyAudioNode($data);
+        $node = $this->createOnlyAudioNode($data);
       }
     }
     else {
@@ -45,6 +46,8 @@ class AudioCreatorService {
 
 
       if (empty($data['files'])) {
+        $message = $data['url'] . " no files error  \r\n";
+        file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/no_files.log', $message, FILE_APPEND);
         \Drupal::logger('audio_import_no_files_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
         return;
       }
@@ -63,13 +66,18 @@ class AudioCreatorService {
             'error' => $e->getMessage(),
             'data' => $data,
           ];
+          $message = $data['url'] . ' ' . $file_info['url'] .   ' save file error ' .  $e->getMessage()  ."\r\n";
+          file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/save_file_error.log', $message, FILE_APPEND);
           \Drupal::logger('audio_import_save_file_error')->error('<pre><code>' . print_r($info, TRUE) . '</code></pre>');
         }
       }
 
       if (empty($node)) {
+        $message = $data['url'] . ' no node error '   . "\r\n";
+        file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/save_file_error.log', $message, FILE_APPEND);
         \Drupal::logger('audio_import_no_node_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
-        return;
+
+        throw new ImportNoNodeError('No node');
       }
 
       if (!empty($node->field_press_release_audio)) {
@@ -124,7 +132,7 @@ class AudioCreatorService {
    * @return string
    */
   protected function convertDateInDbFormat($date): string {
-    $date_obj = date_create_from_format('d.m.y', $date);
+    $date_obj = date_create_from_format('m.d.y', $date);
     if(empty($date_obj)) {
       throw new ImportParseError('Invalid date ' . $date);
     }

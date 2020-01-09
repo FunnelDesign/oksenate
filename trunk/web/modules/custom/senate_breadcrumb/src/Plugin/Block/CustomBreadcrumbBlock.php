@@ -125,23 +125,19 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     return [
       '#type' => 'inline_template',
       '#template' => '
-          <div class="section__sNav">
-            <div class="bContainer">
-              {{ back_link }}
+        {{ back_link }}
 
-              {% if breadcrumbs %}
-                <div class="breadcrumb {{ breadcrumb_class }}">
-                  {% for breadcrumb in breadcrumbs %}
-                    {{ breadcrumb }}
-                  {% endfor %}
+        {% if breadcrumbs %}
+          <div class="breadcrumb {{ breadcrumb_class }}">
+            {% for breadcrumb in breadcrumbs %}
+              {{ breadcrumb }}
+            {% endfor %}
 
-                  {% if page_title is not empty %}
-                    <span>{{ page_title }}</span>
-                  {% endif %}
-                </div>
-              {% endif %}
-            </div>
-          </div>',
+            {% if page_title is not empty %}
+              <span>{{ page_title }}</span>
+            {% endif %}
+          </div>
+        {% endif %}',
       '#context' => [
         'breadcrumbs' => !empty($breadcrumbs) ? $breadcrumbs : [],
         'page_title' => !empty($page_title) ? $page_title : NULL,

@@ -6,10 +6,11 @@
  */
 
 use Drupal\import_audio\WeekImportBatch;
+use Drupal\user\Entity\User;
 
 define('IMPORT_AUDIO_START_DATE', '2003-01-01');
 define('IMPORT_AUDIO_MONTH_URL', 'http://www.oksenate.gov/news/press_releases_audio_clips/:Y_audio_clips/prac:Y:M.html');
-
+define('IMPORT_LOG_COUNTER', 2);
 
 
 
@@ -48,7 +49,7 @@ function audio_import_test_creation() {
 //  $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130228b.MP3';
 //  $data['files'][0]['desc'] = '';
 
-  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
+//  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
 
 }
 
@@ -60,7 +61,7 @@ function audio_import_test_creation_only_audio() {
   $data['files'][0]['url'] = 'http://www.oksenate.gov/news/press_releases_audio_clips/2013_audio_clips/prac20130228b.MP3';
   $data['files'][0]['desc'] = '';
 
-  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
+//  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->saveAudio($data));
 }
 
 function audio_import_test_load_only_audio() {
@@ -77,17 +78,59 @@ function audio_import_test_service() {
   //$url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2019_audio_clips/prac201903.htm';
   //$url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac200802.html';
   //$url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2010_audio_clips/prac201003.html';
-  $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2007_audio_clips/prac200704.html';
+  //$url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2007_audio_clips/prac200704.html';
 //http://www.oksenate.gov/news/press_releases/press_releases_2008/2008_audio_clips/prac200802.html
 //  dsm(\Drupal::getContainer()->get('import_audio.audio_creator')->fixPressReleaseUrl('http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac200802.html'));
 
   //parsed http://www.oksenate.gov/news/press_releases_audio_clips/prac20080227c.mp3
   //valid http://www.oksenate.gov/news/press_releases_audio_clips/2008_audio_clips/prac20080227c.mp3
+  $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2004_audio_clips/prac200412.html';
   dsm($res = \Drupal::getContainer()->get('import_audio.parser')->parseAudioReleases($url));
-  dsm($res[7]);
+  //dsm($res[7]);
 }
 
 function audio_import_test_service2() {
   $url = 'http://www.oksenate.gov/news/press_releases_audio_clips/2012_audio_clips/prac201202.html';
   dsm(\Drupal::getContainer()->get('import_audio.parser')->parseAudioReleases($url));
+}
+
+function autio_import_create_senators() {
+
+//  $nodes = \Drupal::entityTypeManager()
+//    ->getStorage('node')
+//    ->loadByProperties(['type' => 'senator']);
+//
+//  //dsm($nodes);
+//  //$node = $nodes[1835];
+//  foreach ($nodes as $node) {
+//    $name = trim($node->label());
+//    $name = strtolower(str_replace([' ', '  ', '   '], '.', $name));
+//    $name = str_replace('..', '.', $name);
+//
+//    $mail = $name . '@oksenate.gov';
+//      dsm($mail);
+//      $user = User::create([
+//        'name' => $name,
+//        'mail' => $mail,
+//        'pass' => \Drupal\Component\Utility\Random::string(16),
+//        'status' => 1,
+//        'roles' => ['senator', 'authenticated'],
+//      ]);
+//      $user->save();
+//  }
+
+//  $users = \Drupal::entityTypeManager()
+//    ->getStorage('user')
+//    ->loadByProperties(['roles' => 'senator']);
+//  //dsm($users);
+//
+//  foreach($users as $user) {
+//    $password = \Drupal\Component\Utility\Random::name(16);
+//    $user->setPassword($password);
+//
+//    // Save the user
+//    $user->save();
+//    dsm($user->label() . "," . $password);
+//  }
+
 }

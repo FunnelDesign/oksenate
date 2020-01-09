@@ -2,12 +2,13 @@
 <html>
 <?php $title = '19-1642-Senator-IndividualPage4'; ?>
 <?php include 'tpl/includes/head.inc'; ?>
-<body class="page">
+<body class="page page-node-type-senator">
 <div class="pageWr">
   <?php include 'tpl/blocks/sHeader.inc'; ?>
   <div class="pageIn">
 
     <section class="section section_ind_c section_bg-color_b">
+      <?php include 'tpl/blocks/bShare-color-a-no-bread.inc'; ?>
 
       <div class="bContainer">
         <a href="#" class="btn btn_a section__btnBack section__btnBack_a">
@@ -220,6 +221,8 @@
                 </span>
               </span>
             </div>
+
+
           </div>
           <div class="bNews__btnAll">
             <a href="#" class="btn">

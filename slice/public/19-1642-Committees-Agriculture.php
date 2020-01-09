@@ -17,6 +17,7 @@
             <a href="#">Committees</a>
             <span>Agriculture and Wildlife</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

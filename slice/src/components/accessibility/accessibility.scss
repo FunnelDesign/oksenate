@@ -28,7 +28,7 @@
     }
 
     &:focus {
-      border: 3px solid red !important;
+      //border: 3px solid red !important;
     }
 
     a {
@@ -64,6 +64,14 @@
 
   .select2 {
     display: none !important;
+
+    &.bDrop {
+      display: block !important;
+
+      .bDrop__body {
+        background: #fff !important;
+      }
+    }
   }
 
   .am-row {

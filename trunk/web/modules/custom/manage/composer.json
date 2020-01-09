@@ -1,0 +1,13 @@
+{
+    "name": "manage",
+    "type": "drupal-module",
+    "description": "Additional management functionality",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/manage",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/manage",
+        "source": "http://cgit.drupalcode.org/manage"
+    }
+}

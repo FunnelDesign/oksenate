@@ -17,6 +17,8 @@
             <a href="#">Publications</a>
             <span>Issue Papers</span>
           </div>
+
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

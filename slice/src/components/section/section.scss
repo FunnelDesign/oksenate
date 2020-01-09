@@ -34,8 +34,8 @@
     }
 
     &_d {
-      @include padding(20px 0, 50px 0);
-      @include min-height(150px, 244px);
+      @include padding(20px 0, 30px 0, 50px 0);
+      @include min-height(150px, 280px, 244px);
     }
 
     &_f {
@@ -129,6 +129,10 @@
 
     &_c {
       @include padding(58px 0 30px, 58px 0 75px);
+
+      .page-node-type-senator & {
+        @include padding(10px 0 30px, 58px 0 75px);
+      }
     }
 
     &_d {
@@ -156,32 +160,57 @@
     @include sm {
       position: absolute;
       left: 0;
-      top: 14px;
+      top: 0;
       width: 100%;
     }
 
+    @include md {
+      padding: 14px;
+    }
+
+    .page-node-type-senator & {
+      margin-bottom: 0;
+      z-index: 1;
+    }
+
     .bContainer {
-      display: flex;
-      align-items: center;
-      padding: 0;
 
       @include sm {
         padding: 0 17px;
+        display: flex;
+        align-items: center;
       }
 
       & > * {
-        padding: 0 20px 0 0;
+        margin: 0 0 10px;
 
         @include sm {
           padding: 0 28px 0 0;
+          margin: 0;
         }
       }
+    }
+
+    #{$this}__bShare {
+      margin-left: auto;
+      padding: 0;
     }
 
     &_a {
 
       @include sm {
         top: 10px;
+      }
+    }
+
+    &_b {
+      background: $color-dark-blue;
+      margin-bottom: 0;
+      border-top: 1px solid #344b71;
+      position: relative;
+
+      & > * {
+        margin: 0;
       }
     }
   }
@@ -205,7 +234,14 @@
 
       @include xs-only {
         top: -40px;
+
+        .page-node-type-senator & {
+          position: relative;
+          top: auto;
+          margin-bottom: 20px;
+        }
       }
+
     }
   }
 

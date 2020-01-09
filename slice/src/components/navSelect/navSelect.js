@@ -39,11 +39,11 @@ window.navSelect = class {
 
 			window.location.hash = prefix + val;
 
-			//let adminMenuHeight = $('.adminimal-admin-toolbar').length ? $('.adminimal-admin-toolbar').css('padding-top') : 0;
+			let adminMenu = parseInt($(`body`).css('padding-top'));
 
 			let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
 
-			$body.animate({scrollTop: $target.offset().top - 10 - headerHeight}, speed);
+			$body.animate({scrollTop: $target.offset().top - 10 - headerHeight - adminMenu}, speed);
 		}
 	}
 };
