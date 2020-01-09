@@ -59,13 +59,6 @@ class TestController extends ControllerBase {
   }
 
   public function testAudioImport() {
-
-    //$web_week_urls = \Drupal::state()->get('import_audio.web_week_urls');
-//    if(empty($web_week_urls)) {
-//      $web_week_urls =  WeekImportBatch::getWeekUrls();
-//      \Drupal::state()->set('import_audio.web_week_urls', $web_week_urls);
-//    }
-
     $count = \Drupal::database()->query(
       'select count(*) from import_audio_check as c
 left join media__field_media_audio_old_url as f on f.field_media_audio_old_url_value = c.audio
@@ -76,6 +69,34 @@ where f.field_media_audio_old_url_value is null')
       'select c.month_page as page, c.audio as file from import_audio_check as c
 left join media__field_media_audio_old_url as f on f.field_media_audio_old_url_value = c.audio
 where f.field_media_audio_old_url_value is null')
+      ->fetchAll();
+
+
+    dsm($count, 'TOTAL count');
+
+    dsm($urls, 'List');
+
+    return [
+      '#type' => 'markup',
+      '#markup' => 'test',
+    ];
+  }
+
+  public function testAudioNodes() {
+    $count = \Drupal::database()->query(
+      'select DISTINCT  count(c.audio)
+from import_audio_check as c
+         left join media__field_media_audio_old_url as f on f.field_media_audio_old_url_value = c.audio
+         left join node__field_press_release_audio as mf on f.entity_id = mf.field_press_release_audio_target_id
+where f.field_media_audio_old_url_value is not null and mf.entity_id is null;')
+      ->fetchField();
+
+    $urls = \Drupal::database()->query(
+      'select DISTINCT  c.month_page as page, c.audio
+from import_audio_check as c
+         left join media__field_media_audio_old_url as f on f.field_media_audio_old_url_value = c.audio
+         left join node__field_press_release_audio as mf on f.entity_id = mf.field_press_release_audio_target_id
+where f.field_media_audio_old_url_value is not null and mf.entity_id is null;')
       ->fetchAll();
 
 
@@ -108,7 +129,6 @@ where f.field_media_audio_old_url_value is null')
     dsm($web_week_urls, 'Old web');
 
     dsm($urls, 'Imported');
-
 
 
     return [
