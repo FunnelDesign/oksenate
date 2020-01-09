@@ -72,6 +72,7 @@
     print-color-adjust: exact;
   }
 
+  .bTiles__btnAllWrap,
   .sHist:before,
   .bSeats:before,
   .bPostList__readMore,
@@ -117,6 +118,8 @@
     display: block !important;
   }
 
+  .bSenBio__col,
+  .senators__items,
   .bTiles_ev,
   .sSen__items,
   .bTiles_rel_c .bTiles__items,
@@ -158,10 +161,6 @@
     display: inline-block !important;
   }
 
-  .bSenBio__col, .bNews__items {
-    text-align: center !important;
-  }
-
   .bSenBio__address {
 
     &:before {
@@ -198,7 +197,7 @@
       max-width: 300px;
     }
 
-    .bListItems__btn {
+    .btn  {
       float: right;
     }
   }
