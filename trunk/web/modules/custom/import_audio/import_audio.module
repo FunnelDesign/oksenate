@@ -10,7 +10,7 @@ use Drupal\user\Entity\User;
 
 define('IMPORT_AUDIO_START_DATE', '2003-01-01');
 define('IMPORT_AUDIO_MONTH_URL', 'http://www.oksenate.gov/news/press_releases_audio_clips/:Y_audio_clips/prac:Y:M.html');
-define('IMPORT_LOG_COUNTER', 3);
+define('IMPORT_LOG_COUNTER', 4);
 
 
 
