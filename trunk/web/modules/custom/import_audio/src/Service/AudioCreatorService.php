@@ -189,7 +189,7 @@ class AudioCreatorService {
   }
 
   public function fixPressReleaseUrl2($url) {
-    $url = preg_replace('/20[0-9]{2}_audio_clips/', '', $url);
+    $url = preg_replace('/20[0-9]{2}_audio_clips\//', '', $url);
     return $url;
   }
 
