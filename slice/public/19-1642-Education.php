@@ -96,43 +96,45 @@
         </div>
 
 
+        <div class="print-hide">
+          <div class="bTiles bTiles_rel bTiles_rel_c bTiles_gap_a">
 
-        <div class="bTiles bTiles_rel bTiles_rel_c bTiles_gap_a">
-
-          <div class="bTiles__items">
-            <a href="#" class="bTiles__item">
+            <div class="bTiles__items">
+              <a href="#" class="bTiles__item">
               <span class="bTiles__ico bTiles__ico_a">
                 <img src="../dist/images/ico/ico-tmp-10.png"
                      srcset="../dist/images/ico/ico-tmp-10-2x.png 2x"
                      alt="">
               </span>
-              <span class="bTiles__btnWrap">
+                <span class="bTiles__btnWrap">
                 <span class="btn  btn_s_d">
                 find bills in progress
                 </span>
               </span>
 
-            </a>
+              </a>
 
-            <a href="#" class="bTiles__item">
+              <a href="#" class="bTiles__item">
               <span class="bTiles__ico bTiles__ico_a">
                 <img src="../dist/images/ico/ico-tmp-11.png"
                      srcset="../dist/images/ico/ico-tmp-11-2x.png 2x"
                      alt="">
               </span>
-              <span class="bTiles__btnWrap">
+                <span class="bTiles__btnWrap">
                 <span class="btn  btn_s_d">
              contact your senator
                 </span>
               </span>
 
-            </a>
+              </a>
+
+            </div>
 
           </div>
 
+          <h2>Get Acquainted with Legislative Terms</h2>
         </div>
-        
-        <h2>Get Acquainted with Legislative Terms</h2>
+
 
         <div class="pageIn__btnWr">
           <a href="#" class="btn btn_c btn_s_j">
@@ -152,7 +154,7 @@
     </section>
 
 
-    <section class="section section_bg-color_f section_inner-v-centered">
+    <section class="section section_bg-color_f section_inner-v-centered print-hide">
       <div class="section__bg-wrap">
         <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-17.jpg')"></div>
       </div>

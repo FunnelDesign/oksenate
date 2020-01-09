@@ -115,9 +115,28 @@
         @include sm {
           padding: 15px;
         }
-
       }
+
+      &.table {
+
+        &_sm {
+
+          font {
+            font-size: 10px;
+            line-height: 1.2;
+          }
+
+          td {
+           padding: 2px;
+          }
+        }
+      }
+
     }
+  }
+
+  .scroll-block {
+    overflow-x: auto;
   }
 
   &__btnWrap {
