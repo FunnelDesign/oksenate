@@ -891,8 +891,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
   switch ($form_id) {
     case 'webform_submission_reserve_a__node_10594_add_form':
-      $form['elements']['date_fieldset']['date']['#attributes']['placeholder'] = 'Start Date';
-      $form['elements']['date_fieldset']['end_time']['#attributes']['placeholder'] = 'End Date';
+      $form['elements']['date_fieldset']['date']['#attributes']['placeholder'] = 'Start Day';
+      $form['elements']['date_fieldset']['end_time']['#attributes']['placeholder'] = 'End Day';
       break;
     case 'views_exposed_form':
       $storage = $form_state->getStorage();
