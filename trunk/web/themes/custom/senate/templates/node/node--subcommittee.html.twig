@@ -98,7 +98,7 @@
           </h1>
           {{ title_suffix }}
 
-          <div class="bTitle__sub">
+          <div class="bTitle__sub print-hide">
             {{ content.body }}
           </div>
         </div>
@@ -136,10 +136,7 @@
           <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png"
                srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
         </div>
-        <div class="print-hide">
-          <h2>{{ committee_events_title }}</h2>
-        </div>
-
+        <h2>{{ committee_events_title }}</h2>
         {{ committee_events }}
       {% endif %}
 
