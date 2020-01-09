@@ -86,6 +86,10 @@
 
     strong {
       font-family: $Roboto-Bold;
+
+      @include xs-only {
+        text-transform: lowercase;
+      }
     }
 
     .btn_s_a {
