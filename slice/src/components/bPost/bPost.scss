@@ -135,6 +135,10 @@
     }
   }
 
+  .scroll-block {
+    overflow-x: auto;
+  }
+
   &__btnWrap {
     margin-bottom: 55px;
     text-align: center;
