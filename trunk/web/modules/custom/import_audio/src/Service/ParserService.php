@@ -73,7 +73,7 @@ class ParserService {
 
     if(empty($releases)) {
       $message = $url . "\n";
-      file_put_contents('import_logs/no_releases.log', $message, FILE_APPEND);
+      file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/no_releases.log', $message, FILE_APPEND);
       \Drupal::logger('audio_import_month_parse')->notice(t('No releases for page @url', ['@url' => $url]));
     }
 

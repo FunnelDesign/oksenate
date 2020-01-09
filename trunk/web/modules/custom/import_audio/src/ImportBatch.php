@@ -53,7 +53,7 @@ class ImportBatch {
         $queue->deleteItem($item);
       } catch (\Exception $e) {
         $message = $item->data . ' error ' .  $e->getMessage()  ."<br>\n";
-        file_put_contents('import_logs/month_page_error.log', $message, FILE_APPEND);
+        file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/month_page_error.log', $message, FILE_APPEND);
         \Drupal::logger('audio_import_month_parse_page_error')->error(t('Error parse @url @message', ['@url' => $item->data, '@message' => $e->getMessage()]));
       }
 
