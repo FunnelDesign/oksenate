@@ -176,6 +176,21 @@
     }
   }
 
+  .bListInline__item {
+    width: 25% !important;
+  }
+
+  .bListItems__item {
+
+  }
+
+  .bTiles.print-show-btn {
+
+    .btn {
+      display: inline-block !important;
+    }
+  }
+
   .bSchedule {
     page-break-before: always;
 
