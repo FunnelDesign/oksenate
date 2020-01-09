@@ -272,9 +272,7 @@
 
               <p style="text-align:start; text-indent:0px; -webkit-text-stroke-width:0px">12.&nbsp;Drug Possession Offenders Sent to Prison, by County</p>
 
-              <div style="
-    overflow-x: auto;
-">
+              <div class="scroll-block">
                 <table style="font-family:Times; letter-spacing:normal; orphans:2; text-indent:0px; text-transform:none; widows:2; word-spacing:0px; -webkit-text-stroke-width:0px; background-color:#ffffff; text-decoration-style:initial; text-decoration-color:initial; border:undefined" class="table table_sm"><tbody><tr align="center" valign="bottom"><td colspan="14" style="background-color:#ffffff"><font face="Arial"><font size="+2"><b>Drug Possession Offenders Sent to Prison</b></font></font></td>
                   </tr><tr align="center" valign="bottom"><td colspan="14" style="background-color:#ffffff"><font face="Arial"><font size="+2"><b>By County, FY'00</b></font></font></td>
                   </tr><tr align="center" valign="bottom"><td colspan="14" style="background-color:#ffffff"><font face="Arial">Source: Criminal Justice Resource Center, Statewide Felony Disposition Report, February 2001</font></td>
