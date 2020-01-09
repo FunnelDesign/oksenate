@@ -40,3 +40,10 @@ import_audio.test_controller_test_audio_import:
     _title: 'Test audio import'
   requirements:
     _permission: 'access content'
+import_audio.test_controller_test_audio_nodes:
+  path: '/admin/test-audio-nodes'
+  defaults:
+    _controller: '\Drupal\import_audio\Controller\TestController::testAudioNodes'
+    _title: 'Test audio nodes'
+  requirements:
+    _permission: 'access content'
