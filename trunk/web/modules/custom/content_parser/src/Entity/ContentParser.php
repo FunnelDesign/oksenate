@@ -641,6 +641,7 @@ class ContentParser extends ConfigEntityBase {
             //          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
             if($html == 'empty'){
               $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
+              file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
@@ -714,10 +715,12 @@ class ContentParser extends ConfigEntityBase {
               $entity->save();
             }catch (\Error $exception){
               $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+              file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }catch (\Exception $exception){
               $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+              file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
@@ -804,6 +807,7 @@ class ContentParser extends ConfigEntityBase {
         }
         if($html == 'empty'){
           $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
+          file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }
@@ -879,10 +883,12 @@ class ContentParser extends ConfigEntityBase {
           $entity->save();
         }catch (\Error $exception){
           $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+          file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }catch (\Exception $exception){
           $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
+          file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }
