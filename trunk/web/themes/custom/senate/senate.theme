@@ -1926,6 +1926,7 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'senate_votes':
       case 'senator':
       case 'tables_page':
+      case 'week_review':
         $color = 'navy';
         break;
     }
