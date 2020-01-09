@@ -49,7 +49,7 @@
   }
 
   [class$='__item']:not(.bDateList__item),
-  [class$='__it']:not(.bTerms__it):not(.bStaff__it),
+  [class$='__it']:not(.bTerms__it):not(.bStaff__it):not(.bIsPapers__it),
   .bListLinks__link {
     display: inline-block !important;
     vertical-align: text-top;
@@ -119,6 +119,7 @@
     display: block !important;
   }
 
+  .bTiles__items,
   .bSenBio__col,
   .senators__items,
   .bTiles_ev,
@@ -181,7 +182,7 @@
   }
 
   .bListItems__item {
-
+    border: 1px solid #cbcbcb !important;
   }
 
   .bTiles.print-show-btn {
