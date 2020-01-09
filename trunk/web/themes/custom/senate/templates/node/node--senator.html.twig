@@ -74,6 +74,12 @@
 #}
 <section class="section section_ind_c section_bg-color_b">
 
+    <div class="section__sNav">
+      <div class="bContainer">
+        {{ socials }}
+      </div>
+    </div>
+
     <div class="bContainer">
         <a href="/senators" class="btn btn_a section__btnBack section__btnBack_a">
             back to senators
@@ -136,42 +142,48 @@
 <section class="section section_ind_d section_bg-color_c">
 
     <div class="bContainer">
-
-        <div class="bAbout bWrap bWrap_size_a">
-            <h2>About the Senator</h2>
-            {% if video_url %}
-                <div class="bMedia bAbout__bMedia">
-                    <a href="{{ '#' ~ video_id }}" class="bMedia__play-btn bMedia-tile__play-btn">
-                        {{ preview_image }}
-                        <span class="bMedia__previewText">play video</span>
-                    </a>
-                    <div class="bMedia__wrap">
-                        <iframe id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    </div>
-                </div>
-            {% endif %}
-
-
-            <div class="bAbout__desc">
-                <div class="bHide">
-                    <div class="bHide__cont">
-                        {{ content.body }}
-                    </div>
-                    <div class="bHide__moreWr">
-                        <a class="bHide__more" data-ev="toggleClass:bHide:open" href="#">
-                            <span class="bHide__moreOpen">show more</span>
-                            <span class="bHide__moreClose">show less</span>
+        {{ news_block }}
+        {% if content.body|render is not empty or video_url %}
+            <div class="bAbout bWrap bWrap_size_a">
+                <h2>About the Senator</h2>
+                {% if video_url %}
+                    <div class="bMedia bAbout__bMedia">
+                        <a href="{{ '#' ~ video_id }}" class="bMedia__play-btn bMedia-tile__play-btn">
+                            {{ preview_image }}
+                            <span class="bMedia__previewText">play video</span>
                         </a>
+                        <div class="bMedia__wrap">
+                            <iframe id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0"
+                                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
+                {% endif %}
 
-        <div class="bMembership bWrap bWrap_size_a">
-            <h2>Committee Membership</h2>
-            {{ content.field_senator_committee_taxonomy }}
-            {{ term_url }}
-        </div>
+                {% if content.body|render is not empty %}
+                    <div class="bAbout__desc">
+                        <div class="bHide">
+                            <div class="bHide__cont">
+                                {{ content.body }}
+                            </div>
+                            <div class="bHide__moreWr">
+                                <a class="bHide__more" data-ev="toggleClass:bHide:open" href="#">
+                                    <span class="bHide__moreOpen">show more</span>
+                                    <span class="bHide__moreClose">show less</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% if content.field_senator_committee_taxonomy|render is not empty or term_url %}
+            <div class="bMembership bWrap bWrap_size_a">
+                <h2>Committee Membership</h2>
+                {{ content.field_senator_committee_taxonomy }}
+                {{ term_url }}
+            </div>
+        {% endif %}
         <div class="bDistrict bWrap bWrap_size_a">
             <h2>{{ content.field_senator_district_taxonomy }}{{ file }}</h2>
             <div class="bDistrict__table">

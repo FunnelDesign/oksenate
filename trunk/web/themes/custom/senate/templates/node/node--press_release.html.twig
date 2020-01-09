@@ -73,7 +73,16 @@
  */
 #}
 <section class="section section_ind_d section_bg-color_c">
-
+  {% if socials %}
+    <div class="section__sNav">
+      <div class="bContainer">
+        {{ socials }}
+      </div>
+    </div>
+  {% endif %}
+{#  <div class="bContainer">#}
+{#  {{ socials }}#}
+{#  </div>#}
   <div class="bContainer">
     {{ back_link }}
 
@@ -89,12 +98,10 @@
 
       <div class="bPost__body">
         <div class="bPost__imgWrap">
-          <div class="bPost__img">
             {{ content.field_release_img }}
-            <span class="bPost__imgCap">
-                    {#TODO: add senator name here#}
-                </span>
-          </div>
+{#            <span class="bPost__imgCap">#}
+{#                    #}{#TODO: add senator name here#}
+{#                </span>#}
         </div>
         {% if content.field_press_release_audio %}
           <div class="bPostList__bAudio bAudio">

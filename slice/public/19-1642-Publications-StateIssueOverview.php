@@ -16,6 +16,7 @@
             <a href="#">Publications</a>
             <span>State Issue Overview</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

@@ -20,6 +20,7 @@
             <a href="#">Education   </a>
             <span>Upcoming Events</span>
           </div>
+          <?php include 'tpl/blocks/bShare-color-a.inc'; ?>
         </div>
 
       </div>

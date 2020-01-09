@@ -19,6 +19,8 @@
             <a href="#">Education</a>
             <span>Agencies Documents</span>
           </div>
+
+          <?php include 'tpl/blocks/bShare-color-a.inc'; ?>
         </div>
 
       </div>
@@ -39,32 +41,32 @@
           </div>
         </div>
 
-        <div class="bListLinks">
-          <div class="bListLinks__items">
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
+        <div class="bListInline">
+          <div class="contextual-region">
+            <div class="bListInline__item">
+              <a href="">
                 FY’17 OEQA Budget to Actual
               </a>
             </div>
 
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
+            <div class="bListInline__item">
+              <a href="">
                 FY’18 OEQA Mission and Governance Arts Council
               </a>
             </div>
-
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
+          </div>
+          <div class="contextual-region">
+            <div class="bListInline__item">
+              <a href="">
                 FY’19 OEQA Budget and Performance Review
               </a>
             </div>
 
-            <div class="bListLinks__item">
-              <a href="" class="bListLinks__link">
+            <div class="bListInline__item">
+              <a href="">
                 OEQA Budget Powerpoint
               </a>
             </div>
-
           </div>
         </div>
 

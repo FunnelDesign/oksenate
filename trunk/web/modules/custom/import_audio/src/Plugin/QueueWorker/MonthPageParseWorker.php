@@ -27,8 +27,6 @@ class MonthPageParseWorker extends QueueWorkerBase {
       foreach ($audio_releases as $item) {
         $queue->createItem($item);
       }
-    } else {
-      \Drupal::logger('audio_import_month_parse')->notice(t('No releases for page @url', ['@url' => $data]));
     }
   }
 

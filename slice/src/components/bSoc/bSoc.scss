@@ -37,7 +37,7 @@
       margin-right: 0;
     }
 
-    &_facebook,&_twitter, &_instagram, &_linkedin  {
+    &_facebook, &_twitter, &_instagram, &_linkedin {
 
       a:before {
         content: '';
@@ -147,6 +147,58 @@
 
       #{$self}__ico {
         font-size: 18px;
+      }
+    }
+
+    &_share {
+
+      #{$self}__item {
+        margin-right: 9px;
+        margin-bottom: 0 !important;
+
+        @include sm {
+
+        }
+
+        a {
+
+          &:before {
+            display: inline-block;
+          }
+        }
+      }
+
+      #{$self}__ico {
+        font-size: 12px;
+      }
+    }
+  }
+
+  &_cl {
+
+    &_a {
+
+      a, span {
+        color: #fff;
+        cursor: pointer;
+
+        &:hover {
+          color: #fff;
+          opacity: .7;
+        }
+      }
+    }
+
+    &_b {
+
+      a, span  {
+        color: #253857;
+        cursor: pointer;
+
+        &:hover {
+          color: #253857;
+          opacity: .7;
+        }
       }
     }
   }

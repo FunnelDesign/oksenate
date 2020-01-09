@@ -16,6 +16,8 @@
             <a href="#">Calendar</a>
             <span>Joint Appropriations & Budget</span>
           </div>
+
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

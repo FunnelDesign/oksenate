@@ -77,6 +77,14 @@
   <section class="section section_bg-color_f section_inner-v-centered">
     {{ content.field_basic_top_image }}
 
+    {% if socials %}
+      <div class="section__sNav">
+        <div class="bContainer">
+          {{ socials }}
+        </div>
+      </div>
+    {% endif %}
+
     <div class="section__v-inner section__v-inner_d">
       <div class="bContainer">
         {{ content.field_basic_top_logo_image }}
@@ -122,24 +130,27 @@
         {{ content.field_education_senate_history }}
       </div>
 
-      <div class="bTiles bTiles_rel bTiles_rel_c bTiles_gap_a">
+      <div class="print-hide">
+        <div class="bTiles bTiles_rel bTiles_rel_c bTiles_gap_a">
 
-        <div class="bTiles__items">
-          {{ content.field_education_find_bills }}
+          <div class="bTiles__items">
+            {{ content.field_education_find_bills }}
 
-          {{ content.field_education_contact }}
+            {{ content.field_education_contact }}
+          </div>
+
         </div>
 
+        {{ content.field_education_leg_title }}
+
+        {{ content.field_education_leg_terms }}
       </div>
 
-      {{ content.field_education_leg_title }}
-
-      {{ content.field_education_leg_terms }}
     </div>
 
   </section>
 
-  <section class="section section_bg-color_f section_inner-v-centered">
+  <section class="section section_bg-color_f section_inner-v-centered print-hide">
     {{ content.field_education_gallery_bg_img }}
 
     <div class="section__v-inner section__v-inner_f">

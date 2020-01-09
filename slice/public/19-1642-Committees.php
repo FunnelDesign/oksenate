@@ -8,6 +8,7 @@
   <div class="pageIn">
 
     <section class="section section_bg-color_f section_inner-v-centered">
+      <?php include 'tpl/blocks/bShare-no-bread.inc'; ?>
       <div class="section__bg-wrap">
         <div class="section__bg" style="background-image: url('../dist/images/tmp/section-bg-img-5.jpg')"></div>
       </div>

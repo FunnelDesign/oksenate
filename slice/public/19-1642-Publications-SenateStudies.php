@@ -16,6 +16,7 @@
             <a href="#">Publications</a>
             <span>Senate Studies</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>

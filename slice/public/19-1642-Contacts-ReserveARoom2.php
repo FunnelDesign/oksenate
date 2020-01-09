@@ -17,6 +17,7 @@
             <a href="#">Contacts</a>
             <span>Reserve a Room</span>
           </div>
+          <?php include 'tpl/blocks/bShare.inc'; ?>
         </div>
 
       </div>
@@ -82,6 +83,39 @@
               <label class="form-required"></label>
               <textarea class="form-textarea" placeholder="Meeting title and description"></textarea>
             </div>
+
+            <fieldset class="js-webform-type-fieldset webform-type-fieldset js-form-item form-item js-form-wrapper form-wrapper" data-drupal-selector="edit-date-fieldset" id="edit-date-fieldset">
+              <legend>
+                <span class="visually-hidden fieldset-legend">date</span>
+              </legend>
+              <div class="fieldset-wrapper">
+                <div class="form-item form-type-text js-form-item form-item js-form-type-datetime form-type-datetime js-form-item-date form-item-date form-no-label">
+                  <label class="visually-hidden js-form-required form-required">Start Date</label>
+                  <div id="edit-date" class="container-inline">
+                    <div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-date-date form-item-date-date form-no-label">
+                      <label for="edit-date-date" class="visually-hidden js-form-required form-required">Start Date: Date</label>
+                      <input min="2020-01-08" data-min-year="2020" placeholder="Start Time" data-drupal-selector="edit-date-date" title="Date (e.g. 2020-01-08)" type="text" data-drupal-date-format="Y-m-d" id="edit-date-date" name="date[date]" value="" size="12" maxlength="128" class="form-text required" required="required" aria-required="true"/>
+                    </div>
+                    <div class="js-form-item form-item js-form-type-webform-time form-type-webform-time js-form-item-date-time form-item-date-time form-no-label">
+                      <label for="edit-date-time" class="visually-hidden js-form-required form-required">Start Date: Time</label>
+                      <input min="2020-01-08" placeholder="Start Time" data-drupal-selector="edit-date-time" title="Time (e.g. 04:29:58)" type="time" step="600" data-webform-time-format="H:i" id="edit-date-time" name="date[time]" value="" size="12" maxlength="12" class="form-time webform-time required" required="required" aria-required="true"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-item form-type-text js-form-item form-item js-form-type-datetime form-type-datetime js-form-item-end-time form-item-end-time form-no-label">
+                  <div id="edit-end-time" class="container-inline">
+                    <div class="js-form-item form-item js-form-type-textfield form-type-textfield js-form-item-end-time-date form-item-end-time-date form-no-label">
+                      <label for="edit-end-time-date" class="visually-hidden js-form-required form-required">End Date: Date</label>
+                      <input min="2020-01-08" data-min-year="2020" placeholder="End Time" data-drupal-selector="edit-end-time-date" title="Date (e.g. 2020-01-08)" type="text" data-drupal-date-format="Y-m-d" id="edit-end-time-date" name="end_time[date]" value="" size="12" maxlength="128" class="form-text required" required="required" aria-required="true"/>
+                    </div>
+                    <div class="js-form-item form-item js-form-type-webform-time form-type-webform-time js-form-item-end-time-time form-item-end-time-time form-no-label">
+                      <label for="edit-end-time-time" class="visually-hidden js-form-required form-required">End Date: Time</label>
+                      <input min="2020-01-08" placeholder="End Time" data-drupal-selector="edit-end-time-time" title="Time (e.g. 04:29:58)" type="time" step="600" data-webform-time-format="H:i" id="edit-end-time-time" name="end_time[time]" value="" size="12" maxlength="12" class="form-time webform-time required" required="required" aria-required="true"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
 
             <div class="am-row">
               <div class="am-col-sm-6 form-item form-type-text">

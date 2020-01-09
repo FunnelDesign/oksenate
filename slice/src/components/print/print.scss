@@ -1,0 +1,246 @@
+@media print {
+
+  @page {
+    size: auto;
+    margin: 5mm;
+  }
+
+  html, body {
+    height: auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+  }
+
+  h1,
+  .bHist__desc,
+  .bHist__date,
+  .bTitle_b h2 {
+    color: $color-dark-blue !important;
+  }
+
+  .pageWr {
+    padding: 0 !important;
+  }
+
+  .section {
+    min-height: auto !important;
+    padding: 5pt 0 !important;
+    background: none !important;
+
+    &__sNav, &__btnBack, &__bg {
+      display: none !important;
+    }
+
+    &__v-inner {
+      min-height: auto !important;
+    }
+  }
+
+  [class$='__items'],
+  [class$='__its'],
+  .bListLinks__links {
+    position: relative !important;
+    display: block !important;
+
+    margin: 0 !important;
+    max-width: none !important;
+  }
+
+  [class$='__item']:not(.bDateList__item),
+  [class$='__it']:not(.bTerms__it):not(.bStaff__it):not(.bIsPapers__it),
+  .bListLinks__link {
+    display: inline-block !important;
+    vertical-align: text-top;
+    page-break-inside: avoid;
+    position: relative !important;
+
+    margin: 0 10px 10px !important;
+  }
+
+  .senators__img,
+  .bTiles__img,
+  .bNews__imgWrap,
+  .bSenBio__imgWrap,
+  .sSen__sImgWrap,
+  .sSen__sImg,
+  .sSen__sMask,
+  .sSen__sDis,
+  .sSen__sName {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .senators__all,
+  .bTiles__btnAllWrap,
+  .sHist:before,
+  .bSeats:before,
+  .bPostList__readMore,
+  .pageIn__ico,
+  .bAudio__au,
+  #toolbar-administration,
+  #block-senate-local-tasks,
+  .bShare,
+  .bTerms__moreWr,
+  .btn,
+  .form,
+  .contextual,
+  .bSoc,
+  .bSort,
+  .sFooter,
+  .sHeader,
+  .bNews,
+  .bStaff__filTitle,
+  .messages,
+  .bAudio,
+  .pager,
+  .bTiles_nav,
+  .bSelect,
+  .bTerms__filTitle,
+  .bNews__readMore,
+  .bDistrict h2 a,
+  .bMedia,
+  .bSenBio__mail,
+  .bSenBio__mediaBtn,
+  .sSen__head,
+  .bSenBio__soc,
+  .print-hide{
+    display: none !important;
+  }
+
+  .bHist__it,
+  .bMembership__item,
+  .bListLinks__link,
+  .bListItems__item,
+  .bSchedule__item,
+  .bPostList__item {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .bTiles__items,
+  .bSenBio__col,
+  .senators__items,
+  .bTiles_ev,
+  .sSen__items,
+  .bTiles_rel_c .bTiles__items,
+  .bListItems__item {
+    text-align: center !important;
+  }
+
+  .bTiles_rel_c .bTiles__item {
+    max-width: 48% !important;
+    min-width: 48% !important;
+  }
+
+  .bSenBio__info {
+    text-align: center !important;
+
+    strong {
+      display: block;
+    }
+  }
+
+  .sSen__item {
+    margin: 0 10px !important;
+    padding-top: 10px !important;
+  }
+
+  .bHide {
+
+    &:after, &__moreWr {
+      display: none;
+    }
+  }
+
+  .bHide__cont {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .bSenBio__con {
+    display: inline-block !important;
+  }
+
+  .bSenBio__address {
+
+    &:before {
+      display: none;
+    }
+  }
+
+  .bListLinks, .bTiles_ev, .bSchedule {
+
+    .btn {
+      display: inline-block !important;
+    }
+  }
+
+  .bListInline__item {
+    width: 25% !important;
+  }
+
+  .bListItems__item {
+    border: 1px solid #cbcbcb !important;
+  }
+
+  .bTiles.print-show-btn {
+
+    .btn {
+      display: inline-block !important;
+    }
+  }
+
+  .bSchedule {
+    page-break-before: always;
+
+    .bSchedule__item {
+      margin-bottom: 20px !important;
+    }
+
+    .bListItems {
+
+      .bListItems__item {
+        text-align: left !important;
+        margin: 0 !important;
+        @include clearfix();
+      }
+    }
+
+    .bListItems__title {
+      display: block;
+      float: left;
+      max-width: 300px;
+    }
+
+    .btn  {
+      float: right;
+    }
+  }
+
+  .bTiles__item, .section__v-inner {
+    min-height: auto !important;
+    padding: 7pt 3pt !important;
+  }
+
+  .bTb__tr {
+    page-break-inside: avoid;
+  }
+
+  .bTb_a_vo  {
+    border-spacing: 0 !important;
+
+    .bTb__tr {
+      border: none !important;
+    }
+
+    .bTb__td {
+      padding: 12px 10px 12px !important;
+
+      &:before {
+        display: none !important;
+      }
+    }
+  }
+}

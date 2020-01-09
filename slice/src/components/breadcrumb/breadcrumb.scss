@@ -4,6 +4,14 @@
   font-family: $Roboto-Regular;
   line-height: 1.2;
 
+  @include sm {
+    line-height: 0.5;
+  }
+
+  @include md {
+    line-height: 0.4;
+  }
+
   a {
     color: #afafaf;
     text-decoration: none;
@@ -30,6 +38,8 @@
   span {
     font-family: $Roboto-Bold;
     color: $color-white;
+    display: inline-block;
+    margin: 5px 8px 5px 0;
   }
 
   &_a {

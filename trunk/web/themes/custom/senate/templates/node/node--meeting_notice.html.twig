@@ -75,7 +75,13 @@
 <article{{ attributes }}>
 
   <section class="section section_bg-color_f section_inner-v-centered">
-    {{ breadcrumbs }}
+
+    <div class="section__sNav">
+      <div class="bContainer">
+        {{ breadcrumbs }}
+        {{ socials }}
+      </div>
+    </div>
 
     <div class="section__bg-wrap">
       <div class="section__bg" style="background-image: url('{{ theme_path }}/dist/images/tmp/section-bg-img-12.jpg')"></div>

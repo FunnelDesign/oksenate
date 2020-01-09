@@ -13,7 +13,7 @@
       <div class="bContainer">
         <div class="logo sHeader__logo">
           <a href="#">
-            <img src="../dist/images/logo.png" alt="logo">
+            <img src="../dist/images/logo-b.png" alt="logo">
             Oklahoma Senate
           </a>
         </div>
@@ -39,7 +39,7 @@
 
         <div class="logo sHeader__logo mobile-only">
           <a href="#">
-            <img src="../dist/images/logo.png" alt="logo">
+            <img src="../dist/images/logo-b.png" alt="logo">
             Oklahoma Senate
           </a>
         </div>

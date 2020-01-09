@@ -74,7 +74,14 @@
 #}
 <article{{ attributes }}>
     <section class="section section_bg-color_f section_inner-v-centered">
-        {{ breadcrumbs }}
+
+        <div class="section__sNav">
+          <div class="bContainer">
+            {{ breadcrumbs }}
+            {{ socials }}
+          </div>
+        </div>
+
         <div class="section__v-inner section__v-inner_d">
             <div class="bContainer">
                 {{ content.field_basic_top_logo_image }}

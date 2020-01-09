@@ -20,6 +20,8 @@
 <!---->
 <!--      </div>-->
 
+      <?php include 'tpl/blocks/bShare-no-bread.inc'; ?>
+
       <div class="section__v-inner section__v-inner_d">
         <div class="bContainer">
 

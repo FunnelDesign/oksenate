@@ -54,5 +54,51 @@ function import_audio_schema() {
     ],
   ];
 
+
+  $schema['import_audio_check'] = [
+    'description' => 'List of urls to test',
+
+    //hook_schema_item_export
+
+    'fields' => [
+      // In case of CTools exportable the reserved field names are:
+      // - export_module
+      // - export_type
+      // - api_version
+      'month_page' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'serialize' => FALSE,
+        'description' => 'Month page url',
+      ),
+      'audio' => array(
+        'type' => 'text',
+        'size' => 'normal',
+        'serialize' => FALSE,
+        'description' => 'Audio url',
+      ),
+//      hook_schema_item_fields_,
+    ],
+
+//    'primary key' => ['id'],
+
+
+//    'unique keys' => [
+//      'my_unique_01' => [
+//        'field_1',
+//        'field_2',
+//      ],
+//    ],
+
+    'indexes' => [
+      'month_page' => [
+        'month_page',
+      ],
+      'audio' => [
+        'audio',
+      ],
+    ],
+  ];
+
   return $schema;
 }
