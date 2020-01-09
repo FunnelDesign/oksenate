@@ -47,7 +47,7 @@ class AudioCreatorService {
 
       if (empty($data['files'])) {
         $message = $data['url'] . " no files error  \r\n";
-        file_put_contents('import_logs/no_files.log', $message, FILE_APPEND);
+        file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/no_files.log', $message, FILE_APPEND);
         \Drupal::logger('audio_import_no_files_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
         return;
       }
@@ -67,14 +67,14 @@ class AudioCreatorService {
             'data' => $data,
           ];
           $message = $data['url'] . ' ' . $file_info['url'] .   ' save file error ' .  $e->getMessage()  ."\r\n";
-          file_put_contents('import_logs/save_file_error.log', $message, FILE_APPEND);
+          file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/save_file_error.log', $message, FILE_APPEND);
           \Drupal::logger('audio_import_save_file_error')->error('<pre><code>' . print_r($info, TRUE) . '</code></pre>');
         }
       }
 
       if (empty($node)) {
         $message = $data['url'] . ' no node error '   . "\r\n";
-        file_put_contents('import_logs/save_file_error.log', $message, FILE_APPEND);
+        file_put_contents('import_logs/' . IMPORT_LOG_COUNTER . '/save_file_error.log', $message, FILE_APPEND);
         \Drupal::logger('audio_import_no_node_error')->error('<pre><code>' . print_r($data, TRUE) . '</code></pre>');
 
         throw new ImportNoNodeError('No node');
