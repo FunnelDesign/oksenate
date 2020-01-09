@@ -13,7 +13,10 @@
     padding: 0 !important;
   }
 
-  h1 {
+  h1,
+  .bHist__desc,
+  .bHist__date,
+  .bTitle_b h2 {
     color: $color-dark-blue !important;
   }
 
@@ -24,30 +27,15 @@
   .section {
     min-height: auto !important;
     padding: 5pt 0 !important;
+    background: none !important;
 
-    &__sNav {
+    &__sNav, &__btnBack, &__bg {
       display: none !important;
     }
 
     &__v-inner {
       min-height: auto !important;
     }
-  }
-
-  .sHeader {
-    display: none !important;
-  }
-
-  .sFooter {
-    display: none !important;
-  }
-
-  .bSort {
-    display: none !important;
-  }
-
-  .bSoc {
-    display: none !important;
   }
 
   [class$='__items'],
@@ -84,6 +72,21 @@
     print-color-adjust: exact;
   }
 
+  .bPostList__readMore,
+  .pageIn__ico,
+  .bAudio__au,
+  #toolbar-administration,
+  #block-senate-local-tasks,
+  .bShare,
+  .bTerms__moreWr,
+  .btn,
+  .form,
+  .contextual,
+  .bSoc,
+  .bSort,
+  .sFooter,
+  .sHeader,
+  .bNews,
   .bStaff__filTitle,
   .messages,
   .bAudio,
@@ -92,7 +95,7 @@
   .bSelect,
   .bTerms__filTitle,
   .bNews__readMore,
-  .bDistrict h2 a ,
+  .bDistrict h2 a,
   .bMedia,
   .bSenBio__mail,
   .bSenBio__mediaBtn,
@@ -110,6 +113,7 @@
     display: block !important;
   }
 
+  .sSen__items,
   .bTiles_rel_c .bTiles__items,
   .bListItems__item {
     text-align: center !important;
@@ -118,27 +122,6 @@
   .bTiles_rel_c .bTiles__item {
     max-width: 48% !important;
     min-width: 48% !important;
-  }
-
-  .sSen__items {
-    text-align: center;
-  }
-
-  .contextual {
-    display: none !important;
-  }
-
-  .bNews {
-
-    h2 {
-      page-break-before: always;
-    }
-  }
-
-  .bHist__desc,
-  .bHist__date,
-  .bTitle_b h2 {
-    color: $color-dark-blue !important;
   }
 
   .bSenBio__info {
@@ -181,12 +164,11 @@
     }
   }
 
-  .btn, .form {
-    display: none !important;
-  }
+  .bListLinks {
 
-  .bTerms__moreWr {
-    display: none !important;
+    .btn {
+      display: inline-block !important;
+    }
   }
 
   .bTiles__item, .section__v-inner {
@@ -194,28 +176,23 @@
     padding: 7pt 3pt !important;
   }
 
-  .pageIn__ico {
-    display: none;
+  .bTb__tr {
+    page-break-inside: avoid;
   }
 
-  .bAudio__au {
-    display: none;
-  }
+  .bTb_a_vo  {
+    border-spacing: 0 !important;
 
-  #toolbar-administration {
-    display: none !important;
-  }
+    .bTb__tr {
+      border: none !important;
+    }
 
-  #block-senate-local-tasks {
-    display: none !important;
-  }
+    .bTb__td {
+      padding: 12px 10px 12px !important;
 
-  .section__btnBack {
-    display: none !important;
+      &:before {
+        display: none !important;
+      }
+    }
   }
-
-  .bShare {
-    display: none !important;
-  }
-
 }
