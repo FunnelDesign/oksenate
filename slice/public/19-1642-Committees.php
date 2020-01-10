@@ -62,6 +62,16 @@
 
         <div class="bTiles bTiles_ev">
 
+          <div class="pageIn__loader">
+<!--            <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>-->
+
+            <div class="loader loader_circle"></div>
+          </div>
+
+          <div class="pageIn__noRes pageIn__noRes_a">
+            <h2>No events</h2>
+          </div>
+
           <div class="bTiles__items">
             <span class="bTiles__item">
               <span class="bTiles__date">

@@ -219,6 +219,56 @@
     h2 {
       @include font-size(25px, 30px, 45px);
     }
+
+    &_a {
+      @include padding(20px 0);
+
+      h2 {
+        @include font-size(18px, 24px, 27px);
+        font-family: $RobotoCondensed-LightItalic;
+        color: grey;
+      }
+    }
+  }
+
+  &__loader {
+    text-align: center;
+    margin: 20px 0;
+
+    .ajax-progress {
+      display: inline-block;
+      margin: 0;
+      position: relative;
+      left: auto;
+      right: auto;
+      top: auto;
+      bottom: auto;
+    }
+
+    .loader {
+      position: relative;
+      height: 75px;
+
+      &_circle {
+
+        @keyframes rotate360 {
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        &:before {
+          @include pseudo-block($top: 0, $left: 50%);
+          width: 70px;
+          height: 70px;
+          margin-left: -35px;
+          background: url("circle05.png");
+          background-size: contain;
+          z-index: 11;
+          animation: 1s rotate360 infinite linear;
+        }
+      }
+    }
   }
 
   &_cl {
