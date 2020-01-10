@@ -111,6 +111,23 @@
     .button_panel {
       text-align: center;
     }
+
+    .select2-container--disabled {
+      opacity: 0.4;
+    }
+
+    .wireless_fields {
+
+      .input_group {
+        display: flex;
+
+        .select2-container {
+          margin-right: 20px;
+          width: 150px;
+          flex: 1;
+        }
+      }
+    }
   }
 
 }

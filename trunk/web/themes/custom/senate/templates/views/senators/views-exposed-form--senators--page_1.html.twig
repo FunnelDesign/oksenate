@@ -19,5 +19,12 @@
     {{ q }}
 {% endif %}
 <div class="sSen__fil">
-    {{ form }}
+    <div class="sSen__filCol">
+        {{ form.zip }}
+        {{ form.actions }}
+    </div>
+    {{ form.county }}
+    {{ form.district }}
+    {{ form.committee }}
+    {{ form.party }}
 </div>
