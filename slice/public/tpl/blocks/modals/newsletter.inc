@@ -53,6 +53,12 @@
               </div>
             </fieldset>
           </form>
+
+          <div class="form-required-note">
+            <span>
+              <img class="required" src="https://content.govdelivery.com/images/required.gif" alt="Required">
+            </span> Required
+          </div>
         </div>
 
         <script type='text/javascript'>

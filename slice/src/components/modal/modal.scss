@@ -46,6 +46,12 @@
 
     h2 {
       color: #fff;
+      margin-bottom: 20px;
+      @include font-size(22px, 28px, 34px);
+    }
+
+    .pageIn__ico {
+      margin-bottom: 20px;
     }
 
     #{$this}__content {
@@ -54,6 +60,52 @@
 
     #{$this}__dialog {
       max-width: 450px;
+    }
+
+    .form {
+      color: #fff;
+
+      legend {
+        display: none;
+
+        & + div {
+          display: none;
+        }
+      }
+
+      label {
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      ol {
+        list-style: none;
+
+        li {
+          padding: 0;
+
+          &:before {
+            display: none;
+          }
+        }
+      }
+
+      .form-required-note {
+        margin-top: 12px;
+        color: #fff;
+
+        span {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .select2-container {
+      width: 100%;
+    }
+
+    .select2-container--default .select2-selection--single {
+      background: $color-dark-blue;
     }
 
     .button_panel {
