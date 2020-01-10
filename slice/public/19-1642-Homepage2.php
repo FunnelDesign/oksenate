@@ -302,6 +302,67 @@
 
             </div>
           </div>
+
+
+        </div>
+
+        <div class="bEvent bTiles bTiles_ev">
+          <div class="bEvent__slider">
+            <div class="bEvent__slider-items">
+              <?php
+              $event_items = [
+                [' Thur. Nov. 7, 2019 |  9:00am',
+                  'Public Safety and Judiciary Subcommittee Budget Hearings',
+                  ' Third Meeting',
+                  ''],
+                [' Thur. Nov. 7, 2019 |  9:00am',
+                  'Public Safety and Judiciary Subcommittee Budget Hearings',
+                  ' Third Meeting',
+                  ''],
+                [' Thur. Nov. 7, 2019 |  9:00am',
+                  'Public Safety and Judiciary Subcommittee Budget Hearings',
+                  ' Third Meeting',
+                  ''],
+                [' Thur. Nov. 7, 2019 |  9:00am',
+                  'Public Safety and Judiciary Subcommittee Budget Hearings',
+                  ' Third Meeting',
+                  ''],
+                [' Thur. Nov. 7, 2019 |  9:00am',
+                  'Public Safety and Judiciary Subcommittee Budget Hearings',
+                  ' Third Meeting',
+                  ''],
+
+              ]
+              ?>
+              <?php foreach ($event_items as $element): ?>
+
+                <div class="bEvent__slider-item bTiles__item">
+
+                  <span class="bTiles__date">
+                    <?php print $element[0]; ?>
+                  </span>
+                  <span class="bTiles__title">
+                    <?php print $element[1]; ?>
+                  </span>
+                  <span class="bTiles__sub">
+                    <?php print $element[2]; ?>
+                  </span>
+                  <span class="bTiles__btnWrap">
+                    <a href="#" class="bTiles__btn btn btn_b btn_b_live">
+                      <span><span>•</span> live now</span> room 511-a
+                    </a>
+                  </span>
+
+                </div>
+
+              <?php endforeach; ?>
+            </div>
+
+            <div class="bEvent__slider-nav">
+
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
