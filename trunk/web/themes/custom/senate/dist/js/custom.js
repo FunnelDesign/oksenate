@@ -37,10 +37,14 @@
       $('#views-exposed-form-senators-page-1', context).once('senators').each(function () {
         var formElements = this.elements;
         var formElementsLength = formElements.length;
+        var zip = document.querySelector('input[id^="edit-zip"]');
+        var zipSubmit = document.querySelector('input[id^="edit-submit-senators"]');
 
         this.addEventListener('focus', function (event) {
           for (var i = 0; i < formElementsLength; i++) {
-            if (formElements[i] !== event.target && formElements[i].type !== "submit") {
+            $zip_rule = (zipSubmit === event.target) && (formElements[i] === zip);
+
+            if (formElements[i] !== event.target && formElements[i].type !== "submit" && !$zip_rule) {
               switch (formElements[i].type) {
                 case 'text':
                   formElements[i].value = '';
