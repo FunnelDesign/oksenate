@@ -78,6 +78,7 @@ import './components/bIsPapers/bIsPapers.scss'
 import './components/bShare/bShare.scss'
 import './components/bListInline/bListInline.scss'
 import './components/bEvents/bEvents.scss'
+import './components/modal/modal.scss'
 
 
 import './common/drupal-styles.scss'
