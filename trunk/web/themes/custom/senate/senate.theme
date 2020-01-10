@@ -891,8 +891,6 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
   switch ($form_id) {
     case 'webform_submission_reserve_a__node_10594_add_form':
-      $form['elements']['date_fieldset']['date']['#placeholder'] = 'Start Time';
-      $form['elements']['date_fieldset']['end_time']['#placeholder'] = 'End Time';
       $form['elements']['date_fieldset']['date']['#attributes']['placeholder'] = 'Start Day';
       $form['elements']['date_fieldset']['end_time']['#attributes']['placeholder'] = 'End Day';
       break;
@@ -1115,11 +1113,10 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
       ->getPath();
 
   if (!empty($form['zip'])){
-    $form['zip']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
+    $form['zip']['#prefix'] = "<div class=\"sSen__filIco\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-1.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-1-2x.png 2x\"  alt=\"\">
         </div><div class=\"sSen__opt form f-search f-search_min\">";
-    $form['zip']['#suffix'] = "</div></div>";
+    $form['zip']['#suffix'] = "</div>";
     $form['zip']['#attributes']['data-bef-auto-submit-exclude'] = '1';
     $form['zip']['#attributes']['autocomplete'] = 'new-password';
   }
