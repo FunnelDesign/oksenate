@@ -240,6 +240,13 @@
       <div class="bContainer">
         <div class="bEvent">
           <h3>This Week at the Senate</h3>
+          <div class="pageIn__loader">
+            <div class="loader loader_circle"></div>
+          </div>
+
+          <div class="pageIn__noRes pageIn__noRes_a">
+            <h2>No events</h2>
+          </div>
           <div class="bEvent__slider">
             <div class="bEvent__slider-items">
               <?php
