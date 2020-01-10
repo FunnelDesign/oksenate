@@ -83,22 +83,24 @@ function _events_custom_get_events() {
   $events =  json_decode($response);
 
   $rooms = [
-    '/230/' => '/room-230',
-    '/419.*b/' => '/room-419-b',
-    '/419.*c/' => '/room-419-c',
-    '/419/' => '/room-419',
-    '/535/' => '/room-535',
+    '/230/' => ['url' => '/room-230', 'title' => 'room 230'],
+    '/419.*b/' => ['url' => '/room-419-b', 'title' => 'room 419-b'],
+    '/419.*c/' => ['url' => '/room-419-c', 'title' => 'room 419-c'],
+    '/419/' => ['url' => '/room-419', 'title' => 'room 419'],
+    '/535/' => ['url' => '/room-535', 'title' => 'room 535'],
   ];
 
   if(!empty($events)) {
     foreach ($events as &$event) {
       //falback value
       $event->location_url = '/audio-video';
+      $event->location_title = 'view';
       if(!empty($event->Location)) {
         $loc = strtolower($event->Location);
-        foreach ($rooms as $pattern => $room_link) {
+        foreach ($rooms as $pattern => $room_info) {
           if(preg_match($pattern, $loc)) {
-            $event->location_url = $room_link;
+            $event->location_url = $room_info['url'];
+            $event->location_title = $room_info['title'];
             break;
           }
         }
