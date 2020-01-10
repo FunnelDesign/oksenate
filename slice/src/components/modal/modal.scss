@@ -1,3 +1,64 @@
 .modal {
+  $this: &;
+
+  &__content {
+    padding: 20px 50px;
+   // border-radius: 20px;
+    background: $color-blue;
+  }
+
+  &__close {
+    position: absolute;
+    right: 23px;
+    top: 22px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    @include text-hide();
+
+    &:hover {
+
+      &:before, &:after {
+        background: $color-red;
+      }
+    }
+
+    &:before, &:after {
+      @include pseudo-block($left: 50%, $top: 50%);
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      top: calc(50% - 1px);
+      transition: background .3s;
+      margin-left: -7px;
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &_newsletter {
+
+    h2 {
+      color: #fff;
+    }
+
+    #{$this}__content {
+      padding: 40px 50px;
+    }
+
+    #{$this}__dialog {
+      max-width: 450px;
+    }
+
+    .button_panel {
+      text-align: center;
+    }
+  }
 
 }
