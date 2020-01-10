@@ -65,8 +65,6 @@ function init() {
 function changeAutocomplete() {
 	let $zip = $(`.sSen .form-item-zip .form-autocomplete`);
 
-	console.log($zip);
-
 	if (!$zip.length) return;
 
 	$zip.attr('autocomplete', 'new-password');
