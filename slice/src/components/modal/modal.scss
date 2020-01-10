@@ -111,6 +111,16 @@
     .button_panel {
       text-align: center;
     }
+
+    .input_group {
+      display: flex;
+
+      .select2-container {
+        margin-right: 20px;
+        opacity: 0.4;
+        width: 150px;
+      }
+    }
   }
 
 }
