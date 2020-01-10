@@ -112,13 +112,20 @@
       text-align: center;
     }
 
-    .input_group {
-      display: flex;
+    .select2-container--disabled {
+      opacity: 0.4;
+    }
 
-      .select2-container {
-        margin-right: 20px;
-        opacity: 0.4;
-        width: 150px;
+    .wireless_fields {
+
+      .input_group {
+        display: flex;
+
+        .select2-container {
+          margin-right: 20px;
+          width: 150px;
+          flex: 1;
+        }
       }
     }
   }
