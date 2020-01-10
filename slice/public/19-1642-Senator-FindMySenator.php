@@ -190,7 +190,7 @@
           </div>
         </div>
       </div>
-      <div class="sSen__res">
+      <div class="sSen__res sSen__res_loading">
 
         <div class="bContainer">
 

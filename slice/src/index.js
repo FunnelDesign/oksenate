@@ -57,8 +57,18 @@ function init() {
 	initCounter($('.bSeats__cap'), false, 2);
 	initCounter($('.bSeats__countD'), false, 2);
 	initCounter($('.bSeats__countR'), false, 2);
+	changeAutocomplete();
 
 	new BlockVideo();
+}
+
+function changeAutocomplete() {
+	let $zip = $(`.sSen .form-item-zip .form-autocomplete`);
+
+	if (!$zip.length) return;
+
+	$zip.attr('autocomplete', 'new-password');
+
 }
 
 function initCounter(wrap, easing, speed) {

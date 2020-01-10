@@ -1,0 +1,227 @@
+.bEvents {
+  $this: &;
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: -6px;
+    margin-right: -6px;
+    margin-bottom: 20px;
+
+    @include sm {
+      margin-bottom: 30px;
+    }
+  }
+
+  &__item {
+    max-width: 280px;
+    min-width: 280px;
+    border-radius: 5px;
+    margin-right: 6px;
+    margin-left: 6px;
+    background: $color-white;
+    border: 2px solid #dfdfdf;
+    margin-bottom: 12px;
+
+    @include sm {
+      max-width: calc(100% / 3 - 12px);
+      min-width: calc(100% / 3 - 12px);
+      margin-bottom: 12px;
+
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  &__imgWrap {
+    padding-bottom: 52%;
+    position: relative;
+    display: block;
+
+    //& + #{$this}__body {
+    //  padding-top: 20px;
+    //}
+
+    &:hover {
+
+      #{$this}__play {
+        background: $color-red;
+      }
+    }
+  }
+
+  &__play {
+    display: block;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 14px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, .5);
+    transition: background .3s;
+
+    &:before {
+      @include pseudo-block($top: 50%, $left: 50%);
+      transform: translate(-50%, -50%);
+
+      border-top: 3px solid transparent;
+      border-bottom: 3px solid transparent;
+      border-left: 5px solid #fff;
+    }
+  }
+
+  &__cat {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    left: 0;
+    width: 100%;
+    padding: 0 10px;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: $FreightTextProBold-Regular;
+    font-size: 19px;
+    text-align: center;
+    letter-spacing: 0.4em;
+  }
+
+  &__category {
+    display: block;
+    font-family: $Roboto-Italic;
+    color: #a1a1a1;
+    line-height: 1.2;
+    font-size: 12px;
+    margin-bottom: 3px;
+  }
+
+  &__img {
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    @include stretch-block();
+    background-size: cover;
+    background-position: center;
+    display: block;
+  }
+
+  &__body {
+    background: $color-white;
+    @include padding(20px, 20px 20px 27px);
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__title {
+    display: block;
+    font-family: $FreightTextProBold-Regular;
+    font-size: 18px;
+    text-decoration: none;
+    color: $color-blue;
+    margin-bottom: 10px;
+
+    &:hover {
+      color: $color-red;
+    }
+  }
+
+  &__date {
+    display: block;
+    font-family: $FreightTextProMedium-Regular;
+    font-size: 14px;
+    color: $color-blue;
+    margin-bottom: 15px;
+  }
+
+  &__desc {
+    font-family: $Roboto-Regular;
+    color: #888888;
+    font-size: 12px;
+    display: block;
+    line-height: 1.7;
+    margin-bottom: 25px;
+  }
+
+  &__readMoreWr {
+    text-align: center;
+    display: block;
+    margin-top: auto;
+  }
+
+  &__readMore {
+    min-width: 126px;
+  }
+
+
+  &__btnAll {
+    text-align: center;
+  }
+
+  &_full {
+
+    #{$this}__items {
+      margin-bottom: 0;
+
+      @include sm {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .views-infinite-scroll-content-wrapper {
+        width: 100%;
+      }
+    }
+
+    #{$this}__item {
+      max-width: 100%;
+      min-width: 100%;
+      margin-bottom: 23px;
+      @include cr-last-item;
+
+      @include sm {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    #{$this}__cat {
+      @include font-size(22px, 25px, 32px);
+    }
+
+    #{$this}__body {
+      @include padding(20px, 22px 24px 27px);
+    }
+
+    #{$this}__readMoreWr {
+      text-align: center;
+
+      @include sm {
+        text-align: left;
+      }
+    }
+  }
+
+  &_img {
+
+    #{$this}__imgWrap {
+      padding-bottom: 78%;
+      border-radius: 5px;
+      overflow: hidden;
+      transition: opacity .3s;
+
+      &:hover {
+        opacity: .7;
+      }
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      @include margin-bottom(30px, 60px);
+    }
+  }
+}

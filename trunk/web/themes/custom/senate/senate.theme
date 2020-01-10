@@ -44,6 +44,10 @@ function senate_preprocess_page(array &$vars) {
   $node = !empty($vars["node"]) ? $vars["node"] : '';
   $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
 
+  $vars['subscribe_form_popup'] = [
+    '#theme' => 'senate_subscribe_form',
+    '#current_path' => $vars['path_to_theme']
+  ];
 }
 
 /**
@@ -889,10 +893,12 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
   }
 
+  if (!empty($form["elements"]) && !empty($form["elements"]["captcha"])) {
+    $form["elements"]["captcha"]["#pre_render"][] = 'senate_change_captcha_description';
+  }
+
   switch ($form_id) {
     case 'webform_submission_reserve_a__node_10594_add_form':
-      $form['elements']['date_fieldset']['date']['#placeholder'] = 'Start Time';
-      $form['elements']['date_fieldset']['end_time']['#placeholder'] = 'End Time';
       $form['elements']['date_fieldset']['date']['#attributes']['placeholder'] = 'Start Day';
       $form['elements']['date_fieldset']['end_time']['#attributes']['placeholder'] = 'End Day';
       break;
@@ -1115,11 +1121,10 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
       ->getPath();
 
   if (!empty($form['zip'])){
-    $form['zip']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
+    $form['zip']['#prefix'] = "<div class=\"sSen__filIco\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-1.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-1-2x.png 2x\"  alt=\"\">
         </div><div class=\"sSen__opt form f-search f-search_min\">";
-    $form['zip']['#suffix'] = "</div></div>";
+    $form['zip']['#suffix'] = "</div>";
     $form['zip']['#attributes']['data-bef-auto-submit-exclude'] = '1';
     $form['zip']['#attributes']['autocomplete'] = 'new-password';
   }
@@ -1650,6 +1655,13 @@ function senate_theme($existing, $type, $theme, $path) {
       ],
       'path' => $theme_path . '/templates/theme',
     ],
+    'senate_subscribe_form' => [
+      'variables' => [
+        'type' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
   ];
 }
 
@@ -1967,4 +1979,38 @@ function senate_preprocess_senate_socials(&$vars) {
       $vars["title"] = \Drupal::service('title_resolver')->getTitle($request, $route);
     }
   }
+}
+
+/**
+ * Captcha pre_render.
+ */
+function senate_change_captcha_description($element) {
+  $description = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) ?
+    $element["captcha_widgets"]["captcha_response"]["#description"] : '';
+  $add_description = t('Math question not to test basic math skills.');
+  $title = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) ?
+    $element["captcha_widgets"]["captcha_response"]["#title"] : '';
+  $add_title = t('CAPTCHA:');
+
+  if (!empty($description)) {
+    $desc = is_object($description) ? $description->__toString() : $description;
+    $add_desc = $add_description->__toString();
+
+    $has_add_desc = (strpos($desc, $add_desc) !== FALSE);
+    if (!$has_add_desc) {
+      $element["captcha_widgets"]["captcha_response"]["#description"] = $description . ' ' . $add_description;
+    }
+  }
+
+  if (!empty($title)) {
+    $title = is_object($title) ? $title->__toString() : $title;
+    $add_title = $add_title->__toString();
+
+    $has_add_title = (strpos($title, $add_title) !== FALSE);
+    if (!$has_add_title) {
+      $element["captcha_widgets"]["captcha_response"]["#title"] = $add_title . ' ' . $title;
+    }
+  }
+
+  return $element;
 }
