@@ -224,7 +224,7 @@
       @include padding(20px 0);
 
       h2 {
-        @include font-size(18px, 24px, 27px);
+        @include font-size(20px, 26px, 30px);
         font-family: $RobotoCondensed-LightItalic;
         color: grey;
       }

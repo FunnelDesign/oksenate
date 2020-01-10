@@ -63,8 +63,6 @@
         <div class="bTiles bTiles_ev">
 
           <div class="pageIn__loader">
-<!--            <div class="ajax-progress ajax-progress-throbber"><div class="throbber">&nbsp;</div></div>-->
-
             <div class="loader loader_circle"></div>
           </div>
 
