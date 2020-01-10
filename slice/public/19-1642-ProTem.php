@@ -116,7 +116,7 @@
         </div>
 
 
-        <h2>OK Senate Sit Down</h2>
+        <h2>Graphics & Other Senate Info</h2>
 
         <div class="bEvents bEvents_img bEvents_gap_a">
 
@@ -124,16 +124,37 @@
 
             <?php
             $sSen__item = array(
-              array("event-img-tmp-5.jpg", "Ep 23: New Agriculture Investments", "October 7, 2019",
-                "The latest On Deck Podcast is here and focuses on Oklahoma Redistricting and the importance of t accountability when using federal grants. In..."),
-              array("event-img-tmp-5.jpg", "Ep 23: New Agriculture Investments", "October 7, 2019",
-                "The latest On Deck Podcast is here and focuses on Oklahoma Redistricting and the importance of t accountability when using federal grants. In..."),
-              array("event-img-tmp-5.jpg", "Ep 23: New Agriculture Investments", "October 7, 2019",
-                "The latest On Deck Podcast is here and focuses on Oklahoma Redistricting and the importance of t accountability when using federal grants. In...")
+              array("event-img-tmp-6.jpg"),
+              array("event-img-tmp-7.jpg"),
+              array("event-img-tmp-8.jpg")
             )
             ?>
             <?php foreach($sSen__item as $key => $element): ?>
-              <?php include '../src/components/bEvents/bEvents.inc'; ?>
+              <?php include '../src/components/bEvents/bEvents-only-img.inc'; ?>
+            <?php endforeach; ?>
+          </div>
+          <div class="bEvents__btnAll">
+            <a href="#" class="btn">
+              see all
+            </a>
+          </div>
+        </div>
+
+        <h2>2019 Budget Graphics</h2>
+
+        <div class="bEvents bEvents_img bEvents_gap_a">
+
+          <div class="bEvents__items">
+
+            <?php
+            $sSen__item = array(
+              array("event-img-tmp-6.jpg"),
+              array("event-img-tmp-7.jpg"),
+              array("event-img-tmp-8.jpg")
+            )
+            ?>
+            <?php foreach($sSen__item as $key => $element): ?>
+              <?php include '../src/components/bEvents/bEvents-only-img.inc'; ?>
             <?php endforeach; ?>
           </div>
           <div class="bEvents__btnAll">

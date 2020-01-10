@@ -206,6 +206,16 @@
 
   &_img {
 
+    #{$this}__imgWrap {
+      padding-bottom: 78%;
+      border-radius: 5px;
+      overflow: hidden;
+      transition: opacity .3s;
+
+      &:hover {
+        opacity: .7;
+      }
+    }
   }
 
   &_gap {
