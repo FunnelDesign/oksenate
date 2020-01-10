@@ -2,12 +2,10 @@
 namespace Drupal\events_custom\Controller;
 
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\AlertCommand;
 use Drupal\Core\Ajax\HtmlCommand;
-use Drupal\Core\Ajax\InvokeCommand;
 use Drupal\Core\Controller\ControllerBase;
 
-class EventsController  extends ControllerBase {
+class EventsController extends ControllerBase {
 
   /**
    * Open video.
