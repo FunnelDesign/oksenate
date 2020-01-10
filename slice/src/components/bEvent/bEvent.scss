@@ -27,9 +27,10 @@
   &__slider-items {
     max-width: 920px;
     @include margin(0 auto -10px, 0 auto 20px);
+    text-align: center;
 
     .slick-track {
-      display: flex;
+      display: inline-flex;
       justify-content: center;
     }
 
