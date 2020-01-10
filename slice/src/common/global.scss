@@ -126,3 +126,30 @@ a {
 b, strong {
   font-weight: normal;
 }
+
+.ui-autocomplete {
+  list-style: none;
+  background: $color-dark-blue;
+  text-align: left;
+  border: none !important;
+  border-radius: 0 0 5px 5px;
+
+  .ui-menu-item {
+    margin: 0;
+
+    a {
+      text-decoration: none;
+      padding: 5px 10px;
+      color: #fff;
+      display: block;
+      font-size: 12px;
+      margin: 0 5px;
+
+      &.ui-state-active {
+        border: none;
+        background: $color-blue;
+        border-radius: 5px;
+      }
+    }
+  }
+}
