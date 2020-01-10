@@ -1,0 +1,15 @@
+
+events_custom.events_insert:
+  path: '/events-custom/insert'
+  defaults:
+    _controller: '\Drupal\events_custom\Controller\EventsController::insertEvents'
+    _title: 'load'
+  requirements:
+    _permission: 'access content'
+events_custom.events_home_insert:
+  path: '/events-custom/insert-home'
+  defaults:
+    _controller: '\Drupal\events_custom\Controller\EventsController::insertHomeEvents'
+    _title: 'load'
+  requirements:
+    _permission: 'access content'

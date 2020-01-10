@@ -104,7 +104,20 @@
     </div>
   </section>
 
-  {% if committee_events %}
+{#  {% if committee_events %}#}
+{#    <section class="section section_ind_d section_bg-color_b">#}
+{#      <div class="bContainer">#}
+{#        <div class="pageIn__ico">#}
+{#          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-1.png"#}
+{#               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x" alt="">#}
+{#        </div>#}
+{#        <h2>{{ 'Committee Events'|t }}</h2>#}
+
+{#        {{ committee_events }}#}
+{#      </div>#}
+{#    </section>#}
+{#  {% endif %}#}
+
     <section class="section section_ind_d section_bg-color_b">
       <div class="bContainer">
         <div class="pageIn__ico">
@@ -112,11 +125,14 @@
                srcset="{{ theme_path }}/dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
         </div>
         <h2>{{ 'Committee Events'|t }}</h2>
-
-        {{ committee_events }}
+        <div class="bTiles bTiles_ev events-holder">
+          <div class="pageIn__loader">
+            <div class="loader loader_circle"></div>
+          </div>
+{#        {{ committee_events_external }}#}
+        </div>
       </div>
     </section>
-  {% endif %}
 
   {% if content.field_comt_ms_sched.0 %}
     <section class="section section_ind_c section_bg-color_c">

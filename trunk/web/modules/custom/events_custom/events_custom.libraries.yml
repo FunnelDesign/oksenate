@@ -1,0 +1,10 @@
+events:
+  js:
+    js/lib/moment.min.js: {}
+    js/lib/moment-timezone-with-data.min.js: {}
+    js/events_custom.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
