@@ -44,6 +44,10 @@ function senate_preprocess_page(array &$vars) {
   $node = !empty($vars["node"]) ? $vars["node"] : '';
   $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
 
+  $vars['subscribe_form_popup'] = [
+    '#theme' => 'senate_subscribe_form',
+    '#current_path' => $vars['path_to_theme']
+  ];
 }
 
 /**
@@ -1647,6 +1651,13 @@ function senate_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'printer' => NULL,
         'color' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senate_subscribe_form' => [
+      'variables' => [
+        'type' => NULL,
+        'current_path' => NULL,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
