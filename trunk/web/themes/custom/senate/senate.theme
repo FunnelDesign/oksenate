@@ -893,6 +893,10 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
   }
 
+  if (!empty($form["elements"]) && !empty($form["elements"]["captcha"])) {
+    $form["elements"]["captcha"]["#pre_render"][] = 'senate_change_captcha_description';
+  }
+
   switch ($form_id) {
     case 'webform_submission_reserve_a__node_10594_add_form':
       $form['elements']['date_fieldset']['date']['#placeholder'] = 'Start Time';
@@ -1978,4 +1982,25 @@ function senate_preprocess_senate_socials(&$vars) {
       $vars["title"] = \Drupal::service('title_resolver')->getTitle($request, $route);
     }
   }
+}
+
+/**
+ * Captcha pre_render.
+ */
+function senate_change_captcha_description($element) {
+  $description = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) ?
+    $element["captcha_widgets"]["captcha_response"]["#description"] : '';
+  $add_description = t('Math question not to test basic math skills.');
+
+  if (!empty($description)) {
+    $desc = is_object($description) ? $description->__toString() : $description;
+    $add_desc = $add_description->__toString();
+
+    $has_add_desc = (strpos($desc, $add_desc) !== FALSE);
+    if (!$has_add_desc) {
+      $element["captcha_widgets"]["captcha_response"]["#description"] = $description . ' ' . $add_description;
+    }
+  }
+
+  return $element;
 }
