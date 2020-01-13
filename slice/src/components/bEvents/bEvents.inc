@@ -1,4 +1,4 @@
-<div class="bEvents__item">
+<div class="bEvents__item" data-videoId="XVsjLNUK-pw">
   <a href="#" class="bEvents__imgWrap">
      <span class="bEvents__img"
            style="background-image: url('../dist/images/events/<?php print $element[0]; ?>')">

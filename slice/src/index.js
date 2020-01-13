@@ -11,6 +11,7 @@ import bTerms from "./components/bTerms/bTerms";
 import bStaff from "./components/bStaff/bStaff";
 import lightSlider from "./components/bLightSlider/lightSlider";
 import Modal from "./components/modal/modal";
+import bEvents from "./components/bEvents/bEvents";
 
 const $ = jQuery;
 
@@ -50,6 +51,7 @@ function init() {
 	new bTerms();
 	new bStaff();
 	new lightSlider();
+	new bEvents();
 	initFormRedirect();
 	initSelect();
 	initAccessibility();
