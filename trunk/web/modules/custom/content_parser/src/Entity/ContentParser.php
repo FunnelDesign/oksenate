@@ -739,7 +739,7 @@ class ContentParser extends ConfigEntityBase {
               }
               $nodes   = \Drupal::entityTypeManager()
                 ->getStorage('node')
-                ->loadByProperties(['title' => $text]);
+                ->loadByProperties(['field_press_release_old_url' => $href]);
                 if (is_array($nodes) && !empty($nodes)) {
                   $entity                  = $nodes[key($nodes)];
                   continue;
@@ -1280,6 +1280,10 @@ class ContentParser extends ConfigEntityBase {
 //      return $text;
 //    }
 //  }
+
+  public function makeBody($text, $title){
+
+  }
 
   public function makeSummary($text, $title){
     $searchForReplace = [
