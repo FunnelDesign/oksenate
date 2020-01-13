@@ -7,9 +7,9 @@
               <span class="bTiles__date">
                 {{ event.ScheduledStart|date("D, m/d/Y | H:ia") }}
               </span>
-              <div class="bTiles__title">
+              <a href="{{event.location_url}}" class="bTiles__title">
                 {{ event.Title }}
-              </div>
+              </a>
 {#              <span class="bTiles__sub">#}
         {#                Third Meeting#}
         {#              </span>#}
