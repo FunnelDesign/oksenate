@@ -130,4 +130,34 @@
     }
   }
 
+  &_video {
+
+    #{$this}__dialog {
+      margin: 42px auto;
+    }
+
+    #{$this}__content {
+      padding: 0;
+    }
+
+    #{$this}__close {
+      background: $color-red;
+      border-radius: 5px;
+      right: 0;
+      top: -35px;
+      transition: background-color .3s;
+
+      &:before, &:after {
+        margin-left: -10px;
+      }
+
+      &:hover {
+        background: $color-dark-blue;
+
+        &:before, &:after {
+          background: #fff;
+        }
+      }
+    }
+  }
 }

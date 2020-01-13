@@ -64,7 +64,8 @@
 
   </div>
   <?php include 'tpl/blocks/sFooter.inc'; ?>
-
 </div>
+
+<?php include 'tpl/blocks/modals/video.inc'; ?>
 </body>
 </html>
