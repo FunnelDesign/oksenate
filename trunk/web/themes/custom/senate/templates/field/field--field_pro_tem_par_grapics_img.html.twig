@@ -52,7 +52,7 @@ label_display == 'visually_hidden' ? 'visually-hidden',
         {% if multiple %}
 
             {% for item in items %}
-                <a href="{{ image_url }}" class="bEvents__imgWrap">
+                <a href="{{ image_url }}" target="_blank" class="bEvents__imgWrap">
                 <span {{ attributes.addClass("bEvents__img", img_classes) }}
                         style="background-image: url('{{ image_url }}')"></span>
                 </a>
@@ -60,7 +60,7 @@ label_display == 'visually_hidden' ? 'visually-hidden',
 
         {% else %}
             {% for item in items %}
-                <a href="{{ image_url }}" class="bEvents__imgWrap">
+                <a href="{{ image_url }}" target="_blank" class="bEvents__imgWrap">
                 <span {{ attributes.addClass("bEvents__img", img_classes) }}
                         style="background-image: url('{{ image_url }}')"></span>
                 </a>
@@ -69,7 +69,7 @@ label_display == 'visually_hidden' ? 'visually-hidden',
 
     {% else %}
         {% for item in items %}
-            <a href="{{ image_url }}" class="bEvents__imgWrap">
+            <a href="{{ image_url }}" target="_blank" class="bEvents__imgWrap">
                 <span {{ attributes.addClass("bEvents__img", img_classes) }}
                         style="background-image: url('{{ image_url }}')"></span>
             </a>
