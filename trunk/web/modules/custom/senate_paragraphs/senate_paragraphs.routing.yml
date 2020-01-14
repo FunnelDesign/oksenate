@@ -1,0 +1,13 @@
+senate_paragraphs.add_form:
+  path: '/senate_paragraphs/{root_parent_type}/{root_parent}/{root_parent_field}/paragraphs/add'
+  defaults:
+    _form:  '\Drupal\senate_paragraphs\Form\SenateParagraphAddForm'
+    _title: 'Add new'
+  requirements:
+    _permission: 'access content'
+    _role: 'manager+administrator'
+  options:
+    _admin_route: TRUE
+    parameters:
+      root_parent:
+        type: 'entity:{root_parent_type}'
