@@ -1,0 +1,16 @@
+<?php
+/**
+ * @file
+ * Senate Paragraphs module.
+ */
+
+use Drupal\senate_paragraphs\Form\SenateParagraphAddForm;
+
+/**
+ * Implements hook_entity_type_build().
+ *
+ * @param \Drupal\Core\Entity\EntityTypeInterface[] $entity_types
+ */
+function senate_paragraphs_entity_type_build(array &$entity_types) {
+  $entity_types['paragraph']->setFormClass('entity_add', SenateParagraphAddForm::class);
+}

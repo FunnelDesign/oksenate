@@ -156,6 +156,9 @@
             },
             "drupal/webform": {
                 "https://www.drupal.org/project/webform/issues/2859421": "https://www.drupal.org/files/issues/2019-10-11/webform-2859421-5.patch"
+            },
+            "drupal/paragraphs_edit": {
+                "https://www.drupal.org/project/paragraphs_edit/issues/2944653": "https://www.drupal.org/files/issues/2019-03-22/error_on_missing_parent-2944653-13034993.patch"
             }
         }
     }
