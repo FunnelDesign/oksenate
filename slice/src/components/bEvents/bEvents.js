@@ -18,11 +18,11 @@ window.bEvents = class {
 		let iframe = $modal.find(`iframe`);
 
 		$elm.on('click touch', `.${this.name}__imgWrap, .${this.name}__readMore`, (e) => {
+			let videoId = $(e.target).closest(`.${this.name}__item`).attr('data-videoId');
+			if (!videoId) return;
+
 			e.preventDefault();
 
-			let videoId = $(e.target).closest(`.${this.name}__item`).attr('data-videoId');
-
-			if (!videoId) return;
 			iframe.attr(`id`, videoId);
 			iframe.attr(`src`, `https://www.youtube.com/embed/${videoId}?rel=0&amp;controls=1&amp;showinfo=0&amp;enablejsapi=1`);
 			$modal.modal(`show`);
