@@ -14,3 +14,23 @@ use Drupal\senate_paragraphs\Form\SenateParagraphAddForm;
 function senate_paragraphs_entity_type_build(array &$entity_types) {
   $entity_types['paragraph']->setFormClass('entity_add', SenateParagraphAddForm::class);
 }
+
+/**
+ * Implements hook_preprocess_views_view();
+ */
+function senate_paragraphs_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+  $id = $view->id();
+  $display_id = $view->current_display;
+
+  switch ($id) {
+    case 'manage_senate_votes':
+      $nid = !empty($view->args) ? $view->args[0] : '';
+      if (!empty($vars["header"]) && !empty($vars["header"]["area_text_custom"]) && !empty($nid)) {
+        $add_new = $vars["header"]["area_text_custom"]["#markup"]->__toString();
+        $add_new = str_replace('[nid]', $nid, $add_new);
+        $vars["header"]["area_text_custom"]["#markup"] = $add_new;
+      }
+      break;
+  }
+}
