@@ -15,6 +15,9 @@
     <span class="bEvents__desc">
        <?php print $element[3]; ?>
     </span>
+    <span class="bEvents__attach">
+      <a href="#">Attached Graphic</a>
+    </span>
     <span class="bEvents__readMoreWr">
        <a href="#" class="btn btn_a bEvents__readMore">watch video</a>
     </span>
