@@ -39,7 +39,13 @@
  */
 #}
 <div class="bEvents__item">
-    <a href="#" class="bEvents__imgWrap">
-        {{ content.field_pro_tem_par_video_preview }}
-    </a>
+        {{ content.field_pro_tem_par_grapics_img }}
+
+    {% if content.field_pro_tem_par_description|render is not empty %}
+        <div class="bEvents__body">
+            <div class="bEvents__desc">
+                {{ content.field_pro_tem_par_description }}
+            </div>
+        </div>
+    {% endif %}
 </div>

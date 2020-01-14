@@ -37,7 +37,7 @@
  * @see template_preprocess_field()
  */
 #}
-<div class="bEvents bEvents_img bEvents_gap_a">
+<div class="bEvents__itemsWr">
     <div class="bEvents__items">
         {% for item in items|slice(0,3)  %} {# slice syntax is: slice(start, length)#}
                 {{ item.content }}

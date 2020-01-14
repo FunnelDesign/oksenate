@@ -37,8 +37,6 @@
  * @see template_preprocess_field()
  */
 #}
-<div class="bEvents__items">
-    {% for item in items|slice(0,3) %} {# slice syntax is: slice(start, length)#}
-        {{ item.content }}
-    {% endfor %}
-</div>
+<span class="bEvents__attach">
+      <a href="{{ image_url }}">Attached Graphic</a>
+    </span>
