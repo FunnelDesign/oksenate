@@ -555,6 +555,7 @@ class ContentParser extends ConfigEntityBase {
     $searchForReplace = [
       'Audio',
       'Print',
+      'Clip',
       'October Press Releases',
       'January Press Releases',
       'February Press Releases',
@@ -610,6 +611,9 @@ class ContentParser extends ConfigEntityBase {
               continue;
             }
             $href = parser_get_absolute_url($secondBase, $href);
+            if($href == 'oksenate.gov/news/press_releases/press_releases_2005/pr20050223b.html'){
+              $tesForVova = 2;
+            }
             if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
               $text = pq($a)->text();
               //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2015/pr20150729a.htm'){
@@ -621,7 +625,27 @@ class ContentParser extends ConfigEntityBase {
 
               $date        = str_replace($text, '', pq($a)->parent()->text());
               $content     = $this->loadUrl($href);
+              if(!$content){
+                $message = '404 page ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+                file_put_contents('parse_errors.txt', $message, FILE_APPEND);
+                \Drupal::logger('404_content_parser')->notice($message);
+              }
+//              $dom = new \DOMDocument;
+//              $dom->loadHTML($content);
+//              $xpath = new \DOMXPath($dom);
+//              $nodes = $xpath->query('//@*');
+//              foreach ($nodes as $node) {
+//                $node->removeAttribute($node->nodeName);
+//              }
               $docNews     = $this->getPhpQuery($content, $href);
+//              $test = $docNews->find('*');
+//              foreach ($docNews->find('*') as $attribute){
+//                foreach ($attribute->childNodes as $childNode){
+//                  pq($childNode)->parent()->attr()->removeAttr($childNode->nodeName);
+//                  pq($childNode)->attr()->remove();
+//                }
+//
+//              }
               $returnLinks = 'this table contains return links';
               $mainNavigation = 'this table contains the news navigation menu';
               $mainContent = 'this table contains the main content of the page';
@@ -634,24 +658,24 @@ class ContentParser extends ConfigEntityBase {
                   pq($table)->remove();
                 }
               }
-              $searchForReplaceSpecial = [
-                '/[&#148;]/u' => '',
-                '/[&#147;]/u'=> '',
-                '/[&#146;]/u'=> '',
-                '/[&#145;]/u'=> ''
-              ];
+//              $searchForReplaceSpecial = [
+//                '/[&#148;]/u' => '',
+//                '/[&#147;]/u'=> '',
+//                '/[&#146;]/u'=> '',
+//                '/[&#145;]/u'=> ''
+//              ];
               $hasMainContent = FALSE;
               foreach ($docNews['table'] as $key => $table) {
                 if (pq($table)->attr('summary') == $mainContent) {
                   $hasMainContent = TRUE;
                   $html          = [
-                    'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br>')),
+                    'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br><strong><ul><li><bold><b><i><em>')),
                     'format' => 'full_html'
                   ];
-                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
-                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br>'));
+//                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
+                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br><strong><ul><li><bold><b><i><em>'));
                   $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
-                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,<br>:/!]~','',$html['value']);
+//                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,:/!]~','',$html['value']);
                 }
               }
               if(!$hasMainContent){
@@ -660,19 +684,19 @@ class ContentParser extends ConfigEntityBase {
 //                $trimmedHref = preg_replace("/[^0-9]/", '', $urlDate);
 //                $urlDate = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $trimmedHref)))));
                   $html          = [
-                    'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<br>')),
+                    'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<br><strong><ul><li><bold><b><i><em>')),
                     'format' => 'full_html'
                   ];
-                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
+//                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
                   $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
-                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br>'));
-                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,<br>:/!]~','',$html['value']);
+                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br><strong><ul><li><bold><b><i><em>'));
+//                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,<br>:;$/!]~','',$html['value']);
 
               }
               // Remove hash
 //              $text = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
               $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-              $text = preg_replace('~[^A-Za-z0-9?.\s+,:;/!]~','',$text);
+//              $text = preg_replace("~[^A-Za-z0-9?.\s+,\\-:;/!]~",'',$text);
               $date = preg_replace("/[^.0-9]/", '', $date);
               $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
               if ($html == 'empty') {
@@ -683,7 +707,7 @@ class ContentParser extends ConfigEntityBase {
               }
               else {
                 $contactInfo = [];
-                $regexp      = "/(For more information, contact:|For more information,contact|For more information|For more information contact:)(?s)(.*$)/";
+                $regexp      = "/(For more information, contact:|For more information,contact|For more information contact:|For more information)(?s)(.*$)/";
                 $all         = preg_match($regexp, $html['value'], $matches);
                 if (!empty($matches)) {
                   foreach ($matches as $matchKey => $match) {
@@ -691,7 +715,7 @@ class ContentParser extends ConfigEntityBase {
                       continue;
                     }
                     else {
-                      $contactInfo[] = ['value' => trim(strip_tags($match))];
+                      $contactInfo[] = ['value' => trim(str_replace('contact:','', strip_tags($match)))];
                     }
                   }
                 }
@@ -1251,37 +1275,58 @@ class ContentParser extends ConfigEntityBase {
     }
   }
 
-//  public function makeBody($text, $title){
-//    $len = (int) strlen($title);
-//    $strpos = (int) strpos($text, $title);
-//    $bodyString = substr($text, $strpos+$len);
-//    if($bodyString){
-//      return $bodyString;
-//    }else{
-//      return $text;
-//    }
-//  }
-
-  public function makeSummary($text, $title){
-    $searchForReplace = [
-      '/[&#148;]/u' => '',
-      '/[&#147;]/u'=> '',
-      '/[&#146;]/u'=> '',
-      '/[&#145;]/u'=> ''
-    ];
-    $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-    $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
-    $len = (int) strlen($title);
-    $strpos = (int) strpos($text, $title);
-    $headerString = substr($text, 0, $strpos);
-    $bodyString = substr($text, $strpos+$len);
-    $headerString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $headerString);
-    $bodyString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $bodyString);
-    if($bodyString && $headerString){
-      return ['body' => $bodyString,'head'=>$headerString];
-    }else{
+  /**
+   * @param $title
+   *
+   * @return bool|string
+   */
+  public function makeBodyHeaderRegexp($title){
+    $explodeByWhitespace = explode(' ', $title);
+    if(empty($explodeByWhitespace)){
       return FALSE;
     }
+    $regexp = implode('((<br>)*\s*|\s*|”*|“*)*?', $explodeByWhitespace);
+    $regexp = '/'.$regexp.'/i';
+    return $regexp;
+  }
+
+  public function makeSummary($text, $title){
+//    $searchForReplace = [
+//      '/[&#148;]/u' => '',
+//      '/[&#147;]/u'=> '',
+//      '/[&#146;]/u'=> '',
+//      '/[&#145;]/u'=> ''
+//    ];
+/*    $testRegexp = "/($title)(?!<.?)(?!.?>)/ig";*/
+
+
+//    $testRegexp = "Waive((<br>)*\s*|\s*)*?Legislative(<br>*|\s*|\s*)*?Review((<br>)*\s*|\s*)*?Of";
+    $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+    $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
+    $title = str_replace("&", '&amp;', $title);
+    $len = (int) strlen($title);
+    $regexp = $this->makeBodyHeaderRegexp($title);
+    $match = preg_match($regexp, $text, $matches, PREG_OFFSET_CAPTURE);
+    if($match){
+      $startPos = $matches[0][1];
+      $strpos = (int) strlen($matches[0][0]) + $startPos;
+      $headerString = substr($text, 0, $startPos);
+      $bodyString = substr($text, $strpos);
+      if($bodyString && $headerString){
+        return ['body' => $bodyString,'head'=>$headerString];
+      }
+    }
+    return FALSE;
+
+//    $strpos = (int) strpos($text, $title);
+
+//    $headerString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $headerString);
+//    $bodyString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $bodyString);
+//    if($bodyString && $headerString){
+//      return ['body' => $bodyString,'head'=>$headerString];
+//    }else{
+//      return FALSE;
+//    }
 
 //    $regexp = "/($title)(?s)(.*$)/";
 //    $all = preg_match($regexp, $text, $matches);
