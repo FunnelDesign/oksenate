@@ -44,15 +44,23 @@
         <span class="bEvents__play"></span>
     </a>
     <span class="bEvents__body">
-    <div class="bEvents__title">
-        {{ content.field_pro_tem_par_title }}
-    </div>
-    <span class="bEvents__date">
-        {{ content.field_pro_tem_par_date }}
-    </span>
-    <span class="bEvents__desc">
-        {{ content.field_pro_tem_par_description }}
-    </span>
+        {% if content.field_pro_tem_par_title|render is not empty %}
+            <span class="bEvents__title">
+                {{ content.field_pro_tem_par_title }}
+            </span>
+        {% endif %}
+        {% if content.field_pro_tem_par_date|render is not empty %}
+            <span class="bEvents__date">
+                {{ content.field_pro_tem_par_date }}
+            </span>
+        {% endif %}
+        {% if content.field_pro_tem_par_description|render is not empty %}
+            <span class="bEvents__desc">
+                {{ content.field_pro_tem_par_description }}
+            </span>
+        {% endif %}
+        {{ content.field_pro_tem_additional_image }}
+
     <span class="bEvents__readMoreWr">
        <a href="#" class="btn btn_a bEvents__readMore">watch video</a>
     </span>

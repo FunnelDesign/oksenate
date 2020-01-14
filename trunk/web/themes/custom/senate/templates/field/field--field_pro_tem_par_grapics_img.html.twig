@@ -37,8 +37,41 @@
  * @see template_preprocess_field()
  */
 #}
-<div class="bEvents__items">
-    {% for item in items|slice(0,3) %} {# slice syntax is: slice(start, length)#}
-        {{ item.content }}
-    {% endfor %}
-</div>
+{% set classes = [
+'field',
+'field--name-' ~ field_name|clean_class,
+'field--type-' ~ field_type|clean_class,
+'field--label-' ~ label_display,
+] %}
+{% set title_classes = [
+'field__label',
+label_display == 'visually_hidden' ? 'visually-hidden',
+] %}
+
+    {% if label_hidden %}
+        {% if multiple %}
+
+            {% for item in items %}
+                <a href="{{ image_url }}" class="bEvents__imgWrap">
+                <span {{ attributes.addClass("bEvents__img", img_classes) }}
+                        style="background-image: url('{{ image_url }}')"></span>
+                </a>
+            {% endfor %}
+
+        {% else %}
+            {% for item in items %}
+                <a href="{{ image_url }}" class="bEvents__imgWrap">
+                <span {{ attributes.addClass("bEvents__img", img_classes) }}
+                        style="background-image: url('{{ image_url }}')"></span>
+                </a>
+            {% endfor %}
+        {% endif %}
+
+    {% else %}
+        {% for item in items %}
+            <a href="{{ image_url }}" class="bEvents__imgWrap">
+                <span {{ attributes.addClass("bEvents__img", img_classes) }}
+                        style="background-image: url('{{ image_url }}')"></span>
+            </a>
+        {% endfor %}
+    {% endif %}
