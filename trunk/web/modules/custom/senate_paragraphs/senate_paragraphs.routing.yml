@@ -5,6 +5,7 @@ senate_paragraphs.add_form:
     _title: 'Add new'
   requirements:
     _permission: 'access content'
+    _role: 'manager+administrator'
   options:
     _admin_route: TRUE
     parameters:
