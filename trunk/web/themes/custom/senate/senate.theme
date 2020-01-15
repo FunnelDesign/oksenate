@@ -867,6 +867,22 @@ function senate_preprocess_field(array &$vars, $hook) {
           $vars['video_id'] = !empty($video_data['video_id']) ? $video_data['video_id'] : '';
         }
       break;
+    case 'field_slider_image':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      $vars['bg_images'] = [];
+      foreach ($items as $key => $item) {
+        if (!empty($item['content']['#item']->entity)) {
+          if (!empty($item["content"]["#image_style"])) {
+            $style = $item["content"]["#image_style"];
+            $img_file_uri = $item['content']['#item']->entity->getFileUri();
+            $vars['bg_images'][$key] = ImageStyle::load($style)->buildUrl($img_file_uri);
+          }
+          else {
+            $vars['bg_images'][$key] = $item['content']['#item']->entity->url();
+          }
+        }
+      }
+      break;
   }
 }
 

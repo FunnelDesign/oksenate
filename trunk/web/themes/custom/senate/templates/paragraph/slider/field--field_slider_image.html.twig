@@ -49,8 +49,8 @@ label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
 
 <ul class="bLightSlider__slides">
-  {% for item in items %}
-    <li data-thumb="{{ image_url }}">
+  {% for key,item in items %}
+    <li data-thumb="{{ bg_images[key] }}">
       {{ item.content }}
     </li>
   {% endfor %}
