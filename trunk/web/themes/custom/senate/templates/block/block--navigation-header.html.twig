@@ -27,6 +27,9 @@
  * @ingroup themeable
  */
 #}
-<div class="navLinks">
-    {{ content }}
+<div{{ attributes.addClass('navLinks') }}>
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  {{ content }}
 </div>

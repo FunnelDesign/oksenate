@@ -80,6 +80,11 @@ function custom_module_add_committee($form, FormStateInterface $form_state) {
         $arg  = explode('/', $current_path);
         if (!empty($arg[2]) && is_numeric($arg[2])) {
           $form_state->setValue('committee', $arg[2]);
+          $mailchimp_group = _custom_module_mailchimp_commitee_map($arg[2]);
+
+          if (!empty($mailchimp_group)) {
+            $form_state->setValue('mailchimp_committee', $mailchimp_group);
+          }
         }
         break;
     }
@@ -257,6 +262,11 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
+  if ($view->id() == 'senators' && $view->getDisplay()->display['id'] == 'page_1') {
+    $formula = 'SUBSTR(node_field_data.title, INSTR(node_field_data.title, \' \'))';
+    $query->addField(NULL, $formula, 'second_name');
+    $query->addOrderBy(NULL, NULL, 'ASC', 'second_name');
+  }
 }
 
 /**
@@ -308,4 +318,30 @@ function _custom_module_get_senator_email($nid) {
 
   $result = $query->execute()->fetchCol();
   return !empty($result) ? $result[0] : '';
+}
+
+function _custom_module_mailchimp_commitee_map($tid) {
+  $map = [
+    '68' => '34cacb43b4',
+    '67' => '5fcc45545c',
+    '85' => '3f95e020d6',
+    '86' => 'b672de2712',
+    '87' => '76091e1f58',
+    '84' => '36f616dad0',
+    '83' => 'dcf7a9a164',
+    '82' => '20012d927a',
+    '69' => '03df5d06c3',
+    '70' => '2b1109ecd9',
+    '71' => '88edf99954',
+    '72' => 'f7ac316d53',
+    '73' => '4e3ee65d72',
+    '74' => '49b253570a',
+    '75' => 'd30c6731fa',
+    '76' => '1bfbd589f7',
+    '77' => '884f58114c',
+    '78' => '9a23cdd8d1',
+    '79' => 'c97d4a4d2f',
+    '80' => '9d92c93616',
+  ];
+  return !empty($map[$tid]) ? $map[$tid] : '';
 }

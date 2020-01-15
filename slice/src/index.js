@@ -11,6 +11,7 @@ import bTerms from "./components/bTerms/bTerms";
 import bStaff from "./components/bStaff/bStaff";
 import lightSlider from "./components/bLightSlider/lightSlider";
 import Modal from "./components/modal/modal";
+import bEvents from "./components/bEvents/bEvents";
 
 const $ = jQuery;
 
@@ -50,6 +51,7 @@ function init() {
 	new bTerms();
 	new bStaff();
 	new lightSlider();
+	new bEvents();
 	initFormRedirect();
 	initSelect();
 	initAccessibility();
@@ -57,8 +59,18 @@ function init() {
 	initCounter($('.bSeats__cap'), false, 2);
 	initCounter($('.bSeats__countD'), false, 2);
 	initCounter($('.bSeats__countR'), false, 2);
+	changeAutocomplete();
 
 	new BlockVideo();
+}
+
+function changeAutocomplete() {
+	let $zip = $(`.sSen .form-item-zip .form-autocomplete`);
+
+	if (!$zip.length) return;
+
+	$zip.attr('autocomplete', 'new-password');
+
 }
 
 function initCounter(wrap, easing, speed) {

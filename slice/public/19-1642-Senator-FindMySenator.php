@@ -54,6 +54,15 @@
                 </div>
               </div>
 
+              <ul id="ui-id-1"
+                  tabindex="0"
+                  class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front"
+                  style="top: 0px;left: 280px;width: 150px;position: absolute"><li class="ui-menu-item"><a id="ui-id-14" tabindex="-1" class="ui-menu-item-wrapper" style="
+    /* padding: 5px; */
+    /* display: block; */
+">67950</a></li><li class="ui-menu-item">
+                  <a id="ui-id-15" tabindex="-1" class="ui-menu-item-wrapper ui-state-active">73002</a></li><li class="ui-menu-item"><a id="ui-id-16" tabindex="-1" class="ui-menu-item-wrapper">73003</a></li><li class="ui-menu-item"><a id="ui-id-17" tabindex="-1" class="ui-menu-item-wrapper">73004</a></li><li class="ui-menu-item"><a id="ui-id-18" tabindex="-1" class="ui-menu-item-wrapper">73005</a></li><li class="ui-menu-item"><a id="ui-id-19" tabindex="-1" class="ui-menu-item-wrapper">73006</a></li><li class="ui-menu-item"><a id="ui-id-20" tabindex="-1" class="ui-menu-item-wrapper">73007</a></li><li class="ui-menu-item"><a id="ui-id-21" tabindex="-1" class="ui-menu-item-wrapper">73008</a></li><li class="ui-menu-item"><a id="ui-id-22" tabindex="-1" class="ui-menu-item-wrapper">73009</a></li><li class="ui-menu-item"><a id="ui-id-23" tabindex="-1" class="ui-menu-item-wrapper">73010</a></li></ul>
+
             </div>
 
           </div>
@@ -190,7 +199,7 @@
           </div>
         </div>
       </div>
-      <div class="sSen__res">
+      <div class="sSen__res sSen__res_loading">
 
         <div class="bContainer">
 

@@ -1,0 +1,13 @@
+{
+    "name": "events_custom",
+    "type": "drupal-module",
+    "description": "Events from Harmony API",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/events_custom",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/events_custom",
+        "source": "http://cgit.drupalcode.org/events_custom"
+    }
+}
