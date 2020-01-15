@@ -124,6 +124,8 @@ function senate_preprocess_node(array &$vars) {
 
           $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', $params);
         }
+
+        $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
       case 'committee_events':
 //        kint($vars);
@@ -316,6 +318,11 @@ function senate_preprocess_node(array &$vars) {
           !empty($vars["content"]["field_senate_studies_year"]["#items"]) ?
           $vars["content"]["field_senate_studies_year"]["#items"]->get(0)->value : '';
         $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', ['all']);
+
+        $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
+        break;
+      case 'tables_page':
+        $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
     }
   }
