@@ -2,6 +2,7 @@
 
 namespace Drupal\content_parser\Entity;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\content_parser\Results;
 use Drupal\node\Entity\Node;
@@ -629,6 +630,7 @@ class ContentParser extends ConfigEntityBase {
                 $message = '404 page ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
                 file_put_contents('parse_errors.txt', $message, FILE_APPEND);
                 \Drupal::logger('404_content_parser')->notice($message);
+                continue;
               }
 //              $dom = new \DOMDocument;
 //              $dom->loadHTML($content);
@@ -669,11 +671,11 @@ class ContentParser extends ConfigEntityBase {
                 if (pq($table)->attr('summary') == $mainContent) {
                   $hasMainContent = TRUE;
                   $html          = [
-                    'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br><strong><ul><li><bold><b><i><em>')),
+                    'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
                     'format' => 'full_html'
                   ];
 //                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
-                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br><strong><ul><li><bold><b><i><em>'));
+                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
                   $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
 //                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,:/!]~','',$html['value']);
                 }
@@ -684,12 +686,12 @@ class ContentParser extends ConfigEntityBase {
 //                $trimmedHref = preg_replace("/[^0-9]/", '', $urlDate);
 //                $urlDate = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $trimmedHref)))));
                   $html          = [
-                    'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<br><strong><ul><li><bold><b><i><em>')),
+                    'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
                     'format' => 'full_html'
                   ];
 //                  $html['value'] = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $html['value']);
                   $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
-                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<br><strong><ul><li><bold><b><i><em>'));
+                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
 //                  $html['value'] = preg_replace('~[^A-Za-z0-9?.\s+,<br>:;$/!]~','',$html['value']);
 
               }
@@ -746,7 +748,7 @@ class ContentParser extends ConfigEntityBase {
               }
               $nodes   = \Drupal::entityTypeManager()
                 ->getStorage('node')
-                ->loadByProperties(['title' => $text]);
+                ->loadByProperties(['field_press_release_old_url' => $href]);
                 if (is_array($nodes) && !empty($nodes)) {
                   $entity                  = $nodes[key($nodes)];
                   continue;
@@ -1285,7 +1287,7 @@ class ContentParser extends ConfigEntityBase {
     if(empty($explodeByWhitespace)){
       return FALSE;
     }
-    $regexp = implode('((<br>)*\s*|\s*|”*|“*)*?', $explodeByWhitespace);
+    $regexp = implode('((<br>|<br \/>)*\s*|\s*|”*|“*)*?', $explodeByWhitespace);
     $regexp = '/'.$regexp.'/i';
     return $regexp;
   }
@@ -1299,9 +1301,10 @@ class ContentParser extends ConfigEntityBase {
 //    ];
 /*    $testRegexp = "/($title)(?!<.?)(?!.?>)/ig";*/
 
-
 //    $testRegexp = "Waive((<br>)*\s*|\s*)*?Legislative(<br>*|\s*|\s*)*?Review((<br>)*\s*|\s*)*?Of";
     $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+    $text = preg_replace('/<p>(<(.+)*>)*(&nbsp;|\s)*(<*\/?>\s*)*<\/p>/g', '', $text);
+    $text = Html::normalize($text);
     $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
     $title = str_replace("&", '&amp;', $title);
     $len = (int) strlen($title);
