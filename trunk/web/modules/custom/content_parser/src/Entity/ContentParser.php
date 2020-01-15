@@ -667,6 +667,11 @@ class ContentParser extends ConfigEntityBase {
 //                '/[&#145;]/u'=> ''
 //              ];
               $hasMainContent = FALSE;
+              if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2001/pr112001c.html'){
+                $mini = 2;
+                $miniTest = mb_check_encoding($html['value'], 'UTF-8') ? $html['value'] : utf8_encode($html['value']);
+                $miniTest = iconv ('UTF-8','UTF-8//TRANSLIT', $miniTest );
+              }
               foreach ($docNews['table'] as $key => $table) {
                 if (pq($table)->attr('summary') == $mainContent) {
                   $hasMainContent = TRUE;
@@ -709,7 +714,7 @@ class ContentParser extends ConfigEntityBase {
               }
               else {
                 $contactInfo = [];
-                $regexp      = "/(For more information, contact:|For more information,contact|For more information contact:|For more information)(?s)(.*$)/";
+                $regexp      = "/(For more information, contact:|For more information,contact|For more information contact:|For more information|For additional information contact:)(?s)(.*$)/";
                 $all         = preg_match($regexp, $html['value'], $matches);
                 if (!empty($matches)) {
                   foreach ($matches as $matchKey => $match) {
@@ -1293,18 +1298,47 @@ class ContentParser extends ConfigEntityBase {
   }
 
   public function makeSummary($text, $title){
+
+//    $doc = new \DOMDocument;
+//    $doc->preserveWhiteSpace = false;
+//    $doc->loadHTML($text);
+//
+//    $xpath = new \DOMXPath($doc);
+//
+//    foreach( $xpath->query('//*[not(*) and not(@*) and not(text()[normalize-space()])]') as $node ) {
+//      $node->parentNode->removeChild($node);
+//    }
+//
+//    $doc->formatOutput = true;
+//
+//    $mini = $doc->saveHTML();
+
+
 //    $searchForReplace = [
 //      '/[&#148;]/u' => '',
 //      '/[&#147;]/u'=> '',
 //      '/[&#146;]/u'=> '',
 //      '/[&#145;]/u'=> ''
 //    ];
+//        $headerString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $headerString);
+//        $bodyString = preg_replace(array_keys($searchForReplace), array_values($searchForReplace), $bodyString);
 /*    $testRegexp = "/($title)(?!<.?)(?!.?>)/ig";*/
 
 //    $testRegexp = "Waive((<br>)*\s*|\s*)*?Legislative(<br>*|\s*|\s*)*?Review((<br>)*\s*|\s*)*?Of";
     $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-    $text = preg_replace('/<p>(<(.+)*>)*(&nbsp;|\s)*(<*\/?>\s*)*<\/p>/g', '', $text);
+    $text = str_replace("", "'", $text);
+    $title = str_replace("", "'", $text);
+/*    $pattern = "/<p>(<.*>)*(&nbsp;|\s)*(<*\/?>\s*)*<\/p>/g";*/
+/*    $pattern = "/<p[^>]*>(\s|&nbsp;|<\/?\s?br\s?\/?>)*<\/?p>/";*/
+//    $pregmatch = preg_match_all($pattern, $text, $getMatches);
+//    if($pregmatch){
+//      $mini = 2;
+//    }
+//    $text = '<p><b>&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;</b></p> mini';
+    $text = preg_replace("#(<p[^>]*>|<b[^>]*>)(\s|&nbsp;|</?\s?br\s?/?>|</?\s?b\s?/?>)*(</?p>|</?b>)#", '', $text);
     $text = Html::normalize($text);
+/*    $text = preg_replace("#<p[^>]*>(\s|&nbsp;|</?\s?br\s?/?>|</?\s?b\s?/?>)*</?p>#", '', $text);*/
+//    $text = preg_replace($pattern, '', $text);
     $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
     $title = str_replace("&", '&amp;', $title);
     $len = (int) strlen($title);
