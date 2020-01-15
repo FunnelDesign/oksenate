@@ -307,6 +307,7 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'contact':
       case 'contact_reservation':
+      case 'protem_podcast':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'senate_studies':
@@ -1981,6 +1982,7 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'senator':
       case 'tables_page':
       case 'week_review':
+      case 'protem_podcast':
         $color = 'navy';
         break;
     }
