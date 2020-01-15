@@ -324,6 +324,17 @@ function senate_preprocess_node(array &$vars) {
       case 'tables_page':
         $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
+      case 'senator_blog_post':
+        _senate_add_share_this($vars);
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back to senator treat’s news'),
+          '#url' => Url::fromUserInput('/news'),
+          '#attributes' => [
+            'class' => ['btn', 'btn_a', 'section__btnBack'],
+          ],
+        ];
+        break;
     }
   }
 }
@@ -1554,6 +1565,19 @@ function senate_preprocess_paragraph(array &$vars) {
         $vars["content"]["field_staff_email"]['#items']->getValue() : '';
       $vars['email'] = !empty($email) && !empty($email[0]) ? $email[0]["value"] : '';
       break;
+    case 'video':
+      if (!empty($vars['content']['field_video_video']) &&
+        !empty($vars['content']['field_video_video']['#items'])) {
+        $items = $vars['content']['field_video_video']['#items'];
+        $value = !empty($items) ? $items->getValue() : '';
+        if (!empty($value)) {
+          $url = $value[0]['value'];
+          $video_data = _get_youtube_embed_data($url, ['rel' => 0, 'controls' => 0, 'showinfo' => 0, 'enablejsapi' => 1]);
+          $vars['video_id'] = !empty($video_data['video_id']) ? $video_data['video_id'] : '';
+          $vars['video_url'] = !empty($video_data['url']) ? $video_data['url'] : '';
+        }
+      }
+      break;
   }
 }
 
@@ -1990,6 +2014,7 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'tables_page':
       case 'week_review':
       case 'protem_podcast':
+      case 'senator_blog_post':
         $color = 'navy';
         break;
     }
