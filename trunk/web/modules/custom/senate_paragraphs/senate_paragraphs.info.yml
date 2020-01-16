@@ -1,0 +1,8 @@
+name: 'Senate Paragraphs'
+type: module
+description: 'Allows users to add new paragraphs.'
+package: 'Custom'
+core: 8.x
+dependencies:
+  - paragraphs:paragraphs
+  - drupal:paragraphs_edit

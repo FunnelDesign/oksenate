@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @file
+ * Contains events_custom.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+
+/**
+ * Implements hook_theme().
+ */
+function events_custom_theme() {
+  return [
+    'events_custom_upcoming' => [
+      'render element' => 'children',
+    ],
+    'events_custom_home' => [
+      'render element' => 'children',
+    ],
+  ];
+}
+
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function events_custom_preprocess_events_custom_upcoming(&$vars) {
+
+
+  $vars['events'] = _events_custom_get_events();
+
+  $vars['#attached']['library'][] = 'events_custom/events';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function events_custom_preprocess_events_custom_home(&$vars) {
+
+
+  $vars['events'] = _events_custom_get_events();
+
+//  dsm($vars['events']);
+
+  $vars['#attached']['library'][] = 'events_custom/events';
+}
+
+function events_custom_preprocess_page(&$vars) {
+  $vars['#attached']['library'][] = 'events_custom/events';
+}
+
+function events_custom_test() {
+
+//  dsm((string) \Drupal::httpClient()
+//    ->get('https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetUpcomingEvents?lastModified=20200101223226000', ['timeout' => 0, 'headers' => [],])
+//    ->getBody());
+
+  $date = date("Ymd", strtotime('monday this week'));
+
+  $response = (string) \Drupal::httpClient()
+    ->get('https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetContentEntityByWeek/' . $date . '/-1', ['timeout' => 0, 'headers' => [],])
+    ->getBody();
+
+
+//  dsm(json_decode($response));
+}
+
+function _events_custom_get_events() {
+  $date = date("Ymd", strtotime('monday this week'));
+//  $date = '20191213';
+  //$response = \Drupal::state()->get('events_custom.cache');
+  if(empty($response)) {
+    //dsm('not from cache');
+    $response = (string) \Drupal::httpClient()
+      ->get('https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetContentEntityByWeek/' . $date . '/-1', ['timeout' => 0, 'headers' => [],])
+      ->getBody();
+
+    //\Drupal::state()->set('events_custom.cache', $response);
+  }
+
+  $events =  json_decode($response);
+
+  $rooms = [
+    '/230/' => ['url' => '/room-230', 'title' => 'room 230'],
+    '/419.*b/' => ['url' => '/room-419-b', 'title' => 'room 419-b'],
+    '/419.*c/' => ['url' => '/room-419-c', 'title' => 'room 419-c'],
+    '/419/' => ['url' => '/room-419', 'title' => 'room 419'],
+    '/535/' => ['url' => '/room-535', 'title' => 'room 535'],
+  ];
+
+  if(!empty($events)) {
+    foreach ($events as &$event) {
+      //falback value
+      $event->location_url = '/audio-video';
+      $event->location_title = 'view';
+      if(!empty($event->Location)) {
+        $loc = strtolower($event->Location);
+        foreach ($rooms as $pattern => $room_info) {
+          if(preg_match($pattern, $loc)) {
+            $event->location_url = $room_info['url'];
+            $event->location_title = $room_info['title'];
+            break;
+          }
+        }
+      }
+    }
+  }
+
+  return $events;
+}

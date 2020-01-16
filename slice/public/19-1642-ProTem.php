@@ -118,21 +118,25 @@
 
         <h2>Graphics & Other Senate Info</h2>
 
-        <div class="bEvents bEvents_img bEvents_gap_a">
+        <div class="bEvents bEvents_gap_a">
 
-          <div class="bEvents__items">
+          <div class="bEvents__itemsWr">
 
-            <?php
-            $sSen__item = array(
-              array("event-img-tmp-6.jpg"),
-              array("event-img-tmp-7.jpg"),
-              array("event-img-tmp-8.jpg")
-            )
-            ?>
-            <?php foreach($sSen__item as $key => $element): ?>
-              <?php include '../src/components/bEvents/bEvents-only-img.inc'; ?>
-            <?php endforeach; ?>
+            <div class="bEvents__items">
+
+              <?php
+              $sSen__item = array(
+                array("event-img-tmp-6.jpg"),
+                array("event-img-tmp-7.jpg"),
+                array("event-img-tmp-8.jpg")
+              )
+              ?>
+              <?php foreach($sSen__item as $key => $element): ?>
+                <?php include '../src/components/bEvents/bEvents-only-img.inc'; ?>
+              <?php endforeach; ?>
+            </div>
           </div>
+
           <div class="bEvents__btnAll">
             <a href="#" class="btn">
               see all
@@ -142,21 +146,24 @@
 
         <h2>2019 Budget Graphics</h2>
 
-        <div class="bEvents bEvents_img bEvents_gap_a">
+        <div class="bEvents bEvents_gap_a">
 
-          <div class="bEvents__items">
+          <div class="bEvents__itemsWr">
+            <div class="bEvents__items">
 
-            <?php
-            $sSen__item = array(
-              array("event-img-tmp-6.jpg"),
-              array("event-img-tmp-7.jpg"),
-              array("event-img-tmp-8.jpg")
-            )
-            ?>
-            <?php foreach($sSen__item as $key => $element): ?>
-              <?php include '../src/components/bEvents/bEvents-only-img.inc'; ?>
-            <?php endforeach; ?>
+              <?php
+              $sSen__item = array(
+                array("event-img-tmp-6.jpg"),
+                array("event-img-tmp-7.jpg"),
+                array("event-img-tmp-8.jpg")
+              )
+              ?>
+              <?php foreach($sSen__item as $key => $element): ?>
+                <?php include '../src/components/bEvents/bEvents-only-img.inc'; ?>
+              <?php endforeach; ?>
+            </div>
           </div>
+
           <div class="bEvents__btnAll">
             <a href="#" class="btn">
               see all

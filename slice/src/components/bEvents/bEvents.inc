@@ -1,4 +1,4 @@
-<div class="bEvents__item">
+<div class="bEvents__item" data-videoId="XVsjLNUK-pw">
   <a href="#" class="bEvents__imgWrap">
      <span class="bEvents__img"
            style="background-image: url('../dist/images/events/<?php print $element[0]; ?>')">
@@ -14,6 +14,9 @@
     </span>
     <span class="bEvents__desc">
        <?php print $element[3]; ?>
+    </span>
+    <span class="bEvents__attach">
+      <a href="#">Attached Graphic</a>
     </span>
     <span class="bEvents__readMoreWr">
        <a href="#" class="btn btn_a bEvents__readMore">watch video</a>

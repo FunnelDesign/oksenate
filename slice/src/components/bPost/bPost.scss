@@ -43,6 +43,10 @@
     }
   }
 
+  &__body {
+    margin-bottom: 20px;
+  }
+
   &__imgWrap {
     display: flex;
     justify-content: center;
@@ -83,6 +87,8 @@
     font-size: 14px;
     line-height: 1.9;
     @include cr-last-child;
+    margin-bottom: 20px;
+    @include cr-last-item;
 
     b, strong {
       font-family: $FreightTextProBold-Regular;
@@ -146,6 +152,16 @@
 
   &__bAudio {
     margin-bottom: 15px;
+  }
+
+  &__caption {
+    text-align: center;
+    margin-top: 17px;
+
+    b, strong {
+      font-family: $FreightTextProBold-Regular;
+      font-weight: normal;
+    }
   }
 
   &_a {

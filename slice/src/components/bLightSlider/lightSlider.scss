@@ -68,5 +68,9 @@
     &_b {
       @include margin-bottom(30px, 44px);
     }
+
+    &_c {
+      margin-bottom: 30px;
+    }
   }
 }

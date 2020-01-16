@@ -1,0 +1,10 @@
+senate_redirect.form:
+  path: '/senate_redirect/add/{nojs}'
+  defaults:
+    _form: '\Drupal\senate_redirect\Form\SenateRedirectForm'
+    _title: 'Senate Redirect Settings'
+    nojs: ajax
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

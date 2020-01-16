@@ -172,6 +172,10 @@
       //  0 0 0 5px #fff,
       //  0 0 0 10px #253857;
 
+      @include mq-down(550px) {
+        padding-bottom: 100%;
+      }
+
       iframe, object, embed {
         //border: 3px solid #fff;
         border-bottom: none;
@@ -179,6 +183,13 @@
 
         border: none;
       }
+    }
+  }
+
+  &_gap {
+
+    &_a {
+      margin-bottom: 30px;
     }
   }
 }
