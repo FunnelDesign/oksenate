@@ -207,8 +207,10 @@ function senate_preprocess_node(array &$vars) {
               }
             }
           }
-          $vars['news_block'] = _senate_get_view('week_review', 'block_1');
+//          $vars['news_block'] = _senate_get_view('week_review', 'block_1');
 
+          $uid = $node->getOwnerId();
+          $vars['news_block'] = _senate_get_view('senator_recent_news', 'block_1', [$uid]);
         }
         if (!empty($vars['content']['field_senator_video_link_video']) &&
           !empty($vars['content']['field_senator_video_link_video']['#items'])) {
@@ -341,6 +343,10 @@ function senate_preprocess_node(array &$vars) {
             'class' => ['btn', 'btn_a', 'section__btnBack'],
           ],
         ];
+
+        $vars['bg_image'] = !empty($vars["content"]["field_senator_blog_post_image"]) &&
+          !empty($vars["content"]["field_senator_blog_post_image"]["#items"]) ?
+          $vars["content"]["field_senator_blog_post_image"]["#items"]->entity->url() : '';
         break;
     }
   }
@@ -1540,6 +1546,9 @@ function senate_preprocess_views_view(&$vars) {
         $vars['showing'] = t('All');
       }
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+      break;
+    case 'senator_recent_news':
+      $vars['news_url'] = "/senator-news/" . $view->args[0];
       break;
   }
 }
