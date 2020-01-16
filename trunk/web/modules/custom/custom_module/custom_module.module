@@ -267,6 +267,15 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $query->addField(NULL, $formula, 'second_name');
     $query->addOrderBy(NULL, NULL, 'ASC', 'second_name');
   }
+  if ($view->id() == 'senator_rec_news_land' && $view->getDisplay()->display['id'] == 'page_1') {
+    foreach ($query->where as $key => &$condition_group) {
+      foreach ($condition_group['conditions'] as &$condition) {
+        if (strpos($condition['field'], 'DATE_FORMAT((node__field_senator_blog_post_posted.field_senator_blog_post_posted_value') !== FALSE) {
+          $condition['field'] = str_replace('%Y-%m-%d', '%Y-%m', $condition['field']);
+        }
+      }
+    }
+  }
 }
 
 /**

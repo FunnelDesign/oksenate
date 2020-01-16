@@ -19,6 +19,7 @@ use Drupal\views\Views;
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
 define('SENATE_RESERVE_ROOM_NID', '5808'); //first stage NID
+define('SENATE_SENATOR_RECENT_NEWS_URL', '/senator-news');
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -1548,7 +1549,28 @@ function senate_preprocess_views_view(&$vars) {
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
     case 'senator_recent_news':
-      $vars['news_url'] = "/senator-news/" . $view->args[0];
+      $vars['news_url'] = SENATE_SENATOR_RECENT_NEWS_URL . "/" . $view->args[0];
+      break;
+    case 'senator_rec_news_land':
+      $args = !empty($view->args) ? $view->args : [];
+      $senator_id = !empty($args[0]) ? $args[0] : '';
+      $archive = _senate_get_archive_senator_blog_post($senator_id);
+      $current_path = \Drupal::service('path.current')->getPath();
+
+      $vars['sidebar'] = [
+        '#theme' => 'senator_blog_post_sidebar',
+        '#archive' => $archive,
+        '#current_path' => $current_path,
+        '#base_path' => SENATE_SENATOR_RECENT_NEWS_URL . "/" . $senator_id,
+      ];
+      $date = !empty($args[1]) ? $args[1] : '';
+      if (!empty($date)) {
+        $date_obj = new DrupalDateTime($date);
+        $vars['showing'] = $date_obj->format('F, Y');
+      }
+      else {
+        $vars['showing'] = t('All');
+      }
       break;
   }
 }
@@ -1758,6 +1780,14 @@ function senate_theme($existing, $type, $theme, $path) {
       'variables' => [
         'type' => NULL,
         'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senator_blog_post_sidebar' => [
+      'variables' => [
+        'archive' => NULL,
+        'current_path' => NULL,
+        'base_path' => NULL,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
@@ -2136,4 +2166,36 @@ function _senate_get_senators_name($uid) {
   $result = $query->execute()->fetchAllKeyed();
 
   return !empty($result) ? $result : [];
+}
+
+function _senate_get_archive_senator_blog_post($uid) {
+  if (empty($uid)) {
+    return [];
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'senator_blog_post')
+    ->condition('nfd.status', 1)
+    ->condition('nfd.uid', $uid);
+  $query->innerJoin('node__field_senator_blog_post_posted', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'senator_blog_post\'');
+
+  $query->addExpression("DATE_FORMAT(field_senator_blog_post_posted_value, '%M')", 'month');
+  $query->addExpression("DATE_FORMAT(field_senator_blog_post_posted_value, '%m')", 'month_digits');
+  $query->addExpression("DATE_FORMAT(field_senator_blog_post_posted_value, '%Y')", 'year');
+
+  $query->groupBy('year');
+  $query->groupBy('month_digits');
+  $query->groupBy('month');
+  $query->orderBy('year', 'desc');
+  $query->orderBy('month_digits', 'desc');
+
+  $result = $query->execute()->fetchAll();
+  //  $a = $query->__toString();
+
+  $archive = [];
+  foreach ($result as $row) {
+    $archive[$row->year][$row->month] = $row;
+  }
+
+  return !empty($archive) ? $archive : [];
 }
