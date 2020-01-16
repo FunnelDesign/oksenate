@@ -15,6 +15,15 @@
         </a>
         
         <div class="bPost bPost_b">
+          <div class="bSubNav bSubNav_gap_a">
+            <ul>
+              <li><a href="#">senate interim studies</a></li>
+              <li class="menu-item--active-trail"><a href="#" class="is-active">house interim studies</a></li>
+              <li><a href="#">task force and special committees</a></li>
+              <li><a href="#">meeting notices</a></li>
+            </ul>
+          </div>
+
           <div class="bPost__header">
             <div class="bPost__title">
               <h1>legislative studies and special committees created by legislation</h1>

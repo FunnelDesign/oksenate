@@ -73,37 +73,25 @@
  */
 #}
 <article{{ attributes }}>
+  {% if bg_image %}
+    <span class="bNews__imgWrap">
+      <span class="bNews__img" style="background-image: url('{{ bg_image }}')"></span>
+    </span>
+  {% endif %}
+  <span class="bNews__body">
+    {{ title_prefix }}
+    <a href="{{ url }}" class="bNews__title">
+      {{ label }}
+    </a>
+    {{ title_suffix }}
 
-  <section class="section section_ind_d section_bg-color_c">
+    <span class="bNews__date">
+      {{ content.field_senator_blog_post_posted }}
+    </span>
 
-    <div class="section__sNav">
-      <div class="bContainer">
-        {{ socials }}
-      </div>
-    </div>
-
-    <div class="bContainer">
-      {{ content.field_basic_back_button_link }}
-
-      <div class="bPost bPost_b">
-        {{ sub_menu }}
-        <div class="bPost__header">
-          <div class="bPost__title">
-           <h1> {{ label }}</h1>
-            {{ content.field_tables_page_revised_date }}
-          </div>
-        </div>
-        <div class="bPost__body">
-
-          <div class="bPost__text">
-            {{ content.field_tables_page_table_paragr }}
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-
-  </section>
-
+    <span class="bNews__desc">
+      {{ content.body }}
+      <a href="{{ url }}" class="bNews__readMore">{{ "read more."|t }}</a>
+    </span>
+  </span>
 </article>

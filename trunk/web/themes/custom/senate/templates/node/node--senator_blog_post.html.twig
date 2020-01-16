@@ -73,9 +73,7 @@
  */
 #}
 <article{{ attributes }}>
-
   <section class="section section_ind_d section_bg-color_c">
-
     <div class="section__sNav">
       <div class="bContainer">
         {{ socials }}
@@ -83,24 +81,32 @@
     </div>
 
     <div class="bContainer">
-      {{ content.field_basic_back_button_link }}
+      {{ back_link }}
 
-      <div class="bPost bPost_b">
-        {{ sub_menu }}
+      <div class="bPost">
         <div class="bPost__header">
+          <div class="bPost__date">
+            {{ "Posted"|t }} {{ content.field_senator_blog_post_posted }}
+          </div>
           <div class="bPost__title">
-           <h1> {{ label }}</h1>
-            {{ content.field_tables_page_revised_date }}
+            {{ title_prefix }}
+              <h1{{ title_attributes }}>
+                {{ label }}
+              </h1>
+            {{ title_suffix }}
           </div>
         </div>
         <div class="bPost__body">
+          {{ content.field_senator_blog_post_image }}
 
           <div class="bPost__text">
-            {{ content.field_tables_page_table_paragr }}
+            {{ content.body }}
           </div>
 
+          {{ content.field_senator_blog_post_content }}
         </div>
 
+        {{ content.sharethis }}
       </div>
     </div>
 

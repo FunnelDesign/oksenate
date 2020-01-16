@@ -73,37 +73,18 @@
  */
 #}
 <article{{ attributes }}>
-
-  <section class="section section_ind_d section_bg-color_c">
-
-    <div class="section__sNav">
-      <div class="bContainer">
-        {{ socials }}
-      </div>
+  <div class="bPostList__header">
+    <div class="bPostList__date">
+      {{ content.field_senator_blog_post_posted }}
     </div>
 
-    <div class="bContainer">
-      {{ content.field_basic_back_button_link }}
-
-      <div class="bPost bPost_b">
-        {{ sub_menu }}
-        <div class="bPost__header">
-          <div class="bPost__title">
-           <h1> {{ label }}</h1>
-            {{ content.field_tables_page_revised_date }}
-          </div>
-        </div>
-        <div class="bPost__body">
-
-          <div class="bPost__text">
-            {{ content.field_tables_page_table_paragr }}
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-
-  </section>
-
+    {{ title_prefix }}
+      <a href="{{ url }}" class="bPostList__title">{{ label }}</a>
+    {{ title_suffix }}
+  </div>
+  <div class="bPostList__text">
+    {{ content.body }}
+    <a href="{{ url }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
+  </div>
+  {{ content.sharethis }}
 </article>

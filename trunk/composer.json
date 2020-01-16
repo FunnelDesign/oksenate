@@ -89,7 +89,8 @@
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",
         "webmozart/path-util": "^2.3",
-        "zaporylie/composer-drupal-optimizations": "^1.0"
+        "zaporylie/composer-drupal-optimizations": "^1.0",
+        "zendframework/zend-filter": "^2.9"
     },
     "require-dev": {
         "webflo/drupal-core-require-dev": "^8.7.0"

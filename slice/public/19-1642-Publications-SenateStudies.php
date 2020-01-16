@@ -42,9 +42,18 @@
 
       <div class="bContainer">
 
-        <div class="section__btnWrap section__btnWrap_gap_a">
-          <a href="#" class="btn btn_s_f">task force and special committees</a>
-          <a href="#" class="btn btn_s_f">house interim studies</a>
+<!--        <div class="section__btnWrap section__btnWrap_gap_a">-->
+<!--          <a href="#" class="btn btn_s_f">task force and special committees</a>-->
+<!--          <a href="#" class="btn btn_s_f">house interim studies</a>-->
+<!--        </div>-->
+
+        <div class="bSubNav bSubNav_gap_a">
+          <ul>
+            <li><a href="#">senate interim studies</a></li>
+            <li class="menu-item--active-trail"><a href="#" class="is-active">house interim studies</a></li>
+            <li><a href="#">task force and special committees</a></li>
+            <li><a href="#">meeting notices</a></li>
+          </ul>
         </div>
 
         <div class="bTitle bTitle_wSub_b bTitle_gap_b">
