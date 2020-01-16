@@ -326,10 +326,17 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'senator_blog_post':
         _senate_add_share_this($vars);
+
+        $uid = $node->getOwnerId();
+        $senator_data = _senate_get_senators_name($uid);
+        $main_nid = key($senator_data);
+        $name = !empty($senator_data[$main_nid]) ? $senator_data[$main_nid] : '';
+        $name_arr = explode(' ', $name);
+        $second_name = end($name_arr);
         $vars['back_link'] = [
           '#type' => 'link',
-          '#title' => t('back to senator treat’s news'),
-          '#url' => Url::fromUserInput('/news'),
+          '#title' => t('back to senator @name’s news', ['@name' => $second_name]),
+          '#url' => Url::fromUserInput('/node/' . $main_nid),
           '#attributes' => [
             'class' => ['btn', 'btn_a', 'section__btnBack'],
           ],
@@ -2098,4 +2105,26 @@ function senate_change_captcha_description($element) {
   }
 
   return $element;
+}
+
+/**
+ * Get node created user.
+ * @param $uid
+ *
+ * @return array
+ */
+function _senate_get_senators_name($uid) {
+  if (empty($uid)) {
+    return [];
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->fields('nfd', ['nid', 'title'])
+    ->condition('nfd.uid', $uid)
+    ->condition('nfd.type', 'senator')
+    ->condition('nfd.status', 1);
+
+  $result = $query->execute()->fetchAllKeyed();
+
+  return !empty($result) ? $result : [];
 }
