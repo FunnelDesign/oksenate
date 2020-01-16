@@ -339,7 +339,7 @@ function senate_preprocess_node(array &$vars) {
         $vars['back_link'] = [
           '#type' => 'link',
           '#title' => t('back to senator @name’s news', ['@name' => $second_name]),
-          '#url' => Url::fromUserInput('/node/' . $main_nid),
+          '#url' => Url::fromUserInput(SENATE_SENATOR_RECENT_NEWS_URL . '/' . $uid),
           '#attributes' => [
             'class' => ['btn', 'btn_a', 'section__btnBack'],
           ],
