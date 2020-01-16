@@ -2,11 +2,11 @@
 @import "../bContainer/bContainer";
 
 .bSubNav {
-  width: 972px;
   left: 50%;
   position: relative;
   transform: translate(-50%, 0);
   @extend .bContainer;
+  margin: 0;
 
   ul {
     display: flex;
