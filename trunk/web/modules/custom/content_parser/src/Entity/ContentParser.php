@@ -632,17 +632,31 @@ class ContentParser extends ConfigEntityBase {
                 \Drupal::logger('404_content_parser')->notice($message);
                 continue;
               }
-
+              $content = iconv('UTF-8', 'cp1252//IGNORE', $content);
               $searchForReplaceSpecial = [
                 '&#148;' => '"',
                 '&#147;'=> '"',
                 '&#146;'=> "'",
-                '&#145;'=> "'"
+                '&#145;'=> "'",
+                '&#60;'=> "<",
+                '&#47;'=> "/",
+                '&#34;'=> '"',
+                '&#38;'=> '&',
+                '&#62;'=> ">",
+                '&#137;'=> "%",
+                '&#139;'=> "<",
+                '&#155;'=> ">",
+                '&#132;'=> '"',
+                '&#130;'=> "'",
+                '&#160;'=> " ",
+                '&#8242;'=> "'",
+                '&#8243;'=> '"',
+                '&#8226;'=> '',
               ];
-
               $content = str_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $content);
+              $text = str_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
               $content = str_replace("&nbsp;", '', $content);
-              $content = preg_replace("#(<p[^>]*>|<b[^>]*>)(\s|&nbsp;|</?\s?br\s?/?>|</?\s?b\s?/?>|</?\s?p\s?/?>)*(</?p>|</?b>)#", '', $content);
+/*              $content = preg_replace("#(<p[^>]*>|<b[^>]*>)(\s|&nbsp;|</?\s?br\s?/?>|</?\s?b\s?/?>|</?\s?p\s?/?>)*(</?p>|</?b>)#", '', $content);*/
               $content = preg_replace("/<p>(&nbsp;|\s)*<\/p>/", '', $content);
               $docNews     = $this->getPhpQuery($content, $href);
               $returnLinks = 'this table contains return links';
@@ -761,17 +775,33 @@ class ContentParser extends ConfigEntityBase {
                 $date = preg_replace('/[\x00-\x1F\x7F-\xA0\xAD]/u', '', $date);
                 $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
                 $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-                $entity->save();
+                $saved = $entity->save();
+                if($saved){
+                  $urlEntityObject = $entity->url();
+                  $scheme = \Drupal::request()->getSchemeAndHttpHost();
+                  $message = "<a href='$scheme$urlEntityObject'>-[$scheme$urlEntityObject]-</a><br>";
+                  if(isset($notSeparated) && $notSeparated){
+                    $message .= ' - Cant separate header and body ' . $base_url . '<br>'. $href . '<br>' . "\r\n";
+                    file_put_contents('parse_errors_to_edit.html', $message, FILE_APPEND);
+                    \Drupal::logger('not_parsed_body')->notice($message);
+                  }
+                  if(isset($notSetContactField) && $notSetContactField){
+                    $message .= ' - Cant identify contact data ' . $base_url  .'<br>'. $href . '<br>' . "\r\n";
+                    file_put_contents('parse_errors_to_edit.html', $message, FILE_APPEND);
+                    \Drupal::logger('not_parsed_contact_data')->notice($message);
+                  }
+                }
+
               }
               catch (\Error $exception) {
                 $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
-                file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
+                file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
                 \Drupal::logger('not_parsed')->notice($message);
                 continue;
               }
               catch (\Exception $exception) {
                 $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
-                file_put_contents('parse_errors_sys.txt', $message, FILE_APPEND);
+                file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
                 \Drupal::logger('not_parsed')->notice($message);
                 continue;
               }
@@ -824,10 +854,9 @@ class ContentParser extends ConfigEntityBase {
     $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
     $title = str_replace("&", '&amp;', $title);
     $title = HTML::normalize($title);
-    $title = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/?p>/", '', $title);
+    $title = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>)|(<strong>\s*<\/strong>))*<\/?p>/", '', $title);
     $text = HTML::normalize($text);
-    $text = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/?p>/", '', $text);
-    $len = (int) strlen($title);
+    $text = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>)|(<strong>\s*<\/strong>))*<\/?p>/", '', $text);
     $regexp = $this->makeBodyHeaderRegexp($title);
     $match = preg_match($regexp, $text, $matches, PREG_OFFSET_CAPTURE);
     if($match){
@@ -835,12 +864,18 @@ class ContentParser extends ConfigEntityBase {
       $strPos = (int) strlen($matches[0][0]) + $startPos;
       $headerString = substr($text, 0, $startPos);
       $bodyString = substr($text, $strPos);
-      $headerString = HTML::normalize($headerString);
       $headerString = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/p>/", '', $headerString);
-      $headerString = preg_replace("/<b[^>]*>(\s|&nbsp;)*<\/b>/", '', $headerString);
-      $bodyString = HTML::normalize($bodyString);
+
+      $headerString = HTML::normalize($headerString);
       $bodyString = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/p>/", '', $bodyString);
-      $bodyString = preg_replace("/<b[^>]*>(\s|&nbsp;)*<\/b>/", '', $bodyString);
+      $bodyString = HTML::normalize($bodyString);
+      $filter = new \Zend\Filter\StripTags();
+      $filter->setAttributesAllowed('none');
+      $filter->setTagsAllowed(['p','br','strong','ul','li','bold','b','i','em']);
+      $bodyString = $filter->filter($bodyString);
+      $headerString = $filter->filter($headerString);
+      $headerString = '<p>'.preg_replace("/^\s*(<br \/>)*\s*/", '', $headerString).'</p>';
+      $bodyString = preg_replace("/^\s*(<br \/>)*\s*/", '', $bodyString);
       if($bodyString && $headerString){
         return ['body' => $bodyString,'head'=>$headerString];
       }
