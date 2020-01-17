@@ -5,8 +5,6 @@ namespace Drupal\content_parser\Entity;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\content_parser\Results;
-use Drupal\node\Entity\Node;
-use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Defines the ContentParser entity.
@@ -552,7 +550,6 @@ class ContentParser extends ConfigEntityBase {
     if (!$this->isCheck($doc, $base_url)) {
       return $this->results->getNoAccessCode();
     }
-    $removeTable = 'this table contains return links';
     $searchForReplace = [
       'Audio',
       'Print',
@@ -574,30 +571,6 @@ class ContentParser extends ConfigEntityBase {
       'Oklahoma State Senate Homepage'
     ];
 
-    //    $remote_code = $this->getCode('remote_id');
-    //
-    //    if ($remote_code) {
-    //      $remote_id = $this->eval($doc, $remote_code, $base_url);
-    //    }
-    //
-    //    if ($remote_id) {
-    //      $entity = $this->getEntityByRemoteId($remote_id);
-    //    }
-    //
-    //    if ($entity && $this->getSetting('no_update')) {
-    //      return $this->results->getNoUpdateCode();
-    //    }
-    //
-    //    if (!$entity) {
-    //      $entity = _entity_create($this->entity_type, $this->bundle);
-    //    }
-    //
-    //    if ($this->getSetting('save_url')) {
-    //      $entity->set('path', [
-    //        'alias' => $this->toAbsolutePath($base_url)
-    //      ]);
-    //    }
-
     foreach ($doc->find('a') as $key=>$a) {
       $secondBase = pq($a)->attr('href');
       if($secondBase == '#top'){
@@ -605,6 +578,14 @@ class ContentParser extends ConfigEntityBase {
       }
       $secondBase = parser_get_absolute_url($base_url, $secondBase);
       $secondBase = preg_replace('/#.*$/', '', $secondBase);
+        $content = $this->loadUrl($secondBase);
+        $docYears = $this->getPhpQuery($content, $secondBase);
+        $monthPage = false;
+      if(preg_match('/\b(?:[A-Za-z]+)?(?:\W+){1,6}?(?:[0-9]{4})?(?:\W+){1,6}?PRESS RELEASES\b/i', $content) === 1){
+        $monthPage = true;
+      }
+        if($monthPage) {
+          foreach ($docYears->find('a') as $key => $a) {
             $href = pq($a)->attr('href');
             if(empty($href)){
               continue;
@@ -613,8 +594,12 @@ class ContentParser extends ConfigEntityBase {
               continue;
             }
             $href = parser_get_absolute_url($secondBase, $href);
-
+            if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2017/pr20170103A.htm'){
+              $testing = 2;
+            }
             if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
+              $notSeparated = FALSE;
+              $notSetContactField = FALSE;
               $nodes   = \Drupal::entityTypeManager()
                 ->getStorage('node')
                 ->loadByProperties(['field_press_release_old_url' => $href]);
@@ -622,11 +607,9 @@ class ContentParser extends ConfigEntityBase {
                 continue;
               }
               $text = pq($a)->text();
-
               $date        = str_replace($text, '', pq($a)->parent()->text());
               $content     = $this->loadUrl($href);
               if(!$content){
-
                 $message = '404 page ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
                 file_put_contents('parse_errors_404.txt', $message, FILE_APPEND);
                 \Drupal::logger('404_content_parser')->notice($message);
@@ -684,15 +667,18 @@ class ContentParser extends ConfigEntityBase {
                 }
               }
               if(!$hasMainContent){
-                  $html          = [
-                    'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
-                    'format' => 'full_html'
-                  ];
-                  $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
-                  $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
+                $html          = [
+                  'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
+                  'format' => 'full_html'
+                ];
+                $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+                $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
 
               }
+              // Remove hash
+//              $text = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
               $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+              $text = preg_replace('~[^A-Za-z0-9?.\s+,\/\$\'’”“:;\-/!]~','',$text);
               $date = preg_replace("/[^.0-9]/", '', $date);
               $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
               if ($html == 'empty') {
@@ -728,19 +714,18 @@ class ContentParser extends ConfigEntityBase {
                         'December',
                         '|',
                       ];
+                      $notSetContactField = FALSE;
                       $contactInfo[] = ['value' => trim(str_replace($searchForReplaceContact,'', strip_tags($match)))];
                     }
                   }
                 }
                 else {
-                  $message = 'Cant identify contact data ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
-                  file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
-                  \Drupal::logger('not_parsed_contact_data')->notice($message);
+                  $notSetContactField = TRUE;
                 }
                 $html['value'] = preg_replace($regexp, '', $html['value']);
-                $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
-                $bodyHeader = '';
+/*                $html['value'] = preg_replace('/(<br *\/?>\s*)+/i', '<br>', $html['value']);*/
                 if ($this->makeSummary($html['value'], $text)) {
+                  $notSeparated = FALSE;
                   $bodyHeader    = [
                     'value'  => $this->makeSummary($html['value'], $text)['head'],
                     'format' => 'full_html'
@@ -748,9 +733,7 @@ class ContentParser extends ConfigEntityBase {
                   $html['value'] = $this->makeSummary($html['value'], $text)['body'];
                 }
                 else {
-                  $message = 'Cant separate header and body ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
-                  file_put_contents('parse_errors_header.txt', $message, FILE_APPEND);
-                  \Drupal::logger('not_parsed_body')->notice($message);
+                  $notSeparated = TRUE;
                 }
               }
               if (empty($date)) {
@@ -758,8 +741,7 @@ class ContentParser extends ConfigEntityBase {
                 $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
                 $date = trim(str_replace($text, '', $date));
               }
-                $entity = _entity_create($this->entity_type, $this->bundle);
-
+              $entity = _entity_create($this->entity_type, $this->bundle);
               try {
                 $mini = parser_download_images($docNews, $href);
 
@@ -807,6 +789,8 @@ class ContentParser extends ConfigEntityBase {
               }
               }
 
+            }
+          }
         }
     return true;
   }
