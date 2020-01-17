@@ -15,6 +15,7 @@ use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\views\Views;
+use Drupal\custom_module\Plugin\views\argument\CustomNidToAuthor;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
@@ -232,6 +233,10 @@ function senate_preprocess_node(array &$vars) {
         }
 
         $vars['nid'] = $node->id();
+        $title = $node->getTitle();
+        $title = trim($title);
+        $title = strtolower($title);
+        $vars['title_alias'] = str_replace(' ', '-', $title);
         break;
       case 'reports':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
@@ -1523,8 +1528,12 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'senator_press_release':
       $args = !empty($view->args) ? $view->args : [];
-      $nid = !empty($args[0]) ? $args[0] : '';
+      $senator_name = !empty($args[0]) ? $args[0] : '';
+      $nid = $senator_name;
       $date = !empty($args[1]) ? $args[1] : '';
+      if (!empty($senator_name) && !is_numeric($senator_name)) {
+        $nid = CustomNidToAuthor::convertSenatorNameToNid($senator_name);
+      }
 
       if (!empty($nid) && is_numeric($nid)) {
         $node_storage = \Drupal::entityTypeManager()->getStorage('node');
@@ -1542,7 +1551,7 @@ function senate_preprocess_views_view(&$vars) {
           '#archive' => $archive,
           '#current_path' => $current_path,
           '#is_audio' => FALSE,
-          '#senator_nid' => $nid,
+          '#senator_nid' => $senator_name,
         ];
       }
 

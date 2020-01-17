@@ -10,7 +10,7 @@ use Drupal\views\Plugin\views\argument\ArgumentPluginBase as ArgumentBase;
  *
  * @ingroup views_argument_handlers
  *
- * @ViewsArgument("custom_taxonomy_slug")
+ * @ViewsArgument("custom_senator_nid_author")
  */
 class CustomNidToAuthor extends ArgumentBase {
 
@@ -27,7 +27,7 @@ class CustomNidToAuthor extends ArgumentBase {
     // Modify this if you do not want to allow integer IDs in the URL and
     // force only URL slugs in the URL.
     $nid = is_numeric($arg)
-      ? $arg : $this->convertNidtoAccountName($arg);
+      ? $arg : $this->convertSenatorNameToNid($arg);
     $this->argument = (int) $nid;
     return $this->validateArgument($nid);
   }
@@ -41,18 +41,20 @@ class CustomNidToAuthor extends ArgumentBase {
    * @return int
    *   Taxonomy term ID.
    */
-  protected function convertNidToAccountName($nid) {
+  public static function convertSenatorNameToNid($name) {
+    if (empty($name)) {
+      return FALSE;
+    }
+    $name = str_replace('-', ' ', $name);
+
     $query = \Drupal::database()->select('node_field_data', 'nfd')
+      ->fields('nfd', ['nid'])
       ->condition('nfd.type', 'senator')
       ->condition('nfd.status', 1)
-      ->condition('nfd.nid', $nid);
-    $query->innerJoin('users_field_data', 'ufd', 'ufd.uid = nfd.uid AND ufd.status = 1');
-    $query->fields('ufd', ['uid']);
+      ->condition('nfd.title', '%' . $name . '%', 'LIKE');
 
     $result = $query->execute()->fetchCol();
 
-    $account_object = \Drupal\user\Entity\User::load($result[0]); // pass your uid
-    $account = $account_object->getAccountName();
-    return !empty($account) ? $account : $nid;
+    return !empty($result) ? $result[0] : FALSE;
   }
 }
