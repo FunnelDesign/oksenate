@@ -1,3 +1,163 @@
 .modal {
+  $this: &;
 
+  &__content {
+    padding: 20px 50px;
+   // border-radius: 20px;
+    background: $color-blue;
+  }
+
+  &__close {
+    position: absolute;
+    right: 23px;
+    top: 22px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    @include text-hide();
+
+    &:hover {
+
+      &:before, &:after {
+        background: $color-red;
+      }
+    }
+
+    &:before, &:after {
+      @include pseudo-block($left: 50%, $top: 50%);
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      top: calc(50% - 1px);
+      transition: background .3s;
+      margin-left: -7px;
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+
+  &_newsletter {
+
+    h2 {
+      color: #fff;
+      margin-bottom: 20px;
+      @include font-size(22px, 28px, 34px);
+    }
+
+    .pageIn__ico {
+      margin-bottom: 20px;
+    }
+
+    #{$this}__content {
+      padding: 40px 50px;
+    }
+
+    #{$this}__dialog {
+      max-width: 450px;
+    }
+
+    .form {
+      color: #fff;
+
+      legend {
+        display: none;
+
+        & + div {
+          display: none;
+        }
+      }
+
+      label {
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      ol {
+        list-style: none;
+
+        li {
+          padding: 0;
+
+          &:before {
+            display: none;
+          }
+        }
+      }
+
+      .form-required-note {
+        margin-top: 12px;
+        color: #fff;
+
+        span {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .select2-container {
+      width: 100%;
+    }
+
+    .select2-container--default .select2-selection--single {
+      background: $color-dark-blue;
+    }
+
+    .button_panel {
+      text-align: center;
+    }
+
+    .select2-container--disabled {
+      opacity: 0.4;
+    }
+
+    .wireless_fields {
+
+      .input_group {
+        display: flex;
+
+        .select2-container {
+          margin-right: 20px;
+          width: 150px;
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  &_video {
+
+    #{$this}__dialog {
+      margin: 42px auto;
+    }
+
+    #{$this}__content {
+      padding: 0;
+    }
+
+    #{$this}__close {
+      background: $color-red;
+      border-radius: 5px;
+      right: 0;
+      top: -35px;
+      transition: background-color .3s;
+
+      &:before, &:after {
+        margin-left: -10px;
+      }
+
+      &:hover {
+        background: $color-dark-blue;
+
+        &:before, &:after {
+          background: #fff;
+        }
+      }
+    }
+  }
 }

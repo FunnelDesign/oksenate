@@ -15,10 +15,16 @@
           Track a Bill
         </a>
       </div>
+
+      <a href="#"
+         class="btn"
+         data-toggle="modal"
+         data-target="#newsletter">newsletter sign up</a>
     </div>
 
     <div class="sFooter__bottom">
       <div class="sFooter__col">
+
         <div class="sFooter__address">
           Oklahoma Senate <br>
           2300 N Lincoln Blvd.,<br>
@@ -65,7 +71,7 @@
   </div>
 </footer>
 
-
+<?php include 'tpl/blocks/modals/newsletter.inc'; ?>
 <!--only for slice!!!-->
 <?php include 'tpl/includes/accessibilityCheck.inc'; ?>
 <!--only for slice!!!-->

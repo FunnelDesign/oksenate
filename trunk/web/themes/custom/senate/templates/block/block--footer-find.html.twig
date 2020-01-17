@@ -31,7 +31,9 @@
  * http://www.w3.org/TR/WCAG-TECHS/H42.html for more information.
  */
 #}
-<div class="sFooter__col">
+<div{{ attributes.addClass('sFooter__col') }}>
+  {{ title_prefix }}
+  {{ title_suffix }}
 
     <div class="sFooter__info">
         <div class="sFooter__img">

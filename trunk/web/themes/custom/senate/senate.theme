@@ -19,6 +19,7 @@ use Drupal\views\Views;
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
 define('SENATE_RESERVE_ROOM_NID', '5808'); //first stage NID
+define('SENATE_SENATOR_RECENT_NEWS_URL', '/senator-news');
 
 /**
  * Implements hook_preprocess_HOOK() for html.html.twig.
@@ -44,6 +45,29 @@ function senate_preprocess_page(array &$vars) {
   $node = !empty($vars["node"]) ? $vars["node"] : '';
   $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
 
+  $vars['subscribe_form_popup'] = [
+    '#theme' => 'senate_subscribe_form',
+    '#current_path' => $vars['path_to_theme']
+  ];
+  $view_id = \Drupal::routeMatch()->getParameter('view_id');
+  if (!empty($view_id)) {
+    switch ($view_id){
+      case 'protem':
+        $vars['video_popup'] = [
+          '#theme' => 'senate_video_popup',
+        ];
+        break;
+    }
+  }
+  if (!empty($node)) {
+    switch ($node->bundle()) {
+      case 'protem_podcast':
+        $vars['video_popup'] = [
+          '#theme' => 'senate_video_popup',
+        ];
+        break;
+    }
+  }
 }
 
 /**
@@ -101,6 +125,8 @@ function senate_preprocess_node(array &$vars) {
 
           $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', $params);
         }
+
+        $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
       case 'committee_events':
 //        kint($vars);
@@ -182,8 +208,10 @@ function senate_preprocess_node(array &$vars) {
               }
             }
           }
-          $vars['news_block'] = _senate_get_view('week_review', 'block_1');
+//          $vars['news_block'] = _senate_get_view('week_review', 'block_1');
 
+          $uid = $node->getOwnerId();
+          $vars['news_block'] = _senate_get_view('senator_recent_news', 'block_1', [$uid]);
         }
         if (!empty($vars['content']['field_senator_video_link_video']) &&
           !empty($vars['content']['field_senator_video_link_video']['#items'])) {
@@ -284,6 +312,7 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'contact':
       case 'contact_reservation':
+      case 'protem_podcast':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'senate_studies':
@@ -292,6 +321,33 @@ function senate_preprocess_node(array &$vars) {
           !empty($vars["content"]["field_senate_studies_year"]["#items"]) ?
           $vars["content"]["field_senate_studies_year"]["#items"]->get(0)->value : '';
         $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', ['all']);
+
+        $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
+        break;
+      case 'tables_page':
+        $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
+        break;
+      case 'senator_blog_post':
+        _senate_add_share_this($vars);
+
+        $uid = $node->getOwnerId();
+        $senator_data = _senate_get_senators_name($uid);
+        $main_nid = key($senator_data);
+        $name = !empty($senator_data[$main_nid]) ? $senator_data[$main_nid] : '';
+        $name_arr = explode(' ', $name);
+        $second_name = end($name_arr);
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back to senator @name’s news', ['@name' => $second_name]),
+          '#url' => Url::fromUserInput(SENATE_SENATOR_RECENT_NEWS_URL . '/' . $uid),
+          '#attributes' => [
+            'class' => ['btn', 'btn_a', 'section__btnBack'],
+          ],
+        ];
+
+        $vars['bg_image'] = !empty($vars["content"]["field_senator_blog_post_image"]) &&
+          !empty($vars["content"]["field_senator_blog_post_image"]["#items"]) ?
+          $vars["content"]["field_senator_blog_post_image"]["#items"]->entity->url() : '';
         break;
     }
   }
@@ -816,6 +872,31 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["items"][$key]["content"]["#title"] = Markup::create('<span><span>•</span></span> ' . $title);
       }
       break;
+    case 'field_pro_tem_par_video':
+        $items = $vars['element']['#items'];
+        $value = !empty($items) ? $items->getValue() : '';
+        if (!empty($value)) {
+          $url = $value[0]['value'];
+          $video_data = _get_youtube_embed_data($url, ['rel' => 0, 'controls' => 0, 'showinfo' => 0, 'enablejsapi' => 1]);
+          $vars['video_id'] = !empty($video_data['video_id']) ? $video_data['video_id'] : '';
+        }
+      break;
+    case 'field_slider_image':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      $vars['bg_images'] = [];
+      foreach ($items as $key => $item) {
+        if (!empty($item['content']['#item']->entity)) {
+          if (!empty($item["content"]["#image_style"])) {
+            $style = $item["content"]["#image_style"];
+            $img_file_uri = $item['content']['#item']->entity->getFileUri();
+            $vars['bg_images'][$key] = ImageStyle::load($style)->buildUrl($img_file_uri);
+          }
+          else {
+            $vars['bg_images'][$key] = $item['content']['#item']->entity->url();
+          }
+        }
+      }
+      break;
   }
 }
 
@@ -889,7 +970,15 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
   }
 
+  if (!empty($form["elements"]) && !empty($form["elements"]["captcha"])) {
+    $form["elements"]["captcha"]["#pre_render"][] = 'senate_change_captcha_description';
+  }
+
   switch ($form_id) {
+    case 'webform_submission_reserve_a__node_10594_add_form':
+      $form['elements']['date_fieldset']['date']['#attributes']['placeholder'] = 'Start Day';
+      $form['elements']['date_fieldset']['end_time']['#attributes']['placeholder'] = 'End Day';
+      break;
     case 'views_exposed_form':
       $storage = $form_state->getStorage();
       $view = !empty($storage["view"]) ? $storage["view"] : '';
@@ -1109,12 +1198,12 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
       ->getPath();
 
   if (!empty($form['zip'])){
-    $form['zip']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
+    $form['zip']['#prefix'] = "<div class=\"sSen__filIco\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-1.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-1-2x.png 2x\"  alt=\"\">
         </div><div class=\"sSen__opt form f-search f-search_min\">";
-    $form['zip']['#suffix'] = "</div></div>";
+    $form['zip']['#suffix'] = "</div>";
     $form['zip']['#attributes']['data-bef-auto-submit-exclude'] = '1';
+    $form['zip']['#attributes']['autocomplete'] = 'new-password';
   }
 
   if (!empty($form['county'])){
@@ -1459,6 +1548,30 @@ function senate_preprocess_views_view(&$vars) {
       }
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
+    case 'senator_recent_news':
+      $vars['news_url'] = SENATE_SENATOR_RECENT_NEWS_URL . "/" . $view->args[0];
+      break;
+    case 'senator_rec_news_land':
+      $args = !empty($view->args) ? $view->args : [];
+      $senator_id = !empty($args[0]) ? $args[0] : '';
+      $archive = _senate_get_archive_senator_blog_post($senator_id);
+      $current_path = \Drupal::service('path.current')->getPath();
+
+      $vars['sidebar'] = [
+        '#theme' => 'senator_blog_post_sidebar',
+        '#archive' => $archive,
+        '#current_path' => $current_path,
+        '#base_path' => SENATE_SENATOR_RECENT_NEWS_URL . "/" . $senator_id,
+      ];
+      $date = !empty($args[1]) ? $args[1] : '';
+      if (!empty($date)) {
+        $date_obj = new DrupalDateTime($date);
+        $vars['showing'] = $date_obj->format('F, Y');
+      }
+      else {
+        $vars['showing'] = t('All');
+      }
+      break;
   }
 }
 
@@ -1505,6 +1618,19 @@ function senate_preprocess_paragraph(array &$vars) {
         !empty($vars["content"]["field_staff_email"]['#items'])) ?
         $vars["content"]["field_staff_email"]['#items']->getValue() : '';
       $vars['email'] = !empty($email) && !empty($email[0]) ? $email[0]["value"] : '';
+      break;
+    case 'video':
+      if (!empty($vars['content']['field_video_video']) &&
+        !empty($vars['content']['field_video_video']['#items'])) {
+        $items = $vars['content']['field_video_video']['#items'];
+        $value = !empty($items) ? $items->getValue() : '';
+        if (!empty($value)) {
+          $url = $value[0]['value'];
+          $video_data = _get_youtube_embed_data($url, ['rel' => 0, 'controls' => 0, 'showinfo' => 0, 'enablejsapi' => 1]);
+          $vars['video_id'] = !empty($video_data['video_id']) ? $video_data['video_id'] : '';
+          $vars['video_url'] = !empty($video_data['url']) ? $video_data['url'] : '';
+        }
+      }
       break;
   }
 }
@@ -1640,6 +1766,28 @@ function senate_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'printer' => NULL,
         'color' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senate_subscribe_form' => [
+      'variables' => [
+        'type' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senate_video_popup' => [
+      'variables' => [
+        'type' => NULL,
+        'current_path' => NULL,
+      ],
+      'path' => $theme_path . '/templates/theme',
+    ],
+    'senator_blog_post_sidebar' => [
+      'variables' => [
+        'archive' => NULL,
+        'current_path' => NULL,
+        'base_path' => NULL,
       ],
       'path' => $theme_path . '/templates/theme',
     ],
@@ -1926,6 +2074,9 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'senate_votes':
       case 'senator':
       case 'tables_page':
+      case 'week_review':
+      case 'protem_podcast':
+      case 'senator_blog_post':
         $color = 'navy';
         break;
     }
@@ -1959,4 +2110,92 @@ function senate_preprocess_senate_socials(&$vars) {
       $vars["title"] = \Drupal::service('title_resolver')->getTitle($request, $route);
     }
   }
+}
+
+/**
+ * Captcha pre_render.
+ */
+function senate_change_captcha_description($element) {
+  $description = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) ?
+    $element["captcha_widgets"]["captcha_response"]["#description"] : '';
+  $add_description = t('Math question not to test basic math skills.');
+  $title = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) ?
+    $element["captcha_widgets"]["captcha_response"]["#title"] : '';
+  $add_title = t('CAPTCHA:');
+
+  if (!empty($description)) {
+    $desc = is_object($description) ? $description->__toString() : $description;
+    $add_desc = $add_description->__toString();
+
+    $has_add_desc = (strpos($desc, $add_desc) !== FALSE);
+    if (!$has_add_desc) {
+      $element["captcha_widgets"]["captcha_response"]["#description"] = $description . ' ' . $add_description;
+    }
+  }
+
+  if (!empty($title)) {
+    $title = is_object($title) ? $title->__toString() : $title;
+    $add_title = $add_title->__toString();
+
+    $has_add_title = (strpos($title, $add_title) !== FALSE);
+    if (!$has_add_title) {
+      $element["captcha_widgets"]["captcha_response"]["#title"] = $add_title . ' ' . $title;
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Get node created user.
+ * @param $uid
+ *
+ * @return array
+ */
+function _senate_get_senators_name($uid) {
+  if (empty($uid)) {
+    return [];
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->fields('nfd', ['nid', 'title'])
+    ->condition('nfd.uid', $uid)
+    ->condition('nfd.type', 'senator')
+    ->condition('nfd.status', 1);
+
+  $result = $query->execute()->fetchAllKeyed();
+
+  return !empty($result) ? $result : [];
+}
+
+function _senate_get_archive_senator_blog_post($uid) {
+  if (empty($uid)) {
+    return [];
+  }
+
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'senator_blog_post')
+    ->condition('nfd.status', 1)
+    ->condition('nfd.uid', $uid);
+  $query->innerJoin('node__field_senator_blog_post_posted', 'rd', 'rd.entity_id = nfd.nid AND rd.deleted = 0 AND rd.bundle = \'senator_blog_post\'');
+
+  $query->addExpression("DATE_FORMAT(field_senator_blog_post_posted_value, '%M')", 'month');
+  $query->addExpression("DATE_FORMAT(field_senator_blog_post_posted_value, '%m')", 'month_digits');
+  $query->addExpression("DATE_FORMAT(field_senator_blog_post_posted_value, '%Y')", 'year');
+
+  $query->groupBy('year');
+  $query->groupBy('month_digits');
+  $query->groupBy('month');
+  $query->orderBy('year', 'desc');
+  $query->orderBy('month_digits', 'desc');
+
+  $result = $query->execute()->fetchAll();
+  //  $a = $query->__toString();
+
+  $archive = [];
+  foreach ($result as $row) {
+    $archive[$row->year][$row->month] = $row;
+  }
+
+  return !empty($archive) ? $archive : [];
 }

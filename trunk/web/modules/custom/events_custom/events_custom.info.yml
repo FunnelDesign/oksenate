@@ -1,0 +1,5 @@
+name: 'events_custom'
+type: module
+description: 'Events from Harmony API'
+core: 8.x
+package: 'Custom'

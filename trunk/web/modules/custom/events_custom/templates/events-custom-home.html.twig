@@ -1,0 +1,45 @@
+<!-- Add you custom twig html here -->
+{#{{ attach_library('events_custom/events') }}#}
+{% if events %}
+  <div class="bEvent bTiles bTiles_ev events-home-holder">
+    <div class="bEvent__slider">
+      <div class="bEvent__slider-items">
+        {% for event in events %}
+          <div class="bEvent__slider-item bTiles__item">
+              <span class="bTiles__date">
+                {{ event.ScheduledStart|date("D, m/d/Y | H:ia") }}
+              </span>
+{#            <a href="#" class="bTiles__title">#}
+{#              {{ event.Title }}#}
+{#            </a>#}
+            <a href="{{event.location_url}}" class="bTiles__title">
+              {{ event.Title }}
+            </a>
+{#                          <span class="bTiles__sub">#}
+{#                            Third Meeting#}
+{#                          </span>#}
+            <span class="bTiles__btnWrap">
+                <a href="{{event.location_url}}" class="bTiles__btn btn btn_b btn_b_live">
+{#                  <span><span>•</span> live now</span> room 511-a#}
+                  <span><span>•</span></span>{{event.location_title}}
+                </a>
+              </span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% else %}
+  <div class="pageIn__noRes pageIn__noRes_a">
+    <h2>No events</h2>
+  </div>
+{% endif %}
+
+
+
+{#<div class="events-holder">#}
+
+{#  <div class="events-empty">#}
+{#    No events#}
+{#  </div>#}
+{#</div>#}
