@@ -74,125 +74,63 @@
 #}
 <article{{ attributes }}>
 
-  {% if top_slider_enabled == '1' %}
-    {{ content.field_home_top_slider }}
-  {% else %}
-    <section class="section section_inner-v-centered sHero">
-      {{ content.field_home_top_bg_mob_image }}
-      {{ content.field_home_top_bg_image }}
-      <div class="section__v-inner section__v-inner_a">
-        <div class="bContainer">
+  <section class="section section_bg-color_f section_inner-v-centered">
 
-          <div class="sHero__img desktop-only">
-            {{ content.field_home_top_logo_image }}
-          </div>
-          <div class="bTitle bTitle_b bTitle_line sHero__bTitle">
-            {{ title_prefix }}
-            {{ content.field_home_top_title_text }}
-            {{ title_suffix }}
-          </div>
+    <div class="section__sNav">
+      <div class="bContainer">
+        {{ breadcrumbs }}
+        {{ socials }}
+      </div>
+    </div>
 
-          <div class="sHero__desc">
-            {{ content.body }}
-          </div>
+    <div class="section__bg-wrap">
+      <div class="section__bg" style="background-image: url('{{ theme_path }}/dist/images/tmp/section-bg-img-12.jpg')"></div>
+    </div>
+    <div class="section__v-inner section__v-inner_d">
+      <div class="bContainer">
+        <div class="bTitle bTitle_wSub_a">
+          <h1>{{ "Meeting Notice"|t }}</h1>
         </div>
       </div>
-    </section>
-  {% endif %}
+    </div>
+  </section>
 
-    <section class="section sFinder">
-        <div class="sFinder__bg">
-            <span></span>
+  <section class="section section_ind_c section_bg-color_c">
+
+    <div class="bContainer">
+      {{ title_prefix }}
+      <h2>{{ label }}</h2>
+      {{ title_suffix }}
+      <div class="pageIn__info pageIn__info_gap_a">
+        {{ content.field_comt_evt_subtitle }}
+        {{ content.field_comt_evt_date }}
+
+        <div class="pageIn__infoIt">
+          {{"Location"|t}} <strong>{{ content.field_comt_evt_room_reference }}, {{ content.field_comt_evt_loc }}</strong>
         </div>
+      </div>
 
-        <div class="bContainer">
-            <div class="sFinder__in">
-                <div class="sFinder__col">
+      <div class="bWrap bWrap_size_a bWrap_cl_a bWrap_f_a bWrap_gap_a">
+        {{ content.field_comt_evt_agenda }}
 
-                    <div class="sFinder__ico">
-                        {{ content.field_home_finder_left_image }}
-                    </div>
-                    {{ content.field_home_finder_left_title }}
-                    <div class="sFinder__desc">
-                        {{ content.field_home_finder_left_text }}
-                    </div>
-                    {{ content.field_home_finder_left_link }}
-                </div>
-                <div class="sFinder__col">
+        {{ content.field_comt_evt_cm_title }}
+        {{ content.field_comt_evt_cm }}
+        {{ content.field_comt_evt_st_req }}
+        {{ content.field_comt_evt_sen_staff }}
+      </div>
 
-                    <div class="sFinder__ico">
-                        {{ content.field_home_finder_right_image }}
-                    </div>
-                    {{ content.field_home_finder_right_title }}
+      {% if content.field_comt_evt_files.0 %}
+        <div class="bWrap bWrap_size_a bWrap_cl_a bWrap_f_a">
+          <div class="bTitle bTitle_wSub_a bTitle_gap_b">
+            <h2>{{ "Meeting Related Materials"|t }}</h2>
 
-                    <div class="sFinder__desc">
-                        {{ content.field_home_finder_right_text }}
-                    </div>
+            {{ content.field_comt_evt_rel_ma_date }}
+          </div>
 
-                  <form class="form f-search f-search-redirect">
-                    <div class="form-item">
-                      <input type="text" class="form-text" placeholder="Enter Bill Number">
-                    </div>
-                    <div class="form-actions">
-                      <input type="submit" class="form-submit" value="search">
-                    </div>
-                  </form>
-                </div>
-            </div>
+          {{ content.field_comt_evt_files }}
         </div>
-    </section>
+      {% endif %}
+    </div>
+  </section>
 
-    <section class="section section_bg-color_a section_ind_a">
-
-        <div class="bContainer">
-            {{ content.field_home_tiles_paragraph }}
-        </div>
-    </section>
-
-    <section class="section section_inner-v-centered">
-        {{ content.field_home_section_image }}
-        <div class="section__v-inner">
-            <div class="bContainer">
-                <div class="bTitle bTitle_a">
-                    {{ content.field_home_section_text }}
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section section_ind_b">
-        {{ content.field_home_slider_bg_image_mob }}
-        {{ content.field_home_slider_bg_image }}
-        <div class="bContainer">
-            <div class="bEvent">
-                {{ content.field_home_slider_title }}
-                <div class="bEvent__slider">
-
-                  {{ week_events }}
-
-{#                  {{ content.field_home_slider_images }}#}
-                </div>
-            </div>
-        </div>
-    </section>
-{#  <section class="section section_ind_b">#}
-{#    {{ content.field_home_slider_bg_image_mob }}#}
-{#    {{ content.field_home_slider_bg_image }}#}
-{#    <div class="bContainer">#}
-{#      <div class="bEvent">#}
-{#        {{ content.field_home_slider_title }}#}
-{#      </div>#}
-{#      <div class="bEvent bTiles bTiles_ev events-home-holder">#}
-{#        <div class="bEvent__slider">#}
-{#          <div class="bEvent__slider-items">#}
-{#            <div class="pageIn__loader">#}
-{#              <div class="loader loader_circle"></div>#}
-{#            </div>#}
-
-{#          </div>#}
-{#        </div>#}
-{#      </div>#}
-{#    </div>#}
-{#  </section>#}
-    {{ leadersip }}
 </article>

@@ -491,11 +491,16 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_comt_evt_room_reference':
     case 'field_comt_sched_event_room_ref':
-      $items = !empty($vars['items']) ? $vars['items'] : [];
-      foreach ($items as $key => $item) {
-        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b btn_b_live');
-        $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
-        $vars['items'][$key]['content']['#title'] = Markup::create("<span><span>•</span></span> " . $vars['items'][$key]['content']['#title']);
+      $without_changes = ($vars['element']['#field_name'] == 'field_comt_evt_room_reference') &&
+        ($view_mode == 'full');
+
+      if (!$without_changes) {
+        $items = !empty($vars['items']) ? $vars['items'] : [];
+        foreach ($items as $key => $item) {
+          $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b btn_b_live');
+          $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
+          $vars['items'][$key]['content']['#title'] = Markup::create("<span><span>•</span></span> " . $vars['items'][$key]['content']['#title']);
+        }
       }
       break;
     case 'field_footer_find_senator_image':
@@ -619,6 +624,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_reports_files':
     case 'field_session_summary_file':
     case 'field_meeting_notice_files':
+    case 'field_comt_evt_files':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {
@@ -825,6 +831,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_meeting_notice_date':
+    case 'field_comt_evt_date':
       $date = !empty($vars["element"]["#items"]) ? $vars["element"]["#items"]->get(0)->value : [];
       if (!empty($date)) {
         $utc_timezone = new \DateTimeZone('UTC');

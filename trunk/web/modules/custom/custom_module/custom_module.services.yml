@@ -8,3 +8,8 @@ services:
     class: Drupal\custom_module\Routing\ManageCustomRoutes
     tags:
       - { name: event_subscriber }
+
+  custom_module.node_author:
+    class: Drupal\custom_module\Plugin\views\CustomNidToAuthor
+    tags:
+      - { name: node_author }
