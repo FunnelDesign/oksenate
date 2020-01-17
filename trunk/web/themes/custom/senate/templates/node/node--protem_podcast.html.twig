@@ -75,19 +75,12 @@
 <article{{ attributes }}>
     <section class="section section_ind_j section_bg-color_c">
         <div class="section__sNav section__sNav_a">
-
             <div class="bContainer">
-                {#TODO: add back button#}
-                {#TODO: add breadcrumbs#}
-                {% if socials %}
-                    <div class="section__sNav">
-                        <div class="bContainer">
-                            {{ socials }}
-                        </div>
-                    </div>
-                {% endif %}
+              {{ breadcrumbs }}
+              {{ socials }}
             </div>
         </div>
+
         <div class="bContainer">
             <h2>{{ label }}</h2>
             {{ content.field_pro_tem_content_paragraph }}

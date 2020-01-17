@@ -51,13 +51,13 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
     if (!$edit_page) {
       switch ($node_type) {
         case 'committee_events':
-          if ($node->hasField('field_comt_evt_committee')) {
-            $committee = $node->get('field_comt_evt_committee');
-            $committee = $committee->getValue();
-            if (!empty($committee)) {
-              $redirect_url .= '/' . $committee[0]["target_id"];
-            }
-          }
+//          if ($node->hasField('field_comt_evt_committee')) {
+//            $committee = $node->get('field_comt_evt_committee');
+//            $committee = $committee->getValue();
+//            if (!empty($committee)) {
+//              $redirect_url .= '/' . $committee[0]["target_id"];
+//            }
+//          }
           break;
         case 'agencies_doc':
           if ($node->hasField('field_agencies_doc_agency')) {
@@ -89,7 +89,7 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
   public function getRedirectUrl($bundle) {
     $map = [
       'agencies_doc' => '/committees/appropriations/%/agencies-documents', // smth,
-      'committee_events' => '/upcoming-events', // committee
+//      'committee_events' => '/upcoming-events', // committee
       'glossary' => '/education/glossary',
       'journals' => '/calendar/journals', // year, month
       'session_summary' => '/publications/session-summary',
