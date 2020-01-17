@@ -551,10 +551,10 @@ class ContentParser extends ConfigEntityBase {
     if (!$this->isCheck($doc, $base_url)) {
       return $this->results->getNoAccessCode();
     }
-    $removeTable = 'this table contains return links';
     $searchForReplace = [
       'Audio',
       'Print',
+      'Clip',
       'October Press Releases',
       'January Press Releases',
       'February Press Releases',
@@ -568,32 +568,9 @@ class ContentParser extends ConfigEntityBase {
       'November Press Releases',
       'December Press Releases',
       '|',
-      'Press Releases'
+      'Press Releases',
+      'Oklahoma State Senate Homepage'
     ];
-
-    //    $remote_code = $this->getCode('remote_id');
-    //
-    //    if ($remote_code) {
-    //      $remote_id = $this->eval($doc, $remote_code, $base_url);
-    //    }
-    //
-    //    if ($remote_id) {
-    //      $entity = $this->getEntityByRemoteId($remote_id);
-    //    }
-    //
-    //    if ($entity && $this->getSetting('no_update')) {
-    //      return $this->results->getNoUpdateCode();
-    //    }
-    //
-    //    if (!$entity) {
-    //      $entity = _entity_create($this->entity_type, $this->bundle);
-    //    }
-    //
-    //    if ($this->getSetting('save_url')) {
-    //      $entity->set('path', [
-    //        'alias' => $this->toAbsolutePath($base_url)
-    //      ]);
-    //    }
 
     foreach ($doc->find('a') as $key=>$a) {
       $href = pq($a)->attr('href');
@@ -620,48 +597,127 @@ class ContentParser extends ConfigEntityBase {
 
             $date = str_replace($text, '', pq($a)->parent()->text());
             $content = $this->loadUrl($href);
+            if(!$content){
+              $message = '404 page ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+              file_put_contents('parse_errors_404.txt', $message, FILE_APPEND);
+              \Drupal::logger('404_content_parser')->notice($message);
+              continue;
+            }
+            $content = iconv('UTF-8', 'cp1252//IGNORE', $content);
+            $searchForReplaceSpecial = [
+              '&#148;' => '"',
+              '&#147;'=> '"',
+              '&#146;'=> "'",
+              '&#145;'=> "'",
+              '&#60;'=> "<",
+              '&#47;'=> "/",
+              '&#34;'=> '"',
+              '&#38;'=> '&',
+              '&#62;'=> ">",
+              '&#137;'=> "%",
+              '&#139;'=> "<",
+              '&#155;'=> ">",
+              '&#132;'=> '"',
+              '&#130;'=> "'",
+              '&#160;'=> " ",
+              '&#8242;'=> "'",
+              '&#8243;'=> '"',
+              '&#8226;'=> '',
+            ];
+            $content = str_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $content);
+            $text = str_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
+            $content = str_replace("&nbsp;", '', $content);
+            $content = preg_replace("/<p>(&nbsp;|\s)*<\/p>/", '', $content);
             $docNews = $this->getPhpQuery($content, $href);
             $returnLinks = 'this table contains return links';
+            $mainNavigation = 'this table contains the news navigation menu';
             $mainContent = 'this table contains the main content of the page';
             $html = 'empty';
-            foreach ($docNews['table'] as $table){
-              if(pq($table)->attr('summary') == $returnLinks){
+            foreach ($docNews['table'] as $table) {
+              if (pq($table)->attr('summary') == $returnLinks) {
+                pq($table)->remove();
+              }
+              if (pq($table)->attr('summary') == $mainNavigation) {
                 pq($table)->remove();
               }
             }
-            foreach ($docNews['table'] as $key=>$table){
-              if(pq($table)->attr('summary') == $mainContent){
-                $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<br>')), 'format'=>'full_html'];
+            $hasMainContent = FALSE;
+            foreach ($docNews['table'] as $key => $table) {
+              if (pq($table)->attr('summary') == $mainContent) {
+                $hasMainContent = TRUE;
+                $html          = [
+                  'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
+                  'format' => 'full_html'
+                ];
+                $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
                 $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
               }
             }
+            if(!$hasMainContent){
+              $html          = [
+                'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
+                'format' => 'full_html'
+              ];
+              $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+              $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
+
+            }
             // Remove hash
             $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+            $text = preg_replace('~[^A-Za-z0-9?.\s+,\/\$\'’”“:;\-/!]~','',$text);
             $date = preg_replace("/[^.0-9]/", '', $date);
-            //          $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
-            if($html == 'empty'){
-              $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
-              file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
+            $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
+            if ($html == 'empty') {
+              $message = 'Empty Body ' . '<br>' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+              file_put_contents('parse_errors_empty_body_senator.txt', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
-            else{
-              $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
-              $all = preg_match($regexp, $html['value'], $matches);
-              if(!empty($matches)){
-                foreach ($matches as $matchKey=>$match){
-                  if($matchKey === 0 || $matchKey === 1){
+            else {
+              $contactInfo = [];
+              $regexp      = "/(For more information, contact:|For more information,contact|For more information contact:|For more information|For additional information contact:|For additional information, contact:|For additional information,contact:)(?s)(.*$)/";
+              $all         = preg_match($regexp, $html['value'], $matches);
+              if (!empty($matches)) {
+                foreach ($matches as $matchKey => $match) {
+                  if ($matchKey === 0 || $matchKey === 1) {
                     continue;
                   }
-                  else{
-                    $contactInfo[] = trim(strip_tags($match));
+                  else {
+                    $searchForReplaceContact = [
+                      'contact:',
+                      'contact',
+                      'October',
+                      'January',
+                      'February',
+                      'March',
+                      'April',
+                      'May',
+                      'June',
+                      'July',
+                      'August',
+                      'September',
+                      'November',
+                      'December',
+                      '|',
+                    ];
+                    $contactInfo[] = ['value' => trim(str_replace($searchForReplaceContact,'', strip_tags($match)))];
                   }
                 }
               }
+              else {
+                $notSetContactField = TRUE;
+              }
               $html['value'] = preg_replace($regexp, '', $html['value']);
-              $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
-              if($this->makeSummary($html['value'], $text)){
-                $html['value'] = $this->makeSummary($html['value'], $text);
+              /*                $html['value'] = preg_replace('/(<br *\/?>\s*)+/i', '<br>', $html['value']);*/
+              if ($this->makeSummary($html['value'], $text)) {
+                $bodyHeader    = [
+                  'value'  => $this->makeSummary($html['value'], $text)['head'],
+                  'format' => 'full_html'
+                ];
+                $html['value'] = $this->makeSummary($html['value'], $text)['body'];
+              }
+              else {
+                $notSeparated = TRUE;
               }
             }
             if(empty($date)){
@@ -701,137 +757,188 @@ class ContentParser extends ConfigEntityBase {
                 $entity = _entity_create($this->entity_type, $this->bundle);
               }
             }
-            $mini = parser_download_images($docNews, $href);
-
-            $entity->set('field_release_img', $mini);
-
-            $entity->set('field_press_release_old_url', $href);
-            $entity->set('title', $text);
-            $entity->set('body', $html);
-            $entity->set('field_senator', isset($senator)?$senator:[]);
             try {
+              $mini = parser_download_images($docNews, $href);
+
+              $entity->set('field_release_img', $mini);
+
+              $entity->set('field_press_release_old_url', $href);
+              $entity->set('field_press_release_is_archived', 1);
+              $entity->set('title', $text);
+              $entity->set('body', $html);
+              $entity->set('field_press_release_header', isset($bodyHeader) ? $bodyHeader : '');
+              $entity->set('field_press_release_contact_info', $contactInfo);
+              $entity->set('field_senator', isset($senator) ? $senator : []);
+              $date = preg_replace('/[\x00-\x1F\x7F-\xA0\xAD]/u', '', $date);
               $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
               $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-              $entity->save();
-            }catch (\Error $exception){
-              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
-              file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
+              $saved = $entity->save();
+              if($saved){
+                $urlEntityObject = $entity->url();
+                $scheme = \Drupal::request()->getSchemeAndHttpHost();
+                $message = "<a href='$scheme$urlEntityObject'>-[$scheme$urlEntityObject]-</a><br>";
+                if(isset($notSeparated) && $notSeparated){
+                  $message .= ' - Cant separate header and body ' . $base_url . '<br>'. $href . '<br>' . "\r\n";
+                  file_put_contents('parse_errors_to_edit.html', $message, FILE_APPEND);
+                  \Drupal::logger('not_parsed_body')->notice($message);
+                }
+                if(isset($notSetContactField) && $notSetContactField){
+                  $message .= ' - Cant identify contact data ' . $base_url  .'<br>'. $href . '<br>' . "\r\n";
+                  file_put_contents('parse_errors_to_edit.html', $message, FILE_APPEND);
+                  \Drupal::logger('not_parsed_contact_data')->notice($message);
+                }
+              }
+
+            }
+            catch (\Error $exception) {
+              $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
+              file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
-            }catch (\Exception $exception){
-              $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
-              file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
+            }
+            catch (\Exception $exception) {
+              $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
+              file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
               \Drupal::logger('not_parsed')->notice($message);
               continue;
             }
           }
         }
-        //      $text = pq($a)->text();
-        //      $date = str_replace($text, '', pq($a)->parent()->text());
-        //      $content = $this->loadUrl($href);
-        //      $docNews = $this->getPhpQuery($content, $href);
-        //      $mainContent = 'this table contains the main content of the page';
-        //      $html = 'empty';
-        //
-        //      foreach ($docNews['table'] as $table){
-        //        if(pq($table)->attr('summary') == $mainContent){
-        //          $html = ['value'=>strip_tags(pq($table)->html(), '<p><br>'), 'format'=>'full_html'];
-        //        }
-        //      }
-        //      // Remove hash
-        //      $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-        //      $date = trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date))));
-        //      if(empty($date)){
-        //        $date = pq($a)->parent()->parent()->text();
-        //        $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
-        //        $date = trim(str_replace($text, '', $date));
-        //      }
-        //      if(strpos($base_url, '_bio.html') !== FALSE){
-        //
-        ////        $news = \Drupal::entityTypeManager()
-        ////          ->getStorage('node')
-        ////          ->loadByProperties(['field_press_release_old_url' => 'test.html']);
-        //
-        //        ///get senator id
-        //        $nodes = \Drupal::entityTypeManager()
-        //          ->getStorage('node')
-        //          ->loadByProperties(['field_temp_old_url' => $base_url]);
-        //        $senator = $nodes[key($nodes)]->id();
-        ////        foreach ( $nodes as $node ) {
-        ////          $senator = $node->id();
-        ////        }
-        //        $news = \Drupal::entityTypeManager()
-        //          ->getStorage('node')
-        //          ->loadByProperties(['field_press_release_old_url' => $href]);
-        //        if(is_array($news) && !empty($news)){
-        //          $entity = $news[key($news)];
-        //          $entity->field_senator[] = ['target_id' => $senator];
-        //          $entity->save();
-        //          continue;
-        //        }
-        //        else{
-        //          $entity = _entity_create($this->entity_type, $this->bundle);
-        //        }
-        //      }
-        //      $mini = parser_download_images($docNews, $href);
-        //
-        //      $entity->set('field_release_img', $mini);
-        //
-        //      $entity->set('field_press_release_old_url', $href);
-        //      $entity->set('title', $text);
-        //      $entity->set('body', $html);
-        //      $entity->set('field_senator', $senator?:1);
-        //      $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
-        //      $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-        //      $entity->save();
       }
       if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
         $text = pq($a)->text();
+        //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2015/pr20150729a.htm'){
+        //            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
+        //          }
+        //          if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2017/pr20170119b.htm'){
+        //            $text = 'Oklahoma Legislative Black Caucus to focus on education, public safety concerns';
+        //          }
+
         $date = str_replace($text, '', pq($a)->parent()->text());
         $content = $this->loadUrl($href);
+        if(!$content){
+          $message = '404 page ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+          file_put_contents('parse_errors_404.txt', $message, FILE_APPEND);
+          \Drupal::logger('404_content_parser')->notice($message);
+          continue;
+        }
+        $content = iconv('UTF-8', 'cp1252//IGNORE', $content);
+        $searchForReplaceSpecial = [
+          '&#148;' => '"',
+          '&#147;'=> '"',
+          '&#146;'=> "'",
+          '&#145;'=> "'",
+          '&#60;'=> "<",
+          '&#47;'=> "/",
+          '&#34;'=> '"',
+          '&#38;'=> '&',
+          '&#62;'=> ">",
+          '&#137;'=> "%",
+          '&#139;'=> "<",
+          '&#155;'=> ">",
+          '&#132;'=> '"',
+          '&#130;'=> "'",
+          '&#160;'=> " ",
+          '&#8242;'=> "'",
+          '&#8243;'=> '"',
+          '&#8226;'=> '',
+        ];
+        $content = str_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $content);
+        $text = str_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
+        $content = str_replace("&nbsp;", '', $content);
+        $content = preg_replace("/<p>(&nbsp;|\s)*<\/p>/", '', $content);
         $docNews = $this->getPhpQuery($content, $href);
         $returnLinks = 'this table contains return links';
+        $mainNavigation = 'this table contains the news navigation menu';
         $mainContent = 'this table contains the main content of the page';
         $html = 'empty';
-
-        foreach ($docNews['table'] as $table){
-          if(pq($table)->attr('summary') == $returnLinks){
+        foreach ($docNews['table'] as $table) {
+          if (pq($table)->attr('summary') == $returnLinks) {
+            pq($table)->remove();
+          }
+          if (pq($table)->attr('summary') == $mainNavigation) {
             pq($table)->remove();
           }
         }
+        $hasMainContent = FALSE;
+        foreach ($docNews['table'] as $key => $table) {
+          if (pq($table)->attr('summary') == $mainContent) {
+            $hasMainContent = TRUE;
+            $html          = [
+              'value'  => str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
+              'format' => 'full_html'
+            ];
+            $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
+            $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+          }
+        }
+        if(!$hasMainContent){
+          $html          = [
+            'value'  => str_replace($searchForReplace, '', strip_tags($docNews['body']->html(), '<p><br><strong><ul><li><bold><b><i><em>')),
+            'format' => 'full_html'
+          ];
+          $html['value'] = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $html['value'])));
+          $html['value'] = str_replace($searchForReplace, '', strip_tags($html['value'], '<p><br><strong><ul><li><bold><b><i><em>'));
 
-        foreach ($docNews['table'] as $table){
-          if(pq($table)->attr('summary') == $mainContent){
-            $html = ['value'=>str_replace($searchForReplace, '', strip_tags(pq($table)->html(), '<p><br>')), 'format'=>'full_html'];
-          }
-        }
-        if($html == 'empty'){
-          $message = 'Empty Body'.'<br>'.$base_url . '<br>' . $href . '<br>';
-          file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
-          \Drupal::logger('not_parsed')->notice($message);
-          continue;
-        }
-        else{
-          $regexp = "/(For more information, contact:|For more information,contact|For more information:)(?s)(.*$)/";
-          $all = preg_match($regexp, $html['value'], $matches);
-          if(!empty($matches)){
-            foreach ($matches as $matchKey=>$match){
-              if($matchKey === 0 || $matchKey === 1){
-                continue;
-              }
-              else{
-                $contactInfo[] = ['value' => trim(strip_tags($match))];
-              }
-            }
-          }
-          $html['value'] = preg_replace($regexp, '', $html['value']);
-          if($this->makeSummary($html['value'], $text)){
-            $html['value'] = $this->makeSummary($html['value'], $text);
-          }
         }
         // Remove hash
         $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+        $text = preg_replace('~[^A-Za-z0-9?.\s+,\/\$\'’”“:;\-/!]~','',$text);
         $date = preg_replace("/[^.0-9]/", '', $date);
+        $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
+        if ($html == 'empty') {
+          $message = 'Empty Body ' . '<br>' . $base_url . '<br>' . $href . '<br>' . "\r\n";
+          file_put_contents('parse_errors_empty_body_senator.txt', $message, FILE_APPEND);
+          \Drupal::logger('not_parsed')->notice($message);
+          continue;
+        }
+        else {
+          $contactInfo = [];
+          $regexp      = "/(For more information, contact:|For more information,contact|For more information contact:|For more information|For additional information contact:|For additional information, contact:|For additional information,contact:)(?s)(.*$)/";
+          $all         = preg_match($regexp, $html['value'], $matches);
+          if (!empty($matches)) {
+            foreach ($matches as $matchKey => $match) {
+              if ($matchKey === 0 || $matchKey === 1) {
+                continue;
+              }
+              else {
+                $searchForReplaceContact = [
+                  'contact:',
+                  'contact',
+                  'October',
+                  'January',
+                  'February',
+                  'March',
+                  'April',
+                  'May',
+                  'June',
+                  'July',
+                  'August',
+                  'September',
+                  'November',
+                  'December',
+                  '|',
+                ];
+                $contactInfo[] = ['value' => trim(str_replace($searchForReplaceContact,'', strip_tags($match)))];
+              }
+            }
+          }
+          else {
+            $notSetContactField = TRUE;
+          }
+          $html['value'] = preg_replace($regexp, '', $html['value']);
+          /*                $html['value'] = preg_replace('/(<br *\/?>\s*)+/i', '<br>', $html['value']);*/
+          if ($this->makeSummary($html['value'], $text)) {
+            $bodyHeader    = [
+              'value'  => $this->makeSummary($html['value'], $text)['head'],
+              'format' => 'full_html'
+            ];
+            $html['value'] = $this->makeSummary($html['value'], $text)['body'];
+          }
+          else {
+            $notSeparated = TRUE;
+          }
+        }
         if(empty($date)){
           $date = pq($a)->parent()->parent()->text();
           $date = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)));
@@ -869,238 +976,54 @@ class ContentParser extends ConfigEntityBase {
             $entity = _entity_create($this->entity_type, $this->bundle);
           }
         }
-        $mini = parser_download_images($docNews, $href);
         try {
+          $mini = parser_download_images($docNews, $href);
+
           $entity->set('field_release_img', $mini);
 
           $entity->set('field_press_release_old_url', $href);
+          $entity->set('field_press_release_is_archived', 1);
           $entity->set('title', $text);
           $entity->set('body', $html);
-          $entity->set('field_press_release_contact_info', isset($contactInfo)?:[]);
+          $entity->set('field_press_release_header', isset($bodyHeader) ? $bodyHeader : '');
+          $entity->set('field_press_release_contact_info', $contactInfo);
           $entity->set('field_senator', isset($senator) ? $senator : []);
+          $date = preg_replace('/[\x00-\x1F\x7F-\xA0\xAD]/u', '', $date);
           $dateFormat = \DateTime::createFromFormat('m.d.y', $date);
           $entity->set('field_date', $dateFormat->format('Y-m-d\TH:i:s'));
-          $entity->save();
-        }catch (\Error $exception){
-          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
-          file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
+          $saved = $entity->save();
+          if($saved){
+            $urlEntityObject = $entity->url();
+            $scheme = \Drupal::request()->getSchemeAndHttpHost();
+            $message = "<a href='$scheme$urlEntityObject'>-[$scheme$urlEntityObject]-</a><br>";
+            if(isset($notSeparated) && $notSeparated){
+              $message .= ' - Cant separate header and body ' . $base_url . '<br>'. $href . '<br>' . "\r\n";
+              file_put_contents('parse_errors_to_edit.html', $message, FILE_APPEND);
+              \Drupal::logger('not_parsed_body')->notice($message);
+            }
+            if(isset($notSetContactField) && $notSetContactField){
+              $message .= ' - Cant identify contact data ' . $base_url  .'<br>'. $href . '<br>' . "\r\n";
+              file_put_contents('parse_errors_to_edit.html', $message, FILE_APPEND);
+              \Drupal::logger('not_parsed_contact_data')->notice($message);
+            }
+          }
+
+        }
+        catch (\Error $exception) {
+          $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
+          file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
-        }catch (\Exception $exception){
-          $message = $exception->getMessage().$base_url . '<br>' . $href . '<br>';
-          file_put_contents('not_parsed_pr_bind_senators.txt', $message, FILE_APPEND);
+        }
+        catch (\Exception $exception) {
+          $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
+          file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }
       }
     }
     return true;
-
-    //    $mini = parser_download_images($doc, $base_url);
-    //
-    //    $entity->set('field_senator_photo', $mini);
-
-
-    foreach ($this->getCodes() as $field_name => $field) {
-      $php_code = $this->getCode($field_name);
-
-      if (!$php_code || $field_name == 'remote_id') {
-        continue;
-      }
-
-      $result = $this->evalEntity(
-        $doc,
-        $entity,
-        $php_code,
-        $base_url
-      );
-
-      $value = [];
-      //        if($field_name == 'field_senator_committee_taxonomy') {
-      //
-      //          foreach ($result as $li){
-      //            $string = trim(strip_tags($li->textContent));
-      //            if(strpos($string, '-')){
-      //              $string = stristr($string, '-', TRUE);
-      //            }
-      //            $string = str_replace('Appropriations Subcommittee on ', '', $string);
-      //            $string = str_replace('&', 'and', $string);
-      //            $term = \Drupal::entityTypeManager()
-      //              ->getStorage('taxonomy_term')
-      //              ->loadByProperties(['name' => $string]);
-      //            if(!empty($term))
-      //              $value[] = $term[key($term)]->id();
-      //            else{}
-      //          }
-      //
-      //        }
-      //      if($field_name == 'field_senator_district_taxonomy') {
-      //
-      //          $term = \Drupal::entityTypeManager()
-      //            ->getStorage('taxonomy_term')
-      //            ->loadByProperties(['name' => $result]);
-      //          if(!empty($term))
-      //            $value[] = $term[key($term)]->id();
-      //          else{}
-      //          $result = null;
-      //        }
-      //      if($field_name == 'field_senator_county_taxonomy') {
-      //        foreach ($result as $li){
-      //          $string = trim(strip_tags($li->textContent));
-      //          $term = \Drupal::entityTypeManager()
-      //            ->getStorage('taxonomy_term')
-      //            ->loadByProperties(['name' => $string]);
-      //          if(!empty($term))
-      //            $value[] = $term[key($term)]->id();
-      //          else{}
-      //        }
-      //      }
-      //      if($field_name == 'field_senator_index_zip_taxonomy') {
-      //        foreach ($result as $li){
-      //          $string = trim(strip_tags($li->textContent));
-      //          $term = \Drupal::entityTypeManager()
-      //            ->getStorage('taxonomy_term')
-      //            ->loadByProperties(['name' => $string]);
-      //          if(!empty($term))
-      //            $value[] = $term[key($term)]->id();
-      //          else{}
-      //        }
-      //      }
-      //
-      //      if($field_name == 'field_senator_occupation_txt') {
-      //        $mini = explode('<br>', $result);
-      //        foreach ($mini as $string) {
-      //          $string = trim(strip_tags($string));
-      //          if (!$string) {
-      //            continue;
-      //          }
-      //          if(strpos($string, 'Occupation') !== FALSE){
-      //            $pos = strpos($string, ':');
-      //            $value = trim(substr($string, $pos+1));
-      //          }
-      //        }
-      //        $result = NULL;
-      //      }
-      //
-      //      if($field_name == 'field_senator_education_txt') {
-      //        $mini = explode('<br>', $result);
-      //        foreach ($mini as $string) {
-      //          $string = trim(strip_tags($string));
-      //          if (!$string) {
-      //            continue;
-      //          }
-      //          if(strpos($string, 'Education') !== FALSE){
-      //            $pos = strpos($string, ':');
-      //            $value = trim(substr($string, $pos+1));
-      //          }
-      //        }
-      //        $result = NULL;
-      //      }
-      //
-      //      if($field_name == 'field_senator_hometown_txt') {
-      //        $mini = explode('<br>', $result);
-      //        foreach ($mini as $string) {
-      //          $string = trim(strip_tags($string));
-      //          if (!$string) {
-      //            continue;
-      //          }
-      //          if(strpos($string, 'Hometown') !== FALSE){
-      //            $pos = strpos($string, ':');
-      //            $value = trim(substr($string, $pos+1));
-      //
-      //          }
-      //          $result = NULL;
-      //        }
-      //      }
-      //
-      //      if($field_name == 'field_senator_leg_experience_txt') {
-      //        $mini = explode('<br>', $result);
-      //        foreach ($mini as $string) {
-      //          $string = trim(strip_tags($string));
-      //          if (!$string) {
-      //            continue;
-      //          }
-      //          if(strpos($string, 'Legislative Experience') !== FALSE){
-      //            $pos = strpos($string, ':');
-      //            $value = trim(substr($string, $pos+1));
-      //          }
-      //        }
-      //        $result = NULL;
-      //      }
-      //      if($field_name == 'title') {
-      //        $result = str_replace('Senator', '', $result);
-      //      }
-      //
-      //      if($field_name == 'field_senator_social_links_par'){
-      //        $arr = [
-      //          'type' => 'senator_socials',   // paragraph type machine name
-      //          'field_senator_social_fb_link' => [   // paragraph's field machine name
-      //            'uri' => $result[0],                  // body field value// body text format
-      //          ],
-      //          'field_senator_social_inst_link' => [   // paragraph's field machine name
-      //            'uri' => $result[0],                  // body field value// body text format
-      //          ],
-      //          'field_senator_social_tw_link' => [   // paragraph's field machine name
-      //            'uri' => $result[0],                  // body field value// body text format
-      //          ],
-      //        ];
-      //
-      //        $paragraph = Paragraph::create($arr);
-      //
-      //        $paragraph->save();
-      //
-      //        $entity->set('field_senator_social_links_par',
-      //        [
-      //          'target_id' => $paragraph->id(),
-      //          'target_revision_id' => $paragraph->getRevisionId(),
-      //        ]);
-      //
-      //        continue;
-      //      }
-
-      if ($field['isMulti'] && is_array($result)) {
-        foreach ($result as $data) {
-          if ($field['reference_create'] && $type = $field['reference']) {
-            $value[] = [
-              'target_id' => _reference_create($type, $data),
-            ];
-          } else {
-            $value[] = $data;
-          }
-        }
-      } elseif(!$field['isMulti'] && $result) {
-        if ($field['reference_create'] && $type = $field['reference']) {
-          $value = _reference_create($type, $result);
-        } else {
-          $value = $result;
-        }
-      }
-
-      if ($value && $field_name !== 'field_bio_info') {
-        $entity->set($field_name, $value);
-      }
-    }
-
-    //    \Drupal::moduleHandler()
-    //        ->invokeAll('content_parser_prepare_entity_' . $this->id, [$entity]);
-    //
-    //    if ($prepare_code = $this->getSetting('prepare_code')) {
-    //       $entity = $this->evalEntity($doc, $entity, $prepare_code, $base_url);
-    //     }
-    //
-    //    $is_new = $entity->isNew();
-    //
-    //    try {
-    //      $entity->save();
-    //    } catch (\Exception $e) {
-    //      return $this->results->getErrorCode();
-    //    }
-    //
-    //    if ($is_new) {
-    //      $this->insertRemote($this->entity_type, $entity->id(), $remote_id, $base_url);
-    //    }
-    //
-    //    return !$is_new ? $this->results->getUpdateCode() : $this->results->getCreateCode();
   }
 
   /**
