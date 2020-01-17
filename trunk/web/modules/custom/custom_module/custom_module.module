@@ -345,3 +345,27 @@ function _custom_module_mailchimp_commitee_map($tid) {
   ];
   return !empty($map[$tid]) ? $map[$tid] : '';
 }
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function custom_module_views_data_alter(array &$data) {
+  if (isset($data['node_field_data'])) {
+    $uid = $data['node_field_data']['uid'];
+
+    // Create a new views argument
+    $data['node_field_data']['uid'] = [
+      'group' => $uid['group'],
+      'title' => t('Custom: Senator nid to Senator node author'),
+      'title short' => t('Nid to Author'),
+      'help' => $uid['help'],
+      // We override the argument. This is where we do our tricks!
+      'argument' => [
+        'table' => 'node_field_data',
+        'field' => 'uid',
+        'id' => 'custom_senator_nid_author',
+        'zero is null' => TRUE,
+      ],
+    ];
+  }
+}
