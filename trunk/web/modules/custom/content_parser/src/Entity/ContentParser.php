@@ -729,6 +729,7 @@ class ContentParser extends ConfigEntityBase {
                         'December',
                         '|',
                       ];
+                      $notSetContactField = FALSE;
                       $contactInfo[] = ['value' => trim(str_replace($searchForReplaceContact,'', strip_tags($match)))];
                     }
                   }
@@ -740,6 +741,7 @@ class ContentParser extends ConfigEntityBase {
                 $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
                 $bodyHeader = '';
                 if ($this->makeSummary($html['value'], $text)) {
+                  $notSeparated = FALSE;
                   $bodyHeader    = [
                     'value'  => $this->makeSummary($html['value'], $text)['head'],
                     'format' => 'full_html'
