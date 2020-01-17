@@ -734,9 +734,7 @@ class ContentParser extends ConfigEntityBase {
                   }
                 }
                 else {
-                  $message = 'Cant identify contact data ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
-                  file_put_contents('parse_errors_contact_data.txt', $message, FILE_APPEND);
-                  \Drupal::logger('not_parsed_contact_data')->notice($message);
+                  $notSetContactField = TRUE;
                 }
                 $html['value'] = preg_replace($regexp, '', $html['value']);
                 $html['value'] = preg_replace('#(<br */?>\s*)+#i', '<br>', $html['value']);
@@ -749,9 +747,7 @@ class ContentParser extends ConfigEntityBase {
                   $html['value'] = $this->makeSummary($html['value'], $text)['body'];
                 }
                 else {
-                  $message = 'Cant separate header and body ' . $base_url . '<br>' . $href . '<br>' . "\r\n";
-                  file_put_contents('parse_errors_header.txt', $message, FILE_APPEND);
-                  \Drupal::logger('not_parsed_body')->notice($message);
+                  $notSeparated = TRUE;
                 }
               }
               if (empty($date)) {
