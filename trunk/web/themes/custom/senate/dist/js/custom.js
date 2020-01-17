@@ -62,6 +62,7 @@
       });
 
       this.setBackButtonUrl(context);
+      this.setSenateCustomCaptcha(context);
     },
 
     setBackButtonUrl: function (context) {
@@ -82,6 +83,66 @@
       if (!results) return null;
       if (!results[2]) return '';
       return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    },
+
+    setSenateCustomCaptcha: function (context) {
+      var _this = this;
+      this.senateCustomCaptcha = document.getElementById('senateCustomCaptcha');
+      this.senateCustomCaptchaTextBox = document.getElementById('senateCustomCaptchaTextBox');
+      this.senateCustomCaptchaWrapper = document.getElementById('senateCustomCaptchaWrapper');
+
+      $('.senate-custom-captcha', context).once('senateCustomCaptcha').each(function () {
+        _this.createCaptcha();
+
+        this.addEventListener('submit', function (event) {
+          event.preventDefault();
+          _this.validateCaptcha();
+        });
+      });
+    },
+
+    createCaptcha: function () {
+      this.senateCustomCaptcha.innerHTML = "";
+      var charsArray = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
+      var lengthOtp = 6;
+      var captcha = [];
+      for (var i = 0; i < lengthOtp; i++) {
+        var index = Math.floor(Math.random() * charsArray.length + 1);
+        if (captcha.indexOf(charsArray[index]) === -1)
+          captcha.push(charsArray[index]);
+        else i--;
+      }
+      var canv = document.createElement("canvas");
+      canv.id = "captcha";
+      canv.width = 100;
+      canv.height = 50;
+      var ctx = canv.getContext("2d");
+      ctx.font = "25px Georgia";
+      ctx.fillText(captcha.join(""), 0, 30);
+      this.code = captcha.join("");
+      this.senateCustomCaptcha.appendChild(canv);
+    },
+
+    validateCaptcha: function () {
+      if (this.senateCustomCaptchaTextBox.value === this.code) {
+        var element = document.getElementById('senateCustomCaptchaError');
+        if (element) {
+          element.parentNode.removeChild(element);
+        }
+        document.querySelector('.senate-custom-captcha').submit();
+      }
+      else {
+        var errorMsg = document.getElementById('senateCustomCaptchaError');
+        if (!errorMsg) {
+          var error = document.createElement('span');
+          error.setAttribute('id', 'senateCustomCaptchaError');
+          error.setAttribute('style', 'color:#b3292e');
+          error.textContent = 'Invalid Captcha. Try Again.';
+          this.senateCustomCaptchaWrapper.appendChild(error);
+        }
+
+        this.createCaptcha();
+      }
     }
   };
 })(jQuery, Drupal, drupalSettings);

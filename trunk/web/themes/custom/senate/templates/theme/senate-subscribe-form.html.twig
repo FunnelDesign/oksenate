@@ -19,7 +19,7 @@
 
           <h2>{{ "Sign up for our Newsletter"|t }}</h2>
 
-          <form id="GD-snippet-form" action="https://public.govdelivery.com/accounts/OKSENATE/subscribers/qualify" accept-charset="UTF-8" method="post" target="_blank">
+          <form id="GD-snippet-form" action="https://public.govdelivery.com/accounts/OKSENATE/subscribers/qualify" accept-charset="UTF-8" method="post" target="_blank" class="senate-custom-captcha">
             <input name="utf8" type="hidden" value="&#x2713;" />
             <input type="hidden" name="authenticity_token" value="m4ks0k1RmE8MHN8GcgS512HfRuaaqNpgXXMyc+pajnroui5iyKXl4fEhEahfGUtTIjhenlW3ux57LtcvSKj+dg==" />
             <fieldset>
@@ -59,6 +59,13 @@
                   <input type="text" name="email" id="email" class="long" />
                 </li>
               </ol>
+
+              <div id="senateCustomCaptchaWrapper">
+                <div id="senateCustomCaptcha">
+                </div>
+                <input type="text" placeholder="Captcha" id="senateCustomCaptchaTextBox"/>
+              </div>
+
               <div class='button_panel'>
                 <input type="submit" name="commit" value="Submit" class="sr-button reverse" />
               </div>
