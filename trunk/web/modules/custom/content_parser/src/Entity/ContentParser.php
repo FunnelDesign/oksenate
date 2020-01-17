@@ -2,6 +2,7 @@
 
 namespace Drupal\content_parser\Entity;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\content_parser\Results;
 use Drupal\node\Entity\Node;
@@ -664,6 +665,7 @@ class ContentParser extends ConfigEntityBase {
             }
             // Remove hash
             $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+//            $text = '$-/`""\'';
             $text = preg_replace('~[^A-Za-z0-9?.\s+,\/\$\'’”“:;\-/!]~','',$text);
             $date = preg_replace("/[^.0-9]/", '', $date);
             $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
@@ -708,6 +710,7 @@ class ContentParser extends ConfigEntityBase {
                 $notSetContactField = TRUE;
               }
               $html['value'] = preg_replace($regexp, '', $html['value']);
+              $bodyHeader = NULL;
               /*                $html['value'] = preg_replace('/(<br *\/?>\s*)+/i', '<br>', $html['value']);*/
               if ($this->makeSummary($html['value'], $text)) {
                 $bodyHeader    = [
@@ -1104,27 +1107,54 @@ class ContentParser extends ConfigEntityBase {
     }
   }
 
+  /**
+   * @param $title
+   *
+   * @return bool|string
+   */
+  public function makeBodyHeaderRegexp($title){
+    $explodeByWhitespace = explode(' ', $title);
+    if(empty($explodeByWhitespace)){
+      return FALSE;
+    }
+    $regexp = implode('((<br>|<br \/>)*\s*|\s*|”*|“*)*?', $explodeByWhitespace);
+    $regexp = '/'.$regexp.'/i';
+    return $regexp;
+  }
+
   public function makeSummary($text, $title){
-    $len = (int) strlen($title);
-    $strpos = (int) strpos($text, $title);
-    $targetString = substr($text, $strpos+$len);
-    return $targetString?$targetString:$text;
-//    $regexp = "/($title)(?s)(.*$)/";
-//    $all = preg_match($regexp, $text, $matches);
-//    if(!empty($matches)){
-//      return $matches[2];
-//      foreach ($matches as $key=>$match){
-//        if($key === 0 || $key === 1){
-//          continue;
-//        }
-//        if($key === 2){
-////          $summary = preg_match('/^(.*)\./', $match, $matches);
-//          $summary = preg_match('/^[^.]+./', $match, $matchSummary);
-//          return $matchSummary[0];
-//        }
-//      }
-//    }
-//    return FALSE;
+
+    $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
+    $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
+    $title = str_replace("&", '&amp;', $title);
+    $title = HTML::normalize($title);
+    $title = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>)|(<strong>\s*<\/strong>))*<\/?p>/", '', $title);
+    $text = HTML::normalize($text);
+    $text = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>)|(<strong>\s*<\/strong>))*<\/?p>/", '', $text);
+    $regexp = $this->makeBodyHeaderRegexp($title);
+    $match = preg_match($regexp, $text, $matches, PREG_OFFSET_CAPTURE);
+    if($match){
+      $startPos = $matches[0][1];
+      $strPos = (int) strlen($matches[0][0]) + $startPos;
+      $headerString = substr($text, 0, $startPos);
+      $bodyString = substr($text, $strPos);
+      $headerString = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/p>/", '', $headerString);
+
+      $headerString = HTML::normalize($headerString);
+      $bodyString = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/p>/", '', $bodyString);
+      $bodyString = HTML::normalize($bodyString);
+      $filter = new \Zend\Filter\StripTags();
+      $filter->setAttributesAllowed('none');
+      $filter->setTagsAllowed(['p','br','strong','ul','li','bold','b','i','em']);
+      $bodyString = $filter->filter($bodyString);
+      $headerString = $filter->filter($headerString);
+      $headerString = '<p>'.preg_replace("/^\s*(<br \/>)*\s*/", '', $headerString).'</p>';
+      $bodyString = preg_replace("/^\s*(<br \/>)*\s*/", '', $bodyString);
+      if($bodyString && $headerString){
+        return ['body' => $bodyString,'head'=>$headerString];
+      }
+    }
+    return FALSE;
   }
 
 }
