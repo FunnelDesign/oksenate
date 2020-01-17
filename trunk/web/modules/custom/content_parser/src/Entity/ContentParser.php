@@ -693,7 +693,7 @@ class ContentParser extends ConfigEntityBase {
 
               }
               $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-              $text = preg_replace('~[^A-Za-z0-9?.\s+,\'’”“:;\-/!]~','',$text);
+              $text = preg_replace('~[^A-Za-z0-9?.\s+,\/\$\'’”“:;\-/!]~','',$text);
               $date = preg_replace("/[^.0-9]/", '', $date);
               $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
               if ($html == 'empty') {
