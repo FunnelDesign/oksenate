@@ -678,7 +678,7 @@ class ContentParser extends ConfigEntityBase {
               // Remove hash
 //              $text = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
               $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-              $text = preg_replace('~[^A-Za-z0-9?.\s+,\/\$\'’”“:;\-/!]~','',$text);
+              $text = preg_replace('~[^A-Za-z0-9?.\s+,\.\(\)\/\$\'\"\’\”\“\:\;\-/!]~','',$text);
               $date = preg_replace("/[^.0-9]/", '', $date);
               $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
               if ($html == 'empty') {
@@ -714,6 +714,7 @@ class ContentParser extends ConfigEntityBase {
                         'December',
                         '|',
                       ];
+                      $notSetContactField = FALSE;
                       $contactInfo[] = ['value' => trim(str_replace($searchForReplaceContact,'', strip_tags($match)))];
                     }
                   }
@@ -724,6 +725,7 @@ class ContentParser extends ConfigEntityBase {
                 $html['value'] = preg_replace($regexp, '', $html['value']);
 /*                $html['value'] = preg_replace('/(<br *\/?>\s*)+/i', '<br>', $html['value']);*/
                 if ($this->makeSummary($html['value'], $text)) {
+                  $notSeparated = FALSE;
                   $bodyHeader    = [
                     'value'  => $this->makeSummary($html['value'], $text)['head'],
                     'format' => 'full_html'
@@ -838,7 +840,7 @@ class ContentParser extends ConfigEntityBase {
     if(empty($explodeByWhitespace)){
       return FALSE;
     }
-    $regexp = implode('((<br>|<br \/>)*\s*|\s*|”*|“*)*?', $explodeByWhitespace);
+    $regexp = implode('((<b>|<\/b>|<br>|<br \/>)*\s*|\”*|\“*|\"*|\,*|\;*|\.*)*?', $explodeByWhitespace);
     $regexp = '/'.$regexp.'/i';
     return $regexp;
   }
