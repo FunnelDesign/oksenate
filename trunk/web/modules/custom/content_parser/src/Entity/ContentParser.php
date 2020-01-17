@@ -821,6 +821,19 @@ class ContentParser extends ConfigEntityBase {
    * @return bool|string
    */
   public function makeBodyHeaderRegexp($title){
+    $searchForReplaceSpecial = [
+      '.' => '\.',
+      '$'=> '\$',
+      ','=> "\,",
+      '-'=> "\-",
+      '/'=> "\/",
+      '('=> "\(",
+      ')'=> "\)",
+      '?'=> "\?",
+      '+'=> "\+",
+      '*'=> "\*",
+    ];
+    $title = str_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $title);
     $explodeByWhitespace = explode(' ', $title);
     if(empty($explodeByWhitespace)){
       return FALSE;
