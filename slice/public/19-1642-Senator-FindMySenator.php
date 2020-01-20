@@ -240,6 +240,12 @@
 
           </div>
 
+          <div class="sSen__mSearch">
+
+            <p>To find your specific senator, search by address.</p>
+            <a class="btn" href="http://www.oklegislature.gov/FindMyLegislature.aspx">search by address</a>
+          </div>
+
         </div>
 
       </div>
