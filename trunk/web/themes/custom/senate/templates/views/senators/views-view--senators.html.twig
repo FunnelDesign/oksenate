@@ -72,8 +72,10 @@ dom_id ? 'js-view-dom-id-' ~ dom_id,
                     {{ rows }}
 
                     {% if show_search_address_txt %}
-                      <p>{{ "To find your specific senator, search by address."|t }}</p>
-                      <a href="http://www.oklegislature.gov/FindMyLegislature.aspx" class="">{{ "search by address"|t }}</a>
+                      <div class="sSen__mSearch">
+                        <p>{{ "To find your specific senator, search by address."|t }}</p>
+                        <a href="http://www.oklegislature.gov/FindMyLegislature.aspx" class="btn">{{ "search by address"|t }}</a>
+                      </div>
                     {% endif %}
                 {% elseif empty -%}
                     <div class="sSen__noRes">
