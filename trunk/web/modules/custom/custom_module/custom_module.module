@@ -276,6 +276,16 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
+  if ($view->id() == 'press_release_senators' && $view->getDisplay()->display['id'] == 'entity_reference_1') {
+    $current_user = \Drupal::currentUser();
+    $uid = $current_user->id();
+    $roles = $current_user->getRoles();
+
+    if (!in_array('administrator', $roles) && !in_array('manager', $roles)) {
+      $query->addWhere('', 'node_field_data.uid', $uid, '=');
+//      $a = $query->query()->__toString();
+    }
+  }
 }
 
 /**
