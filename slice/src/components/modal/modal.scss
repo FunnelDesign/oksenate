@@ -136,6 +136,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
 
       & > * {
         margin: 0 7px;
@@ -146,6 +147,12 @@
         border-radius: 5px;
         background: #fff;
         display: block;
+      }
+
+      #senateCustomCaptchaError {
+        width: 100%;
+        padding-top: 20px;
+        color: #e26071 !important;
       }
     }
 
