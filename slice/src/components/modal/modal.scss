@@ -133,16 +133,22 @@
       margin-bottom: 25px;
       text-align: center;
       color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       canvas {
-        padding: 5px;
+        padding: 0 10px;
         border-radius: 5px;
-        background: #fff
+        background: #fff;
+        display: block;
+        margin-right: 13px;
       }
     }
 
     #senateCustomCaptchaTextBox {
-      max-width: 200px;
+      max-width: 150px;
+      padding: 16px 20px !important;
     }
   }
 
