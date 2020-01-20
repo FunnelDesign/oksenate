@@ -1418,6 +1418,9 @@ function senate_preprocess_views_view(&$vars) {
   switch ($id) {
     case 'senators':
       $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
+      $exp_input = $view->getExposedInput();
+      $zip_exp_input = !empty($exp_input["zip"]) ? $exp_input["zip"] : '';
+      $vars['show_search_address_txt'] = !empty($zip_exp_input) && ($view->total_rows > 1) ? TRUE : FALSE;
       break;
     case 'subcommittee_events':
       $tid = !empty($view->args) ? $view->args[0] : '';
