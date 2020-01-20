@@ -101,22 +101,8 @@ class SenateRedirectForm extends FormBase {
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
   public function setRedirect($urls) {
-    $redirect_service = \Drupal::service('redirect.repository');
-
-    foreach ($urls as $nid => $url) {
-      if (!empty($nid) && !empty($url)) {
-        $url = str_replace('http://www.oksenate.gov/', '', $url);
-
-        if (!$redirect_service->findMatchingRedirect($url, [], 'und')) {
-          $redirect = Redirect::create();
-          $redirect->setSource($url);
-          $redirect->setRedirect('/node/' . $nid);
-          $redirect->setLanguage('und');
-          $redirect->setStatusCode(301);
-          $redirect->save();
-        }
-      }
-    }
+    $batch = $this->generateBatch($urls);
+    batch_set($batch);
   }
 
   public function getNodeTypes() {
@@ -141,5 +127,24 @@ class SenateRedirectForm extends FormBase {
     }
 
     return $options;
+  }
+
+
+  protected function generateBatch($urls) {
+    $operations[] = [
+      'senate_redirect_batch_op',
+      [$urls],
+    ];
+
+    $batch = [
+      'operations' => $operations,
+      'finished' => 'senate_redirect_batch_finished',
+      'title' => t('Processing batch'),
+      'init_message' => t('Batch is starting.'),
+      'progress_message' => t('Processed @current out of @total.'),
+      'error_message' => t('Batch has encountered an error.'),
+    ];
+
+    return $batch;
   }
 }
