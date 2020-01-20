@@ -88,7 +88,7 @@
     line-height: 1.9;
     @include cr-last-child;
     margin-bottom: 20px;
-    @include cr-last-item;
+    //@include cr-last-item;
 
     b, strong {
       font-family: $FreightTextProBold-Regular;
