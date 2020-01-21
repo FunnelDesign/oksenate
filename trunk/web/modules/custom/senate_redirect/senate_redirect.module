@@ -49,7 +49,7 @@ function senate_redirect_batch_op(array $items, &$context) {
         $counter++;
         $context['sandbox']['progress']++;
 
-        $context['message'] = t('Now processing file :progress of :count', [
+        $context['message'] = t('Now processing node :progress of :count', [
           ':progress' => $context['sandbox']['progress'],
           ':count' => $context['sandbox']['max'],
         ]);
