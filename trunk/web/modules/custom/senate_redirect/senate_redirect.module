@@ -32,6 +32,7 @@ function senate_redirect_batch_op(array $items, &$context) {
       if ($counter != $limit) {
         if (!empty($url)) {
           $url_short = str_replace('http://www.oksenate.gov/', '', $url);
+          $url_short = urldecode($url_short);
 
           if (!$redirect_service->findMatchingRedirect($url_short, [], 'und')) {
             $nid = array_search($url, $items);
