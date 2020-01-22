@@ -76,7 +76,7 @@
   &__btnByAdd {
     display: inline-block;
     line-height: 1.2;
-    background: $color-blue-3;
+    background: $color-red;
     color: $color-white;
     @include font-size(18px, 24px, 32px);
     font-family: $RobotoCondensed-Light;
@@ -97,7 +97,7 @@
       vertical-align: middle;
       @include width(30px, 40px);
       @include height(44px, 55px);
-      background: url('by-address-img-tmp.png') no-repeat;
+      background: url('by-address-img-tmp-a.png') no-repeat;
       background-size: contain;
       margin-right: 18px;
     }
