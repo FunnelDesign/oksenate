@@ -35,7 +35,7 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
   }
 
   public static function getSubscribedEvents() {
-    $events[KernelEvents::REQUEST][] = array('checkAuthStatus');
+//    $events[KernelEvents::REQUEST][] = array('checkAuthStatus');
     $events[KernelEvents::REQUEST][] = array('checkNodeRedirection');
     return $events;
   }
