@@ -2218,3 +2218,15 @@ function _senate_get_archive_senator_blog_post($uid) {
 
   return !empty($archive) ? $archive : [];
 }
+
+/**
+ * Implements hook_theme_suggestions_node_alter().
+ */
+function senate_theme_suggestions_block_alter(array &$suggestions, array $vars) {
+  $webform = (!empty($vars["elements"]) && !empty($vars["elements"]["content"]["#webform"])) ?
+    $vars["elements"]["content"]["#webform"] : '';
+
+  if (!empty($webform)) {
+    $suggestions[] = 'block__webform__' . $webform->id();
+  }
+}
