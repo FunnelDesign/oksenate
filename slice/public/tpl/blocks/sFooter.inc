@@ -72,6 +72,7 @@
 </footer>
 
 <?php include 'tpl/blocks/modals/newsletter.inc'; ?>
+<?php include 'tpl/blocks/modals/meetingnotices.inc'; ?>
 <!--only for slice!!!-->
 <?php include 'tpl/includes/accessibilityCheck.inc'; ?>
 <!--only for slice!!!-->

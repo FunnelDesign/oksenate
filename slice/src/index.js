@@ -60,6 +60,7 @@ function init() {
 	initCounter($('.bSeats__countD'), false, 2);
 	initCounter($('.bSeats__countR'), false, 2);
 	changeAutocomplete();
+	scrollBlock();
 
 	new BlockVideo();
 }
@@ -154,6 +155,15 @@ function initSelect() {
 			duration: 600,
 			scrollStep: 160
 		});
+	});
+}
+
+function scrollBlock() {
+
+	$('.modal_meetingnotices .form-checkboxes, .modal_meetingnotices .form-radios ').scrollbar({
+		disableBodyScroll: false,
+		duration: 600,
+		scrollStep: 160
 	});
 }
 

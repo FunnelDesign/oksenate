@@ -192,4 +192,161 @@
       }
     }
   }
+
+  &_meetingnotices {
+
+    h2 {
+      color: #fff;
+      margin: 0 0 20px;
+      @include font-size(22px, 26px, 32px);
+    }
+
+    .pageIn__ico {
+      margin-bottom: 5px;
+    }
+
+    #{$this}__content {
+      padding: 35px 44px;
+    }
+
+    #{$this}__dialog {
+      max-width: 414px;
+    }
+
+    #{$this}__close {
+      right: 20px;
+      top: 15px;
+    }
+
+    .form {
+      text-align: center;
+
+      &__desc {
+        color: #fff;
+        text-align: center;
+        font-family: $FreightTextProBook-Regular;
+        margin: 0 0 28px;
+      }
+
+      .captcha {
+        color: #fff;
+
+        .description {
+          text-align: center;
+          margin-top: 5px;
+        }
+      }
+
+      .form-actions {
+        display: inline-block;
+
+        .ajax-progress {
+          top: 0;
+          right: auto;
+          left: 100%;
+          margin-left: 15px;
+        }
+      }
+
+      .form-checkboxes, .form-radios {
+        max-height: 200px;
+        overflow-y: auto;
+        position: relative;
+
+        & > .scroll-element,
+        & > .scroll-element div
+        {
+          background: none;
+          border: none;
+          margin: 0;
+          padding: 0;
+          position: absolute;
+          z-index: 10;
+        }
+
+        & > .scroll-element div {
+          display: block;
+          height: 100%;
+          left: 0;
+          top: 0;
+          width: 100%;
+        }
+
+        & > .scroll-element .scroll-element_track { display: none; }
+        & > .scroll-element .scroll-bar {
+          background-color: #c5c5c5;
+          display: block;
+
+          -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+          filter: alpha(opacity=0);
+          //opacity: 0;
+
+          -webkit-border-radius: 7px;
+          -moz-border-radius: 7px;
+          border-radius: 7px;
+
+          -webkit-transition: opacity 0.2s linear;
+          -moz-transition: opacity 0.2s linear;
+          -o-transition: opacity 0.2s linear;
+          -ms-transition: opacity 0.2s linear;
+          transition: opacity 0.2s linear;
+        }
+        &:hover > .scroll-element .scroll-bar,
+        & > .scroll-element.scroll-draggable .scroll-bar {
+          -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+          filter: alpha(opacity=70);
+          //opacity: 1;
+        }
+
+
+        & > .scroll-element.scroll-x {
+          bottom: 0px;
+          height: 0px;
+          left: 0;
+          min-width: 100%;
+          overflow: visible;
+          width: 100%;
+        }
+
+        & > .scroll-element.scroll-y {
+          height: 100%;
+          min-height: 100%;
+          right: 0px;
+          top: 0;
+          width: 0px;
+        }
+
+        /* scrollbar height/width & offset from container borders */
+        & > .scroll-element.scroll-x .scroll-bar { height: 7px; min-width: 10px; top: -9px; }
+        & > .scroll-element.scroll-y .scroll-bar { left: -10px; min-height: 38px; width: 5px; }
+
+        & > .scroll-element.scroll-x .scroll-element_outer { left: 2px; }
+        & > .scroll-element.scroll-x .scroll-element_size { left: -4px; }
+
+        & > .scroll-element.scroll-y .scroll-element_outer { top: 2px; }
+        & > .scroll-element.scroll-y .scroll-element_size { top: -4px; }
+
+        /* update scrollbar offset if both scrolls are visible */
+        & > .scroll-element.scroll-x.scroll-scrolly_visible .scroll-element_size { left: -11px; }
+        & > .scroll-element.scroll-y.scroll-scrollx_visible .scroll-element_size { top: -11px; }
+
+
+
+
+        .form-item {
+          padding: 5px 10px;
+          margin: 0;
+
+          &:first-child {
+            padding-top: 10px;
+          }
+
+          &:last-child {
+            padding-bottom: 10px;
+          }
+        }
+      }
+    }
+
+  }
 }

@@ -52,6 +52,78 @@ textarea {
   }
 }
 
+input[type="checkbox"],
+input[type="radio"] {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  z-index: -1;
+
+  &.error + label {
+    color: red;
+
+    &:before {
+      background: red;
+    }
+  }
+
+  &:checked, &.error:checked {
+
+    & + label:after {
+      display: block;
+    }
+  }
+
+  & + label {
+    cursor: pointer;
+    position: relative;
+    line-height: 1.2;
+    display: inline-block;
+    font-family: $FreightTextProBook-Regular;
+    color: $color-gray-2;
+    padding: 5px 0 5px 24px;
+    font-size: 14px;
+
+    &:before, &:after {
+      @include pseudo-block($left: 0, $top: 50%);
+      transform: translate(0, -50%);
+    }
+
+    &:before {
+      background: #fff;
+      width: 18px;
+      height: 18px;
+      border: 1px solid $color-blue;
+    }
+
+    &:after {
+      left: 3px;
+      margin-top: -2px;
+      background: url("check-img.png") no-repeat;
+      width: 20px;
+      height: 18px;
+      background-size: 100% 100%;
+      border: none;
+      display: none;
+    }
+  }
+}
+
+.form-checkboxes, .form-radios {
+  padding: 10px;
+  background: #fff;
+  border-radius: 5px;
+  margin-bottom: 10px;
+
+  .form-type-checkbox, .form-type-radio {
+    text-align: left;
+
+    @include sm {
+      width: auto;
+    }
+  }
+}
+
 textarea {
   resize: none !important;
   min-height: 134px !important;
