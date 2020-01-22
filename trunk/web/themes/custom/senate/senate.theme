@@ -1087,6 +1087,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       if (!empty($form["elements"]["committees"])) {
         $options = $form["elements"]["committees"]["#options"];
         $form["elements"]["committees"]["#options"] = ['all' => t('Receive notifications for all committees')] + $options;
+        $form["#validate"][] = 'webform_sign_up_committee_meeting_validate';
       }
       break;
   }
@@ -2234,5 +2235,20 @@ function senate_theme_suggestions_block_alter(array &$suggestions, array $vars) 
 
   if (!empty($webform)) {
     $suggestions[] = 'block__webform__' . $webform->id();
+  }
+}
+
+/**
+ * Sign up committee meeting validation.
+ * @param $form
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ */
+function webform_sign_up_committee_meeting_validate($form, FormStateInterface $form_state) {
+  $input = $form_state->getUserInput();
+  $committees = !empty($input["committees"]) ? $input["committees"] : [];
+  if (!empty($committees['all'])) {
+    unset($committees['all']);
+    $committees_keys = array_keys($committees);
+    $form_state->setValue('committees', $committees_keys);
   }
 }
