@@ -129,7 +129,6 @@
     </section>
   {% endif %}
 
-  {% if (press_releases or subcommittee_agencies) %}
     <section class="section section_ind_c section_bg-color_c">
       <div class="bContainer">
   {#      {% if committee_events %}#}
@@ -144,13 +143,18 @@
         {{ press_releases }}
         {{ subcommittee_agencies }}
 
+        <div class="pageIn__ico">
+          <img src="{{ theme_path }}/dist/images/titleIco/title-ico-4.png"
+               srcset="{{ theme_path }}/dist/images/titleIco/title-ico-4-2x.png 2x" alt="">
+        </div>
+        <div class="bTitle bTitle_wSub_a bTitle_gap_a">
+          <h1>{{ "Stay informed of all upcoming Meeting Notices"|t }}</h1>
+        </div>
+        <a href="#" class="btn" data-toggle="modal" data-target="#meetingnotices">
+          {{ "sign up"|t }}
+        </a>
         {#
         {% if content.field_subcomt_webform.0 %}
-          <div class="pageIn__ico">
-            <img src="{{ theme_path }}/dist/images/titleIco/title-ico-4.png"
-                 srcset="{{ theme_path }}/dist/images/titleIco/title-ico-4-2x.png 2x" alt="">
-          </div>
-
           <div class="print-hide">
             {{ content.field_subcomt_webform_title }}
           </div>
@@ -160,7 +164,7 @@
         #}
       </div>
     </section>
-  {% endif %}
+
 
 {#  <div{{ content_attributes }}>#}
 {#    {{ content }}#}

@@ -1083,13 +1083,14 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         }
       }
       break;
-    case 'webform_submission_sign_up_committee_meeting_node_1278_add_form':
-      if (!empty($form["elements"]["committees"])) {
-        $options = $form["elements"]["committees"]["#options"];
-        $form["elements"]["committees"]["#options"] = ['all' => t('Receive notifications for all committees')] + $options;
-        $form["#validate"][] = 'webform_sign_up_committee_meeting_validate';
-      }
-      break;
+  }
+
+  if (strpos($form_id, 'webform_submission_sign_up_committee_meeting_node') !== FALSE) {
+    if (!empty($form["elements"]["committees"])) {
+      $options = $form["elements"]["committees"]["#options"];
+      $form["elements"]["committees"]["#options"] = ['all' => t('Receive notifications for all committees')] + $options;
+      $form["#validate"][] = 'webform_sign_up_committee_meeting_validate';
+    }
   }
 }
 
