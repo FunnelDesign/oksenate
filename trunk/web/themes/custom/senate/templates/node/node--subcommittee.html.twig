@@ -148,11 +148,13 @@
                srcset="{{ theme_path }}/dist/images/titleIco/title-ico-4-2x.png 2x" alt="">
         </div>
         <div class="bTitle bTitle_wSub_a bTitle_gap_a">
-          <h1>{{ "Stay informed of all upcoming Meeting Notices"|t }}</h1>
+          <h2>{{ "Stay informed of all upcoming Meeting Notices"|t }}</h2>
         </div>
-        <a href="#" class="btn" data-toggle="modal" data-target="#meetingnotices">
-          {{ "sign up"|t }}
-        </a>
+        <div class="pageIn__btnWr">
+          <a href="#" class="btn" data-toggle="modal" data-target="#meetingnotices">
+            {{ "sign up"|t }}
+          </a>
+        </div>
         {#
         {% if content.field_subcomt_webform.0 %}
           <div class="print-hide">
