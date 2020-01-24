@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		prefix: 'category-',
 		prefixContent: 'id-',
 	});
+	hashScroll();
 });
 
 function init() {
@@ -63,6 +64,36 @@ function init() {
 	scrollBlock();
 
 	new BlockVideo();
+}
+
+function hashScroll() {
+	let $body = $('body, html');
+	let $bodyOnly = $('body');
+
+	if ($bodyOnly.hasClass('hashScroll_processed')) return;
+	$bodyOnly.addClass('hashScroll_processed');
+
+	let prefix = `l-`;
+	//let prefixContent = `${this.prefixContent}`;
+	let speed = 600;
+
+	if(window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
+		animation(window.location.hash.replace('#' + prefix, ''));
+	}
+
+	function animation(val) {
+		let $target = $('#' + val);
+
+		if(!$target.length) return;
+
+		window.location.hash = prefix + val;
+
+		let adminMenu = parseInt($(`body`).css('padding-top'));
+
+		let headerHeight = $('.sHeader').length ? $('.sHeader').outerHeight() : 0;
+
+		$body.animate({scrollTop: $target.offset().top - 10 - headerHeight - adminMenu}, speed);
+	}
 }
 
 function changeAutocomplete() {
