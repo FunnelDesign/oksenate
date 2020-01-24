@@ -11,7 +11,7 @@
 
           var keys = Object.keys(options[year]);
           month.innerHTML = keys.map(function (key) {
-            return `<option value="${key}">${options[year][key]}</option>`;
+            return '<option value="' + key + '">' + options[year][key] + '</option>';
           }).join();
           _this.submit();
         });
