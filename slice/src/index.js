@@ -81,6 +81,13 @@ function hashScroll() {
 		animation(window.location.hash.replace('#' + prefix, ''));
 	}
 
+	$(window).on('hashchange', function() {
+
+		if(window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
+			animation(window.location.hash.replace('#' + prefix, ''));
+		}
+	});
+
 	function animation(val) {
 		let $target = $('#' + val);
 
