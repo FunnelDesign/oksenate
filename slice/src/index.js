@@ -40,12 +40,13 @@ document.addEventListener('DOMContentLoaded', () => {
 		prefix: 'category-',
 		prefixContent: 'id-',
 	});
-
+	new sHeader();
+	addPadding();
+	hashScroll();
 });
 
 $(window).on('load', function() {
-	new sHeader();
-	hashScroll();
+	addPadding();
 });
 
 function init() {
@@ -68,6 +69,16 @@ function init() {
 	scrollBlock();
 
 	new BlockVideo();
+}
+
+function addPadding() {
+
+	let $header = $(`.sHeader`);
+	if (!$header.length) return;
+
+	let $pageWr = $(`.pageWr`);
+	if (!$pageWr.length) return;
+	$pageWr.css(`padding-top`, $header.outerHeight());
 }
 
 function hashScroll() {
