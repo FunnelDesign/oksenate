@@ -40,7 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		prefix: 'category-',
 		prefixContent: 'id-',
 	});
-	hashScroll();
 });
 
 function init() {
@@ -62,6 +61,7 @@ function init() {
 	initCounter($('.bSeats__countR'), false, 2);
 	changeAutocomplete();
 	scrollBlock();
+	hashScroll();
 
 	new BlockVideo();
 }
