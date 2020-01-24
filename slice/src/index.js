@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		prefix: 'category-',
 		prefixContent: 'id-',
 	});
+
+});
+
+$(window).on('load', function() {
 	new sHeader();
 	hashScroll();
 });
