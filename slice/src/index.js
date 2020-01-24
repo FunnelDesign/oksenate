@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		prefix: 'category-',
 		prefixContent: 'id-',
 	});
+	new sHeader();
 });
 
 function init() {
@@ -47,7 +48,6 @@ function init() {
 	new bEvent();
 	new bSort();
 	new SliderTypeA();
-	new sHeader();
 	new bTerms();
 	new bStaff();
 	new lightSlider();
