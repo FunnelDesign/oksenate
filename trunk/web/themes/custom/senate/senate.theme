@@ -1522,8 +1522,16 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'senate_artwork':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
-      $vars['top_text'] = _senate_get_block('senateartworkdescription');
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+
+      $exp_input = $view->getExposedInput();
+      $location = !empty($exp_input["location"]) ? $exp_input["location"] : '';
+      if (!empty($location)) {
+        $vars['top_text'] = $location;
+      }
+      else {
+        $vars['top_text'] = _senate_get_block('senateartworkdescription');
+      }
       break;
     case 'senate_votes':
       $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
