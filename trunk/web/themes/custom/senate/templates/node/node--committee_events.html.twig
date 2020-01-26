@@ -72,6 +72,7 @@
  * @ingroup themeable
  */
 #}
+{% set loc_delimeter = content.field_comt_evt_loc.0 ? ', ' : '' %}
 <article{{ attributes }}>
 
   <section class="section section_bg-color_f section_inner-v-centered">
@@ -101,12 +102,17 @@
       {{ title_prefix }}
       <h2>{{ label }}</h2>
       {{ title_suffix }}
+
+      {{ content.field_comt_evt_room_reference }}
+
       <div class="pageIn__info pageIn__info_gap_a">
         {{ content.field_comt_evt_subtitle }}
         {{ content.field_comt_evt_date }}
 
         <div class="pageIn__infoIt">
-          {{"Location"|t}} <strong>{{ content.field_comt_evt_room_reference }}, {{ content.field_comt_evt_loc }}</strong>
+          {% spaceless %}
+            {{"Location"|t}} <strong>{{ room_link }}{{ loc_delimeter }}{{ content.field_comt_evt_loc }}</strong>
+          {% endspaceless %}
         </div>
       </div>
 

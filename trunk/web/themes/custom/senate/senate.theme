@@ -136,6 +136,17 @@ function senate_preprocess_node(array &$vars) {
           $vars["attributes"]["class"][] = 'bTiles__item';
         }
         $vars['title'] = $node->get('title')->value;
+
+        if ($view_mode == 'full') {
+          $room = (!empty($vars["content"]["field_comt_evt_room_reference"]) &&
+            !empty($vars["content"]["field_comt_evt_room_reference"][0])) ?
+            $vars["content"]["field_comt_evt_room_reference"][0] : '';
+          if (!empty($room)) {
+            $room_url = $room['#url']->toString();
+            $room_url = Url::fromUserInput($room_url);
+            $vars['room_link'] = Link::fromTextAndUrl($room["#title"], $room_url);
+          }
+        }
         break;
       case 'subcommittee':
         $commitee = (!empty($vars["content"]["field_subcomt"]) &&
@@ -497,16 +508,11 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_comt_evt_room_reference':
     case 'field_comt_sched_event_room_ref':
-      $without_changes = ($vars['element']['#field_name'] == 'field_comt_evt_room_reference') &&
-        ($view_mode == 'full');
-
-      if (!$without_changes) {
-        $items = !empty($vars['items']) ? $vars['items'] : [];
-        foreach ($items as $key => $item) {
-          $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b btn_b_live');
-          $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
-          $vars['items'][$key]['content']['#title'] = Markup::create("<span><span>•</span></span> " . $vars['items'][$key]['content']['#title']);
-        }
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b btn_b_live');
+        $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
+        $vars['items'][$key]['content']['#title'] = Markup::create("<span><span>•</span></span> " . $vars['items'][$key]['content']['#title']);
       }
       break;
     case 'field_footer_find_senator_image':
