@@ -19,7 +19,6 @@ class EventsCustom extends QueueWorkerBase {
    * {@inheritdoc}
    */
   public function processItem($data) {
-    $a = 9;
     $events = !empty($data->events) ? $data->events : [];
     $events_sync_helper = \Drupal::hasService('events_custom.helper') ?
       \Drupal::service('events_custom.helper') : '';
@@ -37,16 +36,6 @@ class EventsCustom extends QueueWorkerBase {
         elseif (empty($existing_nodes[$src_id])) {
           $nid = $events_sync_helper->createNode($event);
         }
-      }
-
-      if (!empty($result['nids'])) {
-        $delete_nids = [];
-        foreach ($existing_nodes as $local_nid => $alias) {
-          if (!empty($alias) && !array_search($alias, $nids_alias)) {
-            $delete_nids[] = $local_nid;
-          }
-        }
-        $events_sync_helper->deleteNodes($delete_nids);
       }
     }
   }
