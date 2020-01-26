@@ -124,7 +124,8 @@ function senate_preprocess_node(array &$vars) {
           $result = implode(',', $tids);
           $params = [$result];
 
-          $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', $params);
+          $display_id = !empty($first_level_tids) ? 'block_2' : 'block_1';
+          $vars['committee_events'] = _senate_get_view('committee_events', $display_id, $params);
         }
 
         $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
