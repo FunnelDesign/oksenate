@@ -87,10 +87,10 @@ class EventsCustomHelper {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function updateNode($nid, $data, $taxonomy) {
+  public function updateNode($nid, $data) {
     $node = $this->nodeStorage->load($nid);
     if (!empty($node)) {
-      $this->updateNodeFields($node, $data, $taxonomy);
+      $this->updateNodeFields($node, $data);
       $node->save();
     }
   }
@@ -151,6 +151,9 @@ class EventsCustomHelper {
     if (!empty($new_data["desc"])) {
       $node->set('field_comt_evt_subtitle', $new_data["desc"]);
     }
+    if (!empty($new_data["room"])) {
+      $node->set('field_comt_evt_room_reference', $new_data["room"]);
+    }
   }
 
   /**
@@ -167,9 +170,10 @@ class EventsCustomHelper {
     $result['committee_id'] = !empty($event->CommitteeId) ? $event->CommitteeId : '';
     $date = !empty($event->ScheduledStart) ? $event->ScheduledStart : '';
     $result['desc'] = !empty($event->Description) ? $event->Description : '';
+    $result['room'] = !empty($event->location_room) ? $event->location_room : '';
 
-    $result['last_modified'] = $this->normalizeDateData($last_modified);
-    $result['date'] = $this->normalizeDateData($date);
+    $result['last_modified'] = $this->normalizeExternalDateData($last_modified);
+    $result['date'] = $this->normalizeExternalDateData($date);
 
     return $result;
   }
@@ -190,6 +194,27 @@ class EventsCustomHelper {
     $default_timezone = $config->get('timezone.default');
     $date_obj = new DrupalDateTime($date, DateTimeItemInterface::STORAGE_TIMEZONE);
     $date_obj->setTimezone(new \DateTimeZone($default_timezone));
+    $new_date = $date_obj->format($format);
+
+    return $new_date;
+  }
+
+  /**
+   * Normalize Date field.
+   * @param $date
+   * @param $format
+   *
+   * @return false|string
+   */
+  public function normalizeExternalDateData($date, $format = DateTimeItemInterface::DATETIME_STORAGE_FORMAT) {
+    if (empty($date)) {
+      return '';
+    }
+
+    $config = \Drupal::config('system.date');
+    $default_timezone = $config->get('timezone.default');
+    $date_obj = new DrupalDateTime($date, $default_timezone);
+    $date_obj->setTimezone(new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE));
     $new_date = $date_obj->format($format);
 
     return $new_date;

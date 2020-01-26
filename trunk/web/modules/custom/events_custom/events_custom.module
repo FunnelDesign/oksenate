@@ -83,11 +83,12 @@ function _events_custom_get_events() {
   $events =  json_decode($response);
 
   $rooms = [
-    '/230/' => ['url' => '/room-230', 'title' => 'room 230'],
-    '/419.*b/' => ['url' => '/room-419-b', 'title' => 'room 419-b'],
-    '/419.*c/' => ['url' => '/room-419-c', 'title' => 'room 419-c'],
-    '/419/' => ['url' => '/room-419', 'title' => 'room 419'],
-    '/535/' => ['url' => '/room-535', 'title' => 'room 535'],
+    '/230/' => ['url' => '/room-230', 'title' => 'room 230', 'room_nid' => 7413],
+    '/419.*b/' => ['url' => '/room-419-b', 'title' => 'room 419-b', 'room_nid' => 7416],
+    '/419.*c/' => ['url' => '/room-419-c', 'title' => 'room 419-c', 'room_nid' => 7417],
+    '/419/' => ['url' => '/room-419', 'title' => 'room 419', 'room_nid' => 7414],
+    '/511.*a/' => ['url' => '/room-511a', 'title' => 'room 511a', 'room_nid' => 10507],
+    '/535/' => ['url' => '/room-535', 'title' => 'room 535', 'room_nid' => 10508],
   ];
 
   if(!empty($events)) {
@@ -101,6 +102,7 @@ function _events_custom_get_events() {
           if(preg_match($pattern, $loc)) {
             $event->location_url = $room_info['url'];
             $event->location_title = $room_info['title'];
+            $event->location_room = $room_info['room_nid'];
             break;
           }
         }
