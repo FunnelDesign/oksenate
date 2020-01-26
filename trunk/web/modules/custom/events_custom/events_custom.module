@@ -49,26 +49,6 @@ function events_custom_preprocess_events_custom_home(&$vars) {
 
 function events_custom_preprocess_page(&$vars) {
   $vars['#attached']['library'][] = 'events_custom/events';
-
-  $events = _events_custom_get_events();
-  $events_sync_helper = \Drupal::hasService('events_custom.helper') ?
-    \Drupal::service('events_custom.helper') : '';
-
-  if (!empty($events_sync_helper) && !empty($events)) {
-    $existing_nodes = $events_sync_helper->getNodesByType('committee_events');
-
-    foreach ($events as $event) {
-      $src_id = !empty($event->Id) ? $event->Id : '';
-      $src_mod = !empty($event->LastModifiedTime) ? $event->LastModifiedTime : '';
-
-      if (!empty($existing_nodes[$src_id]) && ($existing_nodes[$src_id]['src_modified'] != $src_mod)) {
-        $events_sync_helper->updateNode($existing_nodes[$src_id]['nid'], $event);
-      }
-      elseif (empty($existing_nodes[$src_id])) {
-        $nid = $events_sync_helper->createNode($event);
-      }
-    }
-  }
 }
 
 function events_custom_test() {
