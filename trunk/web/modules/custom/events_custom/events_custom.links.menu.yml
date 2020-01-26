@@ -1,0 +1,4 @@
+events_custom.settings_form:
+  title: 'Events custom settings'
+  route_name: events_custom.settings_form
+  parent: system.admin_config_system

@@ -1,0 +1,4 @@
+services:
+  events_custom.helper:
+    class: Drupal\events_custom\Service\EventsCustomHelper
+    arguments: ['@database', '@messenger', '@entity_type.manager']

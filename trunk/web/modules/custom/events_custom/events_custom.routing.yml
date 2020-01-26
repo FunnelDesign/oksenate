@@ -13,3 +13,10 @@ events_custom.events_home_insert:
     _title: 'load'
   requirements:
     _permission: 'access content'
+events_custom.settings_form:
+  path: '/admin/config/events_custom/settings'
+  defaults:
+    _form: '\Drupal\events_custom\Form\EventsCustomForm'
+    _title: 'Events Custom Cron Settings'
+  requirements:
+    _permission: 'access administration pages'
