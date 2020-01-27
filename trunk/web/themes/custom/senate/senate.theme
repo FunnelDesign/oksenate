@@ -1540,6 +1540,24 @@ function senate_preprocess_views_view(&$vars) {
       $exp_input = $view->getExposedInput();
       $location = !empty($exp_input["location"]) ? $exp_input["location"] : '';
       if (!empty($location)) {
+        $result = !empty($view->result[0]) ? $view->result[0] : '';
+        $entity = !empty($result->_entity) ? $result->_entity : '';
+
+        if (!empty($entity)) {
+          $caption = $entity->get('field_edu_indiv_art_work_cap')->getValue();
+          $caption = !empty($caption[0]) ? $caption[0]["value"] : '';
+          $caption_array = preg_split('/<br[^>]*>/i', $caption);
+          $caption_array = !empty($caption_array) ? $caption_array : [];
+          foreach ($caption_array as $value) {
+            if (strpos($value, 'Location') !== FALSE) {
+              $value = html_entity_decode($value);
+              $value = strip_tags($value);
+              $value = str_replace('Location:', '', $value);
+              $location = trim($value);
+            }
+          }
+        }
+
         $vars['top_text'] = $location;
       }
       else {
