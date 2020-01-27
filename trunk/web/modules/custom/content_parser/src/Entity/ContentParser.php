@@ -563,7 +563,7 @@ class ContentParser extends ConfigEntityBase {
           $content = $this->loadUrl($base_url);
           $docYears = $this->getPhpQuery($content, $base_url);
           if(preg_match('/\b(?:[A-Za-z]+)?(?:\W+){1,6}?(?:[0-9]{4})?(?:\W+){1,6}?PRESS RELEASES\b/i', $content) === 1){
-            return $this->extractContent($base_url, $docYears);
+            $this->extractContent($base_url, $docYears);
           }
         }
         break;
@@ -661,14 +661,15 @@ class ContentParser extends ConfigEntityBase {
   }
 
   /**
-   * @param $base_url
-   * @param $docYears
+   * @param      $base_url
+   * @param      $docYears
+   * @param bool $skipExistingNodes
    *
    * @return bool
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
-  public function extractContent($base_url, $docYears): bool {
+  public function extractContent($base_url, $docYears, $skipExistingNodes = true): bool {
     $searchForReplace = [
       'Audio',
       'Print',
