@@ -316,6 +316,9 @@ function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'pub
     if(strpos($file_url_info, 'bandblue') !== FALSE){
       continue;
     }
+    if(strpos($file_url_info, 'barrington_bio') !== FALSE){
+      $mini = 2;
+    }
 //    $local_file_name = ltrim($file_url_info['path'], '/');
 //    $local_file_name = str_replace('/', '-', $file_url_info);
     $file_patch = $path . '/' . $file_url_info;
@@ -351,7 +354,7 @@ function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'pub
 /**
  * {@inheritdoc}
  */
-function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
+function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $base_url) {
   $elements = [];
 
   foreach ($doc->find($query) as $element) {
@@ -361,6 +364,9 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
     $alt = $element->attr('alt');
     if(strpos($src, 'headphone') !== FALSE){
       continue;
+    }
+    if(strpos($src, 'barrington_bio') !== FALSE){
+      $mini = 2;
     }
     if(strpos($src, 'printnews') !== FALSE){
       continue;
@@ -378,29 +384,54 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src') {
     $base_url_info = parse_url($base);
     $mini = basename($src);
     $uri = file_default_scheme() . '://senator_release/' . str_replace($base_url_info['path'], '', $mini);
+    $file_url = parser_get_absolute_url($base_url, pq($element)->attr($attr));
     $storage = Drupal::entityManager()
       ->getStorage('file');
 
-    $exist = $storage->loadByProperties([
-      'uri' => urldecode($uri),
-    ]);
+//    $exist = $storage->loadByProperties([
+//      'uri' => urldecode($uri),
+//    ]);
 
-    if (count($exist) > 0) {
-      $file = reset($exist);
-    } else {
-      if (strlen($uri) > 255) {
-        continue;
+    if (!file_exists(drupal_realpath($uri))) {
+      try {
+        \Drupal::httpClient()->get($file_url, [
+          'save_to' => $uri,
+          'connect_timeout' => 30,
+          'read_timeout' => 600,
+          'timeout' => 30,
+          'verify' => false
+        ]);
+      } catch (ClientException $e) {
+        $message = $e  . $base_url  .'<br>'. $uri . '<br>' . "\r\n";
+        file_put_contents('parse_errors_images.html', $message, FILE_APPEND);
+        \Drupal::logger('not_parsed_contact_data')->notice($message);
+      } catch (ConnectException $e) {
+        $message = $e  . $base_url  .'<br>'. $uri . '<br>' . "\r\n";
+        file_put_contents('parse_errors_to_images.html', $message, FILE_APPEND);
+        \Drupal::logger('not_parsed_contact_data')->notice($message);
       }
 
       $file = $storage->create([
-        'uri' => $uri,
+        'uri'    => $uri,
         'status' => 1,
       ]);
 
       $file->save();
+    }else {
+      $exist = $storage->loadByProperties([
+        'uri' => urldecode($uri),
+      ]);
+      if (count($exist) > 0) {
+        $file = reset($exist);
+      }
+      else {
+        if (strlen($uri) > 255) {
+          continue;
+        }
+      }
     }
 
-    if ($file) {
+    if (isset($file) && $file) {
       $elements[] = [
        'target_id' => $file->id(),
        'alt' => $element->attr('alt') ? substr($element->attr('alt'), 0,254) : null

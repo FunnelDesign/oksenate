@@ -594,10 +594,10 @@ class ContentParser extends ConfigEntityBase {
               continue;
             }
             $href = parser_get_absolute_url($secondBase, $href);
-            if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2017/pr20170103A.htm'){
-              $testing = 2;
-            }
             if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
+              if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2010/pr20100205a.html'){
+                $mini = 2;
+              }
               $notSeparated = FALSE;
               $notSetContactField = FALSE;
               $nodes   = \Drupal::entityTypeManager()
@@ -678,7 +678,7 @@ class ContentParser extends ConfigEntityBase {
               // Remove hash
 //              $text = preg_replace(array_keys($searchForReplaceSpecial), array_values($searchForReplaceSpecial), $text);
               $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
-              $text = preg_replace('~[^A-Za-z0-9?.\s+,\.\(\)\/\$\'\"\’\”\“\:\;\-/!]~','',$text);
+              $text = preg_replace('~[^A-Za-z0-9?.\s+,\.\(\)\/\$\'\"\’\‘\”\“\:\;\-/!]~','',$text);
               $date = preg_replace("/[^.0-9]/", '', $date);
               $date = ltrim(trim(str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $date)))));
               if ($html == 'empty') {
@@ -743,7 +743,7 @@ class ContentParser extends ConfigEntityBase {
               }
               $entity = _entity_create($this->entity_type, $this->bundle);
               try {
-                $mini = parser_download_images($docNews, $href);
+                $mini = _content_parser_retrieve_images($docNews, 'img', 'src', $href);
 
                 $entity->set('field_release_img', $mini);
 
@@ -773,7 +773,6 @@ class ContentParser extends ConfigEntityBase {
                     \Drupal::logger('not_parsed_contact_data')->notice($message);
                   }
                 }
-
               }
               catch (\Error $exception) {
                 $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
