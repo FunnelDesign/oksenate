@@ -568,6 +568,7 @@ class ContentParser extends ConfigEntityBase {
         }
         break;
       case 'four_years':
+        $this->extractContent($base_url, $doc);
         break;
       case 'senators':
         break;
