@@ -550,19 +550,28 @@ class ContentParser extends ConfigEntityBase {
     if (!$this->isCheck($doc, $base_url)) {
       return $this->results->getNoAccessCode();
     }
-    foreach ($doc->find('a') as $key=>$a) {
-      $secondBase = pq($a)->attr('href');
-      if($secondBase == '#top'){
-        continue;
-      }
-      $base_url = parser_get_absolute_url($base_url, $secondBase);
-      $base_url = preg_replace('/#.*$/', '', $base_url);
-        $content = $this->loadUrl($base_url);
-        $docYears = $this->getPhpQuery($content, $base_url);
-      if(preg_match('/\b(?:[A-Za-z]+)?(?:\W+){1,6}?(?:[0-9]{4})?(?:\W+){1,6}?PRESS RELEASES\b/i', $content) === 1){
-        return $this->extractContent($base_url, $docYears);
-      }
+    $case = $this->evalEntity(true, true, $this->getCode('field_press_release_type'), true);
+    switch ($case){
+      case 'archived':
+        foreach ($doc->find('a') as $key=>$a) {
+          $secondBase = pq($a)->attr('href');
+          if($secondBase == '#top'){
+            continue;
+          }
+          $base_url = parser_get_absolute_url($base_url, $secondBase);
+          $base_url = preg_replace('/#.*$/', '', $base_url);
+          $content = $this->loadUrl($base_url);
+          $docYears = $this->getPhpQuery($content, $base_url);
+          if(preg_match('/\b(?:[A-Za-z]+)?(?:\W+){1,6}?(?:[0-9]{4})?(?:\W+){1,6}?PRESS RELEASES\b/i', $content) === 1){
+            return $this->extractContent($base_url, $docYears);
+          }
         }
+        break;
+      case 'four_years':
+        break;
+      case 'senators':
+        break;
+    }
     return true;
   }
 
