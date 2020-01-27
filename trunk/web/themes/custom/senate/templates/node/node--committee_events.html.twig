@@ -72,7 +72,7 @@
  * @ingroup themeable
  */
 #}
-{% set loc_delimeter = content.field_comt_evt_loc.0 ? ', ' : '' %}
+{% set loc_delimeter = content.field_comt_evt_loc.0 and room_link ? ', ' : '' %}
 <article{{ attributes }}>
 
   <section class="section section_bg-color_f section_inner-v-centered">

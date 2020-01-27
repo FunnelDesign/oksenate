@@ -131,13 +131,13 @@ function events_custom_cron() {
       \Drupal::state()->set('events_custom_show_status_message', FALSE);
     }
 
+    $prev_execution = \Drupal::state()->get('events_custom.prev_execution', 0);
     \Drupal::state()->set('events_custom.next_execution', $request_time + $interval);
     \Drupal::state()->set('events_custom.prev_execution', $request_time);
+    $type = empty($prev_execution) ? 'all' : 'week';
 
     $queue = \Drupal::queue('events_custom');
-    $events = _events_custom_get_events();
-    $events = !empty($events) ? $events : [];
-    $item = (object) ['events' => $events];
+    $item = (object) ['type' => $type];
 
     $queue->createItem($item);
   }

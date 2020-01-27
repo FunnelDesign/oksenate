@@ -122,9 +122,15 @@ function senate_preprocess_node(array &$vars) {
         }
         if (!empty($tids)) {
           $result = implode(',', $tids);
-          $params = [$result];
+          $month_obj = new DrupalDateTime("this month");
 
           $display_id = !empty($first_level_tids) ? 'block_2' : 'block_1';
+          if ($display_id == 'block_1') {
+            $params = [$result, $month_obj->format('Ym')];
+          }
+          elseif ($display_id == 'block_2') {
+            $params = [$month_obj->format('Ym')];
+          }
           $vars['committee_events'] = _senate_get_view('committee_events', $display_id, $params);
         }
 

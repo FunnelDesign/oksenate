@@ -108,6 +108,11 @@ class EventsCustomForm extends ConfigFormBase {
       '#title' => $this->t("Run cron regardless of whether interval has expired."),
       '#default_value' => FALSE,
     ];
+    $form['cron_run']['cron_get_all'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t("Get all events."),
+      '#default_value' => FALSE,
+    ];
     $form['cron_run']['cron_trigger']['actions'] = ['#type' => 'actions'];
     $form['cron_run']['cron_trigger']['actions']['sumbit'] = [
       '#type' => 'submit',
@@ -141,8 +146,12 @@ class EventsCustomForm extends ConfigFormBase {
    */
   public function cronRun(array &$form, FormStateInterface &$form_state) {
     $cron_reset = $form_state->getValue('cron_reset');
+    $cron_get_all = $form_state->getValue('cron_get_all');
     if (!empty($cron_reset)) {
       $this->state->set('events_custom.next_execution', 0);
+    }
+    if (!empty($cron_get_all)) {
+      $this->state->set('events_custom.prev_execution', 0);
     }
 
     // Use a state variable to signal that cron was run manually from this form.

@@ -9,7 +9,6 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\Entity\Node;
-use Drupal\time_field\Time;
 use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeStorageInterface;
@@ -154,6 +153,9 @@ class EventsCustomHelper {
     if (!empty($new_data["room"])) {
       $node->set('field_comt_evt_room_reference', $new_data["room"]);
     }
+    if (!empty($new_data["location"])) {
+      $node->set('field_comt_evt_loc', $new_data["location"]);
+    }
   }
 
   /**
@@ -164,13 +166,14 @@ class EventsCustomHelper {
    */
   public function prepareNodeData($event) {
     $result = [];
-    $result['title'] = !empty($event->Title) ? $event->Title : '';
-    $result['id'] = !empty($event->Id) ? $event->Id : '';
-    $last_modified = !empty($event->LastModifiedTime) ? $event->LastModifiedTime : '';
-    $result['committee_id'] = !empty($event->CommitteeId) ? $event->CommitteeId : '';
-    $date = !empty($event->ScheduledStart) ? $event->ScheduledStart : '';
-    $result['desc'] = !empty($event->Description) ? $event->Description : '';
-    $result['room'] = !empty($event->location_room) ? $event->location_room : '';
+    $result['title'] = !empty($event['Title']) ? $event['Title'] : '';
+    $result['id'] = !empty($event['Id']) ? $event['Id'] : '';
+    $last_modified = !empty($event['LastModifiedTime']) ? $event['LastModifiedTime'] : '';
+    $result['committee_id'] = !empty($event['CommitteeId']) ? $event['CommitteeId'] : '';
+    $date = !empty($event['ScheduledStart']) ? $event['ScheduledStart'] : '';
+    $result['desc'] = !empty($event['Description']) ? $event['Description'] : '';
+    $result['room'] = !empty($event['location_room']) ? $event['location_room'] : '';
+    $result['location'] = (!empty($event['Location']) && empty($result['room'])) ? $event['Location'] : '';
 
     $result['last_modified'] = $this->normalizeExternalDateData($last_modified);
     $result['date'] = $this->normalizeExternalDateData($date);
@@ -262,5 +265,119 @@ class EventsCustomHelper {
           '%message' => $e->getMessage(),
         ]));
     }
+  }
+
+  /**
+   * Get all events.
+   * @param string $from
+   * Format Ymd.
+   *
+   * @return array
+   * @throws \Exception
+   */
+  public function getAllEvents($from = '20160101') {
+    $all_events = [];
+    $date_obj_now = new DrupalDateTime('now', 'UTC');
+    $date_obj = new DrupalDateTime('20160101', 'UTC');
+    $date_interval = new \DateInterval('P1M');
+
+    while ($date_obj <= $date_obj_now) {
+      $date = $date_obj->format('Ymd');
+      $date_obj->add($date_interval);
+      $url = 'https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetContentEntityByMonth/' . $date . '/-1';
+      $events = $this->sendJsonRequest($url);
+      $events = !empty($events) && is_array($events) ? $events : [];
+      $all_events = array_merge($all_events, $events);
+    }
+
+    $all_events = $this->setRoomData($all_events);
+
+    return $all_events;
+  }
+
+  /**
+   * Get week
+   * @return string
+   */
+  public function getWeekEvents() {
+    $date = date("Ymd", strtotime('monday this week'));
+    $url = 'https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetContentEntityByWeek/' . $date . '/-1';
+    $events = $this->sendJsonRequest($url);
+    $events = !empty($events) && is_array($events) ? $events : [];
+    $events = $this->setRoomData($events);
+
+    return $events;
+  }
+
+  /**
+   * Send Json request.
+   * @param $url
+   *
+   * @return array|mixed|\Psr\Http\Message\StreamInterface
+   */
+  public function sendJsonRequest($url) {
+    $client = \Drupal::httpClient();
+
+    try {
+      $response = $client->get($url);
+
+      if ($response->getStatusCode() == 200) {
+        $data = $response->getBody();
+        $data = Json::decode($data);
+      }
+      else {
+        \Drupal::logger('events_custom')->error(t('Request of "@url" failed with error "@error" (HTTP code @code).', [
+          '@url' => $url,
+          '@error' => $response->getReasonPhrase(),
+          '@code' => $response->getStatusCode()
+        ]));
+      }
+
+      return $data;
+    }
+    catch (RequestException $e) {
+      watchdog_exception('events_custom', $e);
+    }
+  }
+
+  public function setRoomData($events) {
+    $rooms = [
+      '/230/' => ['url' => '/room-230', 'title' => 'room 230', 'room_nid' => 7413],
+      '/419.*b/' => ['url' => '/room-419-b', 'title' => 'room 419-b', 'room_nid' => 7416],
+      '/419.*c/' => ['url' => '/room-419-c', 'title' => 'room 419-c', 'room_nid' => 7417],
+      '/419/' => ['url' => '/room-419', 'title' => 'room 419', 'room_nid' => 7414],
+      '/511.*a/' => ['url' => '/room-511a', 'title' => 'room 511a', 'room_nid' => 10507],
+      '/535/' => ['url' => '/room-535', 'title' => 'room 535', 'room_nid' => 10508],
+    ];
+    $ids = [];
+
+    if (!empty($events)) {
+      foreach ($events as $key => &$event) {
+        $id = !empty($event["Id"]) ? $event["Id"] : '';
+
+        if (!empty($ids[$id])) {
+          unset($events[$key]);
+        }
+        else {
+          //falback value
+          $ids[$id] = $key;
+          $event['location_url'] = '/audio-video';
+          $event['location_title'] = 'view';
+          if (!empty($event['Location'])) {
+            $loc = strtolower($event['Location']);
+            foreach ($rooms as $pattern => $room_info) {
+              if (preg_match($pattern, $loc)) {
+                $event['location_url'] = $room_info['url'];
+                $event['location_title'] = $room_info['title'];
+                $event['location_room'] = $room_info['room_nid'];
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return array_values($events);
   }
 }
