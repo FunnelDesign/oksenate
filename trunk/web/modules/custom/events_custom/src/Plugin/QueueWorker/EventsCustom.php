@@ -20,6 +20,7 @@ class EventsCustom extends QueueWorkerBase {
    */
   public function processItem($data) {
     $type = !empty($data->type) ? $data->type : '';
+    $update_all = !empty($data->update_all) ? $data->update_all : FALSE;
     $events_sync_helper = \Drupal::hasService('events_custom.helper') ?
       \Drupal::service('events_custom.helper') : '';
 
@@ -40,7 +41,8 @@ class EventsCustom extends QueueWorkerBase {
         $src_id = !empty($event['Id']) ? $event['Id'] : '';
         $src_mod = !empty($event['LastModifiedTime']) ? $event['LastModifiedTime'] : '';
 
-        if (!empty($existing_nodes[$src_id]) && ($existing_nodes[$src_id]['src_modified'] != $src_mod)) {
+        if (!empty($existing_nodes[$src_id]) &&
+          (($existing_nodes[$src_id]['src_modified'] != $src_mod) || $update_all)) {
           $events_sync_helper->updateNode($existing_nodes[$src_id]['nid'], $event);
         }
         elseif (empty($existing_nodes[$src_id])) {

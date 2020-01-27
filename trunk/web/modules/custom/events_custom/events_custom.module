@@ -132,12 +132,14 @@ function events_custom_cron() {
     }
 
     $prev_execution = \Drupal::state()->get('events_custom.prev_execution', 0);
+    $update_all = \Drupal::state()->get('events_custom.update_all', FALSE);
     \Drupal::state()->set('events_custom.next_execution', $request_time + $interval);
     \Drupal::state()->set('events_custom.prev_execution', $request_time);
+    \Drupal::state()->set('events_custom.update_all', FALSE);
     $type = empty($prev_execution) ? 'all' : 'week';
 
     $queue = \Drupal::queue('events_custom');
-    $item = (object) ['type' => $type];
+    $item = (object) ['type' => $type, 'update_all' => $update_all];
 
     $queue->createItem($item);
   }

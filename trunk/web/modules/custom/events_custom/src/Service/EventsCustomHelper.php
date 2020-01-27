@@ -156,6 +156,9 @@ class EventsCustomHelper {
     if (!empty($new_data["location"])) {
       $node->set('field_comt_evt_loc', $new_data["location"]);
     }
+    if (!empty($new_data["committee_tid"])) {
+      $node->set('field_comt_evt_committee', $new_data["committee_tid"]);
+    }
   }
 
   /**
@@ -169,7 +172,7 @@ class EventsCustomHelper {
     $result['title'] = !empty($event['Title']) ? $event['Title'] : '';
     $result['id'] = !empty($event['Id']) ? $event['Id'] : '';
     $last_modified = !empty($event['LastModifiedTime']) ? $event['LastModifiedTime'] : '';
-    $result['committee_id'] = !empty($event['CommitteeId']) ? $event['CommitteeId'] : '';
+    $result['committee_tid'] = !empty($event['committee_tid']) ? $event['committee_tid'] : '';
     $date = !empty($event['ScheduledStart']) ? $event['ScheduledStart'] : '';
     $result['desc'] = !empty($event['Description']) ? $event['Description'] : '';
     $result['room'] = !empty($event['location_room']) ? $event['location_room'] : '';
@@ -350,6 +353,7 @@ class EventsCustomHelper {
       '/535/' => ['url' => '/room-535', 'title' => 'room 535', 'room_nid' => 10508],
     ];
     $ids = [];
+    list($first_level, $second_level) = $this->getAllCommittees();
 
     if (!empty($events)) {
       foreach ($events as $key => &$event) {
@@ -374,10 +378,71 @@ class EventsCustomHelper {
               }
             }
           }
+
+          if (!empty($event["Title"])) {
+            $event['committee_tid'] = $this->getCommitteeTidByTitle($event["Title"], $first_level, $second_level);
+          }
         }
       }
     }
 
     return array_values($events);
+  }
+
+  public function getCommitteeTidByTitle($title, $first_level, $second_level) {
+    $event_tid = '';
+
+    if (strpos($title, 'Subcommittee') !== FALSE) {
+      $first_array = $second_level;
+      $second_array = $first_level;
+    }
+    else {
+      $first_array = $first_level;
+      $second_array = $second_level;
+    }
+
+    foreach ($first_array as $tid => $name) {
+      $spec_name = str_replace(' and ', ' & ', $name);
+
+      if (strpos($title, $name) !== FALSE) {
+        $event_tid = $tid;
+      }
+      else if (strpos($title, $spec_name) !== FALSE) {
+        $event_tid = $tid;
+      }
+    }
+
+    if (empty($event_tid)) {
+      foreach ($second_array as $tid => $name) {
+        $spec_name = str_replace(' and ', ' & ', $name);
+
+        if (strpos($title, $name) !== FALSE) {
+          $event_tid = $tid;
+        }
+        else if (strpos($title, $spec_name) !== FALSE) {
+          $event_tid = $tid;
+        }
+      }
+    }
+
+    return $event_tid;
+  }
+
+  public function getAllCommittees() {
+    $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')
+      ->loadTree('committees', 0, NULL, FALSE);
+    $first_level_tids = [];
+    $second_level_tids = [];
+    foreach ($tree as $term) {
+      $parent = (!empty($term->parents) && isset($term->parents[0])) ? $term->parents[0] : '';
+      if ($parent === '0') {
+        $first_level_tids[$term->tid] = $term->name;
+      }
+      else {
+        $second_level_tids[$term->tid] = $term->name;
+      }
+    }
+
+    return [$first_level_tids, $second_level_tids];
   }
 }
