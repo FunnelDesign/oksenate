@@ -867,14 +867,11 @@ class ContentParser extends ConfigEntityBase {
             ///get senator id
             $nodes = \Drupal::entityTypeManager()
               ->getStorage('node')
-              ->loadByProperties(['title' => $base_url]);
+              ->loadByProperties(['field_temp_old_url' => $base_url]);
             $senator = $nodes[key($nodes)]->id();
-            //        foreach ( $nodes as $node ) {
-            //          $senator = $node->id();
-            //        }
             $news = \Drupal::entityTypeManager()
               ->getStorage('node')
-              ->loadByProperties(['field_press_release_old_url' => $href]);
+              ->loadByProperties(['title' => $text]);
             if(is_array($news) && !empty($news)){
               $entity = $news[key($news)];
               foreach ($entity->field_senator as $existSenator){
