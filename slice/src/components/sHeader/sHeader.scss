@@ -97,6 +97,7 @@
   $fist-li--active: #{$fist-ul} " > li.menu-item--active-trail";
   $fist-li--hover: #{$fist-ul} " > li:hover";
   $fist-a: #{$fist-li} > a;
+  $fist-span: #{$fist-li} > span;
 
   $second-ul: #{$fist-li} > ul;
   $second-li: #{$second-ul} > li;
@@ -181,8 +182,9 @@
 
   #{$fist-li--active}, #{$fist-li--hover} {
 
-    & > a {
+    & > a, & > span {
       color: #ce5155;
+      cursor: pointer;
 
       @media (min-width: $bp-small) {
         color: $color-white;
@@ -196,7 +198,7 @@
     }
   }
 
-  #{$fist-a} {
+  #{$fist-a}, #{$fist-span} {
     color: $color-white;
     text-decoration: none;
     display: block;
