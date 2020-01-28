@@ -658,7 +658,7 @@ class ContentParser extends ConfigEntityBase {
     $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
     $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
     $title = str_replace("&", '&amp;', $title);
-    if(empty($imageAltArray)){
+    if(!empty($imageAltArray)){
       $text = $this->trimAltFromContent($text, $imageAltArray);
     }
     $title = HTML::normalize($title);
