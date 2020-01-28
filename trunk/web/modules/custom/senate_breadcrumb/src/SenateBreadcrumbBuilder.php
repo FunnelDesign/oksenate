@@ -38,6 +38,8 @@ use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\easy_breadcrumb\EasyBreadcrumbBuilder;
+use Drupal\custom_module\Plugin\views\argument\CustomNidToAuthor;
+
 
 /**
  * Primary implementation for the Easy Breadcrumb builder.
@@ -286,6 +288,10 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
           $arg = explode('/', $current_path);
           $senator_nid = !empty($arg[2]) ? $arg[2] : '';
           $links = [];
+
+          if (!empty($senator_nid) && !is_numeric($senator_nid)) {
+            $senator_nid = CustomNidToAuthor::convertSenatorNameToNid($senator_nid);
+          }
 
           if (!empty($senator_nid) && is_numeric($senator_nid)) {
             $this->useEasyBreadcrumb = FALSE;
