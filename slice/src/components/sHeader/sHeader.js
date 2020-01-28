@@ -58,6 +58,8 @@ window.sHeader = class {
 				$accessibility.hide();
 				addPadding();
 			} else {
+				$accessibility.show();
+				$accessibility.removeClass(`bMessage_hide`);
 				$accessibility.on('ev.hide', () => {
 
 					$.cookie('accessibility_message_was_shown', "1", {

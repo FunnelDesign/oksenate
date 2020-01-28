@@ -3,7 +3,6 @@ const $ = jQuery;
 class CustomEv {
 
 	constructor() {
-		this.addAccessibilityCookie();
 		this.customClick();
 	}
 
@@ -50,25 +49,6 @@ class CustomEv {
 
 			$('#views-exposed-form-senators-page-1 .form-submit').on('click touch', () => {
 				$('.sSen .sSen__res').addClass('sSen__res_loading');
-			});
-		}
-	}
-
-	addAccessibilityCookie() {
-		let $accessibility = $('#accessibility');
-
-		if (!$accessibility.length) return;
-		let cookeName = 'accessibility_message_was_shown';
-
-		if ($.cookie(cookeName)) {
-			$accessibility.hide();
-		} else {
-			$accessibility.on('ev.hide', () => {
-
-				$.cookie('accessibility_message_was_shown', "1", {
-					expires: 86400,
-					path: '/'
-				});
 			});
 		}
 	}
