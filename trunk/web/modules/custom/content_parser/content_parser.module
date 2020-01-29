@@ -365,9 +365,6 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $b
     if(strpos($src, 'headphone') !== FALSE){
       continue;
     }
-    if(strpos($src, 'barrington_bio') !== FALSE){
-      $mini = 2;
-    }
     if(strpos($src, 'printnews') !== FALSE){
       continue;
     }
@@ -387,20 +384,13 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $b
     $file_url = parser_get_absolute_url($base_url, pq($element)->attr($attr));
     $storage = Drupal::entityManager()
       ->getStorage('file');
-
-//    $exist = $storage->loadByProperties([
-//      'uri' => urldecode($uri),
-//    ]);
-
     if (!file_exists(drupal_realpath($uri))) {
       try {
-        $result = \Drupal::httpClient()->get($file_url, [
-          'save_to' => $uri,
+        $downloadedFile = \Drupal::httpClient()->get($file_url, [
           'connect_timeout' => 30,
-          'read_timeout' => 600,
-          'timeout' => 30,
-          'verify' => false
-        ]);
+          'read_timeout' => 120,
+          'timeout' => 120]);
+
       } catch (ClientException $e) {
         $message = $e  . $base_url  .'<br>'. $uri . '<br>' . "\r\n";
         file_put_contents('parse_errors_images.html', $message, FILE_APPEND);
@@ -412,13 +402,15 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $b
         \Drupal::logger('not_parsed_contact_data')->notice($message);
         continue;
       }
-
-      $file = $storage->create([
-        'uri'    => $uri,
-        'status' => 1,
-      ]);
-
-      $file->save();
+      if($downloadedFile->getStatusCode() == 200){
+        $data = (string) $downloadedFile->getBody();
+        if(!empty($data)){
+          $file = file_save_data($data, $uri);
+        }
+      }
+      else{
+        continue;
+      }
     }else {
       $exist = $storage->loadByProperties([
         'uri' => urldecode($uri),
@@ -432,7 +424,6 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $b
         }
       }
     }
-
     if (isset($file) && $file) {
       $elements[] = [
        'target_id' => $file->id(),

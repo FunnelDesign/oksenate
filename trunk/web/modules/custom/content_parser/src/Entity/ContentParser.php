@@ -658,9 +658,6 @@ class ContentParser extends ConfigEntityBase {
     $text = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $text)));
     $title = str_replace("\r\n", NULL, trim(preg_replace('/\s{2,}/', ' ', $title)));
     $title = str_replace("&", '&amp;', $title);
-    if(!empty($imageAltArray)){
-      $text = $this->trimAltFromContent($imageAltArray, $text);
-    }
     $title = HTML::normalize($title);
     $title = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>)|(<strong>\s*<\/strong>))*<\/?p>/", '', $title);
     $text = HTML::normalize($text);
@@ -675,6 +672,9 @@ class ContentParser extends ConfigEntityBase {
       $headerString = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/p>/", '', $headerString);
 
       $headerString = HTML::normalize($headerString);
+      if(!empty($imageAltArray)){
+        $headerString = $this->trimAltFromContent($imageAltArray, $headerString);
+      }
       $bodyString = preg_replace("/<p[^>]*>(\s|&nbsp;|(<b>\s*<\/b>))*<\/p>/", '', $bodyString);
       $bodyString = HTML::normalize($bodyString);
       $filter = new \Zend\Filter\StripTags();
