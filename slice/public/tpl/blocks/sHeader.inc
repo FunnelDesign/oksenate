@@ -87,7 +87,7 @@
                 <li><a href="#">Committees</a></li>
                 <li><a href="#">Calendar</a></li>
                 <li><a href="#">Press & Media</a></li>
-                <li><a href="#">Contacts</a>
+                <li><span href="#">Contacts</span>
                   <ul class="menu">
                     <li><a href="#">Lorem ips</a></li>
                     <li class="menu-item--active-trail"><a href="#">Lorem ips</a></li>
