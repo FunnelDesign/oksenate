@@ -733,6 +733,9 @@ class ContentParser extends ConfigEntityBase {
       $notSeparated       = FALSE;
       $notSetContactField = FALSE;
       $href = parser_get_absolute_url($base_url, $href);
+      if($href == 'http://www.oksenate.gov/news/press_releases/press_releases_2014/pr20141231a.htm'){
+        $forTestingPurposes = 1;
+      }
       if (strpos($href, 'news/press_releases/press_releases_') !== FALSE) {
         if(!$senator){
           $nodes              = \Drupal::entityTypeManager()

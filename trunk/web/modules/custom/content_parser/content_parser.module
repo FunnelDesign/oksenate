@@ -394,7 +394,7 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $b
 
     if (!file_exists(drupal_realpath($uri))) {
       try {
-        \Drupal::httpClient()->get($file_url, [
+        $result = \Drupal::httpClient()->get($file_url, [
           'save_to' => $uri,
           'connect_timeout' => 30,
           'read_timeout' => 600,
