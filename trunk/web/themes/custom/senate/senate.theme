@@ -1004,6 +1004,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       $form['elements']['date_fieldset']['date']['#attributes']['placeholder'] = 'Start Day';
       $form['elements']['date_fieldset']['end_time']['#attributes']['placeholder'] = 'End Day';
       $form['elements']['date_fieldset']['date']['#date_time_format'] = 'h:i a';
+      $form['elements']['date_fieldset']['end_time']['#date_time_format'] = 'h:i a';
       break;
     case 'views_exposed_form':
       $storage = $form_state->getStorage();
