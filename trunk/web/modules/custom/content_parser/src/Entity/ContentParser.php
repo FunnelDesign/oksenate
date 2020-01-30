@@ -911,6 +911,7 @@ class ContentParser extends ConfigEntityBase {
 
           $entity->set('field_press_release_old_url', $href);
           $entity->set('field_press_release_is_archived', 1);
+          $entity->set('field_press_release_migration_nu', 1);
           $entity->set('title', $text);
           $entity->set('body', $html);
           $entity->set('field_press_release_header', isset($bodyHeader) ? $bodyHeader : '');
