@@ -937,13 +937,13 @@ class ContentParser extends ConfigEntityBase {
           }
         }
         catch (\Error $exception) {
-          $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
+          $message = utf8_encode('Node not saved <br>' . $base_url . '<br>' . $href . '<br>' . "\r\n");
           file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
         }
         catch (\Exception $exception) {
-          $message = utf8_encode($exception->getMessage() . $base_url . '<br>' . $href . '<br>' . "\r\n");
+          $message = utf8_encode('Node not saved <br>' . $base_url . '<br>' . $href . '<br>' . "\r\n");
           file_put_contents('parse_errors_sys.html', $message, FILE_APPEND);
           \Drupal::logger('not_parsed')->notice($message);
           continue;
