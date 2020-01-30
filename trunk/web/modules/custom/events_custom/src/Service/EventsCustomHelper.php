@@ -159,6 +159,10 @@ class EventsCustomHelper {
     if (!empty($new_data["committee_tid"])) {
       $node->set('field_comt_evt_committee', $new_data["committee_tid"]);
     }
+
+    if ($op == 'create') {
+      $node->set('status', 0);
+    }
   }
 
   /**
@@ -236,8 +240,7 @@ class EventsCustomHelper {
     try {
       $query = $this->database->select('node_field_data', 'n')
         ->fields('n', ['nid'])
-        ->condition('n.type', $bundle)
-        ->condition('n.status', 1);
+        ->condition('n.type', $bundle);
 
       $query->innerJoin('node__field_comt_evt_src_id', 'src_id', 'src_id.entity_id = n.nid AND src_id.deleted = 0');
       $query->fields('src_id', ['field_comt_evt_src_id_value']);
