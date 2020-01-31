@@ -239,6 +239,32 @@
     }
   }
 
+  &__desc {
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #b1aeae;
+
+    @include sm {
+      padding-bottom: 64px;
+      margin-bottom: 74px;
+    }
+  }
+
+  &__descIn {
+    max-width: 570px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 14px;
+    font-family: $FreightTextProBook-Regular;
+    @include cr-last-child;
+    line-height: 1.4;
+
+    @include sm {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  }
+
   &__loader {
     text-align: center;
     margin: 20px 0;
