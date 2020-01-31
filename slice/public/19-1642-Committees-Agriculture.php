@@ -40,6 +40,15 @@
     <section class="section section_ind_f section_bg-color_b">
 
       <div class="bContainer">
+        <div class="pageIn__desc">
+          <div class="pageIn__descIn">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque deserunt distinctio doloremque eligendi ex id iusto libero, magnam, minus nobis numquam officiis perspiciatis quasi quibusdam quos suscipit tenetur. Consequatur, in.
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque deserunt distinctio doloremque eligendi ex id iusto libero, magnam, minus nobis numquam officiis perspiciatis quasi quibusdam quos suscipit tenetur. Consequatur, in.
+            </p>
+          </div>
+        </div>
+
         <div class="senators senators_col senators_dark">
 
           <div class="senators__items">
