@@ -1653,7 +1653,7 @@ function senate_preprocess_paragraph(array &$vars) {
   switch ($bundle) {
     case 'publications':
       $node = \Drupal::routeMatch()->getParameter('node');
-      if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
+      if (!empty($node) && $node->id() == SENATE_CONTACTS_LANDING_NID) {
         $vars['icon_attributes'] = ' bTiles__ico_a';
       }
 
