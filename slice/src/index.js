@@ -67,6 +67,7 @@ function init() {
 	initCounter($('.bSeats__countR'), false, 2);
 	changeAutocomplete();
 	scrollBlock();
+	changePlaceholderTime();
 
 	new BlockVideo();
 }
@@ -125,6 +126,17 @@ function changeAutocomplete() {
 
 	$zip.attr('autocomplete', 'new-password');
 
+}
+
+function changePlaceholderTime() {
+	let $inputStart = $(`.form-item-date-time input`);
+	let $inputEnd = $(`.form-item-end-time-time input`);
+
+	if (!$inputStart.length) return;
+	if (!$inputEnd.length) return;
+
+	$inputStart.attr('placeholder', 'Start Time');
+	$inputEnd.attr('placeholder', 'End Time');
 }
 
 function initCounter(wrap, easing, speed) {
