@@ -1255,7 +1255,7 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-3.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-3-2x.png 2x\"  alt=\"\">
         </div>";
     $form['district']['#suffix'] = "<div class=\"sSen__filLink\">
-            <a href=\"$theme_path/dist/OKSenate-DistrictMaps.pdf\" target=\"_blank\">see district map</a>
+            <a href=\"/OKSenateDistrictMap\" target=\"_blank\">see district map</a>
         </div></div>";
   }
 
