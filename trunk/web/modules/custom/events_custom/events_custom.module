@@ -192,9 +192,11 @@ function _events_custom_get_events_timetable() {
     ->condition('nfd.status', 1);
   $query->innerJoin('node__field_comt_evt_date', 'start_date', 'start_date.entity_id = nfd.nid AND start_date.deleted = 0 AND start_date.bundle = \'committee_events\'');
   $query->innerJoin('node__field_comt_evt_to_date', 'end_date', 'end_date.entity_id = nfd.nid AND end_date.deleted = 0 AND end_date.bundle = \'committee_events\'');
+  $query->innerJoin('node__field_comt_evt_src_id', 'src_id', 'src_id.entity_id = nfd.nid AND src_id.deleted = 0 AND src_id.bundle = \'committee_events\'');
   $query->fields('nfd', ['nid']);
   $query->fields('start_date', ['field_comt_evt_date_value']);
   $query->fields('end_date', ['field_comt_evt_to_date_value']);
+  $query->fields('src_id', ['field_comt_evt_src_id_value']);
   $query->orderBy('start_date.field_comt_evt_date_value', 'ASC');
 
 //  $a = $query->__toString();
@@ -217,6 +219,7 @@ function _events_custom_get_events_timetable_normalize($result = []) {
     $nid = !empty($value->nid) ? $value->nid : '';
     $start = !empty($value->field_comt_evt_date_value) ? $value->field_comt_evt_date_value : '';
     $end = !empty($value->field_comt_evt_to_date_value) ? $value->field_comt_evt_to_date_value : '';
+    $meetingId = !empty($value->field_comt_evt_src_id_value) ? $value->field_comt_evt_src_id_value : '';
 
     if (!empty($start)) {
       $start_date_obj = new DrupalDateTime($start, $timezone_db);
@@ -233,6 +236,7 @@ function _events_custom_get_events_timetable_normalize($result = []) {
       'nid' => $nid,
       'startUtc' => $start,
       'endUtc' => $end,
+      'meetingId' => $meetingId,
     ];
   }
 
