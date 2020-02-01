@@ -136,7 +136,7 @@ function events_custom_cron() {
     \Drupal::state()->set('events_custom.next_execution', $request_time + $interval);
     \Drupal::state()->set('events_custom.prev_execution', $request_time);
     \Drupal::state()->set('events_custom.update_all', FALSE);
-    $type = empty($prev_execution) ? 'all' : 'week';
+    $type = empty($prev_execution) ? 'all' : 'month';
 
     $queue = \Drupal::queue('events_custom');
     $item = (object) ['type' => $type, 'update_all' => $update_all];
