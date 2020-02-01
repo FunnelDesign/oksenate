@@ -36,10 +36,12 @@ var controllerEvents = {
 
         event.status = _this.EVENT_NOT_STARTED;
         event.statusChanged = false;
+        event.sentRequest = false;
 
         if ((eventStart <= now) && (eventEnd >= now)) {
           var url = _this.apiUrl + event.meetingId;
           url = controllerEvents.TEST_MODE ? url + '/test' : url;
+          event.sentRequest = true;
           _this.getEventInfo(url, _this.setEventStatus, event);
         }
 
@@ -71,11 +73,13 @@ var controllerEvents = {
         url = controllerEvents.TEST_MODE ? url + '/test' : url;
 
         if ((eventStart <= now) && (eventEnd >= now)) {
-          if (!isOnline) {
+          if (!isOnline && !event.sentRequest) {
+            event.sentRequest = true;
             _this.getEventInfo(url, _this.setEventStatus, event);
           }
         }
-        else if (isOnline) {
+        else if (isOnline && !event.sentRequest) {
+          event.sentRequest = true;
           _this.getEventInfo(url, _this.setEventStatus, event);
         }
       });
@@ -106,6 +110,7 @@ var controllerEvents = {
 
   setEventStatus: function (data, event) {
     var eventStatus = data.EntityStatus || controllerEvents.EVENT_NOT_STARTED;
+    event.sentRequest = false;
 
     if (event.status !== eventStatus) {
       event.status = eventStatus;
