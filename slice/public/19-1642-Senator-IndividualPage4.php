@@ -36,6 +36,11 @@
                   <div class="bSenBio__dis">
                     district 47
                   </div>
+                <div class="bSenBio__btnWr">
+                    <a href="#" class="btn">
+                        visit pto tem page
+                    </a>
+                </div>
 
                 </div>
 
