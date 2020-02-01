@@ -26,6 +26,12 @@
 
   &__btnWr {
     margin-top: 10px;
+    text-align: center;
+
+    @include sm {
+      margin-top: 23px;
+      text-align: left;
+    }
   }
 
   &__dis {
