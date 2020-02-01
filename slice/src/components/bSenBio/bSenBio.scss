@@ -24,6 +24,10 @@
     }
   }
 
+  &__btnWr {
+    margin-top: 10px;
+  }
+
   &__dis {
     font-family: $RobotoCondensed-Regular;
     @include font-size(14px, 16px, 16px);
