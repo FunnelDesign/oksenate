@@ -465,6 +465,12 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars['items'][$key]['wrappers'] = 'sFinder__btn-wrap';
       }
       break;
+    case 'field_senato_ext_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
+      }
+      break;
     case 'field_leadership_link':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {

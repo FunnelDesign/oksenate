@@ -103,6 +103,11 @@
                             <div class="bSenBio__dis">
                                 {{ content.field_senator_district_taxonomy[0]['#title'] }}
                             </div>
+                            {% if content.field_senato_ext_link|render|trim is not empty %}
+                              <div class="bSenBio__btnWr">
+                                {{ content.field_senato_ext_link }}
+                              </div>
+                            {% endif %}
                         </div>
                         {{ content.field_senator_social_links_par }}
                         <div class="bSenBio__info">
