@@ -129,7 +129,7 @@ var controllerEvents = {
 var viewEvents = {
 
   init: function() {
-    this.eventsElem = document.querySelectorAll('a.bTiles__btn');
+    this.eventsElem = document.querySelectorAll('a.events_custom_timetable');
 
     this.render();
   },

@@ -6,6 +6,7 @@ use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 class EventsController extends ControllerBase {
 
@@ -58,6 +59,22 @@ class EventsController extends ControllerBase {
   }
 
   public function getTestEvent($meeting_id) {
-    return ['EntityStatus' => 1];
+    $result = _events_custom_get_events_timetable();
+    $result = !empty($result) ? $result : [];
+    $now = new DrupalDateTime('now', 'UTC');
+    $event = ['EntityStatus' => 0];
+
+    foreach ($result as $value) {
+      if ($value['meetingId'] == $meeting_id) {
+        $from = new DrupalDateTime($value['startUtc'], 'UTC');
+        $to = new DrupalDateTime($value['endUtc'], 'UTC');
+
+        if (($from <= $now) && ($to >= $now)) {
+          $event['EntityStatus'] = 1;
+        }
+      }
+    }
+
+    return $event;
   }
 }
