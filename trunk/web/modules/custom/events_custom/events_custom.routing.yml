@@ -20,3 +20,12 @@ events_custom.settings_form:
     _title: 'Events Custom Cron Settings'
   requirements:
     _permission: 'access administration pages'
+events_custom.harmony_sliq_event:
+  path: '/events-custom/get-complete-meeting/{meeting_id}/{event_type}'
+  defaults:
+    _controller: '\Drupal\events_custom\Controller\EventsController::getCompleteMeeting'
+    event_type: 'prod'
+  requirements:
+    _permission: 'access content'
+  options:
+    no_cache: TRUE

@@ -9,7 +9,7 @@ var modelEvents = {
 /* ======= Controller ======= */
 
 var controllerEvents = {
-  apiUrl: 'https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetCompleteMeeting?meetingId=',
+  apiUrl: '/events-custom/get-complete-meeting/',
   EVENT_OPENED: -4,
   EVENT_CANCELLED: -3,
   EVENT_END_PENDING: -2,
@@ -19,6 +19,7 @@ var controllerEvents = {
   EVENT_PAUSED: 2,
   EVENT_IN_CAMERA: 101,
   EVENT_IN_CAMERA_PAUSED: 102,
+  TEST_MODE: false,
 
   init: function() {
     if (drupalSettings.hasOwnProperty('events_custom')) {
@@ -38,6 +39,7 @@ var controllerEvents = {
 
         if ((eventStart <= now) && (eventEnd >= now)) {
           var url = _this.apiUrl + event.meetingId;
+          url = controllerEvents.TEST_MODE ? url + '/test' : url;
           _this.getEventInfo(url, _this.setEventStatus, event);
         }
 
@@ -66,6 +68,7 @@ var controllerEvents = {
         var eventEnd = moment.utc(event.endUtc);
         var isOnline = _this.checkEventStatusOnline(event);
         var url = _this.apiUrl + event.meetingId;
+        url = controllerEvents.TEST_MODE ? url + '/test' : url;
 
         if ((eventStart <= now) && (eventEnd >= now)) {
           if (!isOnline) {
