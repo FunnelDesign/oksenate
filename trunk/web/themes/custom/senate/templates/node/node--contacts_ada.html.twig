@@ -97,6 +97,11 @@
     <section class="section section_ind_c section_bg-color_c">
 
         <div class="bContainer">
+          {% if content.body|render is not empty %}
+            <div class="bWrap bWrap_size_a bWrap_f_a bWrap_f_a_16 bWrap_cl_a bWrap_gap_b">
+              {{ content.body }}
+            </div>
+          {% endif %}
             {{ content.field_contacts_ada_staff_title }}
             <div class="pageIn__info pageIn__info_a pageIn__info_gap_a pageIn__info_cent">
                 {{ content.field_contacts_ada_staff_text }}
