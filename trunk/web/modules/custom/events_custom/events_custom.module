@@ -6,7 +6,8 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 
 /**
  * Implements hook_theme().
@@ -143,4 +144,97 @@ function events_custom_cron() {
 
     $queue->createItem($item);
   }
+}
+
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function events_custom_preprocess_node(array &$vars) {
+  global $base_path;
+  $node = $vars['node'];
+  $view_mode = !empty($vars["view_mode"]) ? $vars["view_mode"] : '';
+
+  if (!empty($node)) {
+
+    switch ($node->bundle()) {
+      case 'committee_events':
+        $timetable = _events_custom_get_events_timetable();
+
+        $vars['#attached']['library'][] = 'events_custom/events_timetable';
+        $vars['#attached']['drupalSettings']['events_custom']['timetable'] = $timetable;
+        break;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view();
+ */
+function events_custom_preprocess_views_view(&$vars) {
+  $view = $vars['view'];
+  $id = $view->id();
+  $display_id = $view->current_display;
+
+  switch ($id) {
+    case 'committee_events':
+      $timetable = _events_custom_get_events_timetable();
+
+      $vars['#attached']['library'][] = 'events_custom/events_timetable';
+      $vars['#attached']['drupalSettings']['events_custom']['timetable'] = $timetable;
+      break;
+  }
+}
+
+function _events_custom_get_events_timetable() {
+  $query = \Drupal::database()->select('node_field_data', 'nfd')
+    ->condition('nfd.type', 'committee_events')
+    ->condition('nfd.status', 1);
+  $query->innerJoin('node__field_comt_evt_date', 'start_date', 'start_date.entity_id = nfd.nid AND start_date.deleted = 0 AND start_date.bundle = \'committee_events\'');
+  $query->innerJoin('node__field_comt_evt_to_date', 'end_date', 'end_date.entity_id = nfd.nid AND end_date.deleted = 0 AND end_date.bundle = \'committee_events\'');
+  $query->fields('nfd', ['nid']);
+  $query->fields('start_date', ['field_comt_evt_date_value']);
+  $query->fields('end_date', ['field_comt_evt_to_date_value']);
+  $query->orderBy('start_date.field_comt_evt_date_value', 'ASC');
+
+//  $a = $query->__toString();
+
+  $result = $query->execute()
+    ->fetchAll();
+  $result = !empty($result) ? $result : [];
+
+  $timetable = _events_custom_get_events_timetable_normalize($result);
+
+  return $timetable;
+}
+
+function _events_custom_get_events_timetable_normalize($result = []) {
+  $timetable = [];
+  $timezone_db = DateTimeItemInterface::STORAGE_TIMEZONE;
+  $utc_timezone = new DateTimeZone('UTC');
+
+  foreach ($result as $key => $value) {
+    $nid = !empty($value->nid) ? $value->nid : '';
+    $start = !empty($value->field_comt_evt_date_value) ? $value->field_comt_evt_date_value : '';
+    $end = !empty($value->field_comt_evt_to_date_value) ? $value->field_comt_evt_to_date_value : '';
+
+    if (!empty($start)) {
+      $start_date_obj = new DrupalDateTime($start, $timezone_db);
+      $start_date_obj->setTimezone($utc_timezone);
+      $start = $start_date_obj->format('Y-m-d H:i:s');
+    }
+    if (!empty($end)) {
+      $end_date_obj = new DrupalDateTime($end, $timezone_db);
+      $end_date_obj->setTimezone($utc_timezone);
+      $end = $end_date_obj->format('Y-m-d H:i:s');
+    }
+
+    $timetable[] = [
+      'nid' => $nid,
+      'startUtc' => $start,
+      'endUtc' => $end,
+    ];
+  }
+
+  return $timetable;
 }

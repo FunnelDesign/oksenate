@@ -6,3 +6,14 @@ events:
     - core/drupal
     - core/drupalSettings
     - core/jquery.once
+events_timetable:
+  js:
+    js/lib/moment.min.js: {}
+    js/lib/moment-timezone-with-data.min.js: {}
+    js/eventsCustomMVC.js: {}
+    js/eventsCustomTimetable.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/jquery.once
