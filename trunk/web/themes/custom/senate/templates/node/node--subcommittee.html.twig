@@ -112,6 +112,13 @@
   {% if content.field_subcomt_app_mmb.0 %}
     <section class="section section_ind_f section_bg-color_b">
       <div class="bContainer">
+        {% if content.field_subcommittee_desc|render|trim is not empty %}
+          <div class="pageIn__desc">
+            <div class="pageIn__descIn">
+              {{ content.field_subcommittee_desc }}
+            </div>
+          </div>
+        {% endif %}
         <div class="senators senators_col senators_dark">
           {{ content.field_subcomt_app_mmb }}
 
