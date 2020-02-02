@@ -520,11 +520,18 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_comt_evt_room_reference':
     case 'field_comt_sched_event_room_ref':
+      $node = !empty($vars["element"]["#object"]) ? $vars["element"]["#object"] : '';
+      $nid = !empty($node) ? $node->id() : '';
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b');
         $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
         $vars['items'][$key]['content']['#title'] = Markup::create($vars['items'][$key]['content']['#title']);
+
+        if ($vars['element']['#field_name'] == 'field_comt_evt_room_reference') {
+          $vars['items'][$key]['content']['#options']['attributes']['data-nid'] = $nid;
+          $vars['items'][$key]['content']['#options']['attributes']['class'][] = 'events_custom_timetable';
+        }
       }
       break;
     case 'field_footer_find_senator_image':

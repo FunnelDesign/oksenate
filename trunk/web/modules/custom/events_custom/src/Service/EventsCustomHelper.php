@@ -147,6 +147,9 @@ class EventsCustomHelper {
     if (!empty($new_data["date"])) {
       $node->set('field_comt_evt_date', $new_data["date"]);
     }
+    if (!empty($new_data["date_finish"])) {
+      $node->set('field_comt_evt_to_date', $new_data["date_finish"]);
+    }
     if (!empty($new_data["desc"])) {
       $node->set('field_comt_evt_subtitle', $new_data["desc"]);
     }
@@ -178,12 +181,14 @@ class EventsCustomHelper {
     $last_modified = !empty($event['LastModifiedTime']) ? $event['LastModifiedTime'] : '';
     $result['committee_tid'] = !empty($event['committee_tid']) ? $event['committee_tid'] : '';
     $date = !empty($event['ScheduledStart']) ? $event['ScheduledStart'] : '';
+    $date_finish = !empty($event['ScheduledEnd']) ? $event['ScheduledEnd'] : '';
     $result['desc'] = !empty($event['Description']) ? $event['Description'] : '';
     $result['room'] = !empty($event['location_room']) ? $event['location_room'] : '';
     $result['location'] = (!empty($event['Location']) && empty($result['room'])) ? $event['Location'] : '';
 
     $result['last_modified'] = $this->normalizeExternalDateData($last_modified);
     $result['date'] = $this->normalizeExternalDateData($date);
+    $result['date_finish'] = $this->normalizeExternalDateData($date_finish);
 
     return $result;
   }
@@ -277,17 +282,19 @@ class EventsCustomHelper {
    * Get all events.
    * @param string $from
    * Format Ymd.
+   * @param string $to
    *
    * @return array
    * @throws \Exception
    */
-  public function getAllEvents($from = '20160101') {
+  public function getAllEvents($from = '20160101', $to = '') {
     $all_events = [];
-    $date_obj_now = new DrupalDateTime('now', 'UTC');
-    $date_obj = new DrupalDateTime('20160101', 'UTC');
+    $to = !empty($to) ? $to : 'now';
+    $date_obj = new DrupalDateTime($from, 'UTC');
+    $date_obj_to = new DrupalDateTime($to, 'UTC');
     $date_interval = new \DateInterval('P1M');
 
-    while ($date_obj <= $date_obj_now) {
+    while ($date_obj <= $date_obj_to) {
       $date = $date_obj->format('Ymd');
       $date_obj->add($date_interval);
       $url = 'https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetContentEntityByMonth/' . $date . '/-1';
