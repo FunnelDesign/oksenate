@@ -139,22 +139,21 @@ function changePlaceholderTime() {
 	$inputStart.attr('placeholder', 'Start Time');
 	$inputEnd.attr('placeholder', 'End Time');
 
-	// $inputStart.attr('type', 'text');
-	// $inputEnd.attr('type', 'text');
+	// focusInit([$inputEnd, $inputStart]);
 	//
-	// $inputStart.on('focus', () => {
-	// 	$inputStart.addClass('focus-init');
-	// 	if (!$inputStart.hasClass('focus-init')) {
-	// 		$inputStart.attr('type', 'time');
-	// 	}
-	// });
+	// function focusInit(inputs) {
+	// 	inputs.forEach((input)=> {
+	// 		input.attr('type', 'text');
 	//
-	// $inputEnd.on('focus', () => {
-	// 	$inputEnd.addClass('focus-init');
-	// 	if (!$inputEnd.hasClass('focus-init')) {
-	// 		$inputEnd.attr('type', 'time');
-	// 	}
-	// });
+	// 		if (!input.hasClass('focus-init')) {
+	// 			input.addClass('focus-init');
+	//
+	// 			input.on('focus', () => {
+	// 				input.attr('type', 'time');
+	// 			})
+	// 		}
+	// 	});
+	// }
 }
 
 function initCounter(wrap, easing, speed) {
