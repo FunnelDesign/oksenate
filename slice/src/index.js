@@ -24,7 +24,8 @@ if (window.Drupal?.behaviors) {
 		attach: (context, settings) => {
 			init();
 		},
-		completedCallback: () => { /*Do nothing. But it's here in case other modules/themes want to override it.*/}
+		completedCallback: () => { /*Do nothing. But it's here in case other modules/themes want to override it.*/
+		}
 	}
 } else {
 	document.addEventListener('DOMContentLoaded', () => {
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	hashScroll();
 });
 
-$(window).on('load', function() {
+$(window).on('load', function () {
 	addPadding();
 });
 
@@ -93,13 +94,13 @@ function hashScroll() {
 	//let prefixContent = `${this.prefixContent}`;
 	let speed = 600;
 
-	if(window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
+	if (window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
 		animation(window.location.hash.replace('#' + prefix, ''));
 	}
 
-	$(window).on('hashchange', function() {
+	$(window).on('hashchange', function () {
 
-		if(window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
+		if (window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
 			animation(window.location.hash.replace('#' + prefix, ''));
 		}
 	});
@@ -107,7 +108,7 @@ function hashScroll() {
 	function animation(val) {
 		let $target = $('#' + val);
 
-		if(!$target.length) return;
+		if (!$target.length) return;
 
 		window.location.hash = prefix + val;
 
@@ -136,7 +137,17 @@ function changePlaceholderTime() {
 	if (!$inputEnd.length) return;
 
 	$inputStart.attr('placeholder', 'Start Time');
+	$inputStart.attr('type', 'text');
 	$inputEnd.attr('placeholder', 'End Time');
+	$inputEnd.attr('type', 'text');
+
+	$inputStart.on('focus', () => {
+		$inputStart.attr('type', 'time');
+	});
+
+	$inputEnd.on('focus', () => {
+		$inputEnd.attr('type', 'time');
+	});
 }
 
 function initCounter(wrap, easing, speed) {
@@ -158,18 +169,18 @@ function initCounter(wrap, easing, speed) {
 
 	checkPosition();
 
-	$(window).on('scroll', function() {
+	$(window).on('scroll', function () {
 		checkPosition();
 	});
 
-	$(window).on('resize', function() {
+	$(window).on('resize', function () {
 		checkPosition();
 	});
 
-	function  checkPosition() {
+	function checkPosition() {
 		if ($wrap.hasClass('active')) return;
 
-		if(($(window).outerHeight() + $(window).scrollTop()) > ($wrap.offset().top + $wrap.outerHeight() + 20)) {
+		if (($(window).outerHeight() + $(window).scrollTop()) > ($wrap.offset().top + $wrap.outerHeight() + 20)) {
 			$wrap.addClass('active');
 
 			counter.start(function () {
@@ -197,11 +208,11 @@ function initFormRedirect() {
 	var $form = $('.f-search-redirect');
 	var $input = $form.find('.form-text');
 
-	$form.on('submit', function(e) {
+	$form.on('submit', function (e) {
 		e.preventDefault();
 		var val = $input.val().trim();
 
-		if(val) {
+		if (val) {
 			location.href = 'http://www.oklegislature.gov/BillInfo.aspx?Bill=' + val;
 		}
 	});
@@ -213,7 +224,7 @@ function initSelect() {
 		minimumResultsForSearch: Infinity
 	});
 
-	$('select').on('select2:open', function(e){
+	$('select').on('select2:open', function (e) {
 
 		$('.select2-results .select2-results__options').scrollbar({
 			disableBodyScroll: false,
