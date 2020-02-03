@@ -5,8 +5,6 @@ namespace Drupal\senate_votes\Plugin\QueueWorker;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\node\Entity\Node;
 
-define('SENATE_VOTES_2019_NID', '48485');
-
 /**
  * A events_custom worker.
  *
@@ -32,24 +30,46 @@ class SenateVotes extends QueueWorkerBase {
       $files_list = $senate_votes_helper->getListFiles($directory);
       $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
       $files_content = [];
-      $parent_node = Node::load(SENATE_VOTES_2019_NID);
+      $nodes = [];
 
       foreach ($files_list as $file) {
         $files_content[$file] = $senate_votes_helper->getFileContent($file, $directory);
 
-        if (!empty($files_content[$file])) {
+        if (!empty($files_content[$file]) && empty($files_content[$file]["status"])) {
           if (!empty($files_content[$file]['action']) && !empty($files_content[$file]['action']['link'])) {
             $files_content[$file]['fid'] = $senate_votes_helper->createFile($files_content[$file]['action']['link'], $directory);
           }
 
-          $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $files_content[$file]);
+          if (!empty($files_content[$file]['date'])) {
+            $year = $senate_votes_helper->getYear($files_content[$file]['date']);
 
-          if (!empty($paragraph)) {
-            $parent_node->field_senate_votes[] = [
-              'target_id' => $paragraph->id(),
-              'target_revision_id' => $paragraph->getRevisionId(),
-            ];
-            $parent_node->save();
+            if (!empty($year) && empty($nodes[$year])) {
+              $parent_nid = $senate_votes_helper->getNodeByYear($year);
+
+              if (!empty($parent_nid)) {
+                $nodes[$year] = Node::load($parent_nid);
+              }
+            }
+
+            if (!empty($nodes[$year]) && is_object($nodes[$year])) {
+              $parent_node = $nodes[$year];
+              $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $files_content[$file]);
+
+              if (!empty($paragraph)) {
+                $parent_node->field_senate_votes[] = [
+                  'target_id' => $paragraph->id(),
+                  'target_revision_id' => $paragraph->getRevisionId(),
+                ];
+                $parent_node->save();
+
+                $senate_votes_helper->setFileStatus($file, $directory);
+              }
+            }
+            else {
+              \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
+                  '%file' => $file,
+                ]));
+            }
           }
         }
       }

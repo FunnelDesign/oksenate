@@ -18,6 +18,7 @@
     margin: 5px 8px 5px 0;
     //display: inline-block;
     display: inline;
+    white-space: nowrap;
 
     &:hover {
       color: $color-white;
