@@ -2,7 +2,11 @@
   color: #afafaf;
   font-size: 12px;
   font-family: $Roboto-Regular;
-  line-height: 1.2;
+  line-height: 1.5;
+
+  @include md {
+    line-height: 1.2;
+  }
 
   a {
     color: #afafaf;
