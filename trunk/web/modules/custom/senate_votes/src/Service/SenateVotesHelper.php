@@ -276,7 +276,7 @@ class SenateVotesHelper {
     return $new_date;
   }
 
-  public function getNodeByYear($year) {
+  public function getNodeByYearSession($year, $session = '') {
     if (empty($year)) {
       return '';
     }
@@ -290,12 +290,33 @@ class SenateVotesHelper {
       $query->innerJoin('node__field_senate_votes_year', 'votes_year', 'votes_year.entity_id = n.nid AND votes_year.deleted = 0');
       $query->condition('votes_year.field_senate_votes_year_value', $year);
 
+      if (!empty($session)) {
+        $query->leftJoin('node__field_senate_votes_title', 'votes_title', 'votes_title.entity_id = n.nid AND votes_title.deleted = 0');
+        $query->fields('votes_title', ['field_senate_votes_title_value']);
+        $query->condition('votes_title.field_senate_votes_title_value', '%' . $session . '%', 'LIKE');
+      }
+
       //      $a = $query->__toString();
 
-      $result = $query->execute()->fetchCol();
-      $result = !empty($result) ? $result[0] : '';
+      $result = $query->execute()->fetchAllKeyed();
+      $result = !empty($result) ? $result : [];
+      $is_ext = (strpos($session, 'ext') !== FALSE);
+      reset($result);
+      $result_nid = key($result);
 
-      return $result;
+      foreach ($result as $nid => $title) {
+        $title = strtolower($title);
+        $title_ext = (strpos($title, 'ext') !== FALSE);
+
+        if ($is_ext && $title_ext) {
+          $result_nid = $nid;
+        }
+        elseif (!$is_ext && !$title_ext) {
+          $result_nid = $nid;
+        }
+      }
+
+      return $result_nid;
     }
     catch (\Exception $e) {
       \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [

@@ -42,17 +42,19 @@ class SenateVotes extends QueueWorkerBase {
 
           if (!empty($files_content[$file]['date'])) {
             $year = $senate_votes_helper->getYear($files_content[$file]['date']);
+            $session = !empty($files_content[$file]['session']) ? $files_content[$file]['session'] : '';
+            $year_session = $year . '_' . $session;
 
-            if (!empty($year) && empty($nodes[$year])) {
-              $parent_nid = $senate_votes_helper->getNodeByYear($year);
+            if (!empty($year) && empty($nodes[$year_session])) {
+              $parent_nid = $senate_votes_helper->getNodeByYearSession($year, $session);
 
               if (!empty($parent_nid)) {
-                $nodes[$year] = Node::load($parent_nid);
+                $nodes[$year_session] = Node::load($parent_nid);
               }
             }
 
-            if (!empty($nodes[$year]) && is_object($nodes[$year])) {
-              $parent_node = $nodes[$year];
+            if (!empty($nodes[$year_session]) && is_object($nodes[$year_session])) {
+              $parent_node = $nodes[$year_session];
               $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $files_content[$file]);
 
               if (!empty($paragraph)) {
