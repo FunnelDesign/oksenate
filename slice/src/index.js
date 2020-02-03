@@ -137,16 +137,23 @@ function changePlaceholderTime() {
 	if (!$inputEnd.length) return;
 
 	$inputStart.attr('placeholder', 'Start Time');
-	$inputStart.attr('type', 'text');
 	$inputEnd.attr('placeholder', 'End Time');
+
+	$inputStart.attr('type', 'text');
 	$inputEnd.attr('type', 'text');
 
 	$inputStart.on('focus', () => {
-		$inputStart.attr('type', 'time');
+		$inputStart.addClass('focus-init');
+		if (!$inputStart.hasClass('focus-init')) {
+			$inputStart.attr('type', 'time');
+		}
 	});
 
 	$inputEnd.on('focus', () => {
-		$inputEnd.attr('type', 'time');
+		$inputEnd.addClass('focus-init');
+		if (!$inputEnd.hasClass('focus-init')) {
+			$inputEnd.attr('type', 'time');
+		}
 	});
 }
 
