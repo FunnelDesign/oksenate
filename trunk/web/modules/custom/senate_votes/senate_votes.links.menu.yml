@@ -1,0 +1,4 @@
+senate_votes.settings_form:
+  title: 'Senate votes settings'
+  route_name: senate_votes.settings_form
+  parent: system.admin_config_system
