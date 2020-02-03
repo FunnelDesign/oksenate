@@ -1,0 +1,83 @@
+<?php
+
+/**
+ * @file
+ * Contains events_custom.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\File\FileSystem;
+
+
+/**
+ * Implements hook_cron().
+ */
+function senate_votes_cron() {
+  $cron_config = \Drupal::configFactory()->getEditable('senate_votes.settings');
+  $interval = $cron_config->get('interval');
+  $interval = !empty($interval) ? $interval : 3600;
+  $request_time = \Drupal::time()->getRequestTime();
+
+  $next_execution = \Drupal::state()->get('senate_votes.next_execution', 0);
+
+  if ($request_time >= $next_execution) {
+    \Drupal::logger('senate_votes')->notice('senate_votes ran');
+    if (\Drupal::state()->get('senate_votes_show_status_message')) {
+      \Drupal::messenger()->addMessage(t('senate_votes executed at %time', ['%time' => date('c')]));
+      \Drupal::state()->set('senate_votes_show_status_message', FALSE);
+    }
+
+    $prev_execution = \Drupal::state()->get('senate_votes.prev_execution', 0);
+    $update_all = \Drupal::state()->get('senate_votes.update_all', FALSE);
+    $directory = \Drupal::state()->get('senate_votes.directory', '');
+    \Drupal::state()->set('senate_votes.next_execution', $request_time + $interval);
+    \Drupal::state()->set('senate_votes.prev_execution', $request_time);
+    \Drupal::state()->set('senate_votes.update_all', FALSE);
+    $type = empty($prev_execution) ? 'all' : 'new';
+
+    $queue = \Drupal::queue('senate_votes');
+    $item = (object) ['type' => $type, 'update_all' => $update_all, 'directory' => $directory];
+
+    $queue->createItem($item);
+  }
+}
+
+/**
+ * Implements hook_preprocess().
+ */
+function senate_votes_preprocess_page(&$vars) {
+  $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
+    \Drupal::service('senate_votes.helper') : '';
+  $test = 0;
+
+  if (!empty($senate_votes_helper) && !empty($test)) {
+    $directory = '/Users/daniyar/www/senate/senatevotes/votes';
+    $files_list = $senate_votes_helper->getListFiles($directory);
+    $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
+    $files_content = [];
+    $parent_node = Node::load(SENATE_VOTES_2019_NID);
+
+    foreach ($files_list as $file) {
+      $files_content[$file] = $senate_votes_helper->getFileContent($file, $directory);
+
+      if (!empty($files_content[$file])) {
+        if (!empty($files_content[$file]['action']) && !empty($files_content[$file]['action']['link'])) {
+          $files_content[$file]['fid'] = $senate_votes_helper->createFile($files_content[$file]['action']['link'], $directory);
+        }
+
+        $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $files_content[$file]);
+
+        if (!empty($paragraph)) {
+          $parent_node->field_senate_votes[] = [
+            'target_id' => $paragraph->id(),
+            'target_revision_id' => $paragraph->getRevisionId(),
+          ];
+          $parent_node->save();
+        }
+      }
+    }
+  }
+}
