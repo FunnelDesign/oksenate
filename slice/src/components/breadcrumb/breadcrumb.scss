@@ -4,14 +4,6 @@
   font-family: $Roboto-Regular;
   line-height: 1.2;
 
-  @include sm {
-    line-height: 0.5;
-  }
-
-  @include md {
-    line-height: 0.4;
-  }
-
   a {
     color: #afafaf;
     text-decoration: none;
@@ -20,7 +12,8 @@
     padding-right: 9px;
     position: relative;
     margin: 5px 8px 5px 0;
-    display: inline-block;
+    //display: inline-block;
+    display: inline;
 
     &:hover {
       color: $color-white;
@@ -38,8 +31,9 @@
   span {
     font-family: $Roboto-Bold;
     color: $color-white;
-    display: inline-block;
-    margin: 5px 8px 5px 0;
+    //display: inline-block;
+    display: inline;
+    //margin: 5px 8px 5px 0;
   }
 
   &_a {
