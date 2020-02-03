@@ -93,26 +93,20 @@ class SenateVotesHelper {
     }
 
     $absolute_path = $directory . '/' . $file;
-    $handle = fopen($absolute_path, "r");
-    $file_content = [];
+    $file_content = file_get_contents($absolute_path);
 
-    if (!empty($handle)) {
-      while (!feof($handle)) {
-        $file_content[] = fgets($handle);
-      }
-    }
-    else {
+    if ($file_content === FALSE) {
       \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Can\'t open file %file.', [
           '%file' => $absolute_path,
         ]));
     }
 
-    $file_content_imp = implode("", $file_content);
-    $file_content_imp = str_replace("\r", '', $file_content_imp);
-    $file_content_imp = str_replace("\n", '', $file_content_imp);
-    $file_content_imp = trim($file_content_imp);
+    $file_content = str_replace("\r", '', $file_content);
+    $file_content = str_replace("\n", '', $file_content);
+    $file_content = trim($file_content);
 
-    $data = Json::decode($file_content_imp);
+    $data = Json::decode($file_content);
+
     if (empty($data)) {
       \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Error in decoding %file.', [
           '%file' => $absolute_path,
@@ -242,5 +236,71 @@ class SenateVotesHelper {
       return \Drupal::service('file_system')->realpath($dir);
     }
     return $dir;
+  }
+
+  public function setFileStatus($file, $directory) {
+    $file_path = $directory . '/' . $file;
+    $text = ',"status":"1"';
+    $contents = file_get_contents($file_path);
+    $new_contents = preg_replace('/}/',
+      $text . '$0', $contents);
+
+    if (!empty($new_contents)) {
+      $result = file_put_contents($file_path, $new_contents);
+
+      if ($result === FALSE) {
+        \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Status. Could not insert into file %file.', [
+            '%file' => $file_path,
+          ]));
+      }
+    }
+  }
+
+  /**
+   * Normalize Date field.
+   * @param $date
+   * @param $format
+   *
+   * @return false|string
+   */
+  public function getYear($date, $format = 'Y') {
+    if (empty($date)) {
+      return '';
+    }
+
+    $config = \Drupal::config('system.date');
+    $default_timezone = $config->get('timezone.default');
+    $date_obj = new DrupalDateTime($date, $default_timezone);
+    $new_date = $date_obj->format($format);
+
+    return $new_date;
+  }
+
+  public function getNodeByYear($year) {
+    if (empty($year)) {
+      return '';
+    }
+
+    try {
+      $query = $this->database->select('node_field_data', 'n')
+        ->fields('n', ['nid'])
+        ->condition('n.type', 'senate_votes')
+        ->condition('n.status', 1);
+
+      $query->innerJoin('node__field_senate_votes_year', 'votes_year', 'votes_year.entity_id = n.nid AND votes_year.deleted = 0');
+      $query->condition('votes_year.field_senate_votes_year_value', $year);
+
+      //      $a = $query->__toString();
+
+      $result = $query->execute()->fetchCol();
+      $result = !empty($result) ? $result[0] : '';
+
+      return $result;
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
+          '%message' => $e->getMessage(),
+        ]));
+    }
   }
 }
