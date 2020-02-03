@@ -1,0 +1,9 @@
+<?php
+/**
+* Preprocess function for captcha.html.twig.
+*/
+function recaptcha_ajax_behavior_preprocess_captcha(&$variables) {
+  if (isset($variables['element']['#captcha_validate']) && $variables['element']['#captcha_validate'] == 'recaptcha_captcha_validation') {
+    $variables['#attached']['library'][] = 'recaptcha_ajax_behavior/recaptcha-ajax';
+  }
+}
