@@ -164,7 +164,7 @@ var viewEvents = {
       eventElem.classList.add('btn_b_live');
       var newSpan = document.createElement("span");
       newSpan.innerHTML = '<span>•</span> live now';
-      eventElem.prepend(newSpan + ' ');
+      eventElem.prepend(newSpan);
     }
   },
 
