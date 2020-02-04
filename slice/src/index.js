@@ -145,13 +145,13 @@ function changePlaceholderTime() {
 		inputs.forEach((input)=> {
 			input.attr('type', 'text');
 
-			if (!input.hasClass('focus-init')) {
-				input.addClass('focus-init');
-
-				input.on('focus', () => {
-					input.attr('type', 'time');
-				})
-			}
+			// if (!input.hasClass('focus-init')) {
+			// 	input.addClass('focus-init');
+			//
+			// 	input.on('focus', () => {
+			// 		input.attr('type', 'time');
+			// 	})
+			// }
 		});
 	}
 }
