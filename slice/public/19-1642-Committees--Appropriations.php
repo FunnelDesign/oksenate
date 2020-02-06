@@ -35,7 +35,7 @@
 
           <div class="bSelect bSelect_a bSelect_size_a">
             <div class="form-item form-type-select">
-              <select class="form-select">
+              <select class="form-select" id="edit-local-state">
                 <option>Select Subcommittee</option>
                 <option>Select Subcommittee</option>
                 <option>Select Subcommittee</option>

@@ -225,9 +225,13 @@ function initFormRedirect() {
 }
 
 function initSelect() {
-	$('select').select2({
+	$('select:not(#edit-permanent-state):not(#edit-local-state)').select2({
 		width: 'full',
 		minimumResultsForSearch: Infinity
+	});
+
+	$('select#edit-permanent-state, select#edit-local-state').select2({
+		width: 'full'
 	});
 
 	$('select').on('select2:open', function (e) {
