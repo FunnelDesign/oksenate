@@ -76,7 +76,9 @@
 
   <div class="section__sNav section__sNav_b">
     <div class="bContainer">
-      {{ content.field_live_stream_voting }}
+      <div>
+        {{ content.field_live_stream_voting }}
+      </div>
       {{ socials }}
     </div>
   </div>
@@ -96,7 +98,7 @@
 
     <div class="bMedia bMedia_web">
       <div class="bMedia__wrap">
-        {{ content }}
+        {{ content|without('field_live_stream_voting') }}
       </div>
     </div>
 
