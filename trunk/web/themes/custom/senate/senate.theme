@@ -466,7 +466,6 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_senator_ext_link':
-    case 'field_live_stream_voting':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $vars['items'][$key]['content']['#options']['attributes']['class'] = array('btn');
@@ -894,6 +893,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       }
       break;
     case 'field_live_stream_iframe':
+    case 'field_live_stream_voting':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $iframe = Xss::filter(html_entity_decode($item["content"]["#context"]["value"]), ['iframe']);
