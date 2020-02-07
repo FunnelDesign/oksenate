@@ -2138,7 +2138,6 @@ function senate_preprocess_senate_socials(&$vars) {
 
   $social_class = [
     'fb' => 'ss-facebook st_facebook_custom',
-    'in' => 'ss-instagram st_instagram_custom',
     'tw' => 'ss-twitter st_twitter_custom',
     'email' => 'ss-mail st_email_custom',
   ];
