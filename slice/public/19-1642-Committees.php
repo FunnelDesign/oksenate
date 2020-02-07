@@ -100,9 +100,7 @@
                 Fourth Meeting
               </span>
               <span class="bTiles__btnWrap">
-                  <span class="bTiles__btn btn btn_b">
-                    <span><span>•</span></span> room 511-a
-                </span>
+                  <span class="bTiles__btn btn btn_b">room 511-a</span>
               </span>
 
             </a>

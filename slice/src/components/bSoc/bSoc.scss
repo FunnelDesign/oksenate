@@ -80,6 +80,15 @@
         background-size: contain;
       }
     }
+
+    span[st_url] {
+      cursor: pointer;
+      transition: opacity .3s;
+
+      &:hover {
+        opacity: .7;
+      }
+    }
   }
 
   a {

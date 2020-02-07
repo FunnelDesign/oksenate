@@ -1,0 +1,4 @@
+recaptcha-ajax:
+  js:
+    https://www.google.com/recaptcha/api.js: {type: external}
+    recaptcha-ajax.js: {}

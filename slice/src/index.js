@@ -24,7 +24,8 @@ if (window.Drupal?.behaviors) {
 		attach: (context, settings) => {
 			init();
 		},
-		completedCallback: () => { /*Do nothing. But it's here in case other modules/themes want to override it.*/}
+		completedCallback: () => { /*Do nothing. But it's here in case other modules/themes want to override it.*/
+		}
 	}
 } else {
 	document.addEventListener('DOMContentLoaded', () => {
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	hashScroll();
 });
 
-$(window).on('load', function() {
+$(window).on('load', function () {
 	addPadding();
 });
 
@@ -93,13 +94,13 @@ function hashScroll() {
 	//let prefixContent = `${this.prefixContent}`;
 	let speed = 600;
 
-	if(window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
+	if (window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
 		animation(window.location.hash.replace('#' + prefix, ''));
 	}
 
-	$(window).on('hashchange', function() {
+	$(window).on('hashchange', function () {
 
-		if(window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
+		if (window.location.hash && ~window.location.hash.indexOf('#' + prefix)) {
 			animation(window.location.hash.replace('#' + prefix, ''));
 		}
 	});
@@ -107,7 +108,7 @@ function hashScroll() {
 	function animation(val) {
 		let $target = $('#' + val);
 
-		if(!$target.length) return;
+		if (!$target.length) return;
 
 		window.location.hash = prefix + val;
 
@@ -137,6 +138,22 @@ function changePlaceholderTime() {
 
 	$inputStart.attr('placeholder', 'Start Time');
 	$inputEnd.attr('placeholder', 'End Time');
+
+	focusInit([$inputEnd, $inputStart]);
+
+	function focusInit(inputs) {
+		inputs.forEach((input)=> {
+			input.attr('type', 'text');
+
+			// if (!input.hasClass('focus-init')) {
+			// 	input.addClass('focus-init');
+			//
+			// 	input.on('focus', () => {
+			// 		input.attr('type', 'time');
+			// 	})
+			// }
+		});
+	}
 }
 
 function initCounter(wrap, easing, speed) {
@@ -158,18 +175,18 @@ function initCounter(wrap, easing, speed) {
 
 	checkPosition();
 
-	$(window).on('scroll', function() {
+	$(window).on('scroll', function () {
 		checkPosition();
 	});
 
-	$(window).on('resize', function() {
+	$(window).on('resize', function () {
 		checkPosition();
 	});
 
-	function  checkPosition() {
+	function checkPosition() {
 		if ($wrap.hasClass('active')) return;
 
-		if(($(window).outerHeight() + $(window).scrollTop()) > ($wrap.offset().top + $wrap.outerHeight() + 20)) {
+		if (($(window).outerHeight() + $(window).scrollTop()) > ($wrap.offset().top + $wrap.outerHeight() + 20)) {
 			$wrap.addClass('active');
 
 			counter.start(function () {
@@ -197,23 +214,61 @@ function initFormRedirect() {
 	var $form = $('.f-search-redirect');
 	var $input = $form.find('.form-text');
 
-	$form.on('submit', function(e) {
+	$form.on('submit', function (e) {
 		e.preventDefault();
 		var val = $input.val().trim();
 
-		if(val) {
+		if (val) {
 			location.href = 'http://www.oklegislature.gov/BillInfo.aspx?Bill=' + val;
 		}
 	});
 }
 
 function initSelect() {
-	$('select').select2({
+	function matchCustom(params, data) {
+		// If there are no search terms, return all of the data
+		if ($.trim(params.term) === '') {
+			return data;
+		}
+
+		// Do not display the item if there is no 'text' property
+		if (typeof data.text === 'undefined') {
+			return null;
+		}
+
+		// `params.term` should be the term that is used for searching
+		// `data.text` is the text that is displayed for the data object
+		// if (data.text.indexOf(params.term) > -1) {
+		//   var modifiedData = $.extend({}, data, true);
+		//   modifiedData.text += ' (matched)';
+		//
+		//   // You can return modified objects from here
+		//   // This includes matching the `children` how you want in nested data sets
+		//   return modifiedData;
+		// }
+
+		if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
+			var modifiedData = $.extend({}, data, true);
+
+			return modifiedData;
+		}
+
+		// Return `null` if the term should not be displayed
+		return null;
+	}
+
+	$('select:not(#edit-permanent-state):not(#edit-local-state)').select2({
 		width: 'full',
 		minimumResultsForSearch: Infinity
 	});
 
-	$('select').on('select2:open', function(e){
+	$('select#edit-permanent-state, select#edit-local-state').select2({
+		width: 'full',
+		minimumResultsForSearch: 0,
+		matcher: matchCustom
+	});
+
+	$('select').on('select2:open', function (e) {
 
 		$('.select2-results .select2-results__options').scrollbar({
 			disableBodyScroll: false,

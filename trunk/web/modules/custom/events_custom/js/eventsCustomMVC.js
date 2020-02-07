@@ -162,9 +162,8 @@ var viewEvents = {
   setStarted: function (eventElem) {
     if (!eventElem.classList.contains('btn_b_live')) {
       eventElem.classList.add('btn_b_live');
-      var newSpan = document.createElement("span");
-      newSpan.innerHTML = '<span>•</span> live now';
-      eventElem.prepend(newSpan);
+      var newSpan = '<span>•</span> live now';
+      jQuery(eventElem).prepend('<span>' + newSpan + '</span> ');
     }
   },
 

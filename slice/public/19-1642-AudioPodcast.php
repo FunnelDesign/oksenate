@@ -122,6 +122,16 @@
 <!--                  </div>-->
 
                   <?php include 'tpl/blocks/bSoc.inc'; ?>
+                  <div class="bSoc__item">
+                                     <span style="    width: 20px;
+    background: red;
+    display: inline-block;
+    height: 20px;" st_url="http://senate.funnelstaging.com/press-releases/senate-republicans-unveil-legislative-agenda-0" st_title="Senate Republicans Unveil Legislative Agenda" class="st_facebook_custom" st_processed="yes">
+        <img src="/themes/custom/senate/dist/images/soc/soc-facebook.png" srcset="/themes/custom/senate/dist/images/soc/soc-facebook-2x.png 2x" alt="">
+      </span>
+                  </div>
+
+
                 </div>
 
                 <div class="bPostList__item">
