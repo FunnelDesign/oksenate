@@ -198,6 +198,17 @@
         &_a {
           margin: 0 auto 20px;
         }
+
+        &_b {
+          margin: 0 auto 10px;
+        }
+      }
+
+      &_left {
+
+        #{$this}__items {
+          justify-content: flex-start;
+        }
       }
     }
 
@@ -232,6 +243,31 @@
         height: 120px;
         max-width: 250px;
         margin: 0 auto 27px;
+      }
+    }
+
+    &_d {
+
+      #{$this}__items {
+
+        @include md {
+          justify-content: flex-start;
+        }
+      }
+
+      #{$this}__item {
+
+        @include sm {
+          padding: 24px 25px 32px;
+        }
+      }
+
+      #{$this}__title {
+        margin-bottom: 22px;
+      }
+
+      #{$this}__ico {
+        max-width: 80px;
       }
     }
   }
