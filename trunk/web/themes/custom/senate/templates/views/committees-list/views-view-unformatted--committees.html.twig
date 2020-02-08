@@ -17,11 +17,7 @@
  * @ingroup themeable
  */
 #}
-<div class="bTiles bTiles_rel bTiles_rel_d">
-  <div class="bTiles__items">
-    {% for row in rows %}
-      {{- row.content -}}
-    {% endfor %}
-  </div>
-</div>
 
+{% for row in rows %}
+  {{- row.content -}}
+{% endfor %}

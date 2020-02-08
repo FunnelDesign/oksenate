@@ -73,12 +73,19 @@
     {{ attachment_before }}
 
     <div class="bContainer">
-      {% if rows -%}
-        {{ rows }}
-      {% elseif empty -%}
-        {{ empty }}
-      {% endif %}
-      {{ pager }}
+      <div class="bTiles bTiles_rel bTiles_rel_d">
+        <div class="bTiles__items">
+          {% if rows -%}
+            {{ rows }}
+          {% elseif empty -%}
+            {{ empty }}
+          {% endif %}
+          {{ pager }}
+        </div>
+        <div class="bTiles__btnAllWrap">
+          <a href="/committees" class="btn">{{ "see senate meetings"|t }}</a>
+        </div>
+      </div>
     </div>
 
     {{ attachment_after }}
