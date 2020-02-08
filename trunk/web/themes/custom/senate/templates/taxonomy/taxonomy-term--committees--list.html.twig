@@ -25,14 +25,17 @@
  * @ingroup themeable
  */
 #}
-<div{{ attributes }}>
-  {{ title_prefix }}
-  <a href="{{ url }}" class="bTiles__item">
-    <span class="bTiles__ico">
-      <img src="{{ content.field_icon_blue }}"
+
+  <a href="{{ content.field_link_to_committee_page[0]['#url']|render }}" class="bTiles__item">
+    <div{{ attributes }}>
+      {{ title_prefix }}
+    {% if content.field_icon_blue|render|trim is not empty and content.field_icon_blue_2x|render|trim is not empty%}
+      <span class="bTiles__ico">
+        <img src="{{ content.field_icon_blue }}"
            srcset="{{ content.field_icon_blue_2x }} 2x"
            alt="">
-    </span>
+      </span>
+    {% endif %}
     <span class="bTiles__title">
       {{ name }}
     </span>
@@ -41,6 +44,7 @@
         {{ "view now"|t }}
       </span>
     </span>
+      {{ title_suffix }}
+    </div>
   </a>
-  {{ title_suffix }}
-</div>
+
