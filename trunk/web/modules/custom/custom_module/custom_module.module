@@ -401,7 +401,7 @@ function custom_module_page_attachments_alter(array &$page) {
 
     if (($tag == 'og_image') || ((strpos($tag, 'og_image') !== FALSE) && is_numeric($tag_number))) {
       $attributes = !empty($head[0]["#attributes"]) ? $head[0]["#attributes"] : [];
-      $attr_name = !empty($attributes["name"]) ? $attributes["name"] : '';
+      $attr_name = !empty($attributes["property"]) ? $attributes["property"] : '';
 
       if ($attr_name == 'og:image') {
         $has_og_image = TRUE;
