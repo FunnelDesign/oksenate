@@ -389,22 +389,35 @@ function custom_module_views_data_alter(array &$data) {
  * Implements hook_page_attachments_alter().
  */
 function custom_module_page_attachments_alter(array &$page) {
+  global $base_url;
   $html_head = !empty($page['#attached']['html_head']) ? $page['#attached']['html_head'] : [];
+  $theme_path = $base_url . '/' . drupal_get_path('theme', 'senate');
   $has_og_image = FALSE;
+  $has_tw_image = FALSE;
 
   foreach ($html_head as $key => $head) {
     $tag = !empty($head[1]) ? $head[1] : '';
     $tag_number = str_replace('og_image_', '', $tag);
 
     if (($tag == 'og_image') || ((strpos($tag, 'og_image') !== FALSE) && is_numeric($tag_number))) {
-      $has_og_image = TRUE;
+      $attributes = !empty($head[0]["#attributes"]) ? $head[0]["#attributes"] : [];
+      $attr_name = !empty($attributes["name"]) ? $attributes["name"] : '';
+
+      if ($attr_name == 'og:image') {
+        $has_og_image = TRUE;
+      }
+    }
+    elseif (($tag == 'twitter_cards_image') || ((strpos($tag, 'twitter_cards_image') !== FALSE) && is_numeric($tag_number))) {
+      $attributes = !empty($head[0]["#attributes"]) ? $head[0]["#attributes"] : [];
+      $attr_name = !empty($attributes["name"]) ? $attributes["name"] : '';
+
+      if ($attr_name == 'twitter:image') {
+        $has_tw_image = TRUE;
+      }
     }
   }
 
   if (!$has_og_image) {
-    global $base_url;
-    $theme_path = $base_url . '/' . drupal_get_path('theme', 'senate');
-
     $og_image = [
       '#tag' => 'meta',
       '#attributes' => [
@@ -412,6 +425,17 @@ function custom_module_page_attachments_alter(array &$page) {
         'content' => $theme_path . '/dist/images/senate-share-photo-generic.jpg',
       ],
     ];
-    $page['#attached']['html_head'][] = [$og_image, 'custom_module'];
+    $page['#attached']['html_head'][] = [$og_image, 'custom_module_og'];
+  }
+
+  if (!$has_tw_image) {
+    $tw_image = [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => 'twitter:image',
+        'content' => $theme_path . '/dist/images/senate-share-photo-generic.jpg',
+      ],
+    ];
+    $page['#attached']['html_head'][] = [$tw_image, 'custom_module_tw'];
   }
 }
