@@ -384,3 +384,34 @@ function custom_module_views_data_alter(array &$data) {
     ];
   }
 }
+
+/**
+ * Implements hook_page_attachments_alter().
+ */
+function custom_module_page_attachments_alter(array &$page) {
+  $html_head = !empty($page['#attached']['html_head']) ? $page['#attached']['html_head'] : [];
+  $has_og_image = FALSE;
+
+  foreach ($html_head as $key => $head) {
+    $tag = !empty($head[1]) ? $head[1] : '';
+    $tag_number = str_replace('og_image_', '', $tag);
+
+    if (($tag == 'og_image') || ((strpos($tag, 'og_image') !== FALSE) && is_numeric($tag_number))) {
+      $has_og_image = TRUE;
+    }
+  }
+
+  if (!$has_og_image) {
+    global $base_url;
+    $theme_path = $base_url . '/' . drupal_get_path('theme', 'senate');
+
+    $og_image = [
+      '#tag' => 'meta',
+      '#attributes' => [
+        'property' => 'og:image',
+        'content' => $theme_path . '/dist/images/senate-share-photo-generic.jpg',
+      ],
+    ];
+    $page['#attached']['html_head'][] = [$og_image, 'custom_module'];
+  }
+}
