@@ -211,9 +211,18 @@
                       <span class="bListItems__sub">10:00am</span>
                     </span>
 
-                    <a href="#" class="bListItems__btn btn btn_b">
-                      <span><span>•</span></span> room 511-a
-                    </a>
+                      <div class="bListItems__btnWr">
+                          <a href="#" class="bListItems__btn btn btn_b">
+                              <span><span>•</span></span> room 511-a
+                          </a>
+
+                          <a href="#" class="bListItems__btn btn btn_b">
+                              <span><span>•</span></span> room 511-a
+                          </a>
+                          <a href="#" class="bListItems__btn btn btn_b">
+                              <span><span>•</span></span> room 511-a
+                          </a>
+                      </div>
 
                   </div>
 
@@ -223,9 +232,13 @@
                        <span class="bListItems__sub">10:00am</span>
                     </span>
 
-                    <a href="#" class="bListItems__btn btn btn_b">
-                      <span><span>•</span></span> room 535
-                    </a>
+                      <div class="bListItems__btnWr">
+                          <a href="#" class="bListItems__btn btn btn_b">
+                              <span><span>•</span></span> room 535
+                          </a>
+
+                      </div>
+
 
 
                   </div>

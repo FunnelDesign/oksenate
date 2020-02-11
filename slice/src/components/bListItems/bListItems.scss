@@ -49,6 +49,7 @@
   &__title {
     flex: 1;
     padding: 0 10px;
+    min-width: 30%;
 
     a {
       font-family: $Roboto-Bold;
@@ -73,6 +74,10 @@
       display: inline-block;
       margin-right: 10px;
     }
+  }
+
+  &__btnWr {
+    text-align: right;
   }
 
   &__btn {
