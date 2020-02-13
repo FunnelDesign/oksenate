@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "develop": "webpack --mode=development --progress",
+    "start": "webpack --mode=development --progress",
     "build": "webpack --mode=production --progress",
     "build trunk": "webpack --mode=production --trunk --progress"
   },
