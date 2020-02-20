@@ -35,45 +35,55 @@ class SenateVotes extends QueueWorkerBase {
       foreach ($files_list as $file) {
         $files_content[$file] = $senate_votes_helper->getFileContent($file, $directory);
 
-        if (!empty($files_content[$file]) && empty($files_content[$file]["status"])) {
-          if (!empty($files_content[$file]['action']) && !empty($files_content[$file]['action']['link'])) {
-            $files_content[$file]['fid'] = $senate_votes_helper->createFile($files_content[$file]['action']['link'], $directory);
-          }
+        if (!empty($files_content[$file])) {
+          foreach ($files_content[$file] as $file_row) {
+            if (!empty($file_row)) {
+              if (!empty($file_row['action']) && !empty($file_row['action']['link'])) {
+                $file_row['fid'] = $senate_votes_helper->createFile($file_row['action']['link'], $directory);
+              }
 
-          if (!empty($files_content[$file]['date'])) {
-            $year = $senate_votes_helper->getYear($files_content[$file]['date']);
-            $session = !empty($files_content[$file]['session']) ? $files_content[$file]['session'] : '';
-            $year_session = $year . '_' . $session;
+              if (!empty($file_row['date'])) {
+                $year = $senate_votes_helper->getYear($file_row['date']);
+                $session = !empty($file_row['session']) ? $file_row['session'] : '1st';
+                $year_session = $year . '_' . $session;
 
-            if (!empty($year) && empty($nodes[$year_session])) {
-              $parent_nid = $senate_votes_helper->getNodeByYearSession($year, $session);
+                if (!empty($year) && empty($nodes[$year_session])) {
+                  $parent_nid = $senate_votes_helper->getNodeByYearSession($year, $session);
 
-              if (!empty($parent_nid)) {
-                $nodes[$year_session] = Node::load($parent_nid);
+                  if (!empty($parent_nid)) {
+                    $nodes[$year_session] = Node::load($parent_nid);
+                  }
+                }
+
+                if (!empty($nodes[$year_session]) && is_object($nodes[$year_session])) {
+                  $parent_node = $nodes[$year_session];
+                  $existing_paragraph = $senate_votes_helper->getVotesData($parent_node->id());
+                  $paragraph_exists = $senate_votes_helper->checkParagraphExists($existing_paragraph, $file_row);
+
+                  if (!$paragraph_exists) {
+                    $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $file_row);
+
+                    if (!empty($paragraph)) {
+                      $parent_node->field_senate_votes[] = [
+                        'target_id' => $paragraph->id(),
+                        'target_revision_id' => $paragraph->getRevisionId(),
+                      ];
+                      $parent_node->save();
+                    }
+                  }
+                }
+                else {
+                  \Drupal::logger('senate_votes')
+                    ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
+                        '%file' => $file,
+                      ]));
+                }
               }
             }
-
-            if (!empty($nodes[$year_session]) && is_object($nodes[$year_session])) {
-              $parent_node = $nodes[$year_session];
-              $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $files_content[$file]);
-
-              if (!empty($paragraph)) {
-                $parent_node->field_senate_votes[] = [
-                  'target_id' => $paragraph->id(),
-                  'target_revision_id' => $paragraph->getRevisionId(),
-                ];
-                $parent_node->save();
-
-                $senate_votes_helper->setFileStatus($file, $directory);
-              }
-            }
-            else {
-              \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
-                  '%file' => $file,
-                ]));
-            }
           }
+          $senate_votes_helper->setFileStatus($file, $directory);
         }
+
       }
     }
   }

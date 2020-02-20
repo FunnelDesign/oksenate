@@ -87,6 +87,7 @@ class SenateVotesHelper {
   }
 
   public function getFileContent($file, $directory) {
+    $data = [];
     $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote('txt')) . ')$/i';
     if (!preg_match($regex, $file)) {
       return [];
@@ -96,21 +97,48 @@ class SenateVotesHelper {
     $file_content = file_get_contents($absolute_path);
 
     if ($file_content === FALSE) {
-      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Can\'t open file %file.', [
-          '%file' => $absolute_path,
-        ]));
+      \Drupal::logger('senate_votes')
+        ->error(__METHOD__ . ' ' . t('failed. Message = Can\'t open file %file.', [
+            '%file' => $absolute_path,
+          ]));
     }
 
-    $file_content = str_replace("\r", '', $file_content);
-    $file_content = str_replace("\n", '', $file_content);
-    $file_content = trim($file_content);
+    if (strpos($file_content, '[status:1]') === FALSE) {
+      $file_regex = '/([1-9]|1[0-2])\/([1-9]|[12]\d|3[01])\/([12]\d{3})(.*)(\d{2})/i';
+      preg_match_all($file_regex, $file_content, $out);
 
-    $data = Json::decode($file_content);
+      if (!empty($out) && !empty($out[0]) && is_array($out[0])) {
+        foreach ($out[0] as $key => $row) {
+          $parts = preg_split('/[\t]{1,2}/', $row);
+          if (!empty($parts[0])) {
+            $data[$key]['date'] = trim($parts[0]);
+          }
+          if (!empty($parts[1])) {
+            $data[$key]['measure'] = trim($parts[1]);
+          }
+          if (!empty($parts[2])) {
+            $data[$key]['author'] = trim($parts[2]);
+          }
+          if (!empty($parts[3])) {
+            $data[$key]['action'] = [
+              'name' => trim($parts[3])
+            ];
+          }
+          if (!empty($parts[4])) {
+            $data[$key]['yeas'] = trim($parts[4]);
+          }
+          if (!empty($parts[5])) {
+            $data[$key]['noes'] = trim($parts[5]);
+          }
+        }
+      }
 
-    if (empty($data)) {
-      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Error in decoding %file.', [
-          '%file' => $absolute_path,
-        ]));
+      if (empty($data)) {
+        \Drupal::logger('senate_votes')
+          ->error(__METHOD__ . ' ' . t('failed. Message = Error in decoding %file.', [
+              '%file' => $absolute_path,
+            ]));
+      }
     }
 
     return (!empty($data) && is_array($data)) ? $data : [];
@@ -154,10 +182,10 @@ class SenateVotesHelper {
         'description' => $new_data['file_name'],
       ]);
     }
-    if (!empty($new_data['yeas'])) {
+    if (isset($new_data['yeas']) && is_numeric($new_data["yeas"])) {
       $paragraph->set('field_senate_votes_yeas', $new_data["yeas"]);
     }
-    if (!empty($new_data['noes'])) {
+    if (isset($new_data['noes']) && is_numeric($new_data["noes"])) {
       $paragraph->set('field_senate_votes_nays', $new_data["noes"]);
     }
   }
@@ -173,8 +201,8 @@ class SenateVotesHelper {
     $new_data['fid'] = !empty($data['fid']) ? $data['fid'] : '';
     $new_data['file_name'] = !empty($data['action']) && !empty($data['action']['name']) ?
       $data['action']['name'] : t('Description');
-    $new_data['yeas'] = !empty($data['yeas']) ? $data['yeas'] : '';
-    $new_data['noes'] = !empty($data['noes']) ? $data['noes'] : '';
+    $new_data['yeas'] = isset($data['yeas']) && is_numeric($data['yeas']) ? $data['yeas'] : '';
+    $new_data['noes'] = isset($data['noes']) && is_numeric($data['noes']) ? $data['noes'] : '';
 
     if (!empty($events_sync_helper) && !empty($new_data['date'])) {
       $new_data['date'] = $events_sync_helper->normalizeExternalDateData($new_data['date'], DateTimeItemInterface::DATE_STORAGE_FORMAT);
@@ -240,13 +268,11 @@ class SenateVotesHelper {
 
   public function setFileStatus($file, $directory) {
     $file_path = $directory . '/' . $file;
-    $text = ',"status":"1"';
-    $contents = file_get_contents($file_path);
-    $new_contents = preg_replace('/}/',
-      $text . '$0', $contents);
+    $text = '[status:1]';
+    $new_contents = PHP_EOL . $text;
 
     if (!empty($new_contents)) {
-      $result = file_put_contents($file_path, $new_contents);
+      $result = file_put_contents($file_path, $new_contents, FILE_APPEND | LOCK_EX);
 
       if ($result === FALSE) {
         \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Status. Could not insert into file %file.', [
@@ -276,7 +302,7 @@ class SenateVotesHelper {
     return $new_date;
   }
 
-  public function getNodeByYearSession($year, $session = '') {
+  public function getNodeByYearSession($year, $session = '1st') {
     if (empty($year)) {
       return '';
     }
@@ -323,5 +349,75 @@ class SenateVotesHelper {
           '%message' => $e->getMessage(),
         ]));
     }
+  }
+
+  public function getVotesData($nid) {
+    if (empty($nid)) {
+      return '';
+    }
+    $new_data = [];
+
+    try {
+      $query = $this->database->select('node_field_data', 'n')
+        ->condition('n.type', 'senate_votes')
+        ->condition('n.nid', $nid)
+        ->condition('n.status', 1);
+
+      $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
+      $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes_date.entity_id = votes.field_senate_votes_target_id AND votes_date.deleted = 0');
+      $query->fields('votes_date', ['field_senate_votes_date_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_measure', 'votes_measure', 'votes_measure.entity_id = votes.field_senate_votes_target_id AND votes_measure.deleted = 0');
+      $query->fields('votes_measure', ['field_senate_votes_measure_value']);
+
+//      $a = $query->__toString();
+
+      $result = $query->execute()->fetchAll();
+
+      foreach ($result as $row) {
+        $date = !empty($row->field_senate_votes_date_value) ?
+          $this->getDate($row->field_senate_votes_date_value) : '';
+        $measure = !empty($row->field_senate_votes_measure_value) ?
+          $row->field_senate_votes_measure_value : '';
+
+        if (!empty($date) && !empty($measure)) {
+          $new_data[$date][] = $measure;
+        }
+      }
+
+      return $new_data;
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
+          '%message' => $e->getMessage(),
+        ]));
+    }
+  }
+
+  /**
+   * Normalize Date field.
+   * @param $date
+   * @param $format
+   *
+   * @return false|string
+   */
+  public function getDate($date, $format = 'n/j/Y') {
+    if (empty($date)) {
+      return '';
+    }
+
+    $config = \Drupal::config('system.date');
+    $default_timezone = $config->get('timezone.default');
+    $date_obj = new DrupalDateTime($date, $default_timezone);
+    $new_date = $date_obj->format($format);
+
+    return $new_date;
+  }
+
+  public function checkParagraphExists($existing_paragraph, $new_data) {
+    $date = !empty($new_data["date"]) ? $new_data["date"] : '';
+    $measure = !empty($new_data["measure"]) ? $new_data["measure"] : '';
+
+    return (!empty($existing_paragraph[$date]) && in_array($measure, $existing_paragraph[$date]));
   }
 }
