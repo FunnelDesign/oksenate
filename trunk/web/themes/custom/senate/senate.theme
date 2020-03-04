@@ -1728,6 +1728,22 @@ function senate_preprocess_paragraph(array &$vars) {
         }
       }
       break;
+    case 'senate_votes':
+      $measure = (!empty($vars["content"]["field_senate_votes_measure"]) &&
+        !empty($vars["content"]["field_senate_votes_measure"]['#items'])) ?
+        $vars["content"]["field_senate_votes_measure"]['#items']->getValue() : '';
+      $measure = !empty($measure) && !empty($measure[0]) ? $measure[0]["value"] : '';
+
+      if (!empty($measure)) {
+        $url = Url::fromUri('http://www.oklegislature.gov/BillInfo.aspx');
+        $url->setOption('query', [
+          'Bill' => $measure,
+        ]);
+        $attributes['target'] = '_blank';
+        $url->setOption('attributes', $attributes);
+        $vars["measure"] = Link::fromTextAndUrl($measure, $url);
+      }
+      break;
   }
 }
 
