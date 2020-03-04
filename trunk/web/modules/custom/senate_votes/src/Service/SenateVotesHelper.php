@@ -104,7 +104,7 @@ class SenateVotesHelper {
     }
 
     if (strpos($file_content, '[status:1]') === FALSE) {
-      $file_regex = '/([1-9]|1[0-2])\/([1-9]|[12]\d|3[01])\/([12]\d{3})(.*)(\d{2})/i';
+      $file_regex = '/([1-9]|1[0-2])\/([1-9]|[12]\d|3[01])\/([12]\d{3})(.*)(\d{1,2})/i';
       preg_match_all($file_regex, $file_content, $out);
 
       if (!empty($out) && !empty($out[0]) && is_array($out[0])) {
