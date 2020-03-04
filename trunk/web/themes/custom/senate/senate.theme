@@ -297,7 +297,7 @@ function senate_preprocess_node(array &$vars) {
         if (!empty(\Drupal::request()->get('back'))
           && strpos(\Drupal::request()->get('back'), '/press-releases-audio') !== FALSE
         ) {
-          $vars['back_link']['#title'] = t('back to audio & podcasts');
+          $vars['back_link']['#title'] = t('back to audio');
           $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
         } else if (!empty(\Drupal::request()->get('back'))
           && strpos(\Drupal::request()->get('back'), '/press-releases') !== FALSE
