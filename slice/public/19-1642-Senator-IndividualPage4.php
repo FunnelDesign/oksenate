@@ -106,9 +106,27 @@
 
             <div class="bSenBio__row">
               <div class="bSenBio__col">
-                <a href="" class="bSenBio__mediaBtn">
-                  Press Releases & Media
-                </a>
+<!--                <a href="" class="bSenBio__mediaBtn">-->
+<!--                  Press Releases & Media-->
+<!--                </a>-->
+
+                <div class="bSenBio__media-btn-wrap">
+                  <a href="" class="bSenBio__media-btn">
+                    <span class="bSenBio__media-btn-ico">
+                        <img src="../dist/images/ico/download-ico.png"
+                             srcset="../dist/images/ico/download-ico-2x.png 2x">
+                    </span>
+                    Download Senator Photo
+                  </a>
+                  <a href="" class="bSenBio__media-btn">
+                     <span class="bSenBio__media-btn-ico">
+                             <img src="../dist/images/ico/press-ico.png"
+                                  srcset="../dist/images/ico/press-ico-2x.png 2x">
+                      </span>
+                    Press Releases & Media
+                  </a>
+                </div>
+
               </div>
               <div class="bSenBio__col">
                 <div class="bSenBio__con">

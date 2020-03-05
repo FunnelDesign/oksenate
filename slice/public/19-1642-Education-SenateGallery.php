@@ -52,26 +52,12 @@
                 <div class="bTiles__img"
                       style="background-image: url('../dist/images/tmp/gallery-img-1.jpg')">
                 </div>
-                <div class="bTiles__bSoc">
-
-                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">
-                    <div class="bSoc__items">
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
+              </div>
+              <div class="bTiles__caption">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              </div>
+              <div class="bTiles__btn-wrap">
+                <a href="#" class="btn">download high res photo</a>
               </div>
             </div>
 
@@ -80,54 +66,12 @@
                 <div class="bTiles__img"
                      style="background-image: url('../dist/images/tmp/gallery-img-1.jpg')">
                 </div>
-                <div class="bTiles__bSoc">
-
-                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">
-                    <div class="bSoc__items">
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
               </div>
-            </div>
-
-            <div class="bTiles__item">
-              <div class="bTiles__imgWrap">
-                <div class="bTiles__img"
-                    >
-                </div>
-                <div class="bTiles__bSoc">
-
-                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">
-                    <div class="bSoc__items">
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
+              <div class="bTiles__caption">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              </div>
+              <div class="bTiles__btn-wrap">
+                <a href="#" class="btn">download high res photo</a>
               </div>
             </div>
 
@@ -136,116 +80,87 @@
                 <div class="bTiles__img"
                      style="background-image: url('../dist/images/tmp/gallery-img-1.jpg')">
                 </div>
-                <div class="bTiles__bSoc">
-
-                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">
-                    <div class="bSoc__items">
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
+              </div>
+              <div class="bTiles__caption">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              </div>
+              <div class="bTiles__btn-wrap">
+                <a href="#" class="btn">download high res photo</a>
               </div>
             </div>
-
-
 
             <div class="bTiles__item">
               <div class="bTiles__imgWrap">
                 <div class="bTiles__img"
                      style="background-image: url('../dist/images/tmp/gallery-img-1.jpg')">
                 </div>
-                <div class="bTiles__bSoc">
-
-                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">
-                    <div class="bSoc__items">
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
+              </div>
+              <div class="bTiles__caption">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              </div>
+              <div class="bTiles__btn-wrap">
+                <a href="#" class="btn">download high res photo</a>
               </div>
             </div>
-
 
             <div class="bTiles__item">
               <div class="bTiles__imgWrap">
                 <div class="bTiles__img"
                      style="background-image: url('../dist/images/tmp/gallery-img-1.jpg')">
                 </div>
-                <div class="bTiles__bSoc">
-
-                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">
-                    <div class="bSoc__items">
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
+              </div>
+              <div class="bTiles__caption">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              </div>
+              <div class="bTiles__btn-wrap">
+                <a href="#" class="btn">download high res photo</a>
               </div>
             </div>
-
 
             <div class="bTiles__item">
               <div class="bTiles__imgWrap">
                 <div class="bTiles__img"
                      style="background-image: url('../dist/images/tmp/gallery-img-1.jpg')">
                 </div>
-                <div class="bTiles__bSoc">
-
-                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">
-                    <div class="bSoc__items">
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>
-                      </div>
-                      <div class="bSoc__item">
-                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
+              </div>
+              <div class="bTiles__caption">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+              </div>
+              <div class="bTiles__btn-wrap">
+                <a href="#" class="btn">download high res photo</a>
               </div>
             </div>
+
+
+
+
+<!--            <div class="bTiles__item">-->
+<!--              <div class="bTiles__imgWrap">-->
+<!--                <div class="bTiles__img"-->
+<!--                     style="background-image: url('../dist/images/tmp/gallery-img-1.jpg')">-->
+<!--                </div>-->
+<!--                <div class="bTiles__bSoc">-->
+<!---->
+<!--                  <div class="bSoc _layout_a _style_simple _size_a _ind_a _color_white">-->
+<!--                    <div class="bSoc__items">-->
+<!--                      <div class="bSoc__item">-->
+<!--                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-facebook"></a>-->
+<!--                      </div>-->
+<!--                      <div class="bSoc__item">-->
+<!--                        <span class="bSoc__ico ss-icon ss-social-circle ss-instagram"></span>-->
+<!--                      </div>-->
+<!--                      <div class="bSoc__item">-->
+<!--                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-pinterest"></a>-->
+<!--                      </div>-->
+<!--                      <div class="bSoc__item">-->
+<!--                        <a target="_blank" href="#" class="bSoc__ico ss-icon ss-social-circle ss-twitter"></a>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!---->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
 
 
 
