@@ -81,7 +81,7 @@
             </p>
           </div>
 
-          <div class="pageIn__btnWr pageIn">
+          <div class="pageIn__btnWr">
             <a href="#" class="btn btn_c btn_s_j">
             <span class="btn__ico">
               <img src="../dist/images/link/link-ico-tmp-1.png"

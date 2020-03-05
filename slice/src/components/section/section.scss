@@ -150,6 +150,10 @@
     &_h {
       @include padding(40px 0, 65px 0 152px);
     }
+
+    &_i {
+      @include padding(40px 0, 93px 0);
+    }
   }
 
   &__sNav {
