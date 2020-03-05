@@ -966,6 +966,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_subcomt_mmb_position':
     case 'field_publications_column_text':
     case 'field_publications_column_title':
+    case 'field_no_meetings_text':
       $suggestions[] = 'field__no_wrappers';
       break;
 
