@@ -25,7 +25,8 @@
           <div class="bSelect bSelect_a bSelect_size_a">
             <div class="form-item  form-type-select">
               <div class="bDrop select2 select2-container select2-container--default">
-                <div class="bDrop__title select2-selection select2-selection--single" data-ev="toggleCustomClass:bDrop:select2-container--open">
+                <div class="bDrop__title select2-selection select2-selection--single"
+                     data-ev="toggleCustomClass:bDrop:select2-container--open">
                   <div class="select2-selection__rendered">
                     Select Committee
                   </div>
@@ -56,7 +57,8 @@
 
       <div class="bContainer">
         <div class="pageIn__ico">
-          <img src="../dist/images/titleIco/title-ico-1.png" srcset="../dist/images/titleIco/title-ico-1-2x.png 2x" alt="">
+          <img src="../dist/images/titleIco/title-ico-1.png" srcset="../dist/images/titleIco/title-ico-1-2x.png 2x"
+               alt="">
         </div>
         <h2>Committee Events</h2>
 
@@ -66,9 +68,27 @@
             <div class="loader loader_circle"></div>
           </div>
 
-          <div class="pageIn__noRes pageIn__noRes_a">
-            <h2>No events</h2>
+          <div class="bTiles bTiles_ev _no-live">
+
+            <div class="bTiles__items">
+             <span class="bTiles__item">
+                <span class="bTiles__ico">
+                    <img src="../dist/images/titleIco/title-ico-1.png"
+                         srcset="../dist/images/titleIco/title-ico-1-2x.png 2x">
+                </span>
+                <span class="bTiles__title">
+                 There are currently no live Committee
+                  Meetings in progress. See our weekly
+                  Committee Meeting schedule below.
+                </span>
+             </span>
+            </div>
+
           </div>
+
+<!--          <div class="pageIn__noRes pageIn__noRes_a">-->
+<!--            <h2>No events</h2>-->
+<!--          </div>-->
 
           <div class="bTiles__items">
             <span class="bTiles__item">
@@ -191,7 +211,8 @@
 
         <div class="bSchedule">
           <div class="pageIn__ico pageIn__ico_a">
-            <img src="../dist/images/titleIco/title-ico-7.png" srcset="../dist/images/titleIco/title-ico-7-2x.png 2x" alt="">
+            <img src="../dist/images/titleIco/title-ico-7.png" srcset="../dist/images/titleIco/title-ico-7-2x.png 2x"
+                 alt="">
           </div>
           <h2>2019 Committee Meeting Schedule</h2>
 
@@ -211,18 +232,18 @@
                       <span class="bListItems__sub">10:00am</span>
                     </span>
 
-                      <div class="bListItems__btnWr">
-                          <a href="#" class="bListItems__btn btn btn_b">
-                              <span><span>•</span></span> room 511-a
-                          </a>
+                    <div class="bListItems__btnWr">
+                      <a href="#" class="bListItems__btn btn btn_b">
+                        <span><span>•</span></span> room 511-a
+                      </a>
 
-                          <a href="#" class="bListItems__btn btn btn_b">
-                              <span><span>•</span></span> room 511-a
-                          </a>
-                          <a href="#" class="bListItems__btn btn btn_b">
-                              <span><span>•</span></span> room 511-a
-                          </a>
-                      </div>
+                      <a href="#" class="bListItems__btn btn btn_b">
+                        <span><span>•</span></span> room 511-a
+                      </a>
+                      <a href="#" class="bListItems__btn btn btn_b">
+                        <span><span>•</span></span> room 511-a
+                      </a>
+                    </div>
 
                   </div>
 
@@ -232,13 +253,12 @@
                        <span class="bListItems__sub">10:00am</span>
                     </span>
 
-                      <div class="bListItems__btnWr">
-                          <a href="#" class="bListItems__btn btn btn_b">
-                              <span><span>•</span></span> room 535
-                          </a>
+                    <div class="bListItems__btnWr">
+                      <a href="#" class="bListItems__btn btn btn_b">
+                        <span><span>•</span></span> room 535
+                      </a>
 
-                      </div>
-
+                    </div>
 
 
                   </div>
