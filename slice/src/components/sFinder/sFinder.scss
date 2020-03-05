@@ -73,6 +73,13 @@
       margin: 0 0 4px;
       @include font-size(24px, 32px);
     }
+
+    h1 {
+      font-family: $RobotoCondensed-Light;
+      color: $color-dark-blue-1;
+      margin: 0;
+      @include font-size(30px, 40px);
+    }
   }
 
   &__ico {
@@ -97,7 +104,7 @@
   }
 
 
-  .page-authorization & {
+  .page-authorization &, .welcome-page & {
 
     #{$this}__in {
       min-height: auto;

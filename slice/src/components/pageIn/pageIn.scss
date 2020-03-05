@@ -24,7 +24,7 @@
     @extend .bContainer;
   }
 
-  .page-authorization & {
+  .page-authorization &, .welcome-page & {
 
     & > #block-senate-content > article {
       display: flex;
@@ -47,6 +47,13 @@
       .form-item {
         position: relative;
       }
+    }
+  }
+
+  .welcome-page & {
+
+    & > #block-senate-content > article {
+      min-height: 55vh;
     }
   }
 
