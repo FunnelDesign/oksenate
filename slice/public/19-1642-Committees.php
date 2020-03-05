@@ -62,15 +62,9 @@
         </div>
         <h2>Committee Events</h2>
 
-        <div class="bTiles bTiles_ev">
+        <div class="bTiles bTiles_ev _no-live">
 
-          <div class="pageIn__loader">
-            <div class="loader loader_circle"></div>
-          </div>
-
-          <div class="bTiles bTiles_ev _no-live">
-
-            <div class="bTiles__items">
+          <div class="bTiles__items">
              <span class="bTiles__item">
                 <span class="bTiles__ico">
                     <img src="../dist/images/titleIco/title-ico-1.png"
@@ -82,8 +76,14 @@
                   Committee Meeting schedule below.
                 </span>
              </span>
-            </div>
+          </div>
 
+        </div>
+
+        <div class="bTiles bTiles_ev">
+
+          <div class="pageIn__loader">
+            <div class="loader loader_circle"></div>
           </div>
 
 <!--          <div class="pageIn__noRes pageIn__noRes_a">-->
