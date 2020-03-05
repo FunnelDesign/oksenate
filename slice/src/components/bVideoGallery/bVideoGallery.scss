@@ -1,0 +1,26 @@
+.bVideoGallery {
+
+  &__items {
+    max-width: 958px;
+    margin: 0 auto;
+    @include cr-last-child;
+  }
+
+  &__item {
+    border: 2px solid #dadada;
+    background: #f0f0f0;
+    @include padding(30px 30px 25px, 50px 40px 45px);
+    margin-bottom: 15px;
+    @include cr-last-item;
+  }
+
+  &__title {
+    text-align: center;
+    @include margin-bottom(20px, 40px);
+    @include cr-last-child;
+
+    h2 {
+
+    }
+  }
+}

@@ -80,7 +80,7 @@ import './components/bListInline/bListInline.scss'
 import './components/bEvents/bEvents.scss'
 import './components/modal/modal.scss'
 import './components/bSubNav/bSubNav.scss'
-
+import './components/bVideoGallery/bVideoGallery.scss'
 
 import './common/drupal-styles.scss'
 import './components/accessibility/accessibility.scss'
