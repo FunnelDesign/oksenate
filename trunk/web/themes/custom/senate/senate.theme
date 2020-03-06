@@ -1737,16 +1737,34 @@ function senate_preprocess_paragraph(array &$vars) {
       $measure = (!empty($vars["content"]["field_senate_votes_measure"]) &&
         !empty($vars["content"]["field_senate_votes_measure"]['#items'])) ?
         $vars["content"]["field_senate_votes_measure"]['#items']->getValue() : '';
-      $measure = !empty($measure) && !empty($measure[0]) ? $measure[0]["value"] : '';
+      $measure_link = (!empty($vars["content"]["field_senate_votes_measure_link"]) &&
+        !empty($vars["content"]["field_senate_votes_measure_link"]['#items'])) ?
+        $vars["content"]["field_senate_votes_measure_link"]['#items']->getValue() : '';
 
-      if (!empty($measure)) {
-        $url = Url::fromUri('http://www.oklegislature.gov/BillInfo.aspx');
-        $url->setOption('query', [
-          'Bill' => $measure,
-        ]);
+      $author = (!empty($vars["content"]["field_senate_votes_author"]) &&
+        !empty($vars["content"]["field_senate_votes_author"]['#items'])) ?
+        $vars["content"]["field_senate_votes_author"]['#items']->getValue() : '';
+      $author_link = (!empty($vars["content"]["field_senate_votes_author_link"]) &&
+        !empty($vars["content"]["field_senate_votes_author_link"]['#items'])) ?
+        $vars["content"]["field_senate_votes_author_link"]['#items']->getValue() : '';
+
+      $vars["measure"] = !empty($measure) && !empty($measure[0]) ? $measure[0]["value"] : '';
+      $measure_link = !empty($measure_link) && !empty($measure_link[0]) ? $measure_link[0]["uri"] : '';
+
+      $vars["author"] = !empty($author) && !empty($author[0]) ? $author[0]["value"] : '';
+      $author_link = !empty($author_link) && !empty($author_link[0]) ? $author_link[0]["uri"] : '';
+
+      if (!empty($vars["measure"]) && !empty($measure_link)) {
+        $url = Url::fromUri($measure_link);
+
         $attributes['target'] = '_blank';
         $url->setOption('attributes', $attributes);
-        $vars["measure"] = Link::fromTextAndUrl($measure, $url);
+        $vars["measure"] = Link::fromTextAndUrl($vars["measure"], $url);
+      }
+
+      if (!empty($vars["author"]) && !empty($author_link)) {
+        $url = Url::fromUri($author_link);
+        $vars["author"] = Link::fromTextAndUrl($vars["author"], $url);
       }
       break;
   }
