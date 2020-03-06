@@ -121,10 +121,21 @@
                 </div>
 
                 <div class="bSenBio__row">
+
                     <div class="bSenBio__col">
-                        <a href="/senator-press-releases/{{ title_alias }}" class="bSenBio__mediaBtn">
-                            {{ "Press Releases & Media"|t }}
-                        </a>
+                        <div class="bSenBio__media-btn-wrap">
+                            <a href="{{ senator_photo_download }}" class="bSenBio__media-btn" download="{{ title_alias }}">
+                    <span class="bSenBio__media-btn-ico">
+                        <img src="{{ theme_path }}/dist/images/ico/download-ico.png" srcset="{{ theme_path }}/dist/images/ico/download-ico-2x.png 2x">
+                    </span>
+                                Download Senator Photo
+                            </a>
+
+                            <a href="/senator-press-releases/{{ title_alias }}" class="bSenBio__mediaBtn">
+                                {{ "Press Releases & Media"|t }}
+                            </a>
+                        </div>
+
                     </div>
                     <div class="bSenBio__col">
                         <div class="bSenBio__con">
