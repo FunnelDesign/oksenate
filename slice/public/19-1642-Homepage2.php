@@ -214,6 +214,16 @@
                 Calendar of Events
               </span>
             </a>
+
+            <a href="#" class="bTiles__item">
+              <span class="bTiles__ico">
+                <img src="../dist/images/titleIco/title-ico-55.png"
+                     srcset="../dist/images/titleIco/title-ico-55-2x.png 2x">
+              </span>
+              <span class="bTiles__title">
+                Floor Agenda
+              </span>
+            </a>
           </div>
         </div>
       </div>
