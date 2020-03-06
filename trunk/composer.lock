@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d76417b546633bd86b8abe05efdf26ba",
+    "content-hash": "053821be05533feacf02fcf2f42cc38c",
     "packages": [
         {
             "name": "adubovskoy/phpquery",
@@ -5428,6 +5428,64 @@
             }
         },
         {
+            "name": "drupal/pdf",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/pdf.git",
+                "reference": "ec8d13d0d91678946e9e23ec71984e1979818585"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1538669280",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Dev releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "DanielFbrg",
+                    "homepage": "https://www.drupal.org/user/884704"
+                },
+                {
+                    "name": "JMOmandown",
+                    "homepage": "https://www.drupal.org/user/1844552"
+                },
+                {
+                    "name": "alextataurov",
+                    "homepage": "https://www.drupal.org/user/957718"
+                },
+                {
+                    "name": "ram4nd",
+                    "homepage": "https://www.drupal.org/user/601534"
+                },
+                {
+                    "name": "shenzhuxi",
+                    "homepage": "https://www.drupal.org/user/193802"
+                }
+            ],
+            "description": "Display PDF file in Drupal without external readers and plugins.",
+            "homepage": "https://www.drupal.org/project/pdf",
+            "support": {
+                "source": "https://git.drupalcode.org/project/pdf"
+            },
+            "time": "2019-08-05T13:33:30+00:00"
+        },
+        {
             "name": "drupal/queue_ui",
             "version": "2.0.0",
             "source": {
@@ -8048,6 +8106,20 @@
                 "html"
             ],
             "time": "2016-07-25T17:07:32+00:00"
+        },
+        {
+            "name": "mozilla/pdf.js",
+            "version": "1.10.100",
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/mozilla/pdf.js/releases/download/v1.10.100/pdfjs-1.10.100-dist.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library",
+            "extra": {
+                "installer-name": "pdf.js"
+            }
         },
         {
             "name": "nikic/php-parser",
@@ -13937,6 +14009,7 @@
         "drupal/filefield_sources": 15,
         "drupal/inline_entity_form": 5,
         "drupal/paragraphs_edit": 15,
+        "drupal/pdf": 20,
         "drupal/search_api_page": 10,
         "drupal/sharethis": 10,
         "drupal/smtp": 10,
