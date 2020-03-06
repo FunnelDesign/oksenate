@@ -249,6 +249,10 @@ function senate_preprocess_node(array &$vars) {
           }
           $vars['preview_image'] = Markup::create("<span class=\"bMedia__preview\" style=\"background-image: url('$img_file_uri')\"></span>");
         }
+        if (!empty($vars['content']['field_senator_photo'][0]['#item'])){
+          $senator_photo_uri = $vars['content']['field_senator_photo'][0]['#item']->entity->url();
+        }
+        $vars['senator_photo_download'] = !empty($senator_photo_uri) ? $senator_photo_uri : '';
 
         $vars['nid'] = $node->id();
         $title = $node->getTitle();
