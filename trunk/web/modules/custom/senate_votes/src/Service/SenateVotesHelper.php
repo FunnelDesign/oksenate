@@ -257,12 +257,21 @@ class SenateVotesHelper {
     if (!empty($new_data['date'])) {
       $paragraph->set('field_senate_votes_date', $new_data["date"]);
     }
-    if (!empty($new_data['measure'])) {
-      $paragraph->set('field_senate_votes_measure', $new_data["measure"]);
+
+    if (!empty($new_data['measure']['value'])) {
+      $paragraph->set('field_senate_votes_measure', $new_data["measure"]['value']);
     }
-    if (!empty($new_data['author'])) {
-      $paragraph->set('field_senate_votes_author', $new_data["author"]);
+    if (!empty($new_data['measure']['url'])) {
+      $paragraph->set('field_senate_votes_measure_link', $new_data["measure"]['url']);
     }
+
+    if (!empty($new_data['author']['value'])) {
+      $paragraph->set('field_senate_votes_author', $new_data["author"]['value']);
+    }
+    if (!empty($new_data['author']['url'])) {
+      $paragraph->set('field_senate_votes_author_link', $new_data["author"]['url']);
+    }
+
     if (!empty($new_data['fid'])) {
       $paragraph->set('field_senate_votes_action_file', [
         'target_id' => $new_data['fid'],
@@ -272,8 +281,17 @@ class SenateVotesHelper {
     if (isset($new_data['yeas']) && is_numeric($new_data["yeas"])) {
       $paragraph->set('field_senate_votes_yeas', $new_data["yeas"]);
     }
-    if (isset($new_data['noes']) && is_numeric($new_data["noes"])) {
-      $paragraph->set('field_senate_votes_nays', $new_data["noes"]);
+    if (isset($new_data['nays']) && is_numeric($new_data["nays"])) {
+      $paragraph->set('field_senate_votes_nays', $new_data["nays"]);
+    }
+
+    if (!empty($new_data['action']['value']) && !empty($new_data['action']['url'])) {
+      $paragraph->set('field_senate_votes_action_link',
+        [
+          'uri' => $new_data["action"]['url'],
+          'title' => $new_data["action"]['value'],
+        ]
+      );
     }
   }
 
@@ -283,13 +301,14 @@ class SenateVotesHelper {
       \Drupal::service('events_custom.helper') : '';
 
     $new_data['date'] = !empty($data['date']) ? $data['date'] : '';
-    $new_data['measure'] = !empty($data['measure']) ? $data['measure'] : '';
-    $new_data['author'] = !empty($data['author']) ? $data['author'] : '';
-    $new_data['fid'] = !empty($data['fid']) ? $data['fid'] : '';
-    $new_data['file_name'] = !empty($data['action']) && !empty($data['action']['name']) ?
-      $data['action']['name'] : t('Description');
+    $new_data['measure'] = !empty($data['measure']) ? $data['measure'] : [];
+    $new_data['author'] = !empty($data['author']) ? $data['author'] : [];
+//    $new_data['fid'] = !empty($data['fid']) ? $data['fid'] : '';
+//    $new_data['file_name'] = !empty($data['action']) && !empty($data['action']['name']) ?
+//      $data['action']['name'] : t('Description');
     $new_data['yeas'] = isset($data['yeas']) && is_numeric($data['yeas']) ? $data['yeas'] : '';
-    $new_data['noes'] = isset($data['noes']) && is_numeric($data['noes']) ? $data['noes'] : '';
+    $new_data['nays'] = isset($data['nays']) && is_numeric($data['nays']) ? $data['nays'] : '';
+    $new_data['action'] = !empty($data['action']) ? $data['action'] : [];
 
     if (!empty($events_sync_helper) && !empty($new_data['date'])) {
       $new_data['date'] = $events_sync_helper->normalizeExternalDateData($new_data['date'], DateTimeItemInterface::DATE_STORAGE_FORMAT);
@@ -503,7 +522,7 @@ class SenateVotesHelper {
 
   public function checkParagraphExists($existing_paragraph, $new_data) {
     $date = !empty($new_data["date"]) ? $new_data["date"] : '';
-    $measure = !empty($new_data["measure"]) ? $new_data["measure"] : '';
+    $measure = !empty($new_data["measure"]) ? $new_data["measure"]["value"] : '';
 
     return (!empty($existing_paragraph[$date]) && in_array($measure, $existing_paragraph[$date]));
   }

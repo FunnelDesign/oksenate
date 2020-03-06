@@ -33,50 +33,53 @@ class SenateVotes extends QueueWorkerBase {
       $nodes = [];
 
       foreach ($files_list as $file) {
-        $files_content[$file] = $senate_votes_helper->getFileContent($file, $directory);
+        $files_content[$file] = $senate_votes_helper->getFileContentXls($file, $directory);
 
         if (!empty($files_content[$file])) {
-          foreach ($files_content[$file] as $file_row) {
-            if (!empty($file_row)) {
-              if (!empty($file_row['action']) && !empty($file_row['action']['link'])) {
-                $file_row['fid'] = $senate_votes_helper->createFile($file_row['action']['link'], $directory);
-              }
+          foreach ($files_content[$file] as $file_sheet) {
+            if (!empty($file_sheet)) {
 
-              if (!empty($file_row['date'])) {
-                $year = $senate_votes_helper->getYear($file_row['date']);
-                $session = !empty($file_row['session']) ? $file_row['session'] : '1st';
-                $year_session = $year . '_' . $session;
-
-                if (!empty($year) && empty($nodes[$year_session])) {
-                  $parent_nid = $senate_votes_helper->getNodeByYearSession($year, $session);
-
-                  if (!empty($parent_nid)) {
-                    $nodes[$year_session] = Node::load($parent_nid);
-                  }
+              foreach ($file_sheet as $file_row) {
+                if (!empty($file_row['action']) && !empty($file_row['action']['link'])) {
+                  $file_row['fid'] = $senate_votes_helper->createFile($file_row['action']['link'], $directory);
                 }
 
-                if (!empty($nodes[$year_session]) && is_object($nodes[$year_session])) {
-                  $parent_node = $nodes[$year_session];
-                  $existing_paragraph = $senate_votes_helper->getVotesData($parent_node->id());
-                  $paragraph_exists = $senate_votes_helper->checkParagraphExists($existing_paragraph, $file_row);
+                if (!empty($file_row['date'])) {
+                  $year = $senate_votes_helper->getYear($file_row['date']);
+                  $session = !empty($file_row['session']) ? $file_row['session'] : '1st';
+                  $year_session = $year . '_' . $session;
 
-                  if (!$paragraph_exists) {
-                    $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $file_row);
+                  if (!empty($year) && empty($nodes[$year_session])) {
+                    $parent_nid = $senate_votes_helper->getNodeByYearSession($year, $session);
 
-                    if (!empty($paragraph)) {
-                      $parent_node->field_senate_votes[] = [
-                        'target_id' => $paragraph->id(),
-                        'target_revision_id' => $paragraph->getRevisionId(),
-                      ];
-                      $parent_node->save();
+                    if (!empty($parent_nid)) {
+                      $nodes[$year_session] = Node::load($parent_nid);
                     }
                   }
-                }
-                else {
-                  \Drupal::logger('senate_votes')
-                    ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
-                        '%file' => $file,
-                      ]));
+
+                  if (!empty($nodes[$year_session]) && is_object($nodes[$year_session])) {
+                    $parent_node = $nodes[$year_session];
+                    $existing_paragraph = $senate_votes_helper->getVotesData($parent_node->id());
+                    $paragraph_exists = $senate_votes_helper->checkParagraphExists($existing_paragraph, $file_row);
+
+                    if (!$paragraph_exists) {
+                      $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $file_row);
+
+                      if (!empty($paragraph)) {
+                        $parent_node->field_senate_votes[] = [
+                          'target_id' => $paragraph->id(),
+                          'target_revision_id' => $paragraph->getRevisionId(),
+                        ];
+                        $parent_node->save();
+                      }
+                    }
+                  }
+                  else {
+                    \Drupal::logger('senate_votes')
+                      ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
+                          '%file' => $file,
+                        ]));
+                  }
                 }
               }
             }
