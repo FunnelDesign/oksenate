@@ -17,6 +17,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeStorageInterface;
 use Drupal\file\Entity\File;
 
+use PhpOffice\PhpSpreadsheet\IOFactory;
+
 /**
  * Class EventsCustomHelper.
  */
@@ -60,7 +62,7 @@ class SenateVotesHelper {
 
   public function getListFiles($dir) {
     $files = [];
-    $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote('txt')) . ')$/i';
+    $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote('xls')) . ')$/i';
 
     if (is_dir($dir)) {
       if ($dh = opendir($dir)) {
@@ -142,6 +144,91 @@ class SenateVotesHelper {
     }
 
     return (!empty($data) && is_array($data)) ? $data : [];
+  }
+
+  public function getFileContentXls($file, $directory) {
+    $file_data = [];
+    $absolute_path = $directory . '/' . $file;
+
+    $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote('xls')) . ')$/i';
+    if (!preg_match($regex, $file)) {
+      return [];
+    }
+
+    try {
+      $reader = $reader = IOFactory::createReaderForFile($absolute_path);
+      $spreadsheet = $reader->load($absolute_path);
+      $sheets_amount = $spreadsheet->getSheetCount();
+
+      for ($i = 0; $i < $sheets_amount; $i++) {
+        $sheet = $spreadsheet->getSheet($i);
+        $cells = $sheet->toArray(null, false, false, true);
+        $cells = !empty($cells) ? $cells : [];
+        $data_keys = [];
+
+        foreach ($cells as $row_number => $row) {
+          $row = !empty($row) ? $row : [];
+
+          if (empty($data_keys)) {
+            $row_strlow = array_map(function ($val) {
+              $val = strtolower($val);
+              $val = trim($val);
+              return $val;
+            }, $row);
+
+            if (in_array('date', $row_strlow) &&
+              in_array('measure', $row_strlow) &&
+              in_array('author', $row_strlow) &&
+              in_array('action', $row_strlow) &&
+              in_array('yeas', $row_strlow) &&
+              in_array('nays', $row_strlow)) {
+
+              $data_keys = array_flip($row_strlow);
+              $file_data[$i] = [];
+            }
+          }
+          else {
+            foreach ($row as $cell_key => $row_value) {
+              if (!empty($row_value)) {
+                $key = array_search($cell_key, $data_keys);
+
+                if (!empty($key)) {
+                  switch ($key) {
+                    case 'measure':
+                    case 'author':
+                    case 'action':
+                      $url = $sheet->getCell($cell_key . $row_number)->getHyperlink();
+                      $url = !empty($url) ? $url->getUrl() : '';
+                      $file_data[$i][$row_number][$key] = [
+                        'value' => trim($row_value),
+                        'url' => $url
+                      ];
+                      break;
+                    default:
+                      $file_data[$i][$row_number][$key] = trim($row_value);
+                      break;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        if (empty($data_keys)) {
+          \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Empty data reading file %filename, sheet %sheet.', [
+              '%filename' => $file,
+              '%sheet' => $i,
+            ]));
+        }
+      }
+
+      return $file_data;
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Error during open file %error.', [
+          '%error' => $e,
+        ]));
+    }
   }
 
   public function createParagraph($parent, $parent_field, $data) {

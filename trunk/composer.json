@@ -107,6 +107,7 @@
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
         "pguardiario/phpuri": "^1.0",
+        "phpoffice/phpspreadsheet": "^1.11",
         "querypath/querypath": "dev-master",
         "vlucas/phpdotenv": "^2.4",
         "webflo/drupal-finder": "^1.0.0",

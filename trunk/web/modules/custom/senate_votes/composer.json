@@ -1,0 +1,16 @@
+{
+    "name": "senate_votes",
+    "type": "drupal-module",
+    "description": "Senate votes",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/senate_votes",
+    "minimum-stability": "dev",
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.11"
+    },
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/senate_votes",
+        "source": "http://cgit.drupalcode.org/senate_votes"
+    }
+}
