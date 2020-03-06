@@ -48,7 +48,7 @@
 %}
 {% block paragraph %}
   {% block content %}
-    <a href="{{ content.field_audio_video_par_link.0.url }}" class="bTiles__item">
+    <a href="{{ content.field_audio_video_par_link[0]['#url'] }}" class="bTiles__item">
       <span class="bTiles__ico">
               {{ content.field_par_publications_page_icon }}
 
@@ -58,7 +58,7 @@
               </span>
       <span class="bTiles__btnWrap">
                 <span class="btn">
-                   {{ content.field_audio_video_par_link.0.title }}
+                   {{ content.field_audio_video_par_link[0]['#title'] }}
                 </span>
               </span>
 
