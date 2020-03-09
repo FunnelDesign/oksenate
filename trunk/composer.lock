@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c232d9abbe4ad77b52461fa022e1b321",
+    "content-hash": "8c5d542fc4171f88202dc2d8306c45a7",
     "packages": [
         {
             "name": "adubovskoy/phpquery",
@@ -5428,64 +5428,6 @@
             }
         },
         {
-            "name": "drupal/pdf",
-            "version": "dev-1.x",
-            "source": {
-                "type": "git",
-                "url": "https://git.drupalcode.org/project/pdf.git",
-                "reference": "ec8d13d0d91678946e9e23ec71984e1979818585"
-            },
-            "require": {
-                "drupal/core": "*"
-            },
-            "type": "drupal-module",
-            "extra": {
-                "branch-alias": {
-                    "dev-1.x": "1.x-dev"
-                },
-                "drupal": {
-                    "version": "8.x-1.x-dev",
-                    "datestamp": "1538669280",
-                    "security-coverage": {
-                        "status": "not-covered",
-                        "message": "Dev releases are not covered by Drupal security advisories."
-                    }
-                }
-            },
-            "notification-url": "https://packages.drupal.org/8/downloads",
-            "license": [
-                "GPL-2.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "DanielFbrg",
-                    "homepage": "https://www.drupal.org/user/884704"
-                },
-                {
-                    "name": "JMOmandown",
-                    "homepage": "https://www.drupal.org/user/1844552"
-                },
-                {
-                    "name": "alextataurov",
-                    "homepage": "https://www.drupal.org/user/957718"
-                },
-                {
-                    "name": "ram4nd",
-                    "homepage": "https://www.drupal.org/user/601534"
-                },
-                {
-                    "name": "shenzhuxi",
-                    "homepage": "https://www.drupal.org/user/193802"
-                }
-            ],
-            "description": "Display PDF file in Drupal without external readers and plugins.",
-            "homepage": "https://www.drupal.org/project/pdf",
-            "support": {
-                "source": "https://git.drupalcode.org/project/pdf"
-            },
-            "time": "2019-08-05T13:33:30+00:00"
-        },
-        {
             "name": "drupal/queue_ui",
             "version": "2.0.0",
             "source": {
@@ -6132,7 +6074,7 @@
                 "shasum": "8e93d4dcf483b1558b800570af1d3b231b8fa6f3"
             },
             "require": {
-                "drupal/core": "~8.0",
+                "drupal/core": "^8 || ^9",
                 "ext-xmlwriter": "*"
             },
             "type": "drupal-module",
@@ -6967,7 +6909,7 @@
                 },
                 "drupal": {
                     "version": "8.x-5.8",
-                    "datestamp": "1571252884",
+                    "datestamp": "1579957681",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -8276,7 +8218,9 @@
             "version": "1.10.100",
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/mozilla/pdf.js/releases/download/v1.10.100/pdfjs-1.10.100-dist.zip"
+                "url": "https://github.com/mozilla/pdf.js/releases/download/v1.10.100/pdfjs-1.10.100-dist.zip",
+                "reference": null,
+                "shasum": null
             },
             "type": "drupal-library",
             "extra": {
@@ -8340,7 +8284,9 @@
             "version": "4.0.12",
             "dist": {
                 "type": "tar",
-                "url": "https://registry.npmjs.org/select2/-/select2-4.0.12.tgz"
+                "url": "https://registry.npmjs.org/select2/-/select2-4.0.12.tgz",
+                "reference": null,
+                "shasum": null
             },
             "type": "npm-asset",
             "license": [
@@ -14269,17 +14215,6 @@
         {
             "name": "webflo/drupal-core-require-dev",
             "version": "8.8.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/webflo/drupal-core-require-dev.git",
-                "reference": "5685684fd06541b8e4a453371542fe04455a56d2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/webflo/drupal-core-require-dev/zipball/5685684fd06541b8e4a453371542fe04455a56d2",
-                "reference": "5685684fd06541b8e4a453371542fe04455a56d2",
-                "shasum": ""
-            },
             "require": {
                 "behat/mink": "1.7.x-dev",
                 "behat/mink-goutte-driver": "^1.2",
@@ -14321,7 +14256,6 @@
         "drupal/filefield_sources": 15,
         "drupal/inline_entity_form": 5,
         "drupal/paragraphs_edit": 15,
-        "drupal/pdf": 20,
         "drupal/search_api_page": 10,
         "drupal/sharethis": 10,
         "drupal/smtp": 10,
