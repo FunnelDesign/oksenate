@@ -39,8 +39,9 @@ class SenateVotes extends QueueWorkerBase {
         if (!empty($files_content[$file])) {
           foreach ($files_content[$file] as $file_sheet) {
             if (!empty($file_sheet)) {
+              $rows = !empty($file_sheet["rows"]) ? $file_sheet["rows"] : [];
 
-              foreach ($file_sheet as $file_row) {
+              foreach ($rows as $file_row) {
                 if (!empty($file_row['action']) && !empty($file_row['action']['link'])) {
                   $file_row['fid'] = $senate_votes_helper->createFile($file_row['action']['link'], $directory);
                 }
@@ -55,6 +56,12 @@ class SenateVotes extends QueueWorkerBase {
 
                     if (!empty($parent_nid)) {
                       $nodes[$year_session] = Node::load($parent_nid);
+                    }
+                    else {
+                      $node_data['title'] = !empty($file_sheet["title"]) ? $file_sheet["title"] : '';
+                      $node_data['description'] = !empty($file_sheet["description"]) ? $file_sheet["description"] : '';
+                      $node_data['year'] = $year;
+                      $nodes[$year_session] = $senate_votes_helper->createNode($node_data);
                     }
                   }
 

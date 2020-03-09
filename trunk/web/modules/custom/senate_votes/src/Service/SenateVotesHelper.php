@@ -185,7 +185,15 @@ class SenateVotesHelper {
               in_array('nays', $row_strlow)) {
 
               $data_keys = array_flip($row_strlow);
-              $file_data[$i] = [];
+
+              $title = $sheet->getCell('A2')->getValue();
+              $title = trim($title);
+              $desc = $sheet->getCell('A3')->getValue();
+              $desc = trim($desc);
+              $file_data[$i] = [
+                'title' => $title,
+                'description' => $desc
+              ];
             }
           }
           else {
@@ -200,17 +208,17 @@ class SenateVotesHelper {
                     case 'action':
                       $url = $sheet->getCell($cell_key . $row_number)->getHyperlink();
                       $url = !empty($url) ? $url->getUrl() : '';
-                      $file_data[$i][$row_number][$key] = [
+                      $file_data[$i]['rows'][$row_number][$key] = [
                         'value' => trim($row_value),
                         'url' => $url
                       ];
                       break;
                     case 'date':
                       $row_value = trim($row_value);
-                      $file_data[$i][$row_number][$key] = $this->getDate($row_value);
+                      $file_data[$i]['rows'][$row_number][$key] = $this->getDate($row_value);
                       break;
                     default:
-                      $file_data[$i][$row_number][$key] = trim($row_value);
+                      $file_data[$i]['rows'][$row_number][$key] = trim($row_value);
                       break;
                   }
                 }
@@ -530,5 +538,50 @@ class SenateVotesHelper {
     $measure = !empty($new_data["measure"]) ? $new_data["measure"]["value"] : '';
 
     return (!empty($existing_paragraph[$date]) && in_array($measure, $existing_paragraph[$date]));
+  }
+
+  /**
+   * Creates new node.
+   * @param $node_data
+   *
+   * @return \Drupal\Core\Entity\EntityInterface
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function createNode($node_data) {
+    $date_obj = new DrupalDateTime('now', DateTimeItemInterface::STORAGE_TIMEZONE);
+    $node = Node::create([
+      'type' => 'senate_votes',
+      'created' => $date_obj->getTimestamp(),
+    ]);
+
+    $this->updateNodeFields($node, $node_data, 'create');
+    $node->enforceIsNew();
+    $node->save();
+
+    return $node;
+  }
+
+  /**
+   * Updates node fields.
+   * @param $node
+   * @param $data
+   * @param $taxonomy
+   * @param $op
+   */
+  public function updateNodeFields(&$node, $data, $op = 'update') {
+    $legislatyre = !empty($data["legislature"]) ? $data["legislature"] : 'Legislature';
+
+    if (!empty($data['title'])) {
+      $node->set('title', $data['title']);
+    }
+    if (!empty($data["description"])) {
+      $node->set('body', $data["description"]);
+    }
+    if (!empty($data["year"])) {
+      $node->set('field_senate_votes_year', $data["year"]);
+      $node->set('field_senate_votes_title', $data["year"] . ' - 1st Session');
+    }
+
+    $node->set('field_senate_votes_legislature', $legislatyre);
   }
 }
