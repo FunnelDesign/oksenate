@@ -56,7 +56,7 @@ class PdfPages extends FormatterBase {
           '#tag' => 'div',
           //'#value' => TODO,
           '#attributes' => [
-            'class' => ['pdf-pages', 'bContainer'],
+            'class' => ['pdf-pages', 'bContainer', 'rtecenter'],
             'id' => ['pdf-pages-' . $delta],
             'file' => [$file_url],
             'scale' => [$scale],
