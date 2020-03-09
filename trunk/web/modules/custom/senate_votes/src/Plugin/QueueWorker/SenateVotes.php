@@ -23,11 +23,12 @@ class SenateVotes extends QueueWorkerBase {
     $type = !empty($data->type) ? $data->type : '';
     $update_all = !empty($data->update_all) ? $data->update_all : FALSE;
     $directory = !empty($data->directory) ? $data->directory : '';
+    $prev_execution = !empty($data->prev_execution) ? $data->prev_execution : 0;
     $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
       \Drupal::service('senate_votes.helper') : '';
 
     if (!empty($senate_votes_helper) && !empty($type) && !empty($directory)) {
-      $files_list = $senate_votes_helper->getListFiles($directory);
+      $files_list = $senate_votes_helper->getListFiles($directory, $prev_execution);
       $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
       $files_content = [];
       $nodes = [];
@@ -84,7 +85,7 @@ class SenateVotes extends QueueWorkerBase {
               }
             }
           }
-          $senate_votes_helper->setFileStatus($file, $directory);
+//          $senate_votes_helper->setFileStatus($file, $directory);
         }
 
       }

@@ -60,14 +60,15 @@ class SenateVotesHelper {
     $this->nodeStorage = $this->entityTypeManager->getStorage('node');
   }
 
-  public function getListFiles($dir) {
+  public function getListFiles($dir, $updated = 0) {
     $files = [];
     $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote('xls')) . ')$/i';
 
     if (is_dir($dir)) {
       if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== FALSE) {
-          if (($file[0] != '.') && preg_match($regex, $file)) {
+          $last_updated = filemtime($dir . '/' . $file);
+          if (($file[0] != '.') && preg_match($regex, $file) && ($last_updated >= $updated)) {
             $files[] = $file;
           }
         }
@@ -203,6 +204,10 @@ class SenateVotesHelper {
                         'value' => trim($row_value),
                         'url' => $url
                       ];
+                      break;
+                    case 'date':
+                      $row_value = trim($row_value);
+                      $file_data[$i][$row_number][$key] = $this->getDate($row_value);
                       break;
                     default:
                       $file_data[$i][$row_number][$key] = trim($row_value);
