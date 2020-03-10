@@ -16,6 +16,7 @@ use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeStorageInterface;
 use Drupal\file\Entity\File;
+use Drupal\Component\Utility\UrlHelper;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -274,14 +275,14 @@ class SenateVotesHelper {
     if (!empty($new_data['measure']['value'])) {
       $paragraph->set('field_senate_votes_measure', $new_data["measure"]['value']);
     }
-    if (!empty($new_data['measure']['url'])) {
+    if (!empty($new_data['measure']['url']) && UrlHelper::isValid($new_data['measure']['url'], TRUE)) {
       $paragraph->set('field_senate_votes_measure_link', $new_data["measure"]['url']);
     }
 
     if (!empty($new_data['author']['value'])) {
       $paragraph->set('field_senate_votes_author', $new_data["author"]['value']);
     }
-    if (!empty($new_data['author']['url'])) {
+    if (!empty($new_data['author']['url']) && UrlHelper::isValid($new_data['author']['url'], TRUE)) {
       $paragraph->set('field_senate_votes_author_link', $new_data["author"]['url']);
     }
 
@@ -298,10 +299,12 @@ class SenateVotesHelper {
       $paragraph->set('field_senate_votes_nays', $new_data["nays"]);
     }
 
-    if (!empty($new_data['action']['value']) && !empty($new_data['action']['url'])) {
+    if (!empty($new_data['action']['value'])) {
+      $url = !empty($new_data['action']['url']) && UrlHelper::isValid($new_data['action']['url'], TRUE) ?
+        $new_data['action']['url'] : 'route:<nolink>';
       $paragraph->set('field_senate_votes_action_link',
         [
-          'uri' => $new_data["action"]['url'],
+          'uri' => $url,
           'title' => $new_data["action"]['value'],
         ]
       );
@@ -489,6 +492,15 @@ class SenateVotesHelper {
       $query->leftJoin('paragraph__field_senate_votes_measure', 'votes_measure', 'votes_measure.entity_id = votes.field_senate_votes_target_id AND votes_measure.deleted = 0');
       $query->fields('votes_measure', ['field_senate_votes_measure_value']);
 
+      $query->leftJoin('paragraph__field_senate_votes_author', 'author', 'author.entity_id = votes.field_senate_votes_target_id AND author.deleted = 0');
+      $query->fields('author', ['field_senate_votes_author_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_nays', 'nays', 'nays.entity_id = votes.field_senate_votes_target_id AND nays.deleted = 0');
+      $query->fields('nays', ['field_senate_votes_nays_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_yeas', 'yeas', 'yeas.entity_id = votes.field_senate_votes_target_id AND yeas.deleted = 0');
+      $query->fields('yeas', ['field_senate_votes_yeas_value']);
+
 //      $a = $query->__toString();
 
       $result = $query->execute()->fetchAll();
@@ -498,9 +510,19 @@ class SenateVotesHelper {
           $this->getDate($row->field_senate_votes_date_value) : '';
         $measure = !empty($row->field_senate_votes_measure_value) ?
           $row->field_senate_votes_measure_value : '';
+        $author = !empty($row->field_senate_votes_author_value) ?
+          $row->field_senate_votes_author_value : '';
+        $yeas = !empty($row->field_senate_votes_yeas_value) ?
+          $row->field_senate_votes_yeas_value : '';
+        $nays = !empty($row->field_senate_votes_nays_value) ?
+          $row->field_senate_votes_nays_value : '';
 
         if (!empty($date) && !empty($measure)) {
-          $new_data[$date][] = $measure;
+          $new_data[$date][$measure] = [
+            'author' => $author,
+            'yeas' => $yeas,
+            'nays' => $nays,
+          ];
         }
       }
 
@@ -536,8 +558,12 @@ class SenateVotesHelper {
   public function checkParagraphExists($existing_paragraph, $new_data) {
     $date = !empty($new_data["date"]) ? $new_data["date"] : '';
     $measure = !empty($new_data["measure"]) ? $new_data["measure"]["value"] : '';
+    $author = !empty($new_data["author"]) ? $new_data["author"]["value"] : '';
+    $yeas = !empty($new_data["yeas"]) ? $new_data["yeas"] : '';
+    $nays = !empty($new_data["nays"]) ? $new_data["nays"] : '';
 
-    return (!empty($existing_paragraph[$date]) && in_array($measure, $existing_paragraph[$date]));
+    return (!empty($existing_paragraph[$date]) &&
+      !empty($existing_paragraph[$date][$measure]));
   }
 
   /**
@@ -569,7 +595,7 @@ class SenateVotesHelper {
    * @param $op
    */
   public function updateNodeFields(&$node, $data, $op = 'update') {
-    $legislatyre = !empty($data["legislature"]) ? $data["legislature"] : 'Legislature';
+    $legislature = !empty($data["legislature"]) ? $data["legislature"] : 'Legislature';
 
     if (!empty($data['title'])) {
       $node->set('title', $data['title']);
@@ -582,6 +608,6 @@ class SenateVotesHelper {
       $node->set('field_senate_votes_title', $data["year"] . ' - 1st Session');
     }
 
-    $node->set('field_senate_votes_legislature', $legislatyre);
+    $node->set('field_senate_votes_legislature', $legislature);
   }
 }
