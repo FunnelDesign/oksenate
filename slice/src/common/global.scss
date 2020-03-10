@@ -78,10 +78,10 @@ ul, ol {
   }
 }
 
-ol{
+ol {
   counter-reset: myCounter;
 
-  li{
+  li {
     list-style: none;
     padding-left: 10px;
     position: relative;
@@ -89,7 +89,7 @@ ol{
     &:before {
       @include pseudo-block($top: -6px, $left: -14px);
       counter-increment: myCounter;
-      content:counter(myCounter);
+      content: counter(myCounter);
       color: currentColor;
       display: inline-block;
       font-family: $FreightTextProBold-Regular;
@@ -98,7 +98,6 @@ ol{
     }
   }
 }
-
 
 
 a {
@@ -154,6 +153,11 @@ b, strong {
   }
 }
 
+.pdf-pages {
+  padding: 10px 5px;
+}
+
 .pdf-canvas {
   max-width: 100%;
+  @include margin(0, 0 4px 3px);
 }
