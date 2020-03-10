@@ -23,11 +23,12 @@ class SenateVotes extends QueueWorkerBase {
     $type = !empty($data->type) ? $data->type : '';
     $update_all = !empty($data->update_all) ? $data->update_all : FALSE;
     $directory = !empty($data->directory) ? $data->directory : '';
+    $prev_execution = !empty($data->prev_execution) ? $data->prev_execution : 0;
     $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
       \Drupal::service('senate_votes.helper') : '';
 
     if (!empty($senate_votes_helper) && !empty($type) && !empty($directory)) {
-      $files_list = $senate_votes_helper->getListFiles($directory);
+      $files_list = $senate_votes_helper->getListFiles($directory, $prev_execution);
       $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
       $files_content = [];
       $nodes = [];
@@ -38,8 +39,9 @@ class SenateVotes extends QueueWorkerBase {
         if (!empty($files_content[$file])) {
           foreach ($files_content[$file] as $file_sheet) {
             if (!empty($file_sheet)) {
+              $rows = !empty($file_sheet["rows"]) ? $file_sheet["rows"] : [];
 
-              foreach ($file_sheet as $file_row) {
+              foreach ($rows as $file_row) {
                 if (!empty($file_row['action']) && !empty($file_row['action']['link'])) {
                   $file_row['fid'] = $senate_votes_helper->createFile($file_row['action']['link'], $directory);
                 }
@@ -54,6 +56,12 @@ class SenateVotes extends QueueWorkerBase {
 
                     if (!empty($parent_nid)) {
                       $nodes[$year_session] = Node::load($parent_nid);
+                    }
+                    else {
+                      $node_data['title'] = !empty($file_sheet["title"]) ? $file_sheet["title"] : '';
+                      $node_data['description'] = !empty($file_sheet["description"]) ? $file_sheet["description"] : '';
+                      $node_data['year'] = $year;
+                      $nodes[$year_session] = $senate_votes_helper->createNode($node_data);
                     }
                   }
 
@@ -84,7 +92,7 @@ class SenateVotes extends QueueWorkerBase {
               }
             }
           }
-          $senate_votes_helper->setFileStatus($file, $directory);
+//          $senate_votes_helper->setFileStatus($file, $directory);
         }
 
       }
