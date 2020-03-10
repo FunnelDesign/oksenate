@@ -1,49 +1,19 @@
 <?php
 
-namespace Drupal\pdf\Plugin\Field\FieldFormatter;
+namespace Drupal\senate_pdf_viewer\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
+use Drupal\pdf\Plugin\Field\FieldFormatter\PdfPages;
 
 /**
  * @FieldFormatter(
- *  id = "pdf_pages",
- *  label = @Translation("PDF: Continuous scroll (experimental)"),
+ *  id = "senate_pdf_viewer",
+ *  label = @Translation("PDF: Continuous pdf scroll for senate"),
  *  description = @Translation("Don&#039;t use this to display big PDF file."),
  *  field_types = {"file"}
  * )
  */
-class PdfPages extends FormatterBase {
-
-  public static function defaultSettings() {
-    return [
-      'scale' => 1,
-    ] + parent::defaultSettings();
-  }
-
-  public function settingsForm(array $form, FormStateInterface $form_state) {
-    $elements['scale'] = [
-      '#type' => 'textfield',
-      '#title' => t('Set the scale of PDF pages'),
-      '#default_value' => $this->getSetting('scale'),
-    ];
-    return $elements;
-  }
-
-  public function settingsSummary() {
-    $summary = [];
-    $scale = $this->getSetting('scale');
-    if (empty($scale)) {
-      $summary[] = $this->t('No settings');
-    }
-    else {
-      $summary[] = t('Scale: @scale', ['@scale' => $scale]);
-    }
-
-    return $summary;
-  }
+class SenatePdfPages extends PdfPages {
 
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
