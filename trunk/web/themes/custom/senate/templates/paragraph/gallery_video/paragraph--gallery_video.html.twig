@@ -38,36 +38,36 @@
  * @ingroup themeable
  */
 #}
-{%
-  set classes = [
-    'paragraph',
-    'paragraph--type--' ~ paragraph.bundle|clean_class,
-    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished'
-  ]
-%}
+{% set classes = [
+'paragraph',
+'paragraph--type--' ~ paragraph.bundle|clean_class,
+view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+not paragraph.isPublished() ? 'paragraph--unpublished'
+] %}
 {% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
-    {% block content %}
-      <div class="bVideoGallery__title">
-        {{ content.field_video_caption }}
-      </div>
-      <div class="bVideoGallery__video">
+    <div{{ attributes.addClass(classes) }}>
+        {% block content %}
+            <div class="bVideoGallery__title">
+                {{ content.field_video_caption }}
+            </div>
+            <div class="bVideoGallery__video">
 
-        <div class="bMedia">
+                <div class="bMedia">
+                    {% if content.field_video_thumbnail|render is not empty %}
+                        <a href="{{ '#' ~ video_id }}" class="bMedia__play-btn bMedia-tile__play-btn">
+                            {{ content.field_video_thumbnail }}
+                            <span class="bMedia__previewText">play video</span>
+                        </a>
+                    {% endif %}
+                    <div class="bMedia__wrap">
+                        <iframe id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0"
+                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
 
-          <a href="#XVsjLNUK-pw" class="bMedia__play-btn bMedia-tile__play-btn">
-            {{ content.field_video_thumbnail }}
-            <span class="bMedia__previewText">play video</span>
-          </a>
-          <div class="bMedia__wrap">
-            <iframe id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
+                </div>
 
-        </div>
+            </div>
 
-      </div>
-
-    {% endblock %}
-  </div>
+        {% endblock %}
+    </div>
 {% endblock paragraph %}
