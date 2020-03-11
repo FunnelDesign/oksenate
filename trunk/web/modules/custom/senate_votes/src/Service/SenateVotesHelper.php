@@ -501,6 +501,9 @@ class SenateVotesHelper {
       $query->leftJoin('paragraph__field_senate_votes_yeas', 'yeas', 'yeas.entity_id = votes.field_senate_votes_target_id AND yeas.deleted = 0');
       $query->fields('yeas', ['field_senate_votes_yeas_value']);
 
+      $query->leftJoin('paragraph__field_senate_votes_action_link', 'action', 'action.entity_id = votes.field_senate_votes_target_id AND action.deleted = 0');
+      $query->fields('action', ['field_senate_votes_action_link_title']);
+
 //      $a = $query->__toString();
 
       $result = $query->execute()->fetchAll();
@@ -516,10 +519,14 @@ class SenateVotesHelper {
           $row->field_senate_votes_yeas_value : '';
         $nays = !empty($row->field_senate_votes_nays_value) ?
           $row->field_senate_votes_nays_value : '';
+        $action = !empty($row->field_senate_votes_action_link_title) ?
+          $row->field_senate_votes_action_link_title : '';
 
         if (!empty($date) && !empty($measure)) {
-          $new_data[$date][$measure] = [
+          $new_data[$date][] = [
+            'measure' => $measure,
             'author' => $author,
+            'action' => $action,
             'yeas' => $yeas,
             'nays' => $nays,
           ];
@@ -561,9 +568,28 @@ class SenateVotesHelper {
     $author = !empty($new_data["author"]) ? $new_data["author"]["value"] : '';
     $yeas = !empty($new_data["yeas"]) ? $new_data["yeas"] : '';
     $nays = !empty($new_data["nays"]) ? $new_data["nays"] : '';
+    $action = !empty($new_data["action"]) ? $new_data["action"]['value'] : '';
 
-    return (!empty($existing_paragraph[$date]) &&
-      !empty($existing_paragraph[$date][$measure]));
+    $rows = !empty($existing_paragraph[$date]) ? $existing_paragraph[$date] : [];
+    $add_rules = strpos($measure, '*') !== FALSE;
+    $result = FALSE;
+
+    foreach ($rows as $row) {
+      $row_action = !empty($row['action']) ? $row['action'] : '';
+      $row_yeas = !empty($row['yeas']) ? $row['yeas'] : '';
+      $row_nays = !empty($row['nays']) ? $row['nays'] : '';
+      $row_measure = !empty($row['measure']) ? $row['measure'] : '';
+
+      if ($add_rules && ($measure == $row_measure) && ($action == $row_action) &&
+        ($yeas == $row_yeas) && ($nays == $row_nays)) {
+        $result = TRUE;
+      }
+      elseif (!$add_rules && ($measure == $row_measure)) {
+        $result = TRUE;
+      }
+    }
+
+    return (!empty($existing_paragraph[$date]) && $result);
   }
 
   /**
