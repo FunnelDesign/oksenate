@@ -2212,6 +2212,7 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'week_review':
       case 'protem_podcast':
       case 'senator_blog_post':
+      case 'simple_page':
         $color = 'navy';
         break;
     }
