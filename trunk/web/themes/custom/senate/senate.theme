@@ -253,6 +253,7 @@ function senate_preprocess_node(array &$vars) {
           $senator_photo_uri = $vars['content']['field_senator_photo'][0]['#item']->entity->url();
         }
         $vars['senator_photo_download'] = !empty($senator_photo_uri) ? $senator_photo_uri : '';
+        $vars['senator_photo_download_target'] = !empty($vars['senator_photo_download']) ? end(explode('/',$vars['senator_photo_download'])) : '';
 
         $vars['nid'] = $node->id();
         $title = $node->getTitle();
