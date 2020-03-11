@@ -1722,6 +1722,7 @@ function senate_preprocess_paragraph(array &$vars) {
       $vars['email'] = !empty($email) && !empty($email[0]) ? $email[0]["value"] : '';
       break;
     case 'video':
+    case 'gallery_video':
       if (!empty($vars['content']['field_video_video']) &&
         !empty($vars['content']['field_video_video']['#items'])) {
         $items = $vars['content']['field_video_video']['#items'];
