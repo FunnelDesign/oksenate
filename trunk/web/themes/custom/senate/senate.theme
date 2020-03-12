@@ -1735,6 +1735,14 @@ function senate_preprocess_paragraph(array &$vars) {
         }
       }
       break;
+    case 'gallery_image':
+      if (!empty($vars['content']['field_gallery_par_image'][0]['#item'])){
+        $gallery_img_uri = $vars['content']['field_gallery_par_image'][0]['#item']->entity->url();
+      }
+      $vars['gallery_img_uri'] = !empty($gallery_img_uri) ? $gallery_img_uri : '';
+      $vars['gallery_img_download_target'] = !empty($vars['gallery_img_uri']) ? end(explode('/',$vars['gallery_img_uri'])) : '';
+
+      break;
     case 'senate_votes':
       $measure = (!empty($vars["content"]["field_senate_votes_measure"]) &&
         !empty($vars["content"]["field_senate_votes_measure"]['#items'])) ?
