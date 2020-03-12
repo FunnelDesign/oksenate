@@ -68,9 +68,9 @@ class SenateVotes extends QueueWorkerBase {
                   if (!empty($nodes[$year_session]) && is_object($nodes[$year_session])) {
                     $parent_node = $nodes[$year_session];
                     $existing_paragraph = $senate_votes_helper->getVotesData($parent_node->id());
-                    $paragraph_exists = $senate_votes_helper->checkParagraphExists($existing_paragraph, $file_row);
+                    $pid = $senate_votes_helper->checkParagraphExists($existing_paragraph, $file_row);
 
-                    if (!$paragraph_exists) {
+                    if (empty($pid)) {
                       $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $file_row);
 
                       if (!empty($paragraph)) {
@@ -80,6 +80,9 @@ class SenateVotes extends QueueWorkerBase {
                         ];
                         $parent_node->save();
                       }
+                    }
+                    else {
+                      $paragraph = $senate_votes_helper->updateParagraph($pid, $file_row);
                     }
                   }
                   else {
