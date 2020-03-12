@@ -48,7 +48,6 @@ not paragraph.isPublished() ? 'paragraph--unpublished'
     <div{{ attributes.addClass(classes) }}>
         {% block content %}
             {{ content.field_gallery_par_image }}
-            </div>
             {% if content.field_gallery_par_image_descr|render is not empty %}
                 <div class="bTiles__caption">
                     {{ content.field_gallery_par_image_descr }}
