@@ -267,6 +267,7 @@ class SenateVotesHelper {
 
   public function updateParagraphFields(&$paragraph, $data, $op = 'update') {
     $new_data = $this->prepareParagraphData($data);
+    $regex = '/(\b(https?):\/\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]/i';
 
     if (!empty($new_data['date'])) {
       $paragraph->set('field_senate_votes_date', $new_data["date"]);
@@ -300,7 +301,7 @@ class SenateVotesHelper {
     }
 
     if (!empty($new_data['action']['value'])) {
-      $url = !empty($new_data['action']['url']) && UrlHelper::isValid($new_data['action']['url'], TRUE) ?
+      $url = !empty($new_data['action']['url']) && preg_match($regex, $new_data['action']['url']) ?
         $new_data['action']['url'] : 'route:<nolink>';
       $paragraph->set('field_senate_votes_action_link',
         [
@@ -486,6 +487,7 @@ class SenateVotesHelper {
         ->condition('n.status', 1);
 
       $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
+      $query->fields('votes', ['field_senate_votes_target_id']);
       $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes_date.entity_id = votes.field_senate_votes_target_id AND votes_date.deleted = 0');
       $query->fields('votes_date', ['field_senate_votes_date_value']);
 
@@ -521,6 +523,8 @@ class SenateVotesHelper {
           $row->field_senate_votes_nays_value : '';
         $action = !empty($row->field_senate_votes_action_link_title) ?
           $row->field_senate_votes_action_link_title : '';
+        $pid = !empty($row->field_senate_votes_target_id) ?
+          $row->field_senate_votes_target_id : '';
 
         if (!empty($date) && !empty($measure)) {
           $new_data[$date][] = [
@@ -529,6 +533,7 @@ class SenateVotesHelper {
             'action' => $action,
             'yeas' => $yeas,
             'nays' => $nays,
+            'pid' => $pid,
           ];
         }
       }
@@ -573,6 +578,7 @@ class SenateVotesHelper {
     $rows = !empty($existing_paragraph[$date]) ? $existing_paragraph[$date] : [];
     $add_rules = strpos($measure, '*') !== FALSE;
     $result = FALSE;
+    $pid = '';
 
     foreach ($rows as $row) {
       $row_action = !empty($row['action']) ? $row['action'] : '';
@@ -583,13 +589,15 @@ class SenateVotesHelper {
       if ($add_rules && ($measure == $row_measure) && ($action == $row_action) &&
         ($yeas == $row_yeas) && ($nays == $row_nays)) {
         $result = TRUE;
+        $pid = !empty($row['pid']) ? $row['pid'] : '';
       }
       elseif (!$add_rules && ($measure == $row_measure)) {
         $result = TRUE;
+        $pid = !empty($row['pid']) ? $row['pid'] : '';
       }
     }
 
-    return (!empty($existing_paragraph[$date]) && $result);
+    return (!empty($existing_paragraph[$date]) && $result && !empty($pid)) ? $pid : FALSE;
   }
 
   /**
@@ -635,5 +643,27 @@ class SenateVotesHelper {
     }
 
     $node->set('field_senate_votes_legislature', $legislature);
+  }
+
+
+  public function updateParagraph($pid, $data) {
+    if (empty($pid) || empty($data)) {
+      return '';
+    }
+
+    $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($pid);
+
+    if (!empty($paragraph)) {
+      $this->updateParagraphFields($paragraph, $data);
+
+      $paragraph->save();
+    }
+    else {
+      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Can\'t load %pid paragraph.', [
+          '%pid' => $pid,
+        ]));
+    }
+
+    return !empty($paragraph) ? $paragraph : '';
   }
 }
