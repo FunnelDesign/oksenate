@@ -108,11 +108,11 @@ class SenateVotesForm extends ConfigFormBase {
       '#title' => $this->t("Run cron regardless of whether interval has expired."),
       '#default_value' => FALSE,
     ];
-//    $form['cron_run']['cron_get_all'] = [
-//      '#type' => 'checkbox',
-//      '#title' => $this->t("Get votes from all files."),
-//      '#default_value' => FALSE,
-//    ];
+    $form['cron_run']['cron_get_all'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t("Get votes from files regardless of whether file has been updated."),
+      '#default_value' => FALSE,
+    ];
 //    $form['cron_run']['cron_update_all'] = [
 //      '#type' => 'checkbox',
 //      '#title' => $this->t("Update all votes paragraphs."),

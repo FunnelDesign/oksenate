@@ -16,6 +16,7 @@ use GuzzleHttp\Exception\RequestException;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeStorageInterface;
 use Drupal\file\Entity\File;
+use Drupal\Component\Utility\UrlHelper;
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -60,14 +61,15 @@ class SenateVotesHelper {
     $this->nodeStorage = $this->entityTypeManager->getStorage('node');
   }
 
-  public function getListFiles($dir) {
+  public function getListFiles($dir, $updated = 0) {
     $files = [];
     $regex = '/\.(' . preg_replace('/ +/', '|', preg_quote('xls')) . ')$/i';
 
     if (is_dir($dir)) {
       if ($dh = opendir($dir)) {
         while (($file = readdir($dh)) !== FALSE) {
-          if (($file[0] != '.') && preg_match($regex, $file)) {
+          $last_updated = filemtime($dir . '/' . $file);
+          if (($file[0] != '.') && preg_match($regex, $file) && ($last_updated >= $updated)) {
             $files[] = $file;
           }
         }
@@ -184,7 +186,15 @@ class SenateVotesHelper {
               in_array('nays', $row_strlow)) {
 
               $data_keys = array_flip($row_strlow);
-              $file_data[$i] = [];
+
+              $title = $sheet->getCell('A2')->getValue();
+              $title = trim($title);
+              $desc = $sheet->getCell('A3')->getValue();
+              $desc = trim($desc);
+              $file_data[$i] = [
+                'title' => $title,
+                'description' => $desc
+              ];
             }
           }
           else {
@@ -199,13 +209,17 @@ class SenateVotesHelper {
                     case 'action':
                       $url = $sheet->getCell($cell_key . $row_number)->getHyperlink();
                       $url = !empty($url) ? $url->getUrl() : '';
-                      $file_data[$i][$row_number][$key] = [
+                      $file_data[$i]['rows'][$row_number][$key] = [
                         'value' => trim($row_value),
                         'url' => $url
                       ];
                       break;
+                    case 'date':
+                      $row_value = trim($row_value);
+                      $file_data[$i]['rows'][$row_number][$key] = $this->getDate($row_value);
+                      break;
                     default:
-                      $file_data[$i][$row_number][$key] = trim($row_value);
+                      $file_data[$i]['rows'][$row_number][$key] = trim($row_value);
                       break;
                   }
                 }
@@ -253,6 +267,7 @@ class SenateVotesHelper {
 
   public function updateParagraphFields(&$paragraph, $data, $op = 'update') {
     $new_data = $this->prepareParagraphData($data);
+    $regex = '/(\b(https?):\/\/)[-A-Za-z0-9+&@#\/%?=~_|!:,.;]+[-A-Za-z0-9+&@#\/%=~_|]/i';
 
     if (!empty($new_data['date'])) {
       $paragraph->set('field_senate_votes_date', $new_data["date"]);
@@ -261,14 +276,14 @@ class SenateVotesHelper {
     if (!empty($new_data['measure']['value'])) {
       $paragraph->set('field_senate_votes_measure', $new_data["measure"]['value']);
     }
-    if (!empty($new_data['measure']['url'])) {
+    if (!empty($new_data['measure']['url']) && UrlHelper::isValid($new_data['measure']['url'], TRUE)) {
       $paragraph->set('field_senate_votes_measure_link', $new_data["measure"]['url']);
     }
 
     if (!empty($new_data['author']['value'])) {
       $paragraph->set('field_senate_votes_author', $new_data["author"]['value']);
     }
-    if (!empty($new_data['author']['url'])) {
+    if (!empty($new_data['author']['url']) && UrlHelper::isValid($new_data['author']['url'], TRUE)) {
       $paragraph->set('field_senate_votes_author_link', $new_data["author"]['url']);
     }
 
@@ -285,10 +300,12 @@ class SenateVotesHelper {
       $paragraph->set('field_senate_votes_nays', $new_data["nays"]);
     }
 
-    if (!empty($new_data['action']['value']) && !empty($new_data['action']['url'])) {
+    if (!empty($new_data['action']['value'])) {
+      $url = !empty($new_data['action']['url']) && preg_match($regex, $new_data['action']['url']) ?
+        $new_data['action']['url'] : 'route:<nolink>';
       $paragraph->set('field_senate_votes_action_link',
         [
-          'uri' => $new_data["action"]['url'],
+          'uri' => $url,
           'title' => $new_data["action"]['value'],
         ]
       );
@@ -470,11 +487,24 @@ class SenateVotesHelper {
         ->condition('n.status', 1);
 
       $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
+      $query->fields('votes', ['field_senate_votes_target_id']);
       $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes_date.entity_id = votes.field_senate_votes_target_id AND votes_date.deleted = 0');
       $query->fields('votes_date', ['field_senate_votes_date_value']);
 
       $query->leftJoin('paragraph__field_senate_votes_measure', 'votes_measure', 'votes_measure.entity_id = votes.field_senate_votes_target_id AND votes_measure.deleted = 0');
       $query->fields('votes_measure', ['field_senate_votes_measure_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_author', 'author', 'author.entity_id = votes.field_senate_votes_target_id AND author.deleted = 0');
+      $query->fields('author', ['field_senate_votes_author_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_nays', 'nays', 'nays.entity_id = votes.field_senate_votes_target_id AND nays.deleted = 0');
+      $query->fields('nays', ['field_senate_votes_nays_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_yeas', 'yeas', 'yeas.entity_id = votes.field_senate_votes_target_id AND yeas.deleted = 0');
+      $query->fields('yeas', ['field_senate_votes_yeas_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_action_link', 'action', 'action.entity_id = votes.field_senate_votes_target_id AND action.deleted = 0');
+      $query->fields('action', ['field_senate_votes_action_link_title']);
 
 //      $a = $query->__toString();
 
@@ -485,9 +515,26 @@ class SenateVotesHelper {
           $this->getDate($row->field_senate_votes_date_value) : '';
         $measure = !empty($row->field_senate_votes_measure_value) ?
           $row->field_senate_votes_measure_value : '';
+        $author = !empty($row->field_senate_votes_author_value) ?
+          $row->field_senate_votes_author_value : '';
+        $yeas = !empty($row->field_senate_votes_yeas_value) ?
+          $row->field_senate_votes_yeas_value : '';
+        $nays = !empty($row->field_senate_votes_nays_value) ?
+          $row->field_senate_votes_nays_value : '';
+        $action = !empty($row->field_senate_votes_action_link_title) ?
+          $row->field_senate_votes_action_link_title : '';
+        $pid = !empty($row->field_senate_votes_target_id) ?
+          $row->field_senate_votes_target_id : '';
 
         if (!empty($date) && !empty($measure)) {
-          $new_data[$date][] = $measure;
+          $new_data[$date][] = [
+            'measure' => $measure,
+            'author' => $author,
+            'action' => $action,
+            'yeas' => $yeas,
+            'nays' => $nays,
+            'pid' => $pid,
+          ];
         }
       }
 
@@ -523,7 +570,100 @@ class SenateVotesHelper {
   public function checkParagraphExists($existing_paragraph, $new_data) {
     $date = !empty($new_data["date"]) ? $new_data["date"] : '';
     $measure = !empty($new_data["measure"]) ? $new_data["measure"]["value"] : '';
+    $author = !empty($new_data["author"]) ? $new_data["author"]["value"] : '';
+    $yeas = !empty($new_data["yeas"]) ? $new_data["yeas"] : '';
+    $nays = !empty($new_data["nays"]) ? $new_data["nays"] : '';
+    $action = !empty($new_data["action"]) ? $new_data["action"]['value'] : '';
 
-    return (!empty($existing_paragraph[$date]) && in_array($measure, $existing_paragraph[$date]));
+    $rows = !empty($existing_paragraph[$date]) ? $existing_paragraph[$date] : [];
+    $add_rules = strpos($measure, '*') !== FALSE;
+    $result = FALSE;
+    $pid = '';
+
+    foreach ($rows as $row) {
+      $row_action = !empty($row['action']) ? $row['action'] : '';
+      $row_yeas = !empty($row['yeas']) ? $row['yeas'] : '';
+      $row_nays = !empty($row['nays']) ? $row['nays'] : '';
+      $row_measure = !empty($row['measure']) ? $row['measure'] : '';
+
+      if ($add_rules && ($measure == $row_measure) && ($action == $row_action) &&
+        ($yeas == $row_yeas) && ($nays == $row_nays)) {
+        $result = TRUE;
+        $pid = !empty($row['pid']) ? $row['pid'] : '';
+      }
+      elseif (!$add_rules && ($measure == $row_measure)) {
+        $result = TRUE;
+        $pid = !empty($row['pid']) ? $row['pid'] : '';
+      }
+    }
+
+    return (!empty($existing_paragraph[$date]) && $result && !empty($pid)) ? $pid : FALSE;
+  }
+
+  /**
+   * Creates new node.
+   * @param $node_data
+   *
+   * @return \Drupal\Core\Entity\EntityInterface
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function createNode($node_data) {
+    $date_obj = new DrupalDateTime('now', DateTimeItemInterface::STORAGE_TIMEZONE);
+    $node = Node::create([
+      'type' => 'senate_votes',
+      'created' => $date_obj->getTimestamp(),
+    ]);
+
+    $this->updateNodeFields($node, $node_data, 'create');
+    $node->enforceIsNew();
+    $node->save();
+
+    return $node;
+  }
+
+  /**
+   * Updates node fields.
+   * @param $node
+   * @param $data
+   * @param $taxonomy
+   * @param $op
+   */
+  public function updateNodeFields(&$node, $data, $op = 'update') {
+    $legislature = !empty($data["legislature"]) ? $data["legislature"] : 'Legislature';
+
+    if (!empty($data['title'])) {
+      $node->set('title', $data['title']);
+    }
+    if (!empty($data["description"])) {
+      $node->set('body', $data["description"]);
+    }
+    if (!empty($data["year"])) {
+      $node->set('field_senate_votes_year', $data["year"]);
+      $node->set('field_senate_votes_title', $data["year"] . ' - 1st Session');
+    }
+
+    $node->set('field_senate_votes_legislature', $legislature);
+  }
+
+
+  public function updateParagraph($pid, $data) {
+    if (empty($pid) || empty($data)) {
+      return '';
+    }
+
+    $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($pid);
+
+    if (!empty($paragraph)) {
+      $this->updateParagraphFields($paragraph, $data);
+
+      $paragraph->save();
+    }
+    else {
+      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Can\'t load %pid paragraph.', [
+          '%pid' => $pid,
+        ]));
+    }
+
+    return !empty($paragraph) ? $paragraph : '';
   }
 }

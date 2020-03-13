@@ -44,8 +44,8 @@
 
         <div class="bSeats bSeats_gap_a">
           <div class="bSeats__img">
-            <img src="../dist/images/tmp/seats-tmp-img-1.png"
-                 srcset="../dist/images/tmp/seats-tmp-img-1-2x.png 2x"
+            <img src="../dist/images/tmp/seats-tmp-img-1-a.png"
+                 srcset="../dist/images/tmp/seats-tmp-img-1-a-2x.png 2x"
                  alt="">
 
             <div class="bSeats__cap">
@@ -64,10 +64,16 @@
               Democrat
             </div>
             <div class="bSeats__countR">
-              <span class="count" data-start="1" data-end="39">
-                39
+              <span class="count" data-start="1" data-end="38">
+                38
               </span>
               Republican
+            </div>
+            <div class="bSeats__countV">
+              <span class="count" data-start="1" data-end="1">
+                1
+              </span>
+              Vacant
             </div>
           </div>
 
