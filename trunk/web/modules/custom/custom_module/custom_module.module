@@ -398,6 +398,7 @@ function custom_module_page_attachments_alter(array &$page) {
   foreach ($html_head as $key => $head) {
     $tag = !empty($head[1]) ? $head[1] : '';
     $tag_number = str_replace('og_image_', '', $tag);
+    $tag_number = str_replace('twitter_cards_image_', '', $tag_number);
 
     if (($tag == 'og_image') || ((strpos($tag, 'og_image') !== FALSE) && is_numeric($tag_number))) {
       $attributes = !empty($head[0]["#attributes"]) ? $head[0]["#attributes"] : [];
@@ -436,7 +437,7 @@ function custom_module_page_attachments_alter(array &$page) {
     $tw_image = [
       '#tag' => 'meta',
       '#attributes' => [
-        'property' => 'twitter:image',
+        'name' => 'twitter:image',
         'content' => $theme_path . '/dist/images/senate-share-photo-generic.jpg',
       ],
     ];
