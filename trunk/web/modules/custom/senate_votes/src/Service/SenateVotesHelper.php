@@ -433,8 +433,8 @@ class SenateVotesHelper {
     try {
       $query = $this->database->select('node_field_data', 'n')
         ->fields('n', ['nid'])
-        ->condition('n.type', 'senate_votes')
-        ->condition('n.status', 1);
+        ->condition('n.type', 'senate_votes');
+//        ->condition('n.status', 1);
 
       $query->innerJoin('node__field_senate_votes_year', 'votes_year', 'votes_year.entity_id = n.nid AND votes_year.deleted = 0');
       $query->condition('votes_year.field_senate_votes_year_value', $year);
@@ -483,8 +483,8 @@ class SenateVotesHelper {
     try {
       $query = $this->database->select('node_field_data', 'n')
         ->condition('n.type', 'senate_votes')
-        ->condition('n.nid', $nid)
-        ->condition('n.status', 1);
+        ->condition('n.nid', $nid);
+//        ->condition('n.status', 1);
 
       $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
       $query->fields('votes', ['field_senate_votes_target_id']);
