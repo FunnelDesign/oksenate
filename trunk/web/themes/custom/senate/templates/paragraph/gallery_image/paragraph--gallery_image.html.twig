@@ -38,26 +38,14 @@
  * @ingroup themeable
  */
 #}
-{% set classes = [
-'paragraph',
-'paragraph--type--' ~ paragraph.bundle|clean_class,
-view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-not paragraph.isPublished() ? 'paragraph--unpublished'
-] %}
-{% block paragraph %}
-    <div{{ attributes.addClass(classes) }}>
-        {% block content %}
-            {{ content.field_gallery_par_image }}
-            {% if content.field_gallery_par_image_descr|render is not empty %}
-                <div class="bTiles__caption">
-                    {{ content.field_gallery_par_image_descr }}
-                </div>
-            {% endif %}
-            <div class="bTiles__btn-wrap">
-                <a href="{{ gallery_img_uri }}" class="btn" download="{{ gallery_img_download_target }}">
-                    {{ "Download high res photo"|t }}
-                </a>
-            </div>
-        {% endblock %}
+{{ content.field_gallery_par_image }}
+{% if content.field_gallery_par_image_descr|render is not empty %}
+    <div class="bTiles__caption">
+        {{ content.field_gallery_par_image_descr }}
     </div>
-{% endblock paragraph %}
+{% endif %}
+<div class="bTiles__btn-wrap">
+    <a href="{{ gallery_img_uri }}" class="btn" download="{{ gallery_img_download_target }}">
+        {{ "Download high res photo"|t }}
+    </a>
+</div>
