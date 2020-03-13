@@ -190,6 +190,7 @@ AddEncoding gzip svgz
 <IfModule mod_headers.c>
   # Disable content sniffing, since it's an attack vector.
   Header always set X-Content-Type-Options nosniff
+  Header set X-XSS-Protection "1; mode=block"
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
 </IfModule>
