@@ -68,7 +68,7 @@
                 </div>
               </div>
               <div class="bTiles__caption">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                Lorem
               </div>
               <div class="bTiles__btn-wrap">
                 <a href="#" class="btn">download high res photo</a>

@@ -615,6 +615,9 @@ class SenateVotesHelper {
     ]);
 
     $this->updateNodeFields($node, $node_data, 'create');
+
+    $node->set('status', 0);
+
     $node->enforceIsNew();
     $node->save();
 
