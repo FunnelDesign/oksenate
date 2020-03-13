@@ -81,9 +81,9 @@ class SenateVotes extends QueueWorkerBase {
                         $parent_node->save();
                       }
                     }
-                    else {
-                      $paragraph = $senate_votes_helper->updateParagraph($pid, $file_row);
-                    }
+//                    else {
+//                      $paragraph = $senate_votes_helper->updateParagraph($pid, $file_row);
+//                    }
                   }
                   else {
                     \Drupal::logger('senate_votes')
