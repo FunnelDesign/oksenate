@@ -191,6 +191,9 @@ AddEncoding gzip svgz
   # Disable content sniffing, since it's an attack vector.
   Header always set X-Content-Type-Options nosniff
   Header set X-XSS-Protection "1; mode=block"
+  Header unset X-Generator
+  Header unset X-Drupal-Cache
+  Header unset X-Powered-By
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
 </IfModule>
