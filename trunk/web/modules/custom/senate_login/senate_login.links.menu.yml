@@ -1,0 +1,6 @@
+senate_login.admin_settings_form2:
+  title: 'Senate login settings'
+  route_name: senate_login.admin_settings_form
+  description: 'Admin page for senate login'
+  parent: system.admin_config_system
+  weight: 99
