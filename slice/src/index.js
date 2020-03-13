@@ -66,6 +66,7 @@ function init() {
 	initCounter($('.bSeats__cap'), false, 2);
 	initCounter($('.bSeats__countD'), false, 2);
 	initCounter($('.bSeats__countR'), false, 2);
+	initCounter($('.bSeats__countV'), false, 2);
 	changeAutocomplete();
 	scrollBlock();
 	changePlaceholderTime();
