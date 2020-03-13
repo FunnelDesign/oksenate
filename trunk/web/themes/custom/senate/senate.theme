@@ -377,6 +377,9 @@ function senate_preprocess_node(array &$vars) {
           !empty($vars["content"]["field_senator_blog_post_image"]["#items"]) ?
           $vars["content"]["field_senator_blog_post_image"]["#items"]->entity->url() : '';
         break;
+      case 'gallery' :
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
     }
   }
 }
@@ -664,6 +667,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_education_seats':
     case 'field_education_democrat':
     case 'field_education_republican':
+    case 'field_education_vacant_seats':
     case 'field_home_top_slider_title':
       if (!empty($vars['items'])) {
         $vars["items"][0]["content"]["#template"] = '{{ value|raw }}';

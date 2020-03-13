@@ -415,6 +415,10 @@ function custom_module_page_attachments_alter(array &$page) {
         $has_tw_image = TRUE;
       }
     }
+
+    if ($head[1] == 'system_meta_generator') {
+      unset($page['#attached']['html_head'][$key]);
+    }
   }
 
   if (!$has_og_image) {
