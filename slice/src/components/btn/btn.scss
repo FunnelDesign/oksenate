@@ -83,6 +83,20 @@
     }
   }
 
+  &_d {
+    padding: 11px 12px;
+    background: $color-white;
+    border: 1px solid #cfcfcf;
+    font-size: 14px;
+    color: $color-blue-3;
+    min-width: 160px;
+
+    &:hover {
+      background: $color-red;
+      color: $color-white;
+    }
+  }
+
   &__ico {
     display: inline-block;
     vertical-align: middle;

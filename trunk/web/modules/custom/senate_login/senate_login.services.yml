@@ -1,0 +1,10 @@
+services:
+  senate_login.event_subscriber:
+    class: Drupal\senate_login\EventSubscriber\RedirectLoginSubscriber
+    arguments: []
+    tags:
+      - {name: event_subscriber}
+  senate_login.route_subscriber:
+    class: Drupal\senate_login\Routing\LoginRedirectsRoute
+    tags:
+    - { name: event_subscriber }

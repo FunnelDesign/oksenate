@@ -73,21 +73,27 @@
  */
 #}
 <article{{ attributes }}>
-  <div class="bEvent__header">
+  <span class="bTiles__date">
     {{ content.field_comt_evt_date }}
-  </div>
-  <div class="bEvent__body">
-    <div class="bEvent__time">
-      {{ content.field_comt_evt_subtitle }}
-    </div>
-    <div class="bEvent__text">
-      {{ title_prefix }}
-      {{ title }}
-      {{ title_suffix }}
-    </div>
-  </div>
+  </span>
 
-  <div class="bEvent__btnWrap">
-    <a href="{{ url }}" class="btn btn_a">{{ "get more information"|t }}</a>
-  </div>
+  <a href="{{ room_url }}" class="bTiles__live events_custom_timetable_new" data-nid="{{ node.id() }}" style="visibility: hidden">
+    <span>•</span> {{ "live now"|t }}
+  </a>
+
+  <span class="bTiles__title">
+    {{ title_prefix }}
+      {{ title }}
+    {{ title_suffix }}
+  </span>
+
+  <span class="bTiles__sub">
+    {{ content.field_comt_evt_subtitle }} • {{ content.field_comt_evt_room_reference }}
+  </span>
+
+  <span class="bTiles__btnWrap">
+    <a href="{{ url }}" class="bTiles__btn btn btn_d">
+      {{ "view meeting details"|t }}
+    </a>
+  </span>
 </article>

@@ -28,7 +28,7 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
         return;
       }
 
-      $response = new RedirectResponse('/user/login', 301);
+      $response = new RedirectResponse('/editor', 301);
       $event->setResponse($response);
       $event->stopPropagation();
     }

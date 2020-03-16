@@ -14,7 +14,8 @@
     padding-top: 152px;
   }
 
-  .page-authorization.path-user & {
+  .page-authorization.path-user &,
+  .page-authorization.path-editor & {
     padding-top: 0;
   }
 
