@@ -344,6 +344,10 @@ textarea {
     label {
       display: block;
     }
+
+    input:not([type=submit]):not([type=checkbox]):not([type=radio]).required {
+      background: none;
+    }
   }
 }
 
