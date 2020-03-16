@@ -27,7 +27,7 @@ define('SENATE_SENATOR_RECENT_NEWS_URL', '/senator-news');
  */
 function senate_preprocess_html(array &$vars) {
 
-  if (!empty($vars) && ($vars['root_path'] == 'user')){
+  if (!empty($vars) && ($vars['root_path'] == 'user' || $vars['root_path'] == 'editor')){
     $vars['attributes']['class'][] = 'page-authorization';
   }
 
