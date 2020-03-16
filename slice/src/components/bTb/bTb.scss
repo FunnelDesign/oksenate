@@ -89,6 +89,10 @@
 
       @include xs-only {
         text-transform: lowercase;
+
+        a {
+          text-transform: capitalize;
+        }
       }
     }
 
