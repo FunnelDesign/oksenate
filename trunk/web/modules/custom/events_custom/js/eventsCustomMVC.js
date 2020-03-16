@@ -185,7 +185,7 @@ var viewEvents = {
 var viewHomeEvents = {
 
   init: function() {
-    this.eventsElem = document.querySelectorAll('span.events_custom_timetable');
+    this.eventsElem = document.querySelectorAll('a.events_custom_timetable_new');
 
     this.render();
   },

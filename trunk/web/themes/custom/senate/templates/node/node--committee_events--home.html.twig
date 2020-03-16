@@ -77,9 +77,9 @@
     {{ content.field_comt_evt_date }}
   </span>
 
-  <span class="bTiles__live events_custom_timetable" data-nid="{{ node.id() }}" style="visibility: hidden">
+  <a href="{{ room_url }}" class="bTiles__live events_custom_timetable_new" data-nid="{{ node.id() }}" style="visibility: hidden">
     <span>•</span> {{ "live now"|t }}
-  </span>
+  </a>
 
   <span class="bTiles__title">
     {{ title_prefix }}
