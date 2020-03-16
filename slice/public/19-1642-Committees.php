@@ -95,15 +95,18 @@
               <span class="bTiles__date">
                 Thur. Nov. 7, 2019 |  9:00am
               </span>
+              <span class="bTiles__live">
+                <span>•</span> live now
+              </span>
               <a href="#" class="bTiles__title">
                 Public Safety and Judiciary Subcommittee Budget Hearings
               </a>
               <span class="bTiles__sub">
-                Third Meeting
+                Third Meeting • Room 511-A
               </span>
               <span class="bTiles__btnWrap">
-                <a href="#" class="bTiles__btn btn btn_b btn_b_live">
-                  <span><span>•</span> live now</span> room 511-a
+                <a href="#" class="bTiles__btn btn btn_d">
+                  view meeting details
                 </a>
               </span>
 
