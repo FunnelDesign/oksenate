@@ -137,7 +137,6 @@ function senate_preprocess_node(array &$vars) {
         $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
       case 'committee_events':
-//        kint($vars);
         if ($view_mode == 'teaser') {
           $vars["attributes"]["class"][] = 'bTiles__item';
         }
