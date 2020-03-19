@@ -32,12 +32,25 @@
                     "url": "https://github.com/mozilla/pdf.js/releases/download/v1.10.100/pdfjs-1.10.100-dist.zip"
                 }
             }
+        },
+      {
+        "type": "package",
+        "package": {
+          "name": "ckeditor-plugin/font",
+          "version": "4.13.1",
+          "type": "drupal-library",
+          "dist": {
+            "url": "https://download.ckeditor.com/font/releases/font_4.13.1.zip",
+            "type": "zip"
+          }
         }
+      }
 
     ],
     "require": {
         "php": ">=7.0.8",
         "adubovskoy/phpquery": "^1.0",
+        "ckeditor-plugin/font": "^4.13",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
         "drupal-composer/drupal-scaffold": "^2.5",

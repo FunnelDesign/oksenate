@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fad053afe9315e7ebd93854defe78f79",
+    "content-hash": "7ee14ed9a1849e379a479b1207205dc7",
     "packages": [
         {
             "name": "adubovskoy/phpquery",
@@ -267,6 +267,17 @@
             ],
             "description": "Drupal code generator",
             "time": "2019-12-07T16:54:31+00:00"
+        },
+        {
+            "name": "ckeditor-plugin/font",
+            "version": "4.13.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://download.ckeditor.com/font/releases/font_4.13.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library"
         },
         {
             "name": "composer/installers",
