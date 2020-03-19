@@ -72,20 +72,27 @@
  * @ingroup themeable
  */
 #}
-<span {{ attributes }}>
+<span class="bTiles__item {{ attributes }}">
   <span class="bTiles__date">
     {{ content.field_comt_evt_date }}
   </span>
+  <a href="{{ room_url }}" class="bTiles__live events_custom_timetable_new" data-nid="{{ node.id() }}" style="visibility: hidden">
+    <span>•</span> {{ "live now"|t }}
+  </a>
+
   {{ title_prefix }}
     <a href="{{ url }}" class="bTiles__title">
       {{ label }}
     </a>
   {{ title_suffix }}
+
   <span class="bTiles__sub">
-    {{ content.field_comt_evt_subtitle }}
+    {{ content.field_comt_evt_subtitle }} • {{ content.field_comt_evt_room_reference }}
+  </span>
+  <span class="bTiles__btnWrap">
+    <a href="{{ url }}" class="bTiles__btn btn btn_d">
+      {{ "view meeting details"|t }}
+    </a>
   </span>
 
-  <span class="bTiles__btnWrap">
-    {{ content.field_comt_evt_room_reference }}
-  </span>
 </span>

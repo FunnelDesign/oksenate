@@ -120,7 +120,10 @@
               <div class="bTb__tr bStaff__it" data-letter="b" >
 
                 <div class="bTb__td">
-                  <strong>Keith Beall</strong>
+                  <strong>
+                    <a href="#">  Keith Beall</a>
+
+                  </strong>
                 </div>
 
                 <div class="bTb__td">

@@ -95,9 +95,9 @@
               <span class="bTiles__date">
                 Thur. Nov. 7, 2019 |  9:00am
               </span>
-              <span class="bTiles__live">
+              <a href="#" class="bTiles__live">
                 <span>•</span> live now
-              </span>
+              </a>
               <a href="#" class="bTiles__title">
                 Public Safety and Judiciary Subcommittee Budget Hearings
               </a>
