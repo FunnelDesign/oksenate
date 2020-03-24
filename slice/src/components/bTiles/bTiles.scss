@@ -45,6 +45,18 @@
     }
   }
 
+  a {
+
+    &#{$this}__live {
+      text-decoration: none;
+      transition: opacity .3s;
+
+      &:hover {
+        opacity: .5;
+      }
+    }
+  }
+
   &__live {
     color: #ff0000;
     font-family: $RobotoCondensed-Bold;
@@ -106,7 +118,7 @@
       }
 
       #{$this}__title {
-       line-height: 1.4;
+        line-height: 1.4;
       }
     }
 
@@ -545,16 +557,16 @@
 
       &:hover {
 
-      //  #{$this}__imgWrap {
-      //
-      //    &:before {
-      //      opacity: 1;
-      //    }
-      //  }
-      //
-      //  #{$this}__bSoc {
-      //    opacity: 1;
-      //  }
+        //  #{$this}__imgWrap {
+        //
+        //    &:before {
+        //      opacity: 1;
+        //    }
+        //  }
+        //
+        //  #{$this}__bSoc {
+        //    opacity: 1;
+        //  }
       }
     }
 

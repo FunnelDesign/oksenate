@@ -137,13 +137,12 @@ function senate_preprocess_node(array &$vars) {
         $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
       case 'committee_events':
-//        kint($vars);
         if ($view_mode == 'teaser') {
           $vars["attributes"]["class"][] = 'bTiles__item';
         }
         $vars['title'] = $node->get('title')->value;
 
-        if ($view_mode == 'full') {
+        if (($view_mode == 'full') || ($view_mode == 'home') || ($view_mode == 'teaser')) {
           $room = (!empty($vars["content"]["field_comt_evt_room_reference"]) &&
             !empty($vars["content"]["field_comt_evt_room_reference"][0])) ?
             $vars["content"]["field_comt_evt_room_reference"][0] : '';
@@ -151,6 +150,7 @@ function senate_preprocess_node(array &$vars) {
             $room_url = $room['#url']->toString();
             $room_url = Url::fromUserInput($room_url);
             $vars['room_link'] = Link::fromTextAndUrl($room["#title"], $room_url);
+            $vars['room_url'] = $room_url;
           }
         }
         break;
@@ -253,7 +253,8 @@ function senate_preprocess_node(array &$vars) {
           $senator_photo_uri = $vars['content']['field_senator_photo'][0]['#item']->entity->url();
         }
         $vars['senator_photo_download'] = !empty($senator_photo_uri) ? $senator_photo_uri : '';
-        $vars['senator_photo_download_target'] = !empty($vars['senator_photo_download']) ? end(explode('/',$vars['senator_photo_download'])) : '';
+        $photo_download_array = explode('/', $vars['senator_photo_download']);
+        $vars['senator_photo_download_target'] = !empty($vars['senator_photo_download']) ? end($photo_download_array) : '';
 
         $vars['nid'] = $node->id();
         $title = $node->getTitle();
@@ -547,11 +548,16 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
         $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bTiles__btn btn btn_b');
         $vars['items'][$key]['content']['#options']['attributes']['target'] = array('_blank');
-        $vars['items'][$key]['content']['#title'] = Markup::create($vars['items'][$key]['content']['#title']);
 
         if ($vars['element']['#field_name'] == 'field_comt_evt_room_reference') {
           $vars['items'][$key]['content']['#options']['attributes']['data-nid'] = $nid;
           $vars['items'][$key]['content']['#options']['attributes']['class'][] = 'events_custom_timetable';
+
+          if (($view_mode == 'home') || ($view_mode == 'teaser')) {
+            $vars['items'][$key]['content']['#options']['attributes']['class'] = [];
+            $vars['items'][$key]['content'] = !empty($vars['items'][$key]['content']['#title']) ?
+              Markup::create($vars['items'][$key]['content']['#title']) : '';
+          }
         }
       }
       break;
