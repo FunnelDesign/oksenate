@@ -136,20 +136,6 @@
                     Oklahoma City, OK 73105
                   </div>
 
-<!--                  <div class="bSenBio__telMail">-->
-<!--                    <a href="tel:(405) 521-5632">-->
-<!--                      <i class="ss-icon ss-glyphish-filled ss-phone"></i>-->
-<!--                      (405) 521-5632-->
-<!--                    </a>-->
-<!--                    <br>-->
-<!---->
-<!--                    <a href="mailto:test@test.com">-->
-<!--                      <i class="ss-icon ss-glyphish-filled ss-mail"></i>-->
-<!--                      Email Senator Treat-->
-<!--                    </a>-->
-<!---->
-<!--                  </div>-->
-
                   <div class="bSenBio__telMail">
 
                     <div class="bSenBio__tel">
@@ -161,10 +147,16 @@
                       <i class="ss-icon ss-glyphish-filled ss-mail"></i>
                       <a href="mailto:test@test.com">
                         Email Senator Treat
-<!--                        Email Senator John Michael Montgomery-->
                       </a>
                     </div>
 
+                  </div>
+
+                  <div class="bSenBio__assistant">
+                    <i class="ss-icon ss-glyphish-filled ss-phone"></i>
+                    <p><span>Executive Assistant </span><br>
+                      John Doe <a href="tel:(405) 521-5632">(405) 521-5632</a>
+                    </p>
                   </div>
 
                 </div>
