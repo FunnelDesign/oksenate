@@ -65,11 +65,13 @@ label_display == 'visually_hidden' ? 'visually-hidden',
 
     {% else %}
 
+      <div class="bSenBio__assistant-in">
         <span>{{ label }}:</span><br>
 
         {% for item in items %}
-            {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
+          {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
         {% endfor %}
+      </div>
 
     {% endif %}
 </div>

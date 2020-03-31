@@ -152,11 +152,21 @@
 
                   </div>
 
+<!--                  <div class="bSenBio__assistant">-->
+<!--                    <i class="ss-icon ss-glyphish-filled ss-phone"></i>-->
+<!--                    <p><span>Executive Assistant </span><br>-->
+<!--                      John Doe <a href="tel:(405) 521-5632">(405) 521-5632</a>-->
+<!--                    </p>-->
+<!---->
+<!--                  </div>-->
+
                   <div class="bSenBio__assistant">
                     <i class="ss-icon ss-glyphish-filled ss-phone"></i>
-                    <p><span>Executive Assistant </span><br>
-                      John Doe <a href="tel:(405) 521-5632">(405) 521-5632</a>
-                    </p>
+                    <div class="bSenBio__assistant-in">
+                      <span>Executive Assistent:</span><br>
+                      <p>Christina Holcomb</p>
+                    </div>
+
                   </div>
 
                 </div>
