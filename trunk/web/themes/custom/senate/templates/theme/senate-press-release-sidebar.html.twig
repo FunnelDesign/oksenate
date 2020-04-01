@@ -20,7 +20,7 @@
               <div class="bSort__body">
                 {% for month_name, data in months %}
                   {% if is_audio %}
-                    {% set url = '/press-releases-audio/' ~ year ~ '-' ~ data.month_digits %}
+                    {% set url = '/audio/' ~ year ~ '-' ~ data.month_digits %}
                   {% elseif senator_nid %}
                     {% set url = '/senator-press-releases/' ~ senator_nid ~ '/' ~ year ~ '-' ~ data.month_digits %}
                   {% else %}
