@@ -289,13 +289,13 @@ class SenateCalendarHelper {
     return $row_strlow;
   }
 
-  public function createParagraph($parent, $parent_field, $data, $type) {
+  public function createParagraph($parent, $parent_field, $data, $type, $paragraph_type) {
     if (empty($parent) || !is_object($parent) || empty($parent_field) || empty($data)) {
       return '';
     }
 
     $paragraph = Paragraph::create([
-      'type' => $parent->bundle(),
+      'type' => $paragraph_type,
       'parent_id' => $parent->id(),
       'parent_type' => 'node',
       'parent_field_name' => $parent_field
@@ -333,7 +333,24 @@ class SenateCalendarHelper {
       }
     }
     else if ($type == 'cl_jnt_cnf') {
-
+      if (!empty($data['bill_#'])) {
+        $paragraph->set('field_cl_jnt_cnf_bill', $data['bill_#']);
+      }
+      if (!empty($data['authors'])) {
+        $paragraph->set('field_cl_jnt_cnf_auth', $data['authors']);
+      }
+      if (!empty($data['short_title'])) {
+        $paragraph->set('field_cl_jnt_cnf_title', $data['short_title']);
+      }
+      if (!empty($data['submitted_in_chamber'])) {
+        $paragraph->set('field_cl_jnt_cnf_sub_ch_orgn', $data['submitted_in_chamber']);
+      }
+      if (!empty($data['adopted_in_chamber'])) {
+        $paragraph->set('field_cl_jnt_cnf_adop_ch_orgn', $data['adopted_in_chamber']);
+      }
+      if (!empty($data['adopted_in_opposite'])) {
+        $paragraph->set('field_cl_jnt_cnf_adop_opp_ch', $data['adopted_in_opposite']);
+      }
     }
   }
 
@@ -355,7 +372,17 @@ class SenateCalendarHelper {
       }
     }
     else if ($type == 'cl_jnt_cnf') {
-
+      if (!empty($events_sync_helper)) {
+        if (!empty($data["submitted_in_chamber"])) {
+          $data["submitted_in_chamber"] = $events_sync_helper->normalizeExternalDateData($data["submitted_in_chamber"], DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+        }
+        if (!empty($data["adopted_in_chamber"])) {
+          $data["adopted_in_chamber"] = $events_sync_helper->normalizeExternalDateData($data["adopted_in_chamber"], DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+        }
+        if (!empty($data["adopted_in_opposite"])) {
+          $data["adopted_in_opposite"] = $events_sync_helper->normalizeExternalDateData($data["adopted_in_opposite"], DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+        }
+      }
     }
   }
 
@@ -468,7 +495,9 @@ class SenateCalendarHelper {
         !empty($existing_paragraph[$date][$bill]) ? $existing_paragraph[$date][$bill]['pid'] : '';
     }
     else if ($type == 'cl_jnt_cnf') {
-
+      $date = !empty($new_data["submitted_in_chamber"]) ?
+        $new_data["submitted_in_chamber"] : '';
+      $bill = !empty($new_data["bill_#"]) ? $new_data["bill_#"] : '';
     }
 
     return $result;

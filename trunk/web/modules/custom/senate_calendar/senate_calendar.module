@@ -68,7 +68,7 @@ function senate_calendar_preprocess_page(array &$vars) {
 
                 if (!$pid) {
                   if ($type == 'cl_app_bud') {
-                    $paragraph = $senate_calendar_helper->createParagraph($parent_node, 'field_cl_app_bud_calendar', $file_row, $type);
+                    $paragraph = $senate_calendar_helper->createParagraph($parent_node, 'field_cl_app_bud_calendar', $file_row, $type, 'cl_app_budget');
 
                     if (!empty($paragraph)) {
                       $parent_node->field_cl_app_bud_calendar[] = [
@@ -79,7 +79,15 @@ function senate_calendar_preprocess_page(array &$vars) {
                     }
                   }
                   else if ($type == 'cl_jnt_cnf') {
+                    $paragraph = $senate_calendar_helper->createParagraph($parent_node, 'field_cl_jnt_cnf_calendar', $file_row, $type, 'cl_jnt_cnf');
 
+                    if (!empty($paragraph)) {
+                      $parent_node->field_cl_jnt_cnf_calendar[] = [
+                        'target_id' => $paragraph->id(),
+                        'target_revision_id' => $paragraph->getRevisionId(),
+                      ];
+                      $parent_node->save();
+                    }
                   }
 
                 }
