@@ -47,44 +47,28 @@
 'field__label',
 label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
-<div class="bTb bTb_a">
-  <div class="bTb__tHead">
-    <div class="bTb__tr">
-      <div class="bTb__th">
-        {{ "bill #"|t }}
-      </div>
 
-      <div class="bTb__th">
-        {{ "authors"|t }}
-      </div>
+{% if label_hidden %}
+  {% if multiple %}
 
-      <div class="bTb__th">
-        {{ "title"|t }}
-      </div>
-
-      <div class="bTb__th">
-        {{ "Joint Committee Report Date"|t }}
-      </div>
-
-      <div class="bTb__th">
-        {{ "House of Origin Action Date"|t }}
-      </div>
-
-      <div class="bTb__th">
-        {{ "Opposite House Action Date"|t }}
-      </div>
-
-      <div class="bTb__th">
-
-      </div>
-    </div>
-  </div>
-
-  <div class="bTb__tBody">
     {% for item in items %}
-      <div class="bTb__tr">
+      {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
+    {% endfor %}
+
+  {% else %}
+    {% for item in items %}
+      <div class="bTitle__sub bTitle__sub_a">
         {{ item.content }}
       </div>
     {% endfor %}
-  </div>
-</div>
+  {% endif %}
+
+{% else %}
+
+  <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
+
+  {% for item in items %}
+    {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
+  {% endfor %}
+
+{% endif %}

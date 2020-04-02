@@ -48,31 +48,30 @@
 %}
 {% block paragraph %}
   <div class="bTb__td">
-    <strong>{{ content.field_cl_app_budget_bill }}</strong>
+    <strong>{{ content.field_cl_jnt_cnf_bill }}</strong>
   </div>
 
   <div class="bTb__td">
-    <strong>{{ content.field_cl_app_budget_auth }}</strong>
-  </div>
-
-
-  <div class="bTb__td">
-    {{ content.field_cl_app_budget_title }}
+    <strong>{{ content.field_cl_jnt_cnf_auth }}</strong>
   </div>
 
   <div class="bTb__td">
-    <strong>{{ content.field_cl_app_budget_rep_date }}</strong>
+    {{ content.field_cl_jnt_cnf_title }}
   </div>
 
   <div class="bTb__td">
-    <strong>{{ content.field_cl_app_budget_hsorg_act_dt }}</strong>
+    <strong>{{ content.field_cl_jnt_cnf_sub_ch_orgn }}</strong>
   </div>
 
   <div class="bTb__td">
-    <strong>{{ content.field_cl_app_budget_ophs_act_dt }}</strong>
+    <strong>{{ content.field_cl_jnt_cnf_adop_ch_orgn }}</strong>
   </div>
 
   <div class="bTb__td">
-    {{ content.field_cl_app_budget_file }}
+    <strong>{{ content.field_cl_jnt_cnf_adop_opp_ch }}</strong>
   </div>
+
+{#  <div class="bTb__td">#}
+{#    {{ content.field_cl_app_budget_file }}#}
+{#  </div>#}
 {% endblock paragraph %}
