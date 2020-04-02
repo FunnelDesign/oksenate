@@ -319,6 +319,7 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'cl_app_bud':
+      case 'cl_jnt_cnf':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'calendar':
