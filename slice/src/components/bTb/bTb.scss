@@ -273,7 +273,12 @@
   &._mw {
 
     &_auto {
-      max-width: none;
+      max-width: 100%;
+      overflow-x: auto;
+
+      @include xs-only {
+        display: block;
+      }
     }
   }
 
