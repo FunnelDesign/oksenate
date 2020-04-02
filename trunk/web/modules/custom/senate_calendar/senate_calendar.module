@@ -24,6 +24,45 @@ function senate_calendar_help($route_name, RouteMatchInterface $route_match) {
   }
 }
 
+/**
+ * Implements hook_cron().
+ */
+function senate_calendar_cron() {
+  $cron_config = \Drupal::configFactory()->getEditable('senate_calendar.settings');
+  $interval = $cron_config->get('interval');
+  $interval = !empty($interval) ? $interval : 3600;
+  $request_time = \Drupal::time()->getRequestTime();
+
+  $next_execution = \Drupal::state()->get('senate_calendar.next_execution', 0);
+
+  if ($request_time >= $next_execution) {
+    \Drupal::logger('senate_calendar')->notice('senate_calendar ran');
+    if (\Drupal::state()->get('senate_calendar_show_status_message')) {
+      \Drupal::messenger()
+        ->addMessage(t('senate_calendar executed at %time', ['%time' => date('c')]));
+      \Drupal::state()->set('senate_calendar_show_status_message', FALSE);
+    }
+
+    $prev_execution = \Drupal::state()->get('senate_calendar.prev_execution', 0);
+    $update_all = \Drupal::state()->get('senate_calendar.update_all', FALSE);
+    $directory = \Drupal::state()->get('senate_calendar.directory', '');
+    \Drupal::state()
+      ->set('senate_calendar.next_execution', $request_time + $interval);
+    \Drupal::state()->set('senate_calendar.prev_execution', $request_time);
+    \Drupal::state()->set('senate_calendar.update_all', FALSE);
+    $type = empty($prev_execution) ? 'all' : 'new';
+
+    $queue = \Drupal::queue('senate_calendar');
+    $item = (object) [
+      'type' => $type,
+      'update_all' => $update_all,
+      'directory' => $directory,
+      'prev_execution' => $prev_execution,
+    ];
+
+    $queue->createItem($item);
+  }
+}
 
 /**
  * Implements hook_preprocess_page() for page.html.twig.
