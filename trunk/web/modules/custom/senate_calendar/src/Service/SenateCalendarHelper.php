@@ -463,6 +463,83 @@ class SenateCalendarHelper {
     }
   }
 
+  public function getConferenceData($nid, $type) {
+    if (empty($nid)) {
+      return '';
+    }
+    $new_data = [];
+
+    try {
+      $query = $this->database->select('node_field_data', 'n')
+        ->condition('n.type', $type)
+        ->condition('n.nid', $nid);
+      //        ->condition('n.status', 1);
+
+      $query->innerJoin('node__field_cl_jnt_cnf_calendar', 'calendar', 'calendar.entity_id = n.nid AND calendar.deleted = 0');
+      $query->fields('calendar', ['field_cl_jnt_cnf_calendar_target_id']);
+
+      $query->leftJoin('paragraph__field_cl_jnt_cnf_bill', 'bill', 'bill.entity_id = calendar.field_cl_jnt_cnf_calendar_target_id AND bill.deleted = 0');
+      $query->fields('bill', ['field_cl_jnt_cnf_bill_value']);
+
+      $query->leftJoin('paragraph__field_cl_jnt_cnf_auth', 'auth', 'auth.entity_id = calendar.field_cl_jnt_cnf_calendar_target_id AND auth.deleted = 0');
+      $query->fields('auth', ['field_cl_jnt_cnf_auth_value']);
+
+      $query->leftJoin('paragraph__field_cl_jnt_cnf_title', 'title', 'title.entity_id = calendar.field_cl_jnt_cnf_calendar_target_id AND title.deleted = 0');
+      $query->fields('title', ['field_cl_jnt_cnf_title_value']);
+
+      $query->leftJoin('paragraph__field_cl_jnt_cnf_sub_ch_orgn', 'sub_chamber_date', 'sub_chamber_date.entity_id = calendar.field_cl_jnt_cnf_calendar_target_id AND sub_chamber_date.deleted = 0');
+      $query->fields('sub_chamber_date', ['field_cl_jnt_cnf_sub_ch_orgn_value']);
+
+      $query->leftJoin('paragraph__field_cl_jnt_cnf_adop_ch_orgn', 'adop_chamber_date', 'adop_chamber_date.entity_id = calendar.field_cl_jnt_cnf_calendar_target_id AND adop_chamber_date.deleted = 0');
+      $query->fields('adop_chamber_date', ['field_cl_jnt_cnf_adop_ch_orgn_value']);
+
+      $query->leftJoin('paragraph__field_cl_jnt_cnf_adop_opp_ch', 'adop_opposite', 'adop_opposite.entity_id = calendar.field_cl_jnt_cnf_calendar_target_id AND adop_opposite.deleted = 0');
+      $query->fields('adop_opposite', ['field_cl_jnt_cnf_adop_opp_ch_value']);
+
+      //      $a = $query->__toString();
+
+      $result = $query->execute()->fetchAll();
+
+      foreach ($result as $row) {
+        $sub_chamber_date = !empty($row->field_cl_jnt_cnf_sub_ch_orgn_value) ?
+          $this->getDate($row->field_cl_jnt_cnf_sub_ch_orgn_value) : '';
+        $adop_chamber_date = !empty($row->field_cl_jnt_cnf_adop_ch_orgn_value) ?
+          $this->getDate($row->field_cl_jnt_cnf_adop_ch_orgn_value) : '';
+        $adop_opposite = !empty($row->field_cl_jnt_cnf_adop_opp_ch_value) ?
+          $this->getDate($row->field_cl_jnt_cnf_adop_opp_ch_value) : '';
+
+        $bill = !empty($row->field_cl_jnt_cnf_bill_value) ?
+          $row->field_cl_jnt_cnf_bill_value : '';
+        $author = !empty($row->field_cl_jnt_cnf_auth_value) ?
+          $row->field_cl_jnt_cnf_auth_value : '';
+        $title = !empty($row->field_cl_jnt_cnf_title_value) ?
+          $row->field_cl_jnt_cnf_title_value : '';
+
+        $pid = !empty($row->field_cl_jnt_cnf_calendar_target_id) ?
+          $row->field_cl_jnt_cnf_calendar_target_id : '';
+
+        if (!empty($sub_chamber_date) && !empty($bill)) {
+          $new_data[$sub_chamber_date][$bill] = [
+            'bill_#' => $bill,
+            'authors' => $author,
+            'short_title' => $title,
+            'submitted_in_chamber' => $sub_chamber_date,
+            'adopted_in_chamber' => $adop_chamber_date,
+            'adopted_in_opposite' => $adop_opposite,
+            'pid' => $pid,
+          ];
+        }
+      }
+
+      return $new_data;
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('senate_calendar')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
+          '%message' => $e->getMessage(),
+        ]));
+    }
+  }
+
   /**
    * Normalize Date field.
    * @param $date
@@ -496,37 +573,15 @@ class SenateCalendarHelper {
     }
     else if ($type == 'cl_jnt_cnf') {
       $date = !empty($new_data["submitted_in_chamber"]) ?
-        $new_data["submitted_in_chamber"] : '';
+        $this->getDate($new_data["submitted_in_chamber"]) : '';
       $bill = !empty($new_data["bill_#"]) ? $new_data["bill_#"] : '';
+
+      $result = !empty($date) && !empty($bill) && !empty($existing_paragraph[$date]) &&
+        !empty($existing_paragraph[$date][$bill]) ? $existing_paragraph[$date][$bill]['pid'] : '';
     }
 
     return $result;
   }
-
-  /**
-   * Updates node fields.
-   * @param $node
-   * @param $data
-   * @param $taxonomy
-   * @param $op
-   */
-  public function updateNodeFields(&$node, $data, $op = 'update') {
-    $legislature = !empty($data["legislature"]) ? $data["legislature"] : 'Legislature';
-
-    if (!empty($data['title'])) {
-      $node->set('title', $data['title']);
-    }
-    if (!empty($data["description"])) {
-      $node->set('body', $data["description"]);
-    }
-    if (!empty($data["year"])) {
-      $node->set('field_senate_calendar_year', $data["year"]);
-      $node->set('field_senate_calendar_title', $data["year"] . ' - 1st Session');
-    }
-
-    $node->set('field_senate_calendar_legislature', $legislature);
-  }
-
 
   public function updateParagraph($pid, $data, $type) {
     if (empty($pid) || empty($data)) {
@@ -570,7 +625,7 @@ class SenateCalendarHelper {
       $data = $this->getABData($nid, $type);
     }
     else if ($type == 'cl_jnt_cnf') {
-
+      $data = $this->getConferenceData($nid, $type);
     }
 
     return $data;
