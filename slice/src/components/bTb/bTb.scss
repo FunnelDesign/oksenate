@@ -88,11 +88,11 @@
       font-family: $Roboto-Bold;
 
       @include xs-only {
-        text-transform: lowercase;
+        //text-transform: lowercase;
 
-        a {
-          text-transform: capitalize;
-        }
+        //a {
+        //  text-transform: capitalize;
+        //}
       }
     }
 
