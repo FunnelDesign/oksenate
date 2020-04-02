@@ -1013,6 +1013,10 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_par_publications_page_icon':
       $suggestions[] = 'field__src_srcset_images';
       break;
+    case 'field_cl_jnt_cnf_adop_opp_ch':
+    case 'field_cl_jnt_cnf_adop_ch_orgn':
+      $suggestions[] = 'field__paragraph__field_cl_jnt_cnf_sub_ch_orgn';
+      break;
   }
 }
 
