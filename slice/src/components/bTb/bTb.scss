@@ -270,6 +270,13 @@
     }
   }
 
+  &._mw {
+
+    &_auto {
+      max-width: none;
+    }
+  }
+
   &_gap {
 
     &_a {
