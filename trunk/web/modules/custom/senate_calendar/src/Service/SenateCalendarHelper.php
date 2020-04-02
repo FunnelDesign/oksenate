@@ -441,7 +441,9 @@ class SenateCalendarHelper {
         $pid = !empty($row->field_cl_app_bud_calendar_target_id) ?
           $row->field_cl_app_bud_calendar_target_id : '';
 
-        if (!empty($report_date) && !empty($bill)) {
+        $report_date = !empty($report_date) ? $report_date : '0';
+
+        if (!empty($bill)) {
           $new_data[$report_date][$bill] = [
             'bill_#' => $bill,
             'authors' => $author,
@@ -518,7 +520,9 @@ class SenateCalendarHelper {
         $pid = !empty($row->field_cl_jnt_cnf_calendar_target_id) ?
           $row->field_cl_jnt_cnf_calendar_target_id : '';
 
-        if (!empty($sub_chamber_date) && !empty($bill)) {
+        $sub_chamber_date = !empty($sub_chamber_date) ? $sub_chamber_date : '0';
+
+        if (!empty($bill)) {
           $new_data[$sub_chamber_date][$bill] = [
             'bill_#' => $bill,
             'authors' => $author,
@@ -565,18 +569,18 @@ class SenateCalendarHelper {
 
     if ($type == 'cl_app_bud') {
       $date = !empty($new_data["joint_committee_report_date"]) ?
-        $new_data["joint_committee_report_date"] : '';
+        $new_data["joint_committee_report_date"] : '0';
       $bill = !empty($new_data["bill_#"]) ? $new_data["bill_#"] : '';
 
-      $result = !empty($date) && !empty($bill) && !empty($existing_paragraph[$date]) &&
+      $result = !empty($bill) && !empty($existing_paragraph[$date]) &&
         !empty($existing_paragraph[$date][$bill]) ? $existing_paragraph[$date][$bill]['pid'] : '';
     }
     else if ($type == 'cl_jnt_cnf') {
       $date = !empty($new_data["submitted_in_chamber"]) ?
-        $this->getDate($new_data["submitted_in_chamber"]) : '';
+        $this->getDate($new_data["submitted_in_chamber"]) : '0';
       $bill = !empty($new_data["bill_#"]) ? $new_data["bill_#"] : '';
 
-      $result = !empty($date) && !empty($bill) && !empty($existing_paragraph[$date]) &&
+      $result = !empty($bill) && !empty($existing_paragraph[$date]) &&
         !empty($existing_paragraph[$date][$bill]) ? $existing_paragraph[$date][$bill]['pid'] : '';
     }
 
