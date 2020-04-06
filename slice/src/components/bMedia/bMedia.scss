@@ -103,6 +103,17 @@
         transform: translate(-50%, 0);
       }
     }
+
+    &_b {
+      padding-bottom: 0;
+      min-height: 570px;
+      border-top: 10px solid #58739e;
+      margin: 0 auto;
+
+      iframe {
+        margin: 0 auto;
+      }
+    }
   }
 
   &__preview {
