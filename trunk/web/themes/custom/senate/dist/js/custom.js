@@ -5,9 +5,11 @@
         var month = this.elements['edit-month'];
         var options = drupalSettings.senate.view_journals || {};
         var _this = this;
+        var $yearSelect = $('#views-exposed-form-journals-page-1 #edit-year + .select2');
+        var event = ($yearSelect.css('display') === 'none') ? 'change' : 'select2:select';
 
-        $('#views-exposed-form-journals-page-1 #edit-year').on('select2:select', function (e) {
-          var year = e.params.data.id;
+        $('#views-exposed-form-journals-page-1 #edit-year').on(event, function (e) {
+          var year = (event === 'select2:select') ? e.params.data.id : this.value;
 
           var keys = Object.keys(options[year]);
           month.innerHTML = keys.map(function (key) {
@@ -16,7 +18,7 @@
           _this.submit();
         });
 
-        $('#views-exposed-form-journals-page-1 #edit-month').on('select2:select', function (e) {
+        $('#views-exposed-form-journals-page-1 #edit-month').on(event, function (e) {
           _this.submit();
         });
       });
