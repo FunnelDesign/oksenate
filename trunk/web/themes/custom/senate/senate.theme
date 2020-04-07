@@ -153,6 +153,15 @@ function senate_preprocess_node(array &$vars) {
             $vars['room_url'] = $room_url;
           }
         }
+
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back'),
+          '#url' => Url::fromUserInput('/committees'),
+          '#attributes' => [
+            'class' => ['btn', 'btn_a', 'section__btnBack', 'section__btnBack_b'],
+          ],
+        ];
         break;
       case 'subcommittee':
         $commitee = (!empty($vars["content"]["field_subcomt"]) &&
