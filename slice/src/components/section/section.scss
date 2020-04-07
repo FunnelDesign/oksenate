@@ -247,6 +247,15 @@
       }
 
     }
+
+    &_b {
+      position: relative;
+      margin-bottom: 20px;
+
+      @include xs-only {
+        top: -20px;
+      }
+    }
   }
 
   .bContainer {
