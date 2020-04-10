@@ -55,6 +55,7 @@ function senate_votes_cron() {
 /**
  * Implements hook_preprocess_page() for page.html.twig.
  */
+/**
 function senate_votes_preprocess_page(array &$vars) {
   $a = 9;
 
@@ -148,3 +149,4 @@ function senate_votes_preprocess_page(array &$vars) {
     }
   }
 }
+*/

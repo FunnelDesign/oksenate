@@ -2217,7 +2217,7 @@ function senate_preprocess_views_view_field(&$vars) {
             $url = Url::fromUri($link);
 
             $attributes['target'] = '_blank';
-            $attributes['class'] = ['bTb__text', 'bTb__text_a', 'pageIn_cl_c'];
+            $attributes['class'] = ['bTb__text', 'bTb__text_a',];
             $url->setOption('attributes', $attributes);
             $vars["output"] = Link::fromTextAndUrl($title, $url)->toString();
           }
@@ -2232,7 +2232,7 @@ function senate_preprocess_views_view_field(&$vars) {
           if (!empty($file)) {
             $url = $file->createFileUrl(FALSE);
             $url = Url::fromUri($url);
-            $options = ['class' => ['bTb__text', 'bTb__text_a', 'pageIn_cl_c']];
+            $options = ['class' => ['bTb__text', 'bTb__text_a',]];
             $options['target'] = '_blank';
 
             $url->setOption('attributes', $options);
