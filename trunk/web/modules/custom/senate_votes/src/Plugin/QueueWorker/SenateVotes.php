@@ -58,8 +58,11 @@ class SenateVotes extends QueueWorkerBase {
                 $node_data['description'] = !empty($file_sheet["description"]) ? $file_sheet["description"] : '';
                 $year = !empty($first_row_data['date']) ? $first_row_data['date'] : '';
                 $node_data['year'] = $senate_votes_helper->getYear($year);
-                $parent_node = $senate_votes_helper->createNode($node_data);
-                $operation = 'create';
+
+                if (!empty($year) && !empty($node_data['title'])) {
+                  $parent_node = $senate_votes_helper->createNode($node_data);
+                  $operation = 'create';
+                }
               }
 
               if (!empty($parent_node) && is_object($parent_node)) {
