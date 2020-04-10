@@ -92,7 +92,7 @@ class SenateVotes extends QueueWorkerBase {
                   }
                 }
 
-//                $this->log($operation, $parent_node->id(), $paragraphs);
+                $this->log($operation, $parent_node->id(), $paragraphs);
               }
               else {
                 \Drupal::logger('senate_votes')
