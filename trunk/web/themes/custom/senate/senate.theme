@@ -1187,6 +1187,17 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
             '#default_value' => '',
           ];
         }
+        if (!empty($form["author"]) && !empty($nid)) {
+          $options = _senate_get_votes_author_options($nid);
+          $author_options = array_combine($options, $options);
+          $author_options = array_merge(['' => t('Showing All')], $author_options);
+
+          $form["author"] = [
+            '#type' => 'select',
+            '#options' => $author_options,
+            '#default_value' => '',
+          ];
+        }
       }
       break;
   }
@@ -2521,6 +2532,27 @@ function _senate_get_votes_measure_options($nid) {
   $query->condition('nfd.nid', $nid);
 
   $query->orderBy('field_senate_votes_measure_value', 'asc')->distinct();
+
+  $result = $query->execute()->fetchCol();
+
+  return !empty($result) ? $result : [];
+}
+
+function _senate_get_votes_author_options($nid) {
+  if (empty($nid)) {
+    return;
+  }
+
+  $query = \Drupal::database()->select('paragraphs_item_field_data', 'pifd')
+    ->condition('pifd.type', 'senate_votes')
+    ->condition('pifd.status', 1);
+  $query->innerJoin('node__field_senate_votes', 'nfsv', 'pifd.id = nfsv.field_senate_votes_target_id AND nfsv.deleted = 0');
+  $query->innerJoin('node_field_data', 'nfd', 'nfsv.entity_id = nfd.nid AND nfd.status = 1 AND nfd.type = \'senate_votes\'');
+  $query->innerJoin('paragraph__field_senate_votes_author', 'pfsva', 'pifd.id = pfsva.entity_id AND pfsva.deleted = 0');
+  $query->fields('pfsva', ['field_senate_votes_author_value']);
+  $query->condition('nfd.nid', $nid);
+
+  $query->orderBy('field_senate_votes_author_value', 'asc')->distinct();
 
   $result = $query->execute()->fetchCol();
 
