@@ -1166,6 +1166,28 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           ];
         }
       }
+      elseif ($view_name == 'senate_votes_inner') {
+        $nid = !empty($view->args) ? $view->args : '';
+        $nid = !empty($nid[0]) ? $nid[0] : '';
+
+        if (empty($nid)) {
+          $node = \Drupal::routeMatch()->getParameter('node');
+          $nid = !empty($node) ? $node->id() : '';
+        }
+
+        $form["#attributes"]["class"][] = 'form-inline';
+        if (!empty($form["measure"]) && !empty($nid)) {
+          $options = _senate_get_votes_measure_options($nid);
+          $measure_options = array_combine($options, $options);
+          $measure_options = array_merge(['' => t('Showing All')], $measure_options);
+
+          $form["measure"] = [
+            '#type' => 'select',
+            '#options' => $measure_options,
+            '#default_value' => '',
+          ];
+        }
+      }
       break;
   }
 
@@ -2482,4 +2504,25 @@ function webform_sign_up_committee_meeting_validate($form, FormStateInterface $f
     $committees_keys = array_keys($committees);
     $form_state->setValue('committees', $committees_keys);
   }
+}
+
+function _senate_get_votes_measure_options($nid) {
+  if (empty($nid)) {
+    return;
+  }
+
+  $query = \Drupal::database()->select('paragraphs_item_field_data', 'pifd')
+    ->condition('pifd.type', 'senate_votes')
+    ->condition('pifd.status', 1);
+  $query->innerJoin('node__field_senate_votes', 'nfsv', 'pifd.id = nfsv.field_senate_votes_target_id AND nfsv.deleted = 0');
+  $query->innerJoin('node_field_data', 'nfd', 'nfsv.entity_id = nfd.nid AND nfd.status = 1 AND nfd.type = \'senate_votes\'');
+  $query->innerJoin('paragraph__field_senate_votes_measure', 'pfsvm', 'pifd.id = pfsvm.entity_id AND pfsvm.deleted = 0');
+  $query->fields('pfsvm', ['field_senate_votes_measure_value']);
+  $query->condition('nfd.nid', $nid);
+
+  $query->orderBy('field_senate_votes_measure_value', 'asc')->distinct();
+
+  $result = $query->execute()->fetchCol();
+
+  return !empty($result) ? $result : [];
 }
