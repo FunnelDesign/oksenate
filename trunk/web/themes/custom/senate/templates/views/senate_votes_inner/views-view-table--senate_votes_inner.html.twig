@@ -41,9 +41,9 @@
 %}
 <div class="bTb bTb_a bTb_a_vo">
   <div class="bTb__tHead">
-    <div class="bTb__tr">
+    <div class="bTb__tr attachment">
       {% for key, column in header %}
-        <div{{ column.attributes.addClass('bTb__th').setAttribute('scope', 'col') }}>
+        <div{{ column.attributes.addClass('bTb__th views-summary').setAttribute('scope', 'col') }}>
           {%- if column.url -%}
             <a href="{{ column.url }}" title="{{ column.title }}">{{ column.content }}{{ column.sort_indicator }}</a>
           {%- else -%}
