@@ -286,6 +286,15 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
 //      $a = $query->query()->__toString();
     }
   }
+  if ($view->id() == 'senate_votes_inner' && $view->getDisplay()->display['id'] == 'block_1') {
+    $table_vote = $query->getTableInfo('node__field_senate_votes');
+    $table_vote['join']->field = 'field_senate_votes_target_id';
+    $table_vote["join"]->configuration["field"] = 'field_senate_votes_target_id';
+
+    $table_node = $query->getTableInfo('field_senate_votes_paragraphs_item_field_data');
+    $table_node['join']->field = 'nid';
+    $table_node["join"]->configuration["field"] = 'nid';
+  }
 }
 
 /**

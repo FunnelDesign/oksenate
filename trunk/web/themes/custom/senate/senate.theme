@@ -344,6 +344,10 @@ function senate_preprocess_node(array &$vars) {
         }
         break;
       case 'senate_votes':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+
+        $vars['votes'] = _senate_get_block('views_block__senate_votes_inner_block_1');
+        break;
       case 'history':
       case 'meeting_notice':
       case 'contacts_ada':
