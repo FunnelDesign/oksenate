@@ -288,12 +288,17 @@
   }
 }
 
-.form-senate-votes {
-  display: flex;
-  margin: 0 -10px 20px;
+.form-inline {
 
+  @include sm {
+    display: flex;
+    margin: 0 -10px 20px;
+  }
 
   & > * {
-    margin: 0 10px;
+
+    @include sm {
+      margin: 0 10px;
+    }
   }
 }
