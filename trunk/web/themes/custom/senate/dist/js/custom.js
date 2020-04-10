@@ -63,6 +63,30 @@
         }, true);
       });
 
+      $('[data-drupal-selector="views-exposed-form-senate-votes-inner-block-1"]').once('votes').each(function () {
+        var formElements = this.elements;
+        var formElementsLength = formElements.length;
+
+        this.addEventListener('focus', function (event) {
+          for (var i = 0; i < formElementsLength; i++) {
+
+            if (formElements[i] !== event.target && formElements[i].type !== "submit") {
+              switch (formElements[i].type) {
+                case 'text':
+                  formElements[i].value = '';
+                  break;
+                case 'select-one':
+                  if (formElements[i].value) {
+                    formElements[i].value = '';
+                    $(formElements[i]).trigger('change.select2');
+                  }
+                  break;
+              }
+            }
+          }
+        }, true);
+      });
+
       this.setBackButtonUrl(context);
       this.setSenateCustomCaptcha(context);
     },
