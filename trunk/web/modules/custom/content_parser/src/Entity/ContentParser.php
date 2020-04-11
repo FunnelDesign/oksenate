@@ -5,6 +5,8 @@ namespace Drupal\content_parser\Entity;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\content_parser\Results;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Defines the ContentParser entity.
@@ -594,6 +596,92 @@ class ContentParser extends ConfigEntityBase {
    * {@inheritdoc}
    */
   public function runTestUrl($base_url, $check_code) {
+    $fields = [
+      'field_press_release_contact_info' => [
+        'table' => 'node__field_press_release_contact_info',
+        'revision_table' => 'node_revision__field_press_release_contact_info',
+        'format_col' => 'field_press_release_contact_info_format',
+      ],
+    ];
+
+    $database = \Drupal::database();
+
+    foreach ($fields as $field_name => $f) {
+      $table = $f['table'];
+      $revision_table = $f['revision_table'];
+      // Entity type here.
+      $entity_type = 'node';
+
+      // Step 1: Get field storage.
+      $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
+
+      // Check if field not found.
+      if (is_null($field_storage)) {
+        continue;
+      }
+
+      // Step 2: Store data.
+      $rows = NULL;
+      $revision_rows = NULL;
+      if ($database->schema()->tableExists($table)) {
+        // The table data to restore after the update is completed.
+        $rows = $database->select($table, 'n')->fields('n')->execute()
+          ->fetchAll();
+        $revision_rows = $database->select($revision_table, 'n')->fields('n')->execute()
+          ->fetchAll();
+      }
+
+      // Step 3: Save new field configs & delete existing fields.
+      $new_fields = array();
+      foreach ($field_storage->getBundles() as $bundle => $label) {
+        $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+        $new_field = $field->toArray();
+        $new_field['field_type'] = 'text';
+        $new_fields[] = $new_field;
+        // Delete field.
+        $field->delete();
+      }
+
+      // Step 4: Create new storage configs from existing.
+      $new_field_storage = $field_storage->toArray();
+      $new_field_storage['type'] = 'text';
+      $new_field_storage['module'] = 'text';
+      $new_field_storage['settings'] = [
+        'max_length' => 255,
+      ];
+
+      // Step 5: Purge deleted fields data.
+      // This is required to create new fields.
+      field_purge_batch(250);
+
+      // Step 6: Create new fieldstorage.
+      FieldStorageConfig::create($new_field_storage)->save();
+
+      // Step 7: Create new fields for all bundles.
+      foreach ($new_fields as $new_field) {
+        $new_field = FieldConfig::create($new_field);
+        $new_field->save();
+      }
+
+      // Step 8: Restore existing data in fields & revision tables.
+      if (!is_null($rows)) {
+        foreach ($rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($table)->fields($row)->execute();
+        }
+      }
+      if (!is_null($revision_rows)) {
+        foreach ($revision_rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($revision_table)->fields($row)->execute();
+        }
+      }
+
+    }
+
+
     $html = $this->loadUrl($base_url);
 
     if (!$html) {
