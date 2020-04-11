@@ -636,7 +636,8 @@ class ContentParser extends ConfigEntityBase {
       foreach ($field_storage->getBundles() as $bundle => $label) {
         $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
         $new_field = $field->toArray();
-        $new_field['field_type'] = 'text';
+        $new_field['field_type'] = 'text_long';
+        $new_field['settings'] = [];
         $new_fields[] = $new_field;
         // Delete field.
         $field->delete();
@@ -644,11 +645,8 @@ class ContentParser extends ConfigEntityBase {
 
       // Step 4: Create new storage configs from existing.
       $new_field_storage = $field_storage->toArray();
-      $new_field_storage['type'] = 'text';
-      $new_field_storage['module'] = 'text';
-      $new_field_storage['settings'] = [
-        'max_length' => 255,
-      ];
+      $new_field_storage['type'] = 'text_long';
+      $new_field_storage['settings'] = [];
 
       // Step 5: Purge deleted fields data.
       // This is required to create new fields.
