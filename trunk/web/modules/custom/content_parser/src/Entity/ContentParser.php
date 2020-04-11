@@ -631,6 +631,30 @@ class ContentParser extends ConfigEntityBase {
           ->fetchAll();
       }
 
+      foreach ($rows as $rowdata){
+        foreach ($rowdata as $rowdatakey => &$rowdatavalue){
+          if($rowdatakey == 'field_press_release_contact_info_value'){
+            preg_match('~[^@\s]*@[^@\s]*\.[^@\s]*~', $rowdatavalue, $matches);
+            if(!empty($matches[0])){
+              $newMail = '<a href="mailto:'.$matches[0].'">'.$matches[0].'</a>';
+              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+            }
+          }
+        }
+      }
+
+      foreach ($revision_rows as $revision_rowdata){
+        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue){
+          if($revision_rowdatakey == 'field_press_release_contact_info_value'){
+            preg_match('~[^@\s]*@[^@\s]*\.[^@\s]*~', $revision_rowdatavalue, $revmatches);
+            if(!empty($revmatches[0])){
+              $newMail = '<a href="mailto:'.$revmatches[0].'">'.$revmatches[0].'</a>';
+              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+            }
+          }
+        }
+      }
+
       // Step 3: Save new field configs & delete existing fields.
       $new_fields = array();
       foreach ($field_storage->getBundles() as $bundle => $label) {
