@@ -57,6 +57,7 @@
         "drupal/admin_toolbar": "^2.0",
         "drupal/adminimal_admin_toolbar": "^1.10",
         "drupal/amswap": "^2.0@beta",
+        "drupal/anchor_link": "^2.4",
         "drupal/audiofield": "^1.9",
         "drupal/backup_migrate": "^4.0",
         "drupal/better_exposed_filters": "^4.0@alpha",
