@@ -596,112 +596,7 @@ class ContentParser extends ConfigEntityBase {
    * {@inheritdoc}
    */
   public function runTestUrl($base_url, $check_code) {
-    $fields = [
-      'field_press_release_contact_info' => [
-        'table' => 'node__field_press_release_contact_info',
-        'revision_table' => 'node_revision__field_press_release_contact_info',
-        'format_col' => 'field_press_release_contact_info_format',
-      ],
-    ];
-
-    $database = \Drupal::database();
-
-    foreach ($fields as $field_name => $f) {
-      $table = $f['table'];
-      $revision_table = $f['revision_table'];
-      // Entity type here.
-      $entity_type = 'node';
-
-      // Step 1: Get field storage.
-      $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
-
-      // Check if field not found.
-      if (is_null($field_storage)) {
-        continue;
-      }
-
-      // Step 2: Store data.
-      $rows = NULL;
-      $revision_rows = NULL;
-      if ($database->schema()->tableExists($table)) {
-        // The table data to restore after the update is completed.
-        $rows = $database->select($table, 'n')->fields('n')->execute()
-          ->fetchAll();
-        $revision_rows = $database->select($revision_table, 'n')->fields('n')->execute()
-          ->fetchAll();
-      }
-
-      foreach ($rows as $rowdata){
-        foreach ($rowdata as $rowdatakey => &$rowdatavalue){
-          if($rowdatakey == 'field_press_release_contact_info_value'){
-            preg_match('~[^@\s]*@[^@\s]*\.[^@\s]*~', $rowdatavalue, $matches);
-            if(!empty($matches[0])){
-              $newMail = '<a href="mailto:'.$matches[0].'">'.$matches[0].'</a>';
-              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
-            }
-          }
-        }
-      }
-
-      foreach ($revision_rows as $revision_rowdata){
-        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue){
-          if($revision_rowdatakey == 'field_press_release_contact_info_value'){
-            preg_match('~[^@\s]*@[^@\s]*\.[^@\s]*~', $revision_rowdatavalue, $revmatches);
-            if(!empty($revmatches[0])){
-              $newMail = '<a href="mailto:'.$revmatches[0].'">'.$revmatches[0].'</a>';
-              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
-            }
-          }
-        }
-      }
-
-      // Step 3: Save new field configs & delete existing fields.
-      $new_fields = array();
-      foreach ($field_storage->getBundles() as $bundle => $label) {
-        $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
-        $new_field = $field->toArray();
-        $new_field['field_type'] = 'text_long';
-        $new_field['settings'] = [];
-        $new_fields[] = $new_field;
-        // Delete field.
-        $field->delete();
-      }
-
-      // Step 4: Create new storage configs from existing.
-      $new_field_storage = $field_storage->toArray();
-      $new_field_storage['type'] = 'text_long';
-      $new_field_storage['settings'] = [];
-
-      // Step 5: Purge deleted fields data.
-      // This is required to create new fields.
-      field_purge_batch(250);
-
-      // Step 6: Create new fieldstorage.
-      FieldStorageConfig::create($new_field_storage)->save();
-
-      // Step 7: Create new fields for all bundles.
-      foreach ($new_fields as $new_field) {
-        $new_field = FieldConfig::create($new_field);
-        $new_field->save();
-      }
-
-      // Step 8: Restore existing data in fields & revision tables.
-      if (!is_null($rows)) {
-        foreach ($rows as $row) {
-          $row = (array)$row;
-          $row[$f['format_col']] = 'basic_html';
-          $database->insert($table)->fields($row)->execute();
-        }
-      }
-      if (!is_null($revision_rows)) {
-        foreach ($revision_rows as $row) {
-          $row = (array)$row;
-          $row[$f['format_col']] = 'basic_html';
-          $database->insert($revision_table)->fields($row)->execute();
-        }
-      }
-
-    }
+    $this->makeBodyNewPageAndContactEmail();
 
 
     $html = $this->loadUrl($base_url);
@@ -1063,6 +958,125 @@ class ContentParser extends ConfigEntityBase {
 
     }
     return TRUE;
+  }
+
+  /**
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function makeBodyNewPageAndContactEmail()
+  {
+    $fields = [
+      'field_press_release_contact_info' => [
+        'table' => 'node__field_press_release_contact_info',
+        'revision_table' => 'node_revision__field_press_release_contact_info',
+        'format_col' => 'field_press_release_contact_info_format',
+      ],
+    ];
+
+    $database = \Drupal::database();
+
+    $test = $database->query('UPDATE node__body nr
+set nr.body_value =
+  replace(nr.body_value, \'<a href="http://www.2020census.gov/"\', \'<a target="_blank" href="http://www.2020census.gov/"\')
+WHERE nr.body_value like \'%<a href="http://www.2020census.gov/"%\'');
+    $mini = $test->execute();
+
+    foreach ($fields as $field_name => $f) {
+      $table = $f['table'];
+      $revision_table = $f['revision_table'];
+      // Entity type here.
+      $entity_type = 'node';
+
+      // Step 1: Get field storage.
+      $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
+
+      // Check if field not found.
+      if (is_null($field_storage)) {
+        continue;
+      }
+
+      // Step 2: Store data.
+      $rows = NULL;
+      $revision_rows = NULL;
+      if ($database->schema()->tableExists($table)) {
+        // The table data to restore after the update is completed.
+        $rows = $database->select($table, 'n')->fields('n')->execute()
+          ->fetchAll();
+        $revision_rows = $database->select($revision_table, 'n')->fields('n')->execute()
+          ->fetchAll();
+      }
+
+      foreach ($rows as $rowdata) {
+        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+          if ($rowdatakey == 'field_press_release_contact_info_value') {
+            preg_match('~[^@\s]*@[^@\s]*\.[^@\s]*~', $rowdatavalue, $matches);
+            if (!empty($matches[0])) {
+              $newMail = '<a href="mailto:' . $matches[0] . '">' . $matches[0] . '</a>';
+              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+            }
+          }
+        }
+      }
+
+      foreach ($revision_rows as $revision_rowdata) {
+        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+          if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
+            preg_match('~[^@\s]*@[^@\s]*\.[^@\s]*~', $revision_rowdatavalue, $revmatches);
+            if (!empty($revmatches[0])) {
+              $newMail = '<a href="mailto:' . $revmatches[0] . '">' . $revmatches[0] . '</a>';
+              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+            }
+          }
+        }
+      }
+
+      // Step 3: Save new field configs & delete existing fields.
+      $new_fields = array();
+      foreach ($field_storage->getBundles() as $bundle => $label) {
+        $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+        $new_field = $field->toArray();
+        $new_field['field_type'] = 'text_long';
+        $new_field['settings'] = [];
+        $new_fields[] = $new_field;
+        // Delete field.
+        $field->delete();
+      }
+
+      // Step 4: Create new storage configs from existing.
+      $new_field_storage = $field_storage->toArray();
+      $new_field_storage['type'] = 'text_long';
+      $new_field_storage['settings'] = [];
+
+      // Step 5: Purge deleted fields data.
+      // This is required to create new fields.
+      field_purge_batch(250);
+
+      // Step 6: Create new fieldstorage.
+      FieldStorageConfig::create($new_field_storage)->save();
+
+      // Step 7: Create new fields for all bundles.
+      foreach ($new_fields as $new_field) {
+        $new_field = FieldConfig::create($new_field);
+        $new_field->save();
+      }
+
+      // Step 8: Restore existing data in fields & revision tables.
+      if (!is_null($rows)) {
+        foreach ($rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($table)->fields($row)->execute();
+        }
+      }
+      if (!is_null($revision_rows)) {
+        foreach ($revision_rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($revision_table)->fields($row)->execute();
+        }
+      }
+
+    }
   }
 
 }
