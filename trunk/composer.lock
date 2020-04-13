@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81d12f0189be03e1f09f20cc3983bec6",
+    "content-hash": "6d323cd97987dd122daf6b4d23cbf619",
     "packages": [
         {
             "name": "adubovskoy/phpquery",
@@ -269,11 +269,33 @@
             "time": "2019-12-07T16:54:31+00:00"
         },
         {
+            "name": "ckeditor-plugin/fakeobjects",
+            "version": "4.14.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://download.ckeditor.com/fakeobjects/releases/fakeobjects_4.14.0.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library"
+        },
+        {
             "name": "ckeditor-plugin/font",
             "version": "4.13.1",
             "dist": {
                 "type": "zip",
                 "url": "https://download.ckeditor.com/font/releases/font_4.13.1.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "type": "drupal-library"
+        },
+        {
+            "name": "ckeditor-plugin/link",
+            "version": "4.14.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://download.ckeditor.com/link/releases/link_4.14.0.zip",
                 "reference": null,
                 "shasum": null
             },
