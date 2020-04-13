@@ -1303,10 +1303,11 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
 //        $new_field = FieldConfig::create($new_field);
 //        $new_field->save();
 //      }
-      \Drupal::database()->truncate($table)->execute();
-      \Drupal::database()->truncate($revision_table)->execute();
+
+
       // Step 8: Restore existing data in fields & revision tables.
       if (!is_null($rows)) {
+        \Drupal::database()->truncate($table)->execute();
         foreach ($rows as $row) {
           $row = (array)$row;
           $row[$f['format_col']] = 'basic_html';
@@ -1314,6 +1315,7 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
         }
       }
       if (!is_null($revision_rows)) {
+        \Drupal::database()->truncate($revision_table)->execute();
         foreach ($revision_rows as $row) {
           $row = (array)$row;
           $row[$f['format_col']] = 'basic_html';
