@@ -984,8 +984,8 @@ class ContentParser extends ConfigEntityBase {
 
     $test = $database->query('UPDATE node__body nr
 set nr.body_value =
-  replace(nr.body_value, \'www.2020census.gov"\', \'<a target="_blank" href="http://www.2020census.gov/">www.2020census.gov</a>\')
-WHERE nr.body_value like \'%www.2020census.gov"%\'');
+  replace(nr.body_value, \'www.2020census.gov\', \'<a target="_blank" href="http://www.2020census.gov/">www.2020census.gov</a>\')
+WHERE nr.body_value like \'%www.2020census.gov%\'');
     $mini = $test->execute();
 //
     $pattern = "~*\@oksenate.gov.~igm";
@@ -1045,27 +1045,15 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
 
 //      $text = '<p>Sen. Micheal Bergstrom at 405-521-5561, or email <a href="mailto:Micheal.Bergstrom@oksenate.gov.">Micheal.Bergstrom@oksenate.gov.</a></p>
 //';
-//
-      foreach ($rows as $rowdata) {
-        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
-          if ($rowdatakey == 'field_press_release_contact_info_value') {
-            if(strpos($rowdatavalue, '@oksenate.gov.') !== false){
-                $newMail = '@oksenate.gov';
-                $rowdatavalue = str_replace('@oksenate.gov.', $newMail, $rowdatavalue);
-            }
-
-          }
-        }
-      }
 
       foreach ($rows as $rowdata) {
         foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
           if ($rowdatakey == 'field_press_release_contact_info_value') {
-            if(strpos($rowdatavalue, 'mailto:email&nbsp;') !== false){
+            preg_match('/(mailto\:email%C2%A0|mailto\:or%C2%A0)/', $rowdatavalue, $matches);
+            if($matches){
               $newMail = 'mailto:';
-              $rowdatavalue = str_replace('mailto:email&nbsp;', $newMail, $rowdatavalue);
+              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
             }
-
           }
         }
       }
@@ -1073,20 +1061,10 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
       foreach ($revision_rows as $revision_rowdata) {
         foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
           if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
-            if(strpos($revision_rowdatavalue, '@oksenate.gov.') !== false){
-              $newMail = '@oksenate.gov';
-              $revision_rowdatavalue = str_replace('@oksenate.gov.', $newMail, $revision_rowdatavalue);
-            }
-          }
-        }
-      }
-
-            foreach ($revision_rows as $revision_rowdata) {
-        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
-          if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
-            if(strpos($revision_rowdatavalue, 'mailto:email&nbsp;') !== false){
+            preg_match('/(mailto\:email%C2%A0|mailto\:or%C2%A0)/', $revision_rowdatavalue, $revmatches);
+            if($revmatches) {
               $newMail = 'mailto:';
-              $revision_rowdatavalue = str_replace('mailto:email&nbsp;', $newMail, $revision_rowdatavalue);
+              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
             }
           }
         }
@@ -1122,10 +1100,11 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
 //        $new_field = FieldConfig::create($new_field);
 //        $new_field->save();
 //      }
-      \Drupal::database()->truncate($table)->execute();
-      \Drupal::database()->truncate($revision_table)->execute();
+
+
       // Step 8: Restore existing data in fields & revision tables.
       if (!is_null($rows)) {
+        \Drupal::database()->truncate($table)->execute();
         foreach ($rows as $row) {
           $row = (array)$row;
           $row[$f['format_col']] = 'basic_html';
@@ -1133,6 +1112,7 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
         }
       }
       if (!is_null($revision_rows)) {
+        \Drupal::database()->truncate($revision_table)->execute();
         foreach ($revision_rows as $row) {
           $row = (array)$row;
           $row[$f['format_col']] = 'basic_html';
@@ -1198,15 +1178,15 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
           ->fetchAll();
       }
 
-      $text = '<p>For more information, contact: Sen. Micheal Bergstrom at 405-521-5561, or email&nbsp;<a>Micheal.Bergstrom@oksenate.gov</a>.</p>';
+//      $text = '<p>For more information, contact: Sen. Micheal Bergstrom at 405-521-5561, or email&nbsp;<a>Micheal.Bergstrom@oksenate.gov</a>.</p>';
 
       foreach ($rows as $rowdata) {
         foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
           if ($rowdatakey == 'body_value') {
-            preg_match('/(<a>|<span>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $rowdatavalue, $matches);
+            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $rowdatavalue, $matches);
             if (!empty($matches)) {
               $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
-              $rowdatavalue = str_replace($matches[2], $newMail, $rowdatavalue);
+              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
             }
           }
         }
@@ -1215,10 +1195,36 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
       foreach ($revision_rows as $revision_rowdata) {
         foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
           if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
-            preg_match('/(<a>|<span>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $revision_rowdatavalue, $revmatches);
+            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $revision_rowdatavalue, $revmatches);
             if (!empty($revmatches)) {
               $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
-              $revision_rowdatavalue = str_replace($revmatches[2], $newMail, $revision_rowdatavalue);
+              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+            }
+          }
+        }
+      }
+
+      foreach ($rows as $rowdata) {
+        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+          if ($rowdatakey == 'body_value') {
+            preg_match('/(\<a\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"&gt\;)/', $rowdatavalue, $matches);
+            if (!empty($matches)) {
+              $newMail = '';
+//              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
+              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+            }
+          }
+        }
+      }
+
+      foreach ($revision_rows as $revision_rowdata) {
+        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+          if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
+            preg_match('/(\<a\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"&gt\;)/', $revision_rowdatavalue, $revmatches);
+            if (!empty($revmatches)) {
+              $newMail = '';
+//              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
+              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
             }
           }
         }
@@ -1324,6 +1330,9 @@ WHERE nr.body_value like \'%www.2020census.gov"%\'');
       }
 
     }
+  }
+  public function newForRegexp(){
+
   }
 
 }
