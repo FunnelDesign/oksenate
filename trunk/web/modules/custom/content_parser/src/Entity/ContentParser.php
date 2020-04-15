@@ -1022,7 +1022,7 @@ class ContentParser extends ConfigEntityBase {
       foreach ($rows as $rowdata) {
         foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
           if ($rowdatakey == 'field_press_release_contact_info_value') {
-            preg_match('/(mailto\:email\s|mailto\:or\s)/', $rowdatavalue, $matches);
+            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $rowdatavalue, $matches);
             if($matches){
               $newMail = 'mailto:';
               $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
@@ -1034,7 +1034,7 @@ class ContentParser extends ConfigEntityBase {
       foreach ($revision_rows as $revision_rowdata) {
         foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
           if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
-            preg_match('/(mailto\:email\s|mailto\:or\s)/', $revision_rowdatavalue, $revmatches);
+            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $revision_rowdatavalue, $revmatches);
             if($revmatches) {
               $newMail = 'mailto:';
               $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
@@ -1153,34 +1153,34 @@ class ContentParser extends ConfigEntityBase {
 
 //      $text = '<p>For more information, contact: Sen. Micheal Bergstrom at 405-521-5561, or email&nbsp;<a>Micheal.Bergstrom@oksenate.gov</a>.</p>';
 
+//      foreach ($rows as $rowdata) {
+//        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+//          if ($rowdatakey == 'body_value') {
+//            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $rowdatavalue, $matches);
+//            if (!empty($matches)) {
+//              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
+//              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+//
+//      foreach ($revision_rows as $revision_rowdata) {
+//        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+//          if ($revision_rowdatakey == 'body_value') {
+//            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $revision_rowdatavalue, $revmatches);
+//            if (!empty($revmatches)) {
+//              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
+//              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+
       foreach ($rows as $rowdata) {
         foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
           if ($rowdatakey == 'body_value') {
-            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $rowdatavalue, $matches);
-            if (!empty($matches)) {
-              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
-              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
-            }
-          }
-        }
-      }
-
-      foreach ($revision_rows as $revision_rowdata) {
-        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
-          if ($revision_rowdatakey == 'body_value') {
-            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $revision_rowdatavalue, $revmatches);
-            if (!empty($revmatches)) {
-              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
-              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
-            }
-          }
-        }
-      }
-
-      foreach ($rows as $rowdata) {
-        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
-          if ($rowdatakey == 'body_value') {
-            preg_match('/(\<a\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"&gt\;)/', $rowdatavalue, $matches);
+            preg_match('/(\<a\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"\>)/', $rowdatavalue, $matches);
             if (!empty($matches)) {
               $newMail = '';
 //              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
@@ -1203,31 +1203,31 @@ class ContentParser extends ConfigEntityBase {
         }
       }
 
-      foreach ($rows as $rowdata) {
-        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
-          if ($rowdatakey == 'body_value') {
-            preg_match('/Learn more at:(.*)/', $rowdatavalue, $matches);
-            if (!empty($matches)) {
-              $newMail = '<a target="_blank" href="http://www.2020census.gov/">www.2020census.gov.</a>';
-//              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
-              $rowdatavalue = str_replace($matches[1], $newMail, $rowdatavalue);
-            }
-          }
-        }
-      }
-
-      foreach ($revision_rows as $revision_rowdata) {
-        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
-          if ($revision_rowdatakey == 'body_value') {
-            preg_match('/Learn more at:(.*)/', $revision_rowdatavalue, $revmatches);
-            if (!empty($revmatches)) {
-              $newMail = '<a target="_blank" href="http://www.2020census.gov/"> www.2020census.gov.</a>';
-//              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
-              $revision_rowdatavalue = str_replace($revmatches[1], $newMail, $revision_rowdatavalue);
-            }
-          }
-        }
-      }
+//      foreach ($rows as $rowdata) {
+//        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+//          if ($rowdatakey == 'body_value') {
+//            preg_match('/Learn more at:(.*)/', $rowdatavalue, $matches);
+//            if (!empty($matches)) {
+//              $newMail = '<a target="_blank" href="http://www.2020census.gov/">www.2020census.gov.</a>';
+////              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
+//              $rowdatavalue = str_replace($matches[1], $newMail, $rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+//
+//      foreach ($revision_rows as $revision_rowdata) {
+//        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+//          if ($revision_rowdatakey == 'body_value') {
+//            preg_match('/Learn more at:(.*)/', $revision_rowdatavalue, $revmatches);
+//            if (!empty($revmatches)) {
+//              $newMail = '<a target="_blank" href="http://www.2020census.gov/"> www.2020census.gov.</a>';
+////              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
+//              $revision_rowdatavalue = str_replace($revmatches[1], $newMail, $revision_rowdatavalue);
+//            }
+//          }
+//        }
+//      }
 
 
       // Step 8: Restore existing data in fields & revision tables.
