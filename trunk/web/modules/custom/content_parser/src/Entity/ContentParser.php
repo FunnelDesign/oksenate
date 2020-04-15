@@ -1019,29 +1019,29 @@ class ContentParser extends ConfigEntityBase {
           ->fetchAll();
       }
 
-      foreach ($rows as $rowdata) {
-        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
-          if ($rowdatakey == 'field_press_release_contact_info_value') {
-            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $rowdatavalue, $matches);
-            if($matches){
-              $newMail = 'mailto:';
-              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
-            }
-          }
-        }
-      }
-
-      foreach ($revision_rows as $revision_rowdata) {
-        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
-          if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
-            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $revision_rowdatavalue, $revmatches);
-            if($revmatches) {
-              $newMail = 'mailto:';
-              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
-            }
-          }
-        }
-      }
+//      foreach ($rows as $rowdata) {
+//        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+//          if ($rowdatakey == 'field_press_release_contact_info_value') {
+//            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $rowdatavalue, $matches);
+//            if($matches){
+//              $newMail = 'mailto:';
+//              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+//
+//      foreach ($revision_rows as $revision_rowdata) {
+//        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+//          if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
+//            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $revision_rowdatavalue, $revmatches);
+//            if($revmatches) {
+//              $newMail = 'mailto:';
+//              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+//            }
+//          }
+//        }
+//      }
 
 
 //      // Step 3: Save new field configs & delete existing fields.
@@ -1177,10 +1177,12 @@ class ContentParser extends ConfigEntityBase {
 //        }
 //      }
 
+
+
       foreach ($rows as $rowdata) {
         foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
           if ($rowdatakey == 'body_value') {
-            preg_match('/(\<a\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"\>)/', $rowdatavalue, $matches);
+            preg_match('/(\<a\shref\=\"mailto\:\<a\shref\=\"mailto\:)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\"\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"\>)/', $rowdatavalue, $matches);
             if (!empty($matches)) {
               $newMail = '';
 //              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
@@ -1189,11 +1191,11 @@ class ContentParser extends ConfigEntityBase {
           }
         }
       }
-
+//      <a href="mailto:<a href="mailto:Paul.Scott@oksenate.gov">Paul.Scott@oksenate.gov</a>">
       foreach ($revision_rows as $revision_rowdata) {
         foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
           if ($revision_rowdatakey == 'body_value') {
-            preg_match('/(\<a\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"&gt\;)/', $revision_rowdatavalue, $revmatches);
+            preg_match('/(\<a\shref\=\"mailto\:\<a\shref\=\"mailto\:)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\"\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"\>)/', $revision_rowdatavalue, $revmatches);
             if (!empty($revmatches)) {
               $newMail = '';
 //              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
