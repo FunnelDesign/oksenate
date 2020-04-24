@@ -1172,7 +1172,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
 
         if (empty($nid)) {
           $node = \Drupal::routeMatch()->getParameter('node');
-          $nid = !empty($node) ? $node->id() : '';
+          $nid = !empty($node) && is_object($node) ? $node->id() : '';
         }
 
         $form["#attributes"]["class"][] = 'form-inline';
@@ -1756,7 +1756,7 @@ function senate_preprocess_paragraph(array &$vars) {
   switch ($bundle) {
     case 'publications':
       $node = \Drupal::routeMatch()->getParameter('node');
-      if (!empty($node) && $node->id() == SENATE_CONTACTS_LANDING_NID) {
+      if (!empty($node) && is_object($node) && $node->id() == SENATE_CONTACTS_LANDING_NID) {
         $vars['icon_attributes'] = ' bTiles__ico_a';
       }
 
