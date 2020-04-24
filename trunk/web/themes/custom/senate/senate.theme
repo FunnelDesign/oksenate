@@ -31,7 +31,7 @@ function senate_preprocess_html(array &$vars) {
     $vars['attributes']['class'][] = 'page-authorization';
   }
 
-  if ($node = \Drupal::request()->attributes->get('node')) {
+  if (($node = \Drupal::request()->attributes->get('node')) && is_object($node)) {
       switch ($node->bundle()) {
         case 'user':
           break;
@@ -60,7 +60,7 @@ function senate_preprocess_page(array &$vars) {
         break;
     }
   }
-  if (!empty($node)) {
+  if (!empty($node) && is_object($node)) {
     switch ($node->bundle()) {
       case 'protem_podcast':
         $vars['video_popup'] = [
@@ -84,7 +84,7 @@ function senate_preprocess_node(array &$vars) {
 
   $vars['socials'] = _senate_get_socials($node, 'node');
 
-  if (!empty($node)) {
+  if (!empty($node) && is_object($node)) {
 
     switch ($node->bundle()) {
       case 'homepage':
