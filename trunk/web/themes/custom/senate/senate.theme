@@ -51,6 +51,15 @@ function senate_preprocess_page(array &$vars) {
     '#current_path' => $vars['path_to_theme']
   ];
   $view_id = \Drupal::routeMatch()->getParameter('view_id');
+
+  $protocol = !empty($GLOBALS['is_https']) ?  'https://' : 'http://';
+  $main_site_url = $protocol . ltrim(strstr($GLOBALS['base_url'], '.'), '.');
+
+  $url = Url::fromUri($main_site_url);
+  $options = ['class' => ['btn accessibility__btn-back contrast-only']];
+  $url->setOption('attributes', $options);
+  $vars['main_site_url'] = Link::fromTextAndUrl(t('Back'), $url);
+
   if (!empty($view_id)) {
     switch ($view_id){
       case 'protem':
