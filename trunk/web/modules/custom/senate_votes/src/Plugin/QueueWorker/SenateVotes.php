@@ -53,6 +53,7 @@ class SenateVotes extends QueueWorkerBase {
                 'entity_id' => $parent_node->id(),
                 'revision_id' => $parent_node->getRevisionId(),
                 'delta' => ++$last_delta,
+                'langcode' => 'en',
                 'field_senate_votes_target_id' => $paragraph->id(),
                 'field_senate_votes_target_revision_id' => $paragraph->getRevisionId(),
               ];
