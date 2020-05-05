@@ -65,6 +65,7 @@
                     </div>
                     
                     <div class="sSlider__desc">
+                     <h2><span>Serving Oklahoma for the creation of laws and budgets.</span></h2>
                       <p>Due to extreme weather, Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
                     </div>
                     <div class="sSlider__btnWrap">
