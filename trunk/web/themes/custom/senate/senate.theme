@@ -995,6 +995,13 @@ function senate_preprocess_field(array &$vars, $hook) {
         ];
       }
       break;
+    case 'field_comt_evt_agenda':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      $items_amount = count($items);
+      if ($items_amount < 2) {
+        $vars["multiple"] = FALSE;
+      }
+      break;
   }
 }
 
