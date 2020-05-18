@@ -247,6 +247,15 @@
       }
 
     }
+
+    &_b {
+      position: relative;
+      margin-bottom: 20px;
+
+      @include xs-only {
+        top: -20px;
+      }
+    }
   }
 
   .bContainer {
@@ -275,6 +284,26 @@
       &_b {
         @include margin-bottom(20px, 30px);
       }
+    }
+  }
+}
+
+.form-inline {
+
+  @include sm {
+    display: flex;
+    justify-content: center;
+    margin: 0 -10px 20px;
+  }
+
+  & > * {
+
+    @include sm {
+      margin: 0 10px;
+    }
+
+    label {
+      display: block;
     }
   }
 }

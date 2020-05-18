@@ -5,9 +5,11 @@
         var month = this.elements['edit-month'];
         var options = drupalSettings.senate.view_journals || {};
         var _this = this;
+        var $yearSelect = $('#views-exposed-form-journals-page-1 #edit-year + .select2');
+        var event = ($yearSelect.css('display') === 'none') ? 'change' : 'select2:select';
 
-        $('#views-exposed-form-journals-page-1 #edit-year').on('select2:select', function (e) {
-          var year = e.params.data.id;
+        $('#views-exposed-form-journals-page-1 #edit-year').on(event, function (e) {
+          var year = (event === 'select2:select') ? e.params.data.id : this.value;
 
           var keys = Object.keys(options[year]);
           month.innerHTML = keys.map(function (key) {
@@ -16,7 +18,7 @@
           _this.submit();
         });
 
-        $('#views-exposed-form-journals-page-1 #edit-month').on('select2:select', function (e) {
+        $('#views-exposed-form-journals-page-1 #edit-month').on(event, function (e) {
           _this.submit();
         });
       });
@@ -52,6 +54,30 @@
                 case 'select-one':
                   if (formElements[i].value !== 'All') {
                     formElements[i].value = 'All';
+                    $(formElements[i]).trigger('change.select2');
+                  }
+                  break;
+              }
+            }
+          }
+        }, true);
+      });
+
+      $('[data-drupal-selector="views-exposed-form-senate-votes-inner-block-1"]').once('votes').each(function () {
+        var formElements = this.elements;
+        var formElementsLength = formElements.length;
+
+        this.addEventListener('focus', function (event) {
+          for (var i = 0; i < formElementsLength; i++) {
+
+            if (formElements[i] !== event.target && formElements[i].type !== "submit") {
+              switch (formElements[i].type) {
+                case 'text':
+                  formElements[i].value = '';
+                  break;
+                case 'select-one':
+                  if (formElements[i].value) {
+                    formElements[i].value = '';
                     $(formElements[i]).trigger('change.select2');
                   }
                   break;

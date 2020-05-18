@@ -349,6 +349,10 @@
     .ss-icon {
       min-width: 18px;
       margin: 0 13px 0 0;
+
+      @include xs-only {
+        display: none;
+      }
     }
 
     p, &-in {

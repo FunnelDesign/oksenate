@@ -88,11 +88,11 @@
       font-family: $Roboto-Bold;
 
       @include xs-only {
-        text-transform: lowercase;
+        //text-transform: lowercase;
 
-        a {
-          text-transform: capitalize;
-        }
+        //a {
+        //  text-transform: capitalize;
+        //}
       }
     }
 
@@ -266,6 +266,24 @@
         &:last-child {
           padding-right: 16px;
         }
+      }
+    }
+  }
+
+  .tablesort {
+    position: relative;
+    top: 4px;
+    left: 2px;
+  }
+
+  &._mw {
+
+    &_auto {
+      max-width: 100%;
+      overflow-x: auto;
+
+      @include xs-only {
+        display: block;
       }
     }
   }

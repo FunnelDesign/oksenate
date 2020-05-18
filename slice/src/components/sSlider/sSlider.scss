@@ -23,5 +23,10 @@
     color: #fff;
     line-height: 1.6;
     text-align: center;
+
+    h2, h3, h4, h5, h6 {
+      color: currentColor;
+      margin-bottom: 10px;
+    }
   }
 }

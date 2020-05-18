@@ -5,6 +5,8 @@ namespace Drupal\content_parser\Entity;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 use Drupal\content_parser\Results;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Defines the ContentParser entity.
@@ -594,6 +596,10 @@ class ContentParser extends ConfigEntityBase {
    * {@inheritdoc}
    */
   public function runTestUrl($base_url, $check_code) {
+    $this->makeBodyNewPageAndContactEmail();
+    $this->makeBodyRegexp();
+
+
     $html = $this->loadUrl($base_url);
 
     if (!$html) {
@@ -953,6 +959,301 @@ class ContentParser extends ConfigEntityBase {
 
     }
     return TRUE;
+  }
+
+  /**
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  private function makeBodyNewPageAndContactEmail()
+  {
+    $fields = [
+      'field_press_release_contact_info' => [
+        'table' => 'node__field_press_release_contact_info',
+        'revision_table' => 'node_revision__field_press_release_contact_info',
+        'format_col' => 'field_press_release_contact_info_format',
+      ],
+    ];
+
+    $database = \Drupal::database();
+
+//    $test = $database->query('UPDATE node__body nr
+//set nr.body_value =
+//  replace(nr.body_value, \'<a href="http://www.2020census.gov/"\', \'<a target="_blank" href="http://www.2020census.gov/"\')
+//WHERE nr.body_value like \'%<a href="http://www.2020census.gov/"%\'');
+//    $mini = $test->execute();
+
+//    $test = $database->query('UPDATE node__body nr
+//set nr.body_value =
+//  replace(nr.body_value, \'www.2020census.gov\', \'<a target="_blank" href="http://www.2020census.gov/">www.2020census.gov</a>\')
+//WHERE nr.body_value like \'%www.2020census.gov%\'');
+//    $mini = $test->execute();
+//
+//    $pattern = "~*\@oksenate.gov.~igm";
+//    preg_match($pattern, $revision_rowdatavalue, $revmatches);
+//    if (!empty($revmatches[0])) {
+//      $newMail = '<a href="mailto:' . $revmatches[0] . '">' . $revmatches[0] . '</a>';
+//      $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+
+    foreach ($fields as $field_name => $f) {
+      $table = $f['table'];
+      $revision_table = $f['revision_table'];
+      // Entity type here.
+      $entity_type = 'node';
+
+      // Step 1: Get field storage.
+      $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
+
+      // Check if field not found.
+      if (is_null($field_storage)) {
+        continue;
+      }
+
+      // Step 2: Store data.
+      $rows = NULL;
+      $revision_rows = NULL;
+      if ($database->schema()->tableExists($table)) {
+        // The table data to restore after the update is completed.
+        $rows = $database->select($table, 'n')->fields('n')->execute()
+          ->fetchAll();
+        $revision_rows = $database->select($revision_table, 'n')->fields('n')->execute()
+          ->fetchAll();
+      }
+
+//      foreach ($rows as $rowdata) {
+//        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+//          if ($rowdatakey == 'field_press_release_contact_info_value') {
+//            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $rowdatavalue, $matches);
+//            if($matches){
+//              $newMail = 'mailto:';
+//              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+//
+//      foreach ($revision_rows as $revision_rowdata) {
+//        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+//          if ($revision_rowdatakey == 'field_press_release_contact_info_value') {
+//            preg_match('/(mailto\:email\\xc2\\xa0|mailto\:or\\xc2\\xa0)/', $revision_rowdatavalue, $revmatches);
+//            if($revmatches) {
+//              $newMail = 'mailto:';
+//              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+
+
+//      // Step 3: Save new field configs & delete existing fields.
+//      $new_fields = array();
+//      foreach ($field_storage->getBundles() as $bundle => $label) {
+//        $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+//        $new_field = $field->toArray();
+//        $new_field['field_type'] = 'text_long';
+//        $new_field['settings'] = [];
+//        $new_fields[] = $new_field;
+//        // Delete field.
+//        $field->delete();
+//      }
+//
+//      // Step 4: Create new storage configs from existing.
+//      $new_field_storage = $field_storage->toArray();
+//      $new_field_storage['type'] = 'text_long';
+//      $new_field_storage['settings'] = [];
+//
+//      // Step 5: Purge deleted fields data.
+//      // This is required to create new fields.
+//      field_purge_batch(250);
+//
+//      // Step 6: Create new fieldstorage.
+//      FieldStorageConfig::create($new_field_storage)->save();
+//
+//      // Step 7: Create new fields for all bundles.
+//      foreach ($new_fields as $new_field) {
+//        $new_field = FieldConfig::create($new_field);
+//        $new_field->save();
+//      }
+
+
+      // Step 8: Restore existing data in fields & revision tables.
+      if (!is_null($rows)) {
+        \Drupal::database()->truncate($table)->execute();
+        foreach ($rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($table)->fields($row)->execute();
+        }
+      }
+      if (!is_null($revision_rows)) {
+        \Drupal::database()->truncate($revision_table)->execute();
+        foreach ($revision_rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($revision_table)->fields($row)->execute();
+        }
+      }
+
+    }
+  }
+
+  public function makeBodyRegexp()
+  {
+    $fields = [
+      'body' => [
+        'table' => 'node__body',
+        'revision_table' => 'node_revision__body',
+        'format_col' => 'body_format',
+      ],
+    ];
+
+    $database = \Drupal::database();
+
+//    $test = $database->query('UPDATE node__body nr
+//set nr.body_value =
+//  replace(nr.body_value, \'<a href="http://www.2020census.gov/"\', \'<a target="_blank" href="http://www.2020census.gov/"\')
+//WHERE nr.body_value like \'%<a href="http://www.2020census.gov/"%\'');
+//    $mini = $test->execute();
+
+//    $test = $database->query('UPDATE node__body nr
+//set nr.body_value =
+//  replace(nr.body_value, \'www.2020census.gov"\', \'<a target="_blank" href="http://www.2020census.gov/"\')
+//WHERE nr.body_value like \'%www.2020census.gov"%\'');
+//    $mini = $test->execute();
+//
+//    $pattern = "~*\@oksenate.gov.~igm";
+//    preg_match($pattern, $revision_rowdatavalue, $revmatches);
+//    if (!empty($revmatches[0])) {
+//      $newMail = '<a href="mailto:' . $revmatches[0] . '">' . $revmatches[0] . '</a>';
+//      $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+
+    foreach ($fields as $field_name => $f) {
+      $table = $f['table'];
+      $revision_table = $f['revision_table'];
+      // Entity type here.
+      $entity_type = 'node';
+
+      // Step 1: Get field storage.
+      $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
+
+      // Check if field not found.
+      if (is_null($field_storage)) {
+        continue;
+      }
+//
+      // Step 2: Store data.
+      $rows = NULL;
+      $revision_rows = NULL;
+      if ($database->schema()->tableExists($table)) {
+        // The table data to restore after the update is completed.
+        $rows = $database->select($table, 'n')->fields('n')->execute()
+          ->fetchAll();
+        $revision_rows = $database->select($revision_table, 'n')->fields('n')->execute()
+          ->fetchAll();
+      }
+
+//      $text = '<p>For more information, contact: Sen. Micheal Bergstrom at 405-521-5561, or email&nbsp;<a>Micheal.Bergstrom@oksenate.gov</a>.</p>';
+
+//      foreach ($rows as $rowdata) {
+//        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+//          if ($rowdatakey == 'body_value') {
+//            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $rowdatavalue, $matches);
+//            if (!empty($matches)) {
+//              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
+//              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+//
+//      foreach ($revision_rows as $revision_rowdata) {
+//        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+//          if ($revision_rowdatakey == 'body_value') {
+//            preg_match('/(or\s|email\s)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/', $revision_rowdatavalue, $revmatches);
+//            if (!empty($revmatches)) {
+//              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
+//              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+
+
+
+      foreach ($rows as $rowdata) {
+        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+          if ($rowdatakey == 'body_value') {
+            preg_match('/(\<a\shref\=\"mailto\:\<a\shref\=\"mailto\:)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\"\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"\>)/', $rowdatavalue, $matches);
+            if (!empty($matches)) {
+              $newMail = '';
+//              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
+              $rowdatavalue = str_replace($matches[0], $newMail, $rowdatavalue);
+            }
+          }
+        }
+      }
+//      <a href="mailto:<a href="mailto:Paul.Scott@oksenate.gov">Paul.Scott@oksenate.gov</a>">
+      foreach ($revision_rows as $revision_rowdata) {
+        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+          if ($revision_rowdatakey == 'body_value') {
+            preg_match('/(\<a\shref\=\"mailto\:\<a\shref\=\"mailto\:)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\"\>)([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)(\<\/a\>\"\>)/', $revision_rowdatavalue, $revmatches);
+            if (!empty($revmatches)) {
+              $newMail = '';
+//              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
+              $revision_rowdatavalue = str_replace($revmatches[0], $newMail, $revision_rowdatavalue);
+            }
+          }
+        }
+      }
+
+//      foreach ($rows as $rowdata) {
+//        foreach ($rowdata as $rowdatakey => &$rowdatavalue) {
+//          if ($rowdatakey == 'body_value') {
+//            preg_match('/Learn more at:(.*)/', $rowdatavalue, $matches);
+//            if (!empty($matches)) {
+//              $newMail = '<a target="_blank" href="http://www.2020census.gov/">www.2020census.gov.</a>';
+////              $newMail = '<a href="mailto:' . $matches[2] . '">' . $matches[2] . '</a>';
+//              $rowdatavalue = str_replace($matches[1], $newMail, $rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+//
+//      foreach ($revision_rows as $revision_rowdata) {
+//        foreach ($revision_rowdata as $revision_rowdatakey => &$revision_rowdatavalue) {
+//          if ($revision_rowdatakey == 'body_value') {
+//            preg_match('/Learn more at:(.*)/', $revision_rowdatavalue, $revmatches);
+//            if (!empty($revmatches)) {
+//              $newMail = '<a target="_blank" href="http://www.2020census.gov/"> www.2020census.gov.</a>';
+////              $newMail = '<a href="mailto:' . $revmatches[2] . '">' . $revmatches[2] . '</a>';
+//              $revision_rowdatavalue = str_replace($revmatches[1], $newMail, $revision_rowdatavalue);
+//            }
+//          }
+//        }
+//      }
+
+
+      // Step 8: Restore existing data in fields & revision tables.
+      if (!is_null($rows)) {
+        \Drupal::database()->truncate($table)->execute();
+        foreach ($rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($table)->fields($row)->execute();
+        }
+      }
+      if (!is_null($revision_rows)) {
+        \Drupal::database()->truncate($revision_table)->execute();
+        foreach ($revision_rows as $row) {
+          $row = (array)$row;
+          $row[$f['format_col']] = 'basic_html';
+          $database->insert($revision_table)->fields($row)->execute();
+        }
+      }
+
+    }
+  }
+  public function newForRegexp(){
+
   }
 
 }

@@ -1,0 +1,13 @@
+{
+    "name": "custom_sucuri",
+    "type": "drupal-module",
+    "description": "Sucuri security integration",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/custom_sucuri",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/custom_sucuri",
+        "source": "http://cgit.drupalcode.org/custom_sucuri"
+    }
+}

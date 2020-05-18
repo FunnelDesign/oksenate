@@ -47,14 +47,14 @@
 'field__label',
 label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
-<ol>
+
 {% if label_hidden %}
   {% if multiple %}
-
+  <ol>
     {% for item in items %}
       <li>{{ item.content }}</li>
     {% endfor %}
-
+  </ol>
   {% else %}
     {% for item in items %}
       {{ prefix|raw }} {{ item.content }} {{ suffix|raw }}
@@ -70,4 +70,3 @@ label_display == 'visually_hidden' ? 'visually-hidden',
   {% endfor %}
 
 {% endif %}
-</ol>

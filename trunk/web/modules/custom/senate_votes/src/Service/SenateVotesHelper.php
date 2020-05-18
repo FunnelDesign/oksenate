@@ -669,4 +669,82 @@ class SenateVotesHelper {
 
     return !empty($paragraph) ? $paragraph : '';
   }
+
+  /**
+   * Get node by first row data.
+   * @param $data
+   *
+   * @return string
+   */
+  public function getNodeByFirstRowData($data) {
+    if (empty($data)) {
+      return '';
+    }
+
+    $date = !empty($data["date"]) ? $data["date"] : '';
+    $measure = !empty($data["measure"]) && !empty($data["measure"]["value"]) ?
+      $data["measure"]["value"] : '';
+    $author = !empty($data["author"]) && !empty($data["author"]["value"]) ?
+      $data["author"]["value"] : '';
+
+    $events_sync_helper = \Drupal::hasService('events_custom.helper') ?
+      \Drupal::service('events_custom.helper') : '';
+
+    try {
+      $query = $this->database->select('node_field_data', 'n')
+        ->fields('n', ['nid', 'status', 'created'])
+        ->condition('n.type', 'senate_votes');
+
+      $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
+
+      if (!empty($date) && !empty($events_sync_helper)) {
+        $date = $events_sync_helper->normalizeExternalDateData($date, DateTimeItemInterface::DATE_STORAGE_FORMAT);
+        $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes.field_senate_votes_target_id = votes_date.entity_id AND votes_date.deleted = 0');
+        $query->fields('votes_date', ['field_senate_votes_date_value']);
+        $query->condition('votes_date.field_senate_votes_date_value', $date);
+      }
+
+      if (!empty($measure)) {
+        $query->leftJoin('paragraph__field_senate_votes_measure', 'votes_measure', 'votes.field_senate_votes_target_id = votes_measure.entity_id AND votes_measure.deleted = 0');
+        $query->fields('votes_measure', ['field_senate_votes_measure_value']);
+        $query->condition('votes_measure.field_senate_votes_measure_value', $measure);
+      }
+
+      if (!empty($author)) {
+        $query->leftJoin('paragraph__field_senate_votes_author', 'votes_author', 'votes.field_senate_votes_target_id = votes_author.entity_id AND votes_author.deleted = 0');
+        $query->fields('votes_author', ['field_senate_votes_author_value']);
+        $query->condition('votes_author.field_senate_votes_author_value', $author);
+      }
+
+      $query->orderBy('n.created', 'ASC');
+
+//      $a = $query->__toString();
+
+      $result = $query->execute()->fetchAll();
+      $result = !empty($result) ? $result : [];
+      $result_nid = '';
+
+      if (!empty($result[0]) && ($result[0]->status === '1')) {
+        $result_nid = $result[0]->nid;
+      }
+      else {
+        foreach ($result as $node) {
+          if (empty($result_nid) && ($node->status === '1')) {
+            $result_nid = $node->nid;
+          }
+        }
+
+        if (empty($result_nid) && !empty($result[0])) {
+          $result_nid = $result[0]->nid;
+        }
+      }
+
+      return $result_nid;
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
+          '%message' => $e->getMessage(),
+        ]));
+    }
+  }
 }

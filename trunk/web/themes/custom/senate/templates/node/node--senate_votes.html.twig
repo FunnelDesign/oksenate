@@ -94,39 +94,7 @@
         {{ content.body }}
       </div>
 
-      <div class="bTb bTb_a bTb_a_vo">
-
-        <div class="bTb__tHead">
-          <div class="bTb__tr">
-            <div class="bTb__th">
-              {{ "date"|t }}
-            </div>
-
-            <div class="bTb__th">
-              {{ "measure"|t }}
-            </div>
-
-            <div class="bTb__th">
-              {{ "author"|t }}
-            </div>
-
-            <div class="bTb__th">
-              {{ "action"|t }}
-            </div>
-
-            <div class="bTb__th">
-              {{ "yeas"|t }}
-            </div>
-
-            <div class="bTb__th">
-              {{ "nays"|t }}
-            </div>
-          </div>
-        </div>
-
-        {{ content.field_senate_votes }}
-      </div>
-
+      {{ votes }}
     </div>
 
   </section>
