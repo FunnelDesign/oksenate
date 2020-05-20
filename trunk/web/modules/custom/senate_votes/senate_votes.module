@@ -79,7 +79,7 @@ function _senate_get_files_data($directory, $prev_execution) {
               $parent_node = Node::load($parent_nid);
               $operation = 'update';
             }
-            else {
+            elseif (!empty($rows)) {
               $node_data['title'] = !empty($file_sheet["title"]) ? $file_sheet["title"] : '';
               $node_data['description'] = !empty($file_sheet["description"]) ? $file_sheet["description"] : '';
               $year = !empty($first_row_data['date']) ? $first_row_data['date'] : '';
@@ -88,6 +88,15 @@ function _senate_get_files_data($directory, $prev_execution) {
               if (!empty($year) && !empty($node_data['title'])) {
                 $parent_node = $senate_votes_helper->createNode($node_data);
                 $operation = 'create';
+
+                $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $first_row_data);
+                if (!empty($paragraph)) {
+                  $parent_node->field_senate_votes[] = [
+                    'target_id' => $paragraph->id(),
+                    'target_revision_id' => $paragraph->getRevisionId(),
+                  ];
+                  $parent_node->save();
+                }
 
                 \Drupal::logger('senate_votes')->notice(t('Node %nid has been created.', [
                   '%nid' => $parent_node->id()

@@ -84,7 +84,7 @@ class SenateVotes extends QueueWorkerBase {
           ]));
           break;
         case 'create':
-          \Drupal::logger('senate_votes')->notice(t('Node %nid has been created. Paragraphs = <pre><code> %message </code></pre>', [
+          \Drupal::logger('senate_votes')->notice(t('New paragraphs in node %nid have been created. Paragraphs = <pre><code> %message </code></pre>', [
             '%message' => print_r($paragraphs, TRUE),
             '%nid' => $nid
           ]));
