@@ -74,6 +74,7 @@ function _senate_get_files_data($directory, $prev_execution) {
             $first_row_data = current($rows);
             $parent_nid = $senate_votes_helper->getNodeByFirstRowData($first_row_data);
             $operation = '';
+            $parent_node = NULL;
 
             if (!empty($parent_nid)) {
               $parent_node = Node::load($parent_nid);

@@ -187,8 +187,10 @@ class SenateVotesHelper {
 
               $data_keys = array_flip($row_strlow);
 
+              $main_title = $sheet->getCell('A1')->getValue();
+              $main_title = !empty($main_title) ? trim($main_title) : 'Votes';
               $title = $sheet->getCell('A2')->getValue();
-              $title = trim($title);
+              $title = !empty($title) ? trim($title) : $main_title;
               $desc = $sheet->getCell('A3')->getValue();
               $desc = trim($desc);
               $file_data[$i] = [
