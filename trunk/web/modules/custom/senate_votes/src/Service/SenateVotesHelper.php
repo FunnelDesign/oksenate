@@ -528,7 +528,7 @@ class SenateVotesHelper {
         $pid = !empty($row->field_senate_votes_target_id) ?
           $row->field_senate_votes_target_id : '';
 
-        if (!empty($date) && !empty($measure)) {
+        if (!empty($date)) {
           $new_data[$date][] = [
             'measure' => $measure,
             'author' => $author,
