@@ -40,13 +40,197 @@ function senate_votes_cron() {
     $type = empty($prev_execution) ? 'all' : 'new';
 
     $queue = \Drupal::queue('senate_votes');
-    $item = (object) [
-      'type' => $type,
-      'update_all' => $update_all,
-      'directory' => $directory,
-      'prev_execution' => $prev_execution,
-    ];
 
-    $queue->createItem($item);
+    $items = _senate_get_files_data($directory, $prev_execution);
+
+    foreach ($items as $item) {
+      $item = (object)$item;
+      $queue->createItem($item);
+    }
   }
 }
+
+
+function _senate_get_files_data($directory, $prev_execution) {
+  $prev_execution = !empty($prev_execution) ? $prev_execution : 0;
+  $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
+    \Drupal::service('senate_votes.helper') : '';
+  $items = [];
+  $limit = 50;
+
+  if (!empty($directory) && !empty($senate_votes_helper)) {
+    $files_list = $senate_votes_helper->getListFiles($directory, $prev_execution);
+    $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
+    $files_content = [];
+
+    foreach ($files_list as $file) {
+      $files_content[$file] = $senate_votes_helper->getFileContentXls($file, $directory);
+
+      if (!empty($files_content[$file])) {
+        foreach ($files_content[$file] as $file_sheet) {
+          if (!empty($file_sheet)) {
+            $rows = !empty($file_sheet["rows"]) ? $file_sheet["rows"] : [];
+            reset($rows);
+            $first_row_data = current($rows);
+            $parent_nid = $senate_votes_helper->getNodeByFirstRowData($first_row_data);
+            $operation = '';
+            $parent_node = NULL;
+
+            if (!empty($parent_nid)) {
+              $parent_node = Node::load($parent_nid);
+              $operation = 'update';
+            }
+            elseif (!empty($rows)) {
+              $node_data['title'] = !empty($file_sheet["title"]) ? $file_sheet["title"] : '';
+              $node_data['description'] = !empty($file_sheet["description"]) ? $file_sheet["description"] : '';
+              $year = !empty($first_row_data['date']) ? $first_row_data['date'] : '';
+              $node_data['year'] = $senate_votes_helper->getYear($year);
+
+              if (!empty($year) && !empty($node_data['title'])) {
+                $parent_node = $senate_votes_helper->createNode($node_data);
+                $operation = 'create';
+
+                $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $first_row_data);
+                if (!empty($paragraph)) {
+                  $parent_node->field_senate_votes[] = [
+                    'target_id' => $paragraph->id(),
+                    'target_revision_id' => $paragraph->getRevisionId(),
+                  ];
+                  $parent_node->save();
+                }
+
+                \Drupal::logger('senate_votes')->notice(t('Node %nid has been created.', [
+                  '%nid' => $parent_node->id()
+                ]));
+              }
+            }
+
+            if (!empty($parent_node) && is_object($parent_node)) {
+              while (!empty($rows)) {
+                $rows_part = array_splice($rows, 0 , $limit);
+
+                if (!empty($rows_part)) {
+                  $items[] = [
+                    'parent_node' => $parent_node,
+                    'operation' => $operation,
+                    'rows' => $rows_part,
+                    'directory' => $directory,
+                  ];
+                }
+              }
+            }
+            else {
+              \Drupal::logger('senate_votes')
+                ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
+                    '%file' => $file,
+                  ]));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return $items;
+}
+
+
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+/**
+function senate_votes_preprocess_page(array &$vars) {
+  $a = 9;
+
+  $data = (object)[
+    'type' => 'all',
+    'update_all' => FALSE,
+    'directory' => '/Users/daniyar/www/senate/senatevotes/votes',
+  ];
+
+  $type = !empty($data->type) ? $data->type : '';
+  $update_all = !empty($data->update_all) ? $data->update_all : FALSE;
+  $directory = !empty($data->directory) ? $data->directory : '';
+  $prev_execution = !empty($data->prev_execution) ? $data->prev_execution : 0;
+  $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
+    \Drupal::service('senate_votes.helper') : '';
+
+  if (!empty($senate_votes_helper) && !empty($type) && !empty($directory)) {
+//    $files_list = $senate_votes_helper->getListFiles($directory, $prev_execution);
+    $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
+    $files_content = [];
+    $nodes = [];
+
+    foreach ($files_list as $file) {
+      $files_content[$file] = $senate_votes_helper->getFileContentXls($file, $directory);
+
+      if (!empty($files_content[$file])) {
+        foreach ($files_content[$file] as $file_sheet) {
+          if (!empty($file_sheet)) {
+            $rows = !empty($file_sheet["rows"]) ? $file_sheet["rows"] : [];
+            reset($rows);
+            $first_row_data = current($rows);
+            $parent_nid = $senate_votes_helper->getNodeByFirstRowData($first_row_data);
+
+            if (!empty($parent_nid)) {
+              $parent_node = Node::load($parent_nid);
+            }
+            else {
+              $node_data['title'] = !empty($file_sheet["title"]) ? $file_sheet["title"] : '';
+              $node_data['description'] = !empty($file_sheet["description"]) ? $file_sheet["description"] : '';
+              $year = !empty($first_row_data['date']) ? $first_row_data['date'] : '';
+              $node_data['year'] = $senate_votes_helper->getYear($year);
+              $parent_node = $senate_votes_helper->createNode($node_data);
+            }
+
+            if (!empty($parent_node) && is_object($parent_node)) {
+              $existing_paragraph = $senate_votes_helper->getVotesData($parent_node->id());
+
+              foreach ($rows as $file_row) {
+                if (!empty($file_row['action']) && !empty($file_row['action']['link']) &&
+                  (strpos($file_row['action']['link'], '.pdf') !== FALSE)) {
+                  $file_row['fid'] = $senate_votes_helper->createFile($file_row['action']['link'], $directory);
+                }
+
+                if (!empty($file_row['date'])) {
+                  $pid = $senate_votes_helper->checkParagraphExists($existing_paragraph, $file_row);
+
+                  if (!$pid) {
+                    $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $file_row);
+
+                    if (!empty($paragraph)) {
+                      $parent_node->field_senate_votes[] = [
+                        'target_id' => $paragraph->id(),
+                        'target_revision_id' => $paragraph->getRevisionId(),
+                      ];
+                      $parent_node->save();
+                    }
+                  }
+                  else {
+                    $paragraph = $senate_votes_helper->updateParagraph($pid, $file_row);
+                  }
+                }
+              }
+            }
+            else {
+              \Drupal::logger('senate_votes')
+                ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
+                    '%file' => $file,
+                  ]));
+            }
+
+
+
+
+
+
+
+          }
+        }
+        //          $senate_votes_helper->setFileStatus($file, $directory);
+      }
+
+    }
+  }
+}
+*/
