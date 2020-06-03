@@ -187,7 +187,7 @@ function senate_preprocess_node(array &$vars) {
           $params = implode(',', $tids);
           $params = [$params];
           $vars['dropdown'] = _senate_get_view('committee_dropdown', 'block_1', $params);
-
+          $vars['senators'] = _senate_get_view('senators', 'block_1', [$tid]);
           $url = Url::fromUserInput('/senators');
           $options = ['class' => ['btn']];
           $url->setOption('attributes', $options);
