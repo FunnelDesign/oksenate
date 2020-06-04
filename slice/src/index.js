@@ -77,9 +77,7 @@ function init() {
 
 		if (settings.url === '/views/ajax?_wrapper_format=drupal_ajax') {
 
-			console.log(event);
-			console.log(settings);
-			console.log(xhr);
+			console.log(settings.data);
 		}
 	});
 }
