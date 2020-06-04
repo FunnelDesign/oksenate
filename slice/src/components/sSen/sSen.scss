@@ -44,6 +44,22 @@
         display: block;
       }
     }
+
+    .sSen__sName-committee-info {
+      //display: none;
+      margin-top: 5px;
+
+      em {
+        display: block;
+      }
+    }
+
+    &_committee {
+
+      .sSen__sName-committee-info {
+        display: block;
+      }
+    }
   }
 
   &__noRes {

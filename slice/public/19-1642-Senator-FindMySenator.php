@@ -199,7 +199,7 @@
           </div>
         </div>
       </div>
-      <div class="sSen__res sSen__res_loading">
+      <div class="sSen__res sSen__res_loading sSen__res_committee">
 
         <div class="bContainer">
 
