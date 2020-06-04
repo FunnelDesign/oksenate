@@ -72,6 +72,16 @@ function init() {
 	changePlaceholderTime();
 
 	new BlockVideo();
+
+	$(document).ajaxComplete(function (event, xhr, settings) {
+
+		if (settings.url === '/views/ajax?_wrapper_format=drupal_ajax') {
+
+			console.log(event);
+			console.log(settings);
+			console.log(xhr);
+		}
+	});
 }
 
 function addPadding() {
