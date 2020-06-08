@@ -47,7 +47,7 @@
 'field__label',
 label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
-<div class="bTb bTb_a">
+<div class="bTb bTb_a _mw_auto">
   <div class="bTb__tHead">
     <div class="bTb__tr">
       <div class="bTb__th">
@@ -55,11 +55,23 @@ label_display == 'visually_hidden' ? 'visually-hidden',
       </div>
 
       <div class="bTb__th">
+        {{ "authors"|t }}
+      </div>
+
+      <div class="bTb__th">
         {{ "title"|t }}
       </div>
 
       <div class="bTb__th">
-        {{ "report date"|t }}
+        {{ "Joint Committee Report Date"|t }}
+      </div>
+
+      <div class="bTb__th">
+        {{ "House of Origin Action Date"|t }}
+      </div>
+
+      <div class="bTb__th">
+        {{ "Opposite House Action Date"|t }}
       </div>
 
       <div class="bTb__th">

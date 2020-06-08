@@ -155,7 +155,7 @@ function events_custom_preprocess_node(array &$vars) {
   $node = $vars['node'];
   $view_mode = !empty($vars["view_mode"]) ? $vars["view_mode"] : '';
 
-  if (!empty($node)) {
+  if (!empty($node) && is_object($node)) {
 
     switch ($node->bundle()) {
       case 'committee_events':

@@ -33,6 +33,11 @@
 
         <a href="mailto:email@oksenate.gov">email@oksenate.gov</a>
 
+        <div class="sFooter__note">
+          Please only send technical inquiries <br>
+          to the above email address.
+        </div>
+
       </div>
 
       <div class="sFooter__col">

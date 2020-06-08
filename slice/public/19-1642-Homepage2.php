@@ -65,6 +65,7 @@
                     </div>
                     
                     <div class="sSlider__desc">
+                     <h2><span>Serving Oklahoma for the creation of laws and budgets.</span></h2>
                       <p>Due to extreme weather, Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
                     </div>
                     <div class="sSlider__btnWrap">
@@ -351,15 +352,18 @@
                   <span class="bTiles__date">
                     <?php print $element[0]; ?>
                   </span>
+                  <span class="bTiles__live">
+                    <span>•</span> live now
+                  </span>
                   <span class="bTiles__title">
                     <?php print $element[1]; ?>
                   </span>
                   <span class="bTiles__sub">
-                    <?php print $element[2]; ?>
+                                   Third Meeting • Room 511-A
                   </span>
                   <span class="bTiles__btnWrap">
-                    <a href="#" class="bTiles__btn btn btn_b btn_b_live">
-                      <span><span>•</span> live now</span> room 511-a
+                    <a href="#" class="bTiles__btn btn btn_d">
+                      view meeting details
                     </a>
                   </span>
 

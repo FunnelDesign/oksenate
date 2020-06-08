@@ -1,0 +1,7 @@
+custom_sucuri.suciri_settings_form:
+  path: '/admin/settings/sucuri'
+  defaults:
+    _form: '\Drupal\custom_sucuri\Form\SettingsForm'
+    _title: 'SettingsForm'
+  requirements:
+    _access: 'TRUE'

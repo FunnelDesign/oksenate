@@ -50,6 +50,7 @@ var controllerEvents = {
     }
 
     viewEvents.init();
+    viewHomeEvents.init();
     this.eventLoop();
   },
 
@@ -117,6 +118,7 @@ var controllerEvents = {
       event.statusChanged = true;
 
       viewEvents.render();
+      viewHomeEvents.render();
     }
   },
 
@@ -143,20 +145,22 @@ var viewEvents = {
     var events = controllerEvents.getEvents();
     var _this = this;
 
-    this.eventsElem.forEach(function(eventElem) {
-      var eventElemNid = eventElem.dataset.nid;
-      var event = events[eventElemNid] || {};
+    if (this.eventsElem) {
+      this.eventsElem.forEach(function(eventElem) {
+        var eventElemNid = eventElem.dataset.nid;
+        var event = events[eventElemNid] || {};
 
-      if (event.statusChanged) {
-        var isOnline = controllerEvents.checkEventStatusOnline(event);
-        if (isOnline) {
-          _this.setStarted(eventElem);
+        if (event.statusChanged) {
+          var isOnline = controllerEvents.checkEventStatusOnline(event);
+          if (isOnline) {
+            _this.setStarted(eventElem);
+          }
+          else {
+            _this.setFinished(eventElem);
+          }
         }
-        else {
-          _this.setFinished(eventElem);
-        }
-      }
-    });
+      });
+    }
   },
 
   setStarted: function (eventElem) {
@@ -174,6 +178,37 @@ var viewEvents = {
       if (eventElem.hasChildNodes()) {
         eventElem.removeChild(eventElem.childNodes[0]);
       }
+    }
+  }
+};
+
+var viewHomeEvents = {
+
+  init: function() {
+    this.eventsElem = document.querySelectorAll('a.events_custom_timetable_new');
+
+    this.render();
+  },
+
+  render: function() {
+    var events = controllerEvents.getEvents();
+    var _this = this;
+
+    if (this.eventsElem) {
+      this.eventsElem.forEach(function(eventElem) {
+        var eventElemNid = eventElem.dataset.nid;
+        var event = events[eventElemNid] || {};
+
+        if (event.statusChanged) {
+          var isOnline = controllerEvents.checkEventStatusOnline(event);
+          if (isOnline) {
+            eventElem.style.visibility = 'visible';
+          }
+          else {
+            eventElem.style.visibility = 'hidden';
+          }
+        }
+      });
     }
   }
 };

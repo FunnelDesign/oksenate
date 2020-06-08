@@ -203,7 +203,7 @@
     min-height: 114px;
     border: 2px solid #bfbebe;
     border-radius: 5px;
-    padding: 20px 18px;
+    padding: 10px 18px;
     font-family: $FreightTextProMedium-Regular;
     font-size: 12px;
     color: #414141;
@@ -212,6 +212,8 @@
     @include sm {
       display: flex;
       align-items: center;
+
+      flex-wrap: wrap;
     }
 
     & > * {
@@ -246,6 +248,7 @@
       display: flex;
       align-items: center;
       text-align: left;
+      max-width: 60%;
     }
 
     &:before {
@@ -266,7 +269,7 @@
     }
   }
 
-  &__mail, &__tel {
+  &__mail, &__tel, &__assistant {
 
     @include sm {
       display: flex;
@@ -324,10 +327,47 @@
     }
 
     a[href^="mailto"] {
-     text-decoration: underline;
+      text-decoration: underline;
 
       &:hover {
         text-decoration: none;
+      }
+    }
+  }
+
+  &__assistant {
+    @include cr-last-child;
+    text-align: center;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    @include sm {
+      text-align: left;
+    }
+
+    .ss-icon {
+      min-width: 18px;
+      margin: 0 13px 0 0;
+
+      @include xs-only {
+        display: none;
+      }
+    }
+
+    p, &-in {
+      line-height: 1.4;
+
+      span {
+        color: #767676;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      p {
+        margin: 0;
       }
     }
   }

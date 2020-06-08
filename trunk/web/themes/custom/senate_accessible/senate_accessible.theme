@@ -10,6 +10,16 @@
  */
 function senate_accessible_preprocess_html(array &$vars) {
 
+  $no_index = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'name' => 'robots',
+      'content' => 'noindex',
+    ],
+  ];
+
+  $vars['page']['#attached']['html_head'][] = [$no_index, 'robots'];
+
   $vars['attributes']['class'][] = 'accessibility';
 }
 

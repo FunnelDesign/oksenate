@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Contains custom_sucuri.module.
+ */
+
+
+/**
+ * Implements hook_cache_flush().
+ */
+function custom_sucuri_cache_flush() {
+  $ENV_TYPE = getenv('ENVIRONMENT_TYPE') ? getenv('ENVIRONMENT_TYPE') : 'local';
+  if($ENV_TYPE === 'prod') {
+
+    $cc_cache_url = \Drupal::config('custom_sucuri.settings')->get('clear_cache_api_url');
+
+    if(!empty($cc_cache_url)) {
+      try {
+        $response = \Drupal::httpClient()->get($cc_cache_url);
+        if($response->getStatusCode() !== 200) {
+          \Drupal::logger('custom_sucuri')->error('Error clearing sucuri cache');
+        } else {
+          \Drupal::logger('custom_sucuri')->notice('Sucuri cache cleared successful');
+        }
+      } catch (Exception $e){
+        \Drupal::logger('custom_sucuri')->error('Error clearing sucuri cache');
+      }
+    }
+  }
+}

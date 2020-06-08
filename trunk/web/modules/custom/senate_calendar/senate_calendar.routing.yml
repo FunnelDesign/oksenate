@@ -1,0 +1,7 @@
+senate_calendar.settings_form:
+  path: '/admin/config/senate_calendar/settings'
+  defaults:
+    _form: '\Drupal\senate_calendar\Form\SenateCalendarForm'
+    _title: 'Senate Calendar Cron Settings'
+  requirements:
+    _permission: 'access administration pages'

@@ -190,6 +190,7 @@
     font-family: $FreightTextProMedium-Regular;
     color: #404040;
     @include cr-last-child;
+    @include cr-last-item;
 
     a[href^="tel"] {
       text-decoration: none;
@@ -206,8 +207,34 @@
       margin: 0 0 1px;
     }
 
+    &-items {
+      @include cr-last-child;
+
+      & > * {
+        margin-bottom: 20px;
+      }
+
+      &_gap {
+
+        &_a {
+          @include margin-bottom(30px, 55px);
+        }
+      }
+    }
+
     &It {
       margin-bottom: 8px;
+    }
+
+    &-title {
+      font-family: $RobotoCondensed-Light;
+      font-size: 18px;
+      color: #253857;
+      margin: 0 0 5px;
+    }
+
+    &-text {
+
     }
 
     &_gap {
@@ -224,6 +251,11 @@
     &_a {
       line-height: 1.6;
       max-width: 300px;
+    }
+
+    &_b {
+      max-width: 495px;
+      text-align: center;
     }
   }
 

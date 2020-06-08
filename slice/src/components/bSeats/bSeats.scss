@@ -48,11 +48,16 @@
     margin-bottom: 47px;
 
     & > * {
-      margin-right: 29px;
-      margin-left: 29px;
+      margin-right: 15px;
+      margin-left: 15px;
+
+      @include sm {
+        margin-right: 29px;
+        margin-left: 29px;
+      }
     }
 
-    &D, &R {
+    &D, &R, &V {
       font-family: $RobotoCondensed-Light;
       text-align: center;
       @include font-size(22px, 28px, 32px);
@@ -69,6 +74,10 @@
 
     &R {
       color: #e13129;
+    }
+
+    &V {
+      color: #000;
     }
   }
 

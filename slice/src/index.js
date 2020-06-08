@@ -66,11 +66,27 @@ function init() {
 	initCounter($('.bSeats__cap'), false, 2);
 	initCounter($('.bSeats__countD'), false, 2);
 	initCounter($('.bSeats__countR'), false, 2);
+	initCounter($('.bSeats__countV'), false, 2);
 	changeAutocomplete();
 	scrollBlock();
 	changePlaceholderTime();
 
 	new BlockVideo();
+
+	$(document).ajaxComplete(function (event, xhr, settings) {
+
+		if (settings.url === '/views/ajax?_wrapper_format=drupal_ajax') {
+			let dataArr = settings.data.split('&');
+
+			if (~$.inArray(`committee=All`, dataArr)) return
+
+			let sSenRes = $(`.sSen__res`)
+
+			if(!sSenRes.length) return;
+
+			sSenRes.addClass('sSen__res_committee');
+		}
+	});
 }
 
 function addPadding() {

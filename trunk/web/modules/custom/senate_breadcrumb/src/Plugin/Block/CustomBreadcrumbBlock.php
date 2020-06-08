@@ -175,7 +175,7 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
       }
     }
 
-    if (!empty($node)) {
+    if (!empty($node) && is_object($node)) {
       switch ($node->bundle()) {
         case 'senate_votes':
         case 'edu_indiv_art_work':

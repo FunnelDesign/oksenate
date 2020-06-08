@@ -16,12 +16,17 @@
 
   &__desc {
     @include cr-last-child;
-    max-width: 350px;
+    //max-width: 350px;
     margin: 0 auto 20px;
     font-family: $FreightTextProMedium-Regular;
     font-size: 14px;
     color: #fff;
     line-height: 1.6;
     text-align: center;
+
+    h2, h3, h4, h5, h6 {
+      color: currentColor;
+      margin-bottom: 10px;
+    }
   }
 }

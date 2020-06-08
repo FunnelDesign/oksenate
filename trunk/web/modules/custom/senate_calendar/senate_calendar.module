@@ -1,0 +1,151 @@
+<?php
+
+/**
+ * @file
+ * Contains senate_calendar.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_help().
+ */
+function senate_calendar_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the senate_calendar module.
+    case 'help.page.senate_calendar':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Import senate Join Calendar from file.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function senate_calendar_cron() {
+  $cron_config = \Drupal::configFactory()->getEditable('senate_calendar.settings');
+  $interval = $cron_config->get('interval');
+  $interval = !empty($interval) ? $interval : 3600;
+  $request_time = \Drupal::time()->getRequestTime();
+
+  $next_execution = \Drupal::state()->get('senate_calendar.next_execution', 0);
+
+  if ($request_time >= $next_execution) {
+    \Drupal::logger('senate_calendar')->notice('senate_calendar ran');
+    if (\Drupal::state()->get('senate_calendar_show_status_message')) {
+      \Drupal::messenger()
+        ->addMessage(t('senate_calendar executed at %time', ['%time' => date('c')]));
+      \Drupal::state()->set('senate_calendar_show_status_message', FALSE);
+    }
+
+    $prev_execution = \Drupal::state()->get('senate_calendar.prev_execution', 0);
+    $update_all = \Drupal::state()->get('senate_calendar.update_all', FALSE);
+    $directory = \Drupal::state()->get('senate_calendar.directory', '');
+    \Drupal::state()
+      ->set('senate_calendar.next_execution', $request_time + $interval);
+    \Drupal::state()->set('senate_calendar.prev_execution', $request_time);
+    \Drupal::state()->set('senate_calendar.update_all', FALSE);
+    $type = empty($prev_execution) ? 'all' : 'new';
+
+    $queue = \Drupal::queue('senate_calendar');
+    $item = (object) [
+      'type' => $type,
+      'update_all' => $update_all,
+      'directory' => $directory,
+      'prev_execution' => $prev_execution,
+    ];
+
+    $queue->createItem($item);
+  }
+}
+
+/**
+ * Implements hook_preprocess_page() for page.html.twig.
+ */
+/**
+function senate_calendar_preprocess_page(array &$vars) {
+  $a = 9;
+
+  $data = (object) [
+    'type' => 'all',
+    'update_all' => FALSE,
+    'directory' => '/Users/daniyar/www/senate/senatevotes/calendar',
+  ];
+
+  $type = !empty($data->type) ? $data->type : '';
+  $directory = !empty($data->directory) ? $data->directory : '';
+  $prev_execution = 0;
+  $senate_calendar_helper = \Drupal::hasService('senate_calendar.helper') ?
+    \Drupal::service('senate_calendar.helper') : '';
+
+  if (!empty($senate_calendar_helper) && !empty($type) && !empty($directory)) {
+//    $files_list = $senate_calendar_helper->getListFiles($directory, $prev_execution);
+    $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
+    $files_content = [];
+    $nodes = [];
+
+    foreach ($files_list as $file) {
+      $files_content[$file] = $senate_calendar_helper->getFileContentXls($file, $directory);
+
+      if (!empty($files_content[$file])) {
+        foreach ($files_content[$file] as $file_sheet) {
+          if (!empty($file_sheet)) {
+            $rows = !empty($file_sheet["rows"]) ? $file_sheet["rows"] : [];
+            $type = !empty($file_sheet["type"]) ? $file_sheet["type"] : '';
+            $parent_nid = $senate_calendar_helper->getLastNid($type);
+            $parent_node = !empty($parent_nid) ? Node::load($parent_nid) : NULL;
+
+            if (!empty($parent_node)) {
+              $existing_paragraph = $senate_calendar_helper->getParagraphData($parent_node->id(), $type);
+
+              foreach ($rows as $file_row) {
+                $pid = $senate_calendar_helper->checkParagraphExists($existing_paragraph, $file_row, $type);
+
+                if (!$pid) {
+                  if ($type == 'cl_app_bud') {
+                    $paragraph = $senate_calendar_helper->createParagraph($parent_node, 'field_cl_app_bud_calendar', $file_row, $type, 'cl_app_budget');
+
+                    if (!empty($paragraph)) {
+                      $parent_node->field_cl_app_bud_calendar[] = [
+                        'target_id' => $paragraph->id(),
+                        'target_revision_id' => $paragraph->getRevisionId(),
+                      ];
+                      $parent_node->save();
+                    }
+                  }
+                  else if ($type == 'cl_jnt_cnf') {
+                    $paragraph = $senate_calendar_helper->createParagraph($parent_node, 'field_cl_jnt_cnf_calendar', $file_row, $type, 'cl_jnt_cnf');
+
+                    if (!empty($paragraph)) {
+                      $parent_node->field_cl_jnt_cnf_calendar[] = [
+                        'target_id' => $paragraph->id(),
+                        'target_revision_id' => $paragraph->getRevisionId(),
+                      ];
+                      $parent_node->save();
+                    }
+                  }
+
+                }
+                else {
+                  $paragraph = $senate_calendar_helper->updateParagraph($pid, $file_row, $type);
+                }
+              }
+            }
+            else {
+              \Drupal::logger('senate_calendar')
+                ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
+                    '%file' => $file,
+                  ]));
+            }
+          }
+        }
+      }
+    }
+  }
+}
+*/

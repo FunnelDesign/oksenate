@@ -124,7 +124,7 @@
 
                     <div class="bSenBio__col">
                         <div class="bSenBio__media-btn-wrap">
-                            <a href="{{ senator_photo_download }}" class="bSenBio__media-btn" download="{{ title_alias }}">
+                            <a href="{{ senator_photo_download }}" class="bSenBio__media-btn" download="{{ senator_photo_download_target }}">
                     <span class="bSenBio__media-btn-ico">
                         <img src="{{ theme_path }}/dist/images/ico/download-ico.png" srcset="{{ theme_path }}/dist/images/ico/download-ico-2x.png 2x">
                     </span>
@@ -147,6 +147,8 @@
                                         <a href="/contact-senator?sid={{ nid }}" target="_blank">Email Senator</a>
                                 </div>
                             </div>
+                            {{ content.field_senator_assistent_text	 }}
+
                         </div>
                     </div>
                 </div>

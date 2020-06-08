@@ -160,21 +160,23 @@
         </div>
     </section>
 
-    <section class="section section_ind_b">
-        {{ content.field_home_slider_bg_image_mob }}
-        {{ content.field_home_slider_bg_image }}
-        <div class="bContainer">
-            <div class="bEvent">
-                {{ content.field_home_slider_title }}
-                <div class="bEvent__slider">
+    {% if week_events|render is not empty %}
+        <section class="section section_ind_b">
+            {{ content.field_home_slider_bg_image_mob }}
+            {{ content.field_home_slider_bg_image }}
+            <div class="bContainer">
+                <div class="bEvent bTiles bTiles_ev">
+                    {{ content.field_home_slider_title }}
+                    <div class="bEvent__slider">
 
-                  {{ week_events }}
+                        {{ week_events }}
 
-{#                  {{ content.field_home_slider_images }}#}
+                        {#                  {{ content.field_home_slider_images }}#}
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 {#  <section class="section section_ind_b">#}
 {#    {{ content.field_home_slider_bg_image_mob }}#}
 {#    {{ content.field_home_slider_bg_image }}#}

@@ -28,7 +28,7 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
         return;
       }
 
-      $response = new RedirectResponse('/user/login', 301);
+      $response = new RedirectResponse('/editor', 301);
       $event->setResponse($response);
       $event->stopPropagation();
     }
@@ -44,7 +44,7 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
     $baseUrl = $event->getRequest()->getBaseUrl();
     $attr = $event->getRequest()->attributes;
     $node = !empty($attr) && is_object($attr) ? $attr->get('node') : '';
-    $node_type = !empty($node) ? $node->bundle() : '';
+    $node_type = !empty($node) && is_object($node) ? $node->bundle() : '';
     $edit_page = ($attr->get('_entity_form') === 'node.edit');
     $redirect_url = $this->getRedirectUrl($node_type);
 

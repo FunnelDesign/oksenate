@@ -1,0 +1,4 @@
+senate_calendar.settings_form:
+  title: 'Senate Joint Calendar settings'
+  route_name: senate_calendar.settings_form
+  parent: system.admin_config_system

@@ -42,6 +42,9 @@
     <section class="section section_ind_c section_bg-color_c">
 
       <div class="bContainer">
+        <a href="#" class="btn btn_a section__btnBack section__btnBack_b">
+          back to committees
+        </a>
        <h2>Committee on Education</h2>
        <div class="pageIn__info pageIn__info_gap_a">
          <div class="pageIn__infoIt">Subject <strong>First Meeting</strong></div>

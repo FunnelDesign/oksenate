@@ -1,0 +1,4 @@
+services:
+  senate_calendar.helper:
+    class: Drupal\senate_calendar\Service\SenateCalendarHelper
+    arguments: ['@database', '@messenger', '@entity_type.manager']
