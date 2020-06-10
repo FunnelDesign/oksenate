@@ -9,6 +9,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\Database\Query\Condition;
 
 /**
  * Implements hook_form_alter().
@@ -294,6 +295,17 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $table_node = $query->getTableInfo('field_senate_votes_paragraphs_item_field_data');
     $table_node['join']->field = 'nid';
     $table_node["join"]->configuration["field"] = 'nid';
+  }
+  if ($view->id() == 'senators' && $view->getDisplay()->display['id'] == 'block_1') {
+    $args = $view->args;
+    if (!empty($args[0]) && is_numeric($args[0])) {
+      $query->addWhere(2, (new Condition('OR'))
+        ->condition('field_committee_chair_node_field_data.tid', '', 'IS NULL')
+        ->condition('field_committee_chair_node_field_data.tid', $args[0], '!='));
+      $query->addWhere(2, (new Condition('OR'))
+        ->condition('field_committee_vice_chairman_node_field_data.tid', '', 'IS NULL')
+        ->condition('field_committee_vice_chairman_node_field_data.tid', $args[0], '!='));
+    }
   }
 }
 
