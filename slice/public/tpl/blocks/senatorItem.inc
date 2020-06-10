@@ -8,5 +8,9 @@
     <span class="sSen__sName">
       <?php print $element[3]; ?>
     </span>
+    <span class="sSen__sName sSen__sName-committee-info">
+      <em>Chair: <?php print $element[3]; ?></em>
+      <em>Vice Chair: <?php print $element[3]; ?></em>
+    </span>
   </a>
 </div>

@@ -72,6 +72,21 @@ function init() {
 	changePlaceholderTime();
 
 	new BlockVideo();
+
+	$(document).ajaxComplete(function (event, xhr, settings) {
+
+		if (settings.url === '/views/ajax?_wrapper_format=drupal_ajax') {
+			let dataArr = settings.data.split('&');
+
+			if (~$.inArray(`committee=All`, dataArr)) return
+
+			let sSenRes = $(`.sSen__res`)
+
+			if(!sSenRes.length) return;
+
+			sSenRes.addClass('sSen__res_committee');
+		}
+	});
 }
 
 function addPadding() {

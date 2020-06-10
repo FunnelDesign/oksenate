@@ -84,6 +84,13 @@
     }
   }
 
+  &__note {
+    margin-top: 10px;
+    text-align: center;
+    font-family: $FreightTextProLight-Regular;
+    line-height: 1.5;
+  }
+
   &__nav {
     @include padding-right($md: 55px);
     @include padding-top(0, 22px);
