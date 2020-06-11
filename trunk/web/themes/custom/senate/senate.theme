@@ -1524,6 +1524,18 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         }
       }
       break;
+    case 'senators':
+      if ($view->current_display == 'block_1'){
+        $unique_items = [];
+        $rows = !empty($vars["rows"]) ? $vars["rows"] : [];
+        foreach ($rows as $key => $row) {
+          if (in_array($row['content']['#row']->nid, $unique_items)) {
+            unset($vars["rows"][$key]);
+          }
+          $unique_items[] = $row['content']['#row']->nid;
+        }
+      }
+      break;
   }
 }
 function senate_preprocess_views_view_fields(&$vars) {
