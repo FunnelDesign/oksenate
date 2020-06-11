@@ -299,12 +299,21 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
   if ($view->id() == 'senators' && $view->getDisplay()->display['id'] == 'block_1') {
     $args = $view->args;
     if (!empty($args[0]) && is_numeric($args[0])) {
+      $sub_query_chair = \Drupal::database()->select('taxonomy_term__field_committee_chair', 'chair')
+        ->fields('chair', ['field_committee_chair_target_id'])
+        ->condition('entity_id', $args[0]);
+
+      $sub_query_vice_chair = \Drupal::database()->select('taxonomy_term__field_committee_vice_chairman', 'vice_chair')
+        ->fields('vice_chair', ['field_committee_vice_chairman_target_id'])
+        ->condition('entity_id', $args[0]);
+
       $query->addWhere(2, (new Condition('OR'))
-        ->condition('field_committee_chair_node_field_data.tid', '', 'IS NULL')
-        ->condition('field_committee_chair_node_field_data.tid', $args[0], '!='));
+        ->condition('taxonomy_term__field_committee_chair.field_committee_chair_target_id', '', 'IS NULL')
+        ->condition('taxonomy_term__field_committee_chair.field_committee_chair_target_id', $sub_query_chair, 'NOT IN'));
+
       $query->addWhere(2, (new Condition('OR'))
-        ->condition('field_committee_vice_chairman_node_field_data.tid', '', 'IS NULL')
-        ->condition('field_committee_vice_chairman_node_field_data.tid', $args[0], '!='));
+        ->condition('taxonomy_term__field_committee_vice_chairman.field_committee_vice_chairman_target_id', '', 'IS NULL')
+        ->condition('taxonomy_term__field_committee_vice_chairman.field_committee_vice_chairman_target_id', $sub_query_vice_chair, 'NOT IN'));
     }
   }
 }
