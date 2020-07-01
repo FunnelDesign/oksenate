@@ -102,8 +102,8 @@ AddEncoding gzip svgz
   # To redirect all users to access the site WITHOUT the 'www.' prefix,
   # (http://www.example.com/foo will be redirected to http://example.com/foo)
   # uncomment the following:
-  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  # RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
+   RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+   RewriteRule ^ http%{ENV:protossl}://%1%{REQUEST_URI} [L,R=301]
 
   # Modify the RewriteBase if you are using Drupal in a subdirectory or in a
   # VirtualDocumentRoot and the rewrite rules are not working properly.
@@ -123,6 +123,9 @@ AddEncoding gzip svgz
 
   # Rewrite install.php during installation to see if mod_rewrite is working
   RewriteRule ^core/install.php core/install.php?rewrite=ok [QSA,L]
+  RewriteRule ^protem.html$ /protem [R=301,NC,L]
+  RewriteRule ^user$ / [R=301,NC,L]
+  RewriteRule ^OKSenateDistrictMap$ themes/custom/senate/dist/OKSenate-DistrictMaps.pdf [NC,L]
 
   # Pass all requests not referring directly to files in the filesystem to
   # index.php.
@@ -170,6 +173,9 @@ AddEncoding gzip svgz
       # Force proxies to cache gzipped & non-gzipped css/js files separately.
       Header append Vary Accept-Encoding
     </FilesMatch>
+   <FilesMatch "(podcast\.rss)$">
+      Header set Content-Type application/xml;
+    </FilesMatch>
   </IfModule>
 </IfModule>
 
@@ -177,6 +183,10 @@ AddEncoding gzip svgz
 <IfModule mod_headers.c>
   # Disable content sniffing, since it's an attack vector.
   Header always set X-Content-Type-Options nosniff
+  Header set X-XSS-Protection "1; mode=block"
+  Header unset X-Generator
+  Header unset X-Drupal-Cache
+  Header unset X-Powered-By
   # Disable Proxy header, since it's an attack vector.
   RequestHeader unset Proxy
 </IfModule>
