@@ -46,9 +46,10 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
     $node = !empty($attr) && is_object($attr) ? $attr->get('node') : '';
     $node_type = !empty($node) && is_object($node) ? $node->bundle() : '';
     $edit_page = ($attr->get('_entity_form') === 'node.edit');
+    $delete_page = ($attr->get('_entity_form') === 'node.delete');
     $redirect_url = $this->getRedirectUrl($node_type);
 
-    if (!$edit_page) {
+    if (!$edit_page && ! $delete_page) {
       switch ($node_type) {
         case 'committee_events':
 //          if ($node->hasField('field_comt_evt_committee')) {
