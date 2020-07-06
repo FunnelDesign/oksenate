@@ -16,6 +16,7 @@ use Drupal\Core\Url;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\views\Views;
 use Drupal\custom_module\Plugin\views\argument\CustomNidToAuthor;
+use Drupal\taxonomy\Entity\Term;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
@@ -1541,6 +1542,36 @@ function senate_preprocess_views_view_unformatted(&$vars) {
 function senate_preprocess_views_view_fields(&$vars) {
 
   $fields = $vars['fields'];
+  if ($vars['view']->id() == 'senators'){
+
+    $view_obj = $vars['view'];
+    $exposed_inp = $view_obj->getExposedInput();
+    $exposd_inp_committee = !empty($exposed_inp["committee"]) ? $exposed_inp["committee"] : '';
+    $committee_filter_value = Term::load($exposd_inp_committee);
+
+    if (!empty($exposd_inp_committee)) {
+      $expsed_committee_chair = '';
+      $expsed_committee_vicechair = '';
+      if (isset($committee_filter_value->get('field_committee_chair')->entity)) {
+        $expsed_committee_chair = reset($committee_filter_value->get('field_committee_chair')
+          ->getValue());
+      }
+      if (isset($committee_filter_value->get('field_committee_vice_chairman')->entity)) {
+        $expsed_committee_vicechair = reset($committee_filter_value->get('field_committee_vice_chairman')
+          ->getValue());
+      }
+
+      if ($expsed_committee_chair['target_id'] == $fields['nid']->content) {
+        $vars['post'] = t('Chair');
+
+      }
+      if ($expsed_committee_vicechair['target_id'] ==  $fields['nid']->content) {
+        $vars['post'] = t('Vice chair');
+      }
+    }
+
+  }
+
 
   if (!empty($fields['field_issue_page_type'])) {
 
