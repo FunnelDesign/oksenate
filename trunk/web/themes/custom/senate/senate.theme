@@ -1566,7 +1566,7 @@ function senate_preprocess_views_view_fields(&$vars) {
 
       }
       if ($expsed_committee_vicechair['target_id'] ==  $fields['nid']->content) {
-        $vars['post'] = t('Vice chair');
+        $vars['post'] = t('Vice Chair');
       }
     }
 
