@@ -164,7 +164,7 @@ class EventsCustomHelper {
     }
 
     if ($op == 'create') {
-      $node->set('status', 0);
+      $node->set('status', 1);
     }
   }
 
