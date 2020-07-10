@@ -2476,10 +2476,13 @@ function senate_preprocess_senate_socials(&$vars) {
  * Captcha pre_render.
  */
 function senate_change_captcha_description($element) {
-  $description = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) ?
+  $description = !empty($element["captcha_widgets"]) &&
+    !empty($element["captcha_widgets"]["captcha_response"]) &&
+    !empty($element["captcha_widgets"]["captcha_response"]["#description"]) ?
     $element["captcha_widgets"]["captcha_response"]["#description"] : '';
   $add_description = t('Math question not to test basic math skills.');
-  $title = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) ?
+  $title = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) &&
+    !empty($element["captcha_widgets"]["captcha_response"]["#title"]) ?
     $element["captcha_widgets"]["captcha_response"]["#title"] : '';
   $add_title = t('CAPTCHA:');
 
