@@ -226,9 +226,6 @@
             "drupal/webform_mailchimp": {
                 "https://www.drupal.org/project/webform_mailchimp/issues/3036323": "https://www.drupal.org/files/issues/2019-10-05/3036323-interest-groups-predefined-options-15.patch"
             },
-            "drupal/captcha": {
-                "https://www.drupal.org/project/captcha/issues/3089263": "https://www.drupal.org/files/issues/2019-12-11/3089263-24.captcha.Captcha-Session-ID-broken-with-cacheable-captcha-backends.patch"
-            },
             "drupal/paragraphs_edit": {
                 "https://www.drupal.org/project/paragraphs_edit/issues/2944653": "https://www.drupal.org/files/issues/2019-03-22/error_on_missing_parent-2944653-13034993.patch"
             }
