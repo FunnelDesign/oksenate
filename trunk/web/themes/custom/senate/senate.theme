@@ -1552,20 +1552,27 @@ function senate_preprocess_views_view_fields(&$vars) {
     if (!empty($exposd_inp_committee)) {
       $expsed_committee_chair = '';
       $expsed_committee_vicechair = '';
-      if (isset($committee_filter_value->get('field_committee_chair')->entity)) {
-        $expsed_committee_chair = reset($committee_filter_value->get('field_committee_chair')
-          ->getValue());
-      }
-      if (isset($committee_filter_value->get('field_committee_vice_chairman')->entity)) {
-        $expsed_committee_vicechair = reset($committee_filter_value->get('field_committee_vice_chairman')
-          ->getValue());
+
+      if (!empty($committee_filter_value) && is_object($committee_filter_value)) {
+        if (isset($committee_filter_value->get('field_committee_chair')->entity)) {
+          $committee_chair_value = $committee_filter_value->get('field_committee_chair')
+            ->getValue();
+          $expsed_committee_chair = reset($committee_chair_value);
+        }
+        if (isset($committee_filter_value->get('field_committee_vice_chairman')->entity)) {
+          $committee_vice_chairman_value = $committee_filter_value->get('field_committee_vice_chairman')
+            ->getValue();
+          $expsed_committee_vicechair = reset($committee_vice_chairman_value);
+        }
       }
 
-      if ($expsed_committee_chair['target_id'] == $fields['nid']->content) {
+      if (!empty($expsed_committee_chair) && !empty($fields['nid']) &&
+        ($expsed_committee_chair['target_id'] == $fields['nid']->content)) {
         $vars['post'] = t('Chair');
 
       }
-      if ($expsed_committee_vicechair['target_id'] ==  $fields['nid']->content) {
+      if (!empty($expsed_committee_vicechair) && !empty($fields['nid']) &&
+        $expsed_committee_vicechair['target_id'] ==  $fields['nid']->content) {
         $vars['post'] = t('Vice Chair');
       }
     }
