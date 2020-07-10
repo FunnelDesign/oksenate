@@ -88,7 +88,7 @@
         "drupal/backup_migrate": "^4.0",
         "drupal/better_exposed_filters": "^4.0@alpha",
         "drupal/block_content_permissions": "^1.8",
-        "drupal/captcha": "^1.0@beta",
+        "drupal/captcha": "^1.1",
         "drupal/ckeditor_font": "^1.0",
         "drupal/coffee": "^1.0@beta",
         "drupal/console": "^1.0.2",

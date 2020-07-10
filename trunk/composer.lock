@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bac17655155be99208d5a583acabc713",
+    "content-hash": "a02326e6b59cacf904ddbed625caa9d2",
     "packages": [
         {
             "name": "adubovskoy/phpquery",
@@ -14985,7 +14985,6 @@
     "stability-flags": {
         "drupal/amswap": 10,
         "drupal/better_exposed_filters": 15,
-        "drupal/captcha": 10,
         "drupal/coffee": 10,
         "drupal/field_permissions": 5,
         "drupal/filefield_sources": 15,
