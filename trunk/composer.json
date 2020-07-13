@@ -222,6 +222,9 @@
                 "https://www.drupal.org/project/sharethis/issues/2885710": "https://www.drupal.org/files/issues/Error-operator-not-supported-for-strings-2885710-12128018.patch",
                 "https://www.drupal.org/project/sharethis/issues/2816573": "https://www.drupal.org/files/issues/2816573-6.patch"
             },
+            "drupal/captcha": {
+                "https://www.drupal.org/project/captcha/issues/3089263": "https://www.drupal.org/files/issues/2019-12-11/3089263-24.captcha.Captcha-Session-ID-broken-with-cacheable-captcha-backends.patch"
+            },
             "drupal/webform_mailchimp": {
                 "https://www.drupal.org/project/webform_mailchimp/issues/3036323": "https://www.drupal.org/files/issues/2019-10-05/3036323-interest-groups-predefined-options-15.patch"
             },

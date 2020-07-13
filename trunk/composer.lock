@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a02326e6b59cacf904ddbed625caa9d2",
+    "content-hash": "ef09c9032386488310b39f87ee5bc107",
     "packages": [
         {
             "name": "adubovskoy/phpquery",
@@ -2751,6 +2751,9 @@
                 },
                 "branch-alias": {
                     "dev-8.x-1.x": "1.x-dev"
+                },
+                "patches_applied": {
+                    "https://www.drupal.org/project/captcha/issues/3089263": "https://www.drupal.org/files/issues/2019-12-11/3089263-24.captcha.Captcha-Session-ID-broken-with-cacheable-captcha-backends.patch"
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
