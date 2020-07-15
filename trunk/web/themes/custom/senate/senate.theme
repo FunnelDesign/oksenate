@@ -1148,7 +1148,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           ];
           $form["day"] = [
             '#type' => 'select',
-            '#options' => array_merge(['all' => 'Day'], $options[$year][$month]['days']),
+            '#options' => (['all' => 'Day'] + $options[$year][$month]['days']),
             '#default_value' => ''
           ];
 
