@@ -125,13 +125,13 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $table_node['join']->field = 'nid';
     $table_node["join"]->configuration["field"] = 'nid';
 
-    foreach ($query->where as $key => &$condition_group) {
-      foreach ($condition_group['conditions'] as &$condition) {
-        if (strpos($condition['field'], 'DATE_FORMAT(paragraph__field_journals_files_date.field_journals_files_date_value') !== FALSE) {
-          $condition['field'] = str_replace('%Y-%m-%d', '%Y-%m', $condition['field']);
-        }
-      }
-    }
+//    foreach ($query->where as $key => &$condition_group) {
+//      foreach ($condition_group['conditions'] as &$condition) {
+//        if (strpos($condition['field'], 'DATE_FORMAT(paragraph__field_journals_files_date.field_journals_files_date_value') !== FALSE) {
+//          $condition['field'] = str_replace('%Y-%m-%d', '%Y-%m', $condition['field']);
+//        }
+//      }
+//    }
   }
   if ($view->id() == 'calendar_lt_st_journals' && $view->getDisplay()->display['id'] == 'block_1') {
     $table_files = $query->getTableInfo('node__field_journals_files');

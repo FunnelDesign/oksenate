@@ -2,23 +2,52 @@
   Drupal.behaviors.senateCustom = {
     attach: function (context, settings) {
       $('#views-exposed-form-journals-page-1', context).once('journals-options').each(function () {
-        var month = this.elements['edit-month'];
+        var yearElm = this.elements.item(0);
+        var monthElm = this.elements.item(1);
+        var daysElm = this.elements.item(2);
         var options = drupalSettings.senate.view_journals || {};
         var _this = this;
         var $yearSelect = $('#views-exposed-form-journals-page-1 #edit-year + .select2');
         var event = ($yearSelect.css('display') === 'none') ? 'change' : 'select2:select';
+        var year = yearElm ? yearElm.value : '';
 
-        $('#views-exposed-form-journals-page-1 #edit-year').on(event, function (e) {
-          var year = (event === 'select2:select') ? e.params.data.id : this.value;
+        $(yearElm).on(event, function (e) {
+          year = (event === 'select2:select') ? e.params.data.id : this.value;
 
           var keys = Object.keys(options[year]);
-          month.innerHTML = keys.map(function (key) {
-            return '<option value="' + key + '">' + options[year][key] + '</option>';
+          keys.sort(function(a, b){
+            return parseInt(a) - parseInt(b);
+          });
+          monthElm.innerHTML = keys.map(function (key) {
+            return '<option value="' + key + '">' + options[year][key]['month'] + '</option>';
+          }).join();
+
+          var defaultMonth = keys[0];
+          var keysDay = Object.keys(options[year][defaultMonth]['days']);
+          keysDay.sort(function(a, b){
+            return parseInt(a) - parseInt(b);
+          });
+          daysElm.innerHTML = keysDay.map(function (key) {
+            return '<option value="' + key + '">' + options[year][defaultMonth]['days'][key] + '</option>';
+          }).join();
+
+          _this.submit();
+        });
+
+        $(monthElm).on(event, function (e) {
+          var monthValue = (event === 'select2:select') ? e.params.data.id : this.value;
+
+          var keys = Object.keys(options[year][monthValue]['days']);
+          keys.sort(function(a, b){
+            return parseInt(a) - parseInt(b);
+          });
+          daysElm.innerHTML = keys.map(function (key) {
+            return '<option value="' + key + '">' + options[year][monthValue]['days'][key] + '</option>';
           }).join();
           _this.submit();
         });
 
-        $('#views-exposed-form-journals-page-1 #edit-month').on(event, function (e) {
+        $(daysElm).on(event, function (e) {
           _this.submit();
         });
       });
