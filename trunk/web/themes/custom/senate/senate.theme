@@ -1134,7 +1134,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           $month = !empty($input["month"]) ? $input["month"] : $month_default;
           $month_options = _senate_get_journals_month_options($options[$year]);
           $day_default = key($options[$year_default][$month_default]['days']);
-          $year_month_default = $year_default . '-' . $month_default . '-' . $day_default;
+          $year_month_default = $year_default . '-' . $month_default;
 
           $form["year"] = [
             '#type' => 'select',
@@ -1148,8 +1148,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           ];
           $form["day"] = [
             '#type' => 'select',
-            '#options' => $options[$year][$month]['days'],
-            '#default_value' => $day_default
+            '#options' => array_merge(['all' => 'Day'], $options[$year][$month]['days']),
+            '#default_value' => ''
           ];
 
           if (!empty($form["field_journals_files_date_value"])) {

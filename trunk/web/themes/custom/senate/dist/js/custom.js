@@ -30,6 +30,7 @@
           daysElm.innerHTML = keysDay.map(function (key) {
             return '<option value="' + key + '">' + options[year][defaultMonth]['days'][key] + '</option>';
           }).join();
+          daysElm.innerHTML = '<option value="all">Day</option>' + daysElm.innerHTML;
 
           _this.submit();
         });
@@ -44,6 +45,7 @@
           daysElm.innerHTML = keys.map(function (key) {
             return '<option value="' + key + '">' + options[year][monthValue]['days'][key] + '</option>';
           }).join();
+          daysElm.innerHTML = '<option value="all">Day</option>' + daysElm.innerHTML;
           _this.submit();
         });
 
