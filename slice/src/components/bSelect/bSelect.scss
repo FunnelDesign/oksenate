@@ -96,9 +96,14 @@
 
   &_date {
 
-    .form-item-date {
+    .form-item-date, .form-item-field-journals-files-date-value {
       width: 303px;
       padding-left: 55px;
+      position: relative;
+
+      label {
+        display: none;
+      }
 
 
       &:before {
@@ -227,7 +232,7 @@
   color: #253857;
 }
 
-.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
   background: $color-red;
   color: $color-white;
   border: 1px solid #c5c5c5;

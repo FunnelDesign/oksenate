@@ -102,7 +102,7 @@ function initDate() {
 		if(console && console.log) {console.log('datepicker undefined: ' + e.message)}
 	}
 
-	var $parent = $wrap.parent('.form-item-date');
+	var $parent = $wrap.parent('.form-item-field-journals-files-date-value');
 
 	if ($parent.hasClass('processed')) return;
 	$parent.addClass('processed');
