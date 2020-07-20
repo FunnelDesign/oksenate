@@ -1121,38 +1121,38 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         }
       }
       elseif ($view_name == 'journals') {
-//        $options = _senate_get_journals_options();
-//        $input = $form_state->getUserInput();
+        $options = _senate_get_journals_options();
+        $input = $form_state->getUserInput();
 
-//        if (!empty($options)) {
-//          $years = array_keys($options);
-//          $year_reverse = array_reverse($years);
-//          $year_default = array_pop($year_reverse);
-//          $month_default = key($options[$year_default]);
-//          $year_month_default = $year_default . '-' . $month_default;
-//          $year_options = array_combine($years, $years);
-//          $year = !empty($input["year"]) ? $input["year"] : $year_default;
-//          $form["year"] = [
-//            '#type' => 'select',
-//            '#options' => $year_options,
-//            '#default_value' => $year_default,
-//          ];
-//          $form["month"] = [
-//            '#type' => 'select',
-//            '#options' => $options[$year],
-//            '#default_value' => $month_default
-//          ];
-//
-//          if (!empty($form["field_journals_files_date_value"])) {
-//            $form["field_journals_files_date_value"]['#access'] = FALSE;
-//
-//            if (empty($input["year"])) {
-//              $form["field_journals_files_date_value"]['#default_value'] = $year_month_default;
-//            }
-//          }
-//
-//          $form['#attached']['drupalSettings']['senate']['view_journals'] = $options;
-//        }
+        if (!empty($options)) {
+          $years = array_keys($options);
+          $year_reverse = array_reverse($years);
+          $year_default = array_pop($year_reverse);
+          $month_default = key($options[$year_default]);
+          $year_month_default = $year_default . '-' . $month_default;
+          $year_options = array_combine($years, $years);
+          $year = !empty($input["year"]) ? $input["year"] : $year_default;
+          $form["year"] = [
+            '#type' => 'select',
+            '#options' => $year_options,
+            '#default_value' => $year_default,
+          ];
+          $form["month"] = [
+            '#type' => 'select',
+            '#options' => $options[$year],
+            '#default_value' => $month_default
+          ];
+
+          if (!empty($form["field_journals_files_date_value"])) {
+            $form["field_journals_files_date_value"]['#access'] = FALSE;
+
+            if (empty($input["year"])) {
+              $form["field_journals_files_date_value"]['#default_value'] = $year_month_default;
+            }
+          }
+
+          $form['#attached']['drupalSettings']['senate']['view_journals'] = $options;
+        }
         $form["#attributes"]["class"][] = 'bSelect bSelect_filter bSelect_a bSelect_size_d  bSelect_gap_b';
       }
       elseif ($view_name == 'search_statutes_constitutions') {
