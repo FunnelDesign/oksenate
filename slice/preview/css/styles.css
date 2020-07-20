@@ -19,7 +19,7 @@ html, body {
 }
 
 .pages-wrapper {
-  max-width: 940px;
+  /*max-width: 940px;*/
   clear: both;
   overflow: hidden;
   margin: 0 auto;
@@ -52,6 +52,8 @@ html, body {
   list-style: none;
   font-size: 12px;
   font-weight: bold;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .pages-wrapper li {
@@ -79,6 +81,7 @@ html, body {
   margin: 20px 20px 0;
   display: block;
   max-width: 250px;
+  max-height: 700px;
 }
 
 .pages-wrapper ul img:hover {
@@ -87,4 +90,6 @@ html, body {
   box-shadow: 0 0 20px 1px #fff;
   -moz-border-radius: 5px;
   -moz-box-shadow: 0 0 20px 1px #fff;
+  transform: scale(1.8);
+  transform-origin: top center;
 }
