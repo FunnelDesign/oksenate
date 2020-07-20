@@ -100,6 +100,7 @@
       width: 303px;
       padding-left: 55px;
 
+
       &:before {
         @include pseudo-block($left: 0, $top: 50%);
         transform: translate(0, -50%);
@@ -113,6 +114,7 @@
         background: #121e32;
         color: $color-white;
         @include input-placeholder($color-white);
+        cursor: pointer;
       }
 
       &:after {
@@ -128,8 +130,10 @@
 
       &.open {
 
+
         input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
           background: #253857;
+          cursor: auto;
         }
 
         &:after {
