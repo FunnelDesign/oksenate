@@ -2154,7 +2154,7 @@ function _senate_get_journals_options() {
 //    $options[$row->year][$row->month_digits] = $row->month;
     $options['options'][$row->year][$row->month_digits]['month'] = $row->month;
     $options['options'][$row->year][$row->month_digits]['days'][$row->day] = (int)$row->day;
-    $options['dates'][] = (int)$row->month_digits . "/" . (int)$row->day . "/" . (int)$row->year;
+    $options['dates'][] = $row->month_digits . "/" . $row->day . "/" . $row->year;
   }
 
   return !empty($options) ? $options : [];
