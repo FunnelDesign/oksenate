@@ -1,6 +1,15 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.senateCustom = {
     attach: function (context, settings) {
+      var array = ["2020-02-13","2020-02-14","2020-02-15"]
+
+      $('input.bef-datepicker', context).datepicker({
+        beforeShowDay: function(date){
+          var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+          return [ array.indexOf(string) === -1 ]
+        }
+      });
+
     //   $('#views-exposed-form-journals-page-1', context).once('journals-options').each(function () {
     //     var yearElm = this.elements.item(0);
     //     var monthElm = this.elements.item(1);
