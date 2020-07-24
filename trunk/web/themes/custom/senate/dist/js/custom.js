@@ -1,7 +1,7 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.senateCustom = {
     attach: function (context, settings) {
-      var array = drupalSettings.senate.active_dates || {};
+      var array = drupalSettings.senate.active_dates || [];
 
       $('input.bef-datepicker', context).datepicker({
         beforeShowDay: function(date){
