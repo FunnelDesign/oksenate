@@ -1120,6 +1120,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         }
       }
       elseif ($view_name == 'journals') {
+        $data = _senate_get_journals_options();
+        $form['#attached']['drupalSettings']['senate']['active_dates'] = $data['dates'];
 
         $form['field_journals_files_date_value']['#attributes']['readonly'] = true;
         $form["#attributes"]["class"][] = 'form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date';

@@ -442,7 +442,6 @@ function custom_module_views_pre_view(\Drupal\views\ViewExecutable $view, $displ
         $exposed_filters = ['field_journals_files_date_value' => $date];
         $view->setExposedInput($exposed_filters);
       }
-      $form['#attached']['drupalSettings']['senate']['active_dates'] = $data['dates'];
     }
 
   }

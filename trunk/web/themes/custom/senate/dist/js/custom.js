@@ -1,12 +1,12 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.senateCustom = {
     attach: function (context, settings) {
-      var array = ["2020-02-13","2020-02-14","2020-02-15"];
+        var array = drupalSettings.senate.active_dates || {};
       console.log(drupalSettings.senate, ' -- drupalSettings.senate');
 
       $('input.bef-datepicker', context).datepicker({
         beforeShowDay: function(date){
-          var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+          var string = jQuery.datepicker.formatDate('mm/dd/yy', date);
           var checkEmptyDay = array.indexOf(string) === -1 ? 'empty-day' : 'event-day';
           return [ true, checkEmptyDay ]
         }
