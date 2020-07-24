@@ -229,11 +229,18 @@
 }
 
 .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+  background: #fff;
   color: #253857;
+
+  .empty-day & {
+    background: #253857;
+    color: #fff;
+  }
 }
 
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
   background: $color-red;
   color: $color-white;
   border: 1px solid #c5c5c5;
+
 }
