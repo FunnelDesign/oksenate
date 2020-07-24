@@ -6,7 +6,7 @@
       $('input.bef-datepicker', context).datepicker({
         beforeShowDay: function(date){
           var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-          var checkEmptyDay = array.indexOf(string) === -1 ? 'event-day' : 'empty-day';
+          var checkEmptyDay = array.indexOf(string) === -1 ? 'empty-day' : 'event-day';
           return [ true, checkEmptyDay ]
         }
       });
