@@ -423,7 +423,8 @@ function custom_module_views_pre_view(\Drupal\views\ViewExecutable $view, $displ
   $view_name = !empty($view) ? $view->id() : '';
 
   if ($view_name == 'journals') {
-    $options = _senate_get_journals_options();
+    $data = _senate_get_journals_options();
+    $options = $data['options'];
     if (!empty($options)) {
       $years = array_keys($options);
       $year_reverse = array_reverse($years);
@@ -441,6 +442,7 @@ function custom_module_views_pre_view(\Drupal\views\ViewExecutable $view, $displ
         $exposed_filters = ['field_journals_files_date_value' => $date];
         $view->setExposedInput($exposed_filters);
       }
+      $form['#attached']['drupalSettings']['senate']['active_dates'] = $data['dates'];
     }
 
   }
