@@ -1,7 +1,8 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.senateCustom = {
     attach: function (context, settings) {
-      var array = ["2020-02-13","2020-02-14","2020-02-15"]
+      var array = ["2020-02-13","2020-02-14","2020-02-15"];
+      console.log(drupalSettings.senate, ' -- drupalSettings.senate');
 
       $('input.bef-datepicker', context).datepicker({
         beforeShowDay: function(date){
