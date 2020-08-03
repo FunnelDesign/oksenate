@@ -70,6 +70,7 @@ function init() {
 	changeAutocomplete();
 	scrollBlock();
 	changePlaceholderTime();
+	initDate();
 
 	new BlockVideo();
 
@@ -86,6 +87,32 @@ function init() {
 
 			sSenRes.addClass('sSen__res_committee');
 		}
+	});
+}
+
+function initDate() {
+	var $wrap = $( ".hasDatepicker" );
+
+	if(!$wrap.length) return;
+
+	try {
+		$wrap.datepicker( "option", "changeMonth", false);
+		$wrap.datepicker( "option", "changeYear", false);
+	} catch (e) {
+		if(console && console.log) {console.log('datepicker undefined: ' + e.message)}
+	}
+
+	var $parent = $wrap.parent('.form-item-field-journals-files-date-value');
+
+	if ($parent.hasClass('processed')) return;
+	$parent.addClass('processed');
+
+	$wrap.on('focusin', function() {
+		$parent.addClass('open');
+	});
+
+	$wrap.on('focusout', function() {
+		$parent.removeClass('open');
 	});
 }
 

@@ -94,6 +94,63 @@
     }
   }
 
+  &_date {
+
+    .form-item-date, .form-item-field-journals-files-date-value {
+      width: 303px;
+      padding-left: 55px;
+      position: relative;
+
+      label {
+        display: none;
+      }
+
+
+      &:before {
+        @include pseudo-block($left: 0, $top: 50%);
+        transform: translate(0, -50%);
+        width: 45px;
+        height: 42px;
+        background: url("img/ico-tmp-7-2x.png") no-repeat;
+        background-size: contain;
+      }
+
+      input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
+        background: #121e32;
+        color: $color-white;
+        @include input-placeholder($color-white);
+        cursor: pointer;
+      }
+
+      &:after {
+        @include pseudo-block($top: 50%, $right: 23px);
+        width: 8px;
+        height: 8px;
+        border: 2px solid #fff;
+        border-top: none;
+        border-right: none;
+        transform: rotate(-45deg);
+        margin-top: -6px;
+      }
+
+      &.open {
+
+
+        input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
+          background: #253857;
+          cursor: auto;
+        }
+
+        &:after {
+          border: 2px solid #fff;
+          border-bottom: none;
+          border-left: none;
+          margin-top: -3px;
+        }
+      }
+    }
+  }
+
   &_size {
 
     &_a {
@@ -160,4 +217,35 @@
     }
 
   }
+}
+
+.ui-datepicker {
+
+  .ui-widget-header,
+  .ui-datepicker-year,
+  &.ui-widget-content {
+    color: #253857;
+  }
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+  background: #fff;
+  color: #253857;
+
+  .empty-day & {
+    background: #253857;
+    color: #fff;
+  }
+
+  &:hover {
+    background: $color-red;
+    color: #fff;
+  }
+}
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
+  background: $color-red;
+  color: $color-white;
+  border: 1px solid #c5c5c5;
+
 }
