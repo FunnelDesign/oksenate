@@ -1,13 +1,19 @@
 (function ($, Drupal, drupalSettings) {
   Drupal.behaviors.senateCustom = {
     attach: function (context, settings) {
-      var array = drupalSettings.senate.active_dates || [];
+      var senateSettings = settings.senate || {};
+      var datesArray = senateSettings.active_dates || [];
 
-      $('input.bef-datepicker', context).datepicker({
-        beforeShowDay: function(date){
-          var string = jQuery.datepicker.formatDate('mm/dd/yy', date);
-          var checkEmptyDay = array.indexOf(string) === -1 ? 'empty-day' : 'event-day';
-          return [ true, checkEmptyDay ]
+      $('input.bef-datepicker', context).once('bef-datepicker').each(function () {
+
+        if (typeof $.datepicker !== 'undefined') {
+          $(this, context).datepicker({
+            beforeShowDay: function(date){
+              var dateString = jQuery.datepicker.formatDate('mm/dd/yy', date);
+              var checkEmptyDay = datesArray.indexOf(dateString) === -1 ? 'empty-day' : 'event-day';
+              return [ true, checkEmptyDay ]
+            }
+          });
         }
       });
 
