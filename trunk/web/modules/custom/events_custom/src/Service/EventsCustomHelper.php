@@ -299,7 +299,7 @@ class EventsCustomHelper {
       $date_obj->add($date_interval);
       $url = 'https://sg001-harmony.sliq.net/00282/Harmony/en/api/Data/GetContentEntityByMonth/' . $date . '/-1';
       $events = $this->sendJsonRequest($url);
-      $events = !empty($events) && is_array($events) ? $events : [];
+      $events = !empty($events) && !empty($events["ContentEntityDatas"]) && is_array($events["ContentEntityDatas"]) ? $events["ContentEntityDatas"] : [];
       $all_events = array_merge($all_events, $events);
     }
 
