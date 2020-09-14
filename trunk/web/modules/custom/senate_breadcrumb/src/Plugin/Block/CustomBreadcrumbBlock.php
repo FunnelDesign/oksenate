@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\TitleResolverInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\Component\Utility\Html;
 
 /**
  * Provides a 'Breadcrumb' Block.
@@ -101,8 +102,11 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
     $page_title = $this->titleResolver->getTitle($request, $this->routeMatch->getRouteObject());
 
     $page_title = $this->replaceTitle($page_title);
+    $last_title = !empty($last) && is_object($last) ? $last->getText() : '';
+    $page_title_compare = Html::getId($page_title);
+    $last_title_compare = Html::getId($last_title);
 
-    if (!empty($page_title) && !empty($last) && ($page_title == $last->getText())) {
+    if (!empty($page_title) && !empty($last) && ($page_title_compare == $last_title_compare)) {
       array_pop($breadcrumbs);
     }
 
@@ -206,6 +210,6 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
       }
     }
 
-    return $title;
+    return trim($title);
   }
 }
