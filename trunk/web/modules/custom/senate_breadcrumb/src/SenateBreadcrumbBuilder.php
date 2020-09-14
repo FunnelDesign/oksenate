@@ -11,6 +11,7 @@ use Drupal\Core\Breadcrumb\BreadcrumbBuilderInterface;
 use Drupal\Core\Cache\CacheableDependencyInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Controller\TitleResolverInterface;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
@@ -165,6 +166,13 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
   const COMMITTEE_MAIN_PAGE_NID = 1384;
 
   /**
+   * The module handler service.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandler
+   */
+  protected $moduleHandler;
+
+  /**
    * Constructs the EasyBreadcrumbBuilder.
    *
    * @param \Drupal\Core\Routing\RequestContext $context
@@ -197,6 +205,8 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
    *   The logger service.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger service.
+   * @param \Drupal\Core\Extension\ModuleHandler $module_handler
+   *   The module handler.
    */
   public function __construct(RequestContext $context, AccessManagerInterface $access_manager,
                               RequestMatcherInterface $router, RequestStack $request_stack,
@@ -207,6 +217,7 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
                               EntityTypeManagerInterface $entity_type_manager,
                               EntityRepositoryInterface $entity_repository,
                               LoggerChannelFactoryInterface $logger, MessengerInterface $messenger,
+                              ModuleHandler $module_handler,
                               EasyBreadcrumbBuilder $easy_breadcrumb_breadcrumb) {
     $this->context = $context;
     $this->accessManager = $access_manager;
@@ -226,6 +237,7 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
     $this->messenger = $messenger;
     $this->easyBreadcrumb = $easy_breadcrumb_breadcrumb;
     $this->useEasyBreadcrumb = TRUE;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
