@@ -1621,6 +1621,8 @@ function senate_preprocess_views_view(&$vars) {
         '#theme' => 'senate_issue_type_select',
         '#archive' => $archive,
       ];
+
+      $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
 
     case 'week_review':
