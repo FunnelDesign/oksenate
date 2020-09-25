@@ -30,7 +30,7 @@ class EventsCustom extends QueueWorkerBase {
           $events = $events_sync_helper->getAllEvents();
           break;
         case 'month':
-          $events = $events_sync_helper->getAllEvents('now', 'now + 1 month + 1 day');
+          $events = $events_sync_helper->getAllEvents('now', 'now + 3 month + 1 day');
           break;
       }
 
