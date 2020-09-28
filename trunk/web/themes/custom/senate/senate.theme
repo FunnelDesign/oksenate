@@ -117,6 +117,7 @@ function senate_preprocess_node(array &$vars) {
           ->loadTree('committees', 0, NULL, FALSE);
         $tids = [];
         $first_level_tids = [];
+        $params = [];
         foreach ($tree as $term) {
           $tids[] = $term->tid;
           $parent = (!empty($term->parents) && isset($term->parents[0])) ? $term->parents[0] : '';
@@ -138,9 +139,9 @@ function senate_preprocess_node(array &$vars) {
           if ($display_id == 'block_1') {
             $params = [$result, $month_obj->format('Ym')];
           }
-          elseif ($display_id == 'block_2') {
-            $params = [$month_obj->format('Ym')];
-          }
+//          elseif ($display_id == 'block_2') {
+//            $params = [$month_obj->format('Ym')];
+//          }
           $vars['committee_events'] = _senate_get_view('committee_events', $display_id, $params);
         }
 

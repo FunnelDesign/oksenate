@@ -320,15 +320,15 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
         ->condition('taxonomy_term__field_committee_vice_chairman.field_committee_vice_chairman_target_id', $sub_query_vice_chair, 'NOT IN'));
     }
   }
-  if ($view->id() == 'committee_events') {
-    foreach ($query->where as $key => &$condition_group) {
-      foreach ($condition_group['conditions'] as &$condition) {
-        if (strpos($condition['field'], 'DATE_FORMAT((node__field_comt_evt_date.field_comt_evt_date_value') !== FALSE) {
-          $condition['field'] = str_replace('=', '>=', $condition['field']);
-        }
-      }
-    }
-  }
+//  if ($view->id() == 'committee_events') {
+//    foreach ($query->where as $key => &$condition_group) {
+//      foreach ($condition_group['conditions'] as &$condition) {
+//        if (strpos($condition['field'], 'DATE_FORMAT((node__field_comt_evt_date.field_comt_evt_date_value') !== FALSE) {
+//          $condition['field'] = str_replace('=', '>=', $condition['field']);
+//        }
+//      }
+//    }
+//  }
 }
 
 /**
