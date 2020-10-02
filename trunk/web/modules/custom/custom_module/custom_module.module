@@ -268,7 +268,7 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     }
   }
   if ($view->id() == 'senators' && $view->getDisplay()->display['id'] == 'page_1') {
-    $formula = 'SUBSTR(node_field_data.title, INSTR(node_field_data.title, \' \'))';
+    $formula = 'SUBSTRING_INDEX(node_field_data.title, \' \', -1)';
     $query->addField(NULL, $formula, 'second_name');
     $query->addOrderBy(NULL, NULL, 'ASC', 'second_name');
   }
