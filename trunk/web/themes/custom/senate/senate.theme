@@ -33,11 +33,13 @@ function senate_preprocess_html(array &$vars) {
   }
 
   if (($node = \Drupal::request()->attributes->get('node')) && is_object($node)) {
-      switch ($node->bundle()) {
-        case 'user':
-          break;
-      }
+    switch ($node->bundle()) {
+      case 'user':
+        break;
     }
+  }
+
+  $vars['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
 }
 
 /**
