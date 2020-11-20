@@ -82,6 +82,7 @@ html, body {
   display: block;
   max-width: 250px;
   max-height: 700px;
+  min-height: 250px;
 }
 
 .pages-wrapper ul img:hover {
