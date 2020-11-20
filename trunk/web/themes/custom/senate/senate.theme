@@ -602,6 +602,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_calendar_up_ddl_icon':
     case 'field_home_top_slider_icon':
     case 'field_contacts_ada_wheel_icon':
+    case 'field_icon_title_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -617,7 +618,6 @@ function senate_preprocess_field(array &$vars, $hook) {
         $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' alt="">';
         $vars['img_src'] = Markup::create($image_html); //prepared image for render
       }
-
       break;
     case 'field_contacts_paragraph_slider':
       $vars['elements'] = array();
@@ -840,7 +840,8 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_contacts_ada_wheel_files':
     case 'field_contacts_ada_info_file':
     case 'field_issue_files':
-    $items = !empty($vars['items']) ? $vars['items'] : [];
+    case 'field_title_desc_file':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
         $title = !empty($title) ? $title : t('View file');
@@ -1890,6 +1891,13 @@ function senate_preprocess_paragraph(array &$vars) {
         $url = Url::fromUri($author_link);
         $vars["author"] = Link::fromTextAndUrl($vars["author"], $url);
       }
+      break;
+    case 'icon_title':
+      $button = (!empty($vars["content"]["field_icon_title_button"]) &&
+        !empty($vars["content"]["field_icon_title_button"]['#items'])) ?
+        $vars["content"]["field_icon_title_button"]['#items']->getValue() : '';
+      $vars['url'] = !empty($button) && !empty($button[0]) ? Url::fromUri($button[0]["uri"])->toString() : '';
+      $vars['title'] = !empty($button) && !empty($button[0]) ? $button[0]["title"] : '';
       break;
   }
 }
