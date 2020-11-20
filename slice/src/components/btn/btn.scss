@@ -127,6 +127,13 @@
       padding: 11px 18px;
     }
 
+    &_g {
+
+      @include sm {
+        min-width: 137px;
+      }
+    }
+
     &_j {
       @include font-size(14px, 18px);
       @include padding(14px 26px);

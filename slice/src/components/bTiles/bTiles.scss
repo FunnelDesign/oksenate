@@ -368,6 +368,34 @@
         margin: 0 auto 13px;
       }
     }
+
+    &_g {
+
+      #{$this}__items {
+        margin: 0 -6px -12px;
+      }
+
+      #{$this}__item {
+        padding: 40px 20px 27px;
+        justify-content: space-between;
+      }
+
+      #{$this}__ico {
+        height: 55px;
+        max-width: 80px;
+        margin: 0 auto 30px;
+      }
+
+      #{$this}__title {
+        font-family: $RobotoCondensed-Light;
+        @include margin-bottom(20px, 25px, 32px);
+        @include font-size(20px, 26px, 32px);
+      }
+
+      //#{$this}__btnWrap {
+      //  margin-top: auto;
+      //}
+    }
   }
 
   &_nav {
