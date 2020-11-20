@@ -410,6 +410,9 @@ function senate_preprocess_node(array &$vars) {
       case 'gallery' :
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
+      case 'redistricting' :
+        $vars['inner_menu'] = _senate_get_block('redistrictingmenu');
+        break;
     }
   }
 }
@@ -1007,6 +1010,14 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items_amount = count($items);
       if ($items_amount < 2) {
         $vars["multiple"] = FALSE;
+      }
+      break;
+    case 'field_block_menu_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' =>
+          ['bPageNav__link']
+        ];
       }
       break;
   }
