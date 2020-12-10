@@ -2449,6 +2449,7 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'protem_podcast':
       case 'senator_blog_post':
       case 'simple_page':
+      case 'feedback':
         $color = 'navy';
         break;
     }
