@@ -1227,6 +1227,14 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       $form["#validate"][] = 'webform_sign_up_committee_meeting_validate';
     }
   }
+
+  if (strpos($form_id, 'webform_submission_feedback_node') !== FALSE) {
+    $node = \Drupal::routeMatch()->getParameter('node');
+
+    if (!empty($form["elements"]["markup"]) && !empty($node) && is_object($node)) {
+      $form["elements"]["markup"]["#markup"] = $node->body->value;
+    }
+  }
 }
 
 /**
