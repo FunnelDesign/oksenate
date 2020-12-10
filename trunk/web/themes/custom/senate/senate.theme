@@ -413,6 +413,18 @@ function senate_preprocess_node(array &$vars) {
       case 'redistricting' :
         $vars['inner_menu'] = _senate_get_block('redistrictingmenu');
         break;
+      case 'feedback' :
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back'),
+          '#url' => Url::fromUserInput('/redistricting'),
+          '#attributes' => [
+            'class' => ['link', 'link_cl_b', 'link_back',],
+          ],
+        ];
+        break;
     }
   }
 }
