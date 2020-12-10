@@ -1032,6 +1032,10 @@ function senate_preprocess_field(array &$vars, $hook) {
         ];
       }
       break;
+    case 'field_redistricting_contact':
+      $vars['prefix'] = '<h2>';
+      $vars['suffix'] = '</h2>';
+      break;
   }
 }
 
