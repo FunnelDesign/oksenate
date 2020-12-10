@@ -207,6 +207,14 @@
       margin: 0 0 1px;
     }
 
+    h4 {
+      font-family: $FreightTextProMedium-Regular;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #404040;
+      margin: 0 0 1px;
+    }
+
     &-items {
       @include cr-last-child;
 
@@ -256,6 +264,28 @@
     &_b {
       max-width: 495px;
       text-align: center;
+    }
+
+    &_c {
+      max-width: 380px;
+      color: $color-dark-blue-1;
+      font-family: $FreightTextProBook-Regular;
+
+      h3 {
+        font-family: $RobotoCondensed-Light;
+        color: $color-dark-blue-1;
+        margin: 0 0 5px;
+      }
+
+      h4 {
+        font-family: $RobotoCondensed-Regular;
+        color: $color-dark-blue-1;
+        margin: 0 0 30px;
+      }
+
+      a {
+        color: $color-dark-blue-1;
+      }
     }
   }
 

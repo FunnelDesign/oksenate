@@ -30,18 +30,18 @@
 
     </section>
 
-    <section class="section section_bg-color_b">
-      <div class="bContainer">
-        <div class="bPageNav">
-          <div class="bPageNav__group">
-            <a href="#" class="bPageNav__link">Home</a>
-            <a href="#" class="bPageNav__link">District Maps</a>
-            <a href="#" class="bPageNav__link">Legal Summary</a>
-            <a href="#" class="bPageNav__link">Resources</a>
-          </div>
-        </div>
-      </div>
-    </section>
+<!--    <section class="section section_bg-color_b">-->
+<!--      <div class="bContainer">-->
+<!--        <div class="bPageNav">-->
+<!--          <div class="bPageNav__group">-->
+<!--            <a href="#" class="bPageNav__link">Home</a>-->
+<!--            <a href="#" class="bPageNav__link">District Maps</a>-->
+<!--            <a href="#" class="bPageNav__link">Legal Summary</a>-->
+<!--            <a href="#" class="bPageNav__link">Resources</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </section>-->
 
     <section class="section section_ind_c section_bg-color_c">
       <div class="bContainer">
@@ -53,7 +53,8 @@
                      srcset="../dist/images/ico/ico-tmp-28-2x.png 2x">
               </span>
               <span class="bTiles__title">
-                District Viewer
+                District <br>
+                Maps
               </span>
               <span class="bTiles__btnWrap">
                 <span class="btn btn_s_g">
@@ -71,7 +72,7 @@
               </span>
               <span class="bTiles__btnWrap">
                 <span class="btn btn_s_g">
-                  view now
+                  give us your feedback
                 </span>
               </span>
             </a>
@@ -81,7 +82,22 @@
                      srcset="../dist/images/ico/ico-tmp-30-2x.png 2x">
               </span>
               <span class="bTiles__title">
-                Find My Representative
+                Find My <br>
+                Senator
+              </span>
+              <span class="bTiles__btnWrap">
+                <span class="btn btn_s_g">
+                  view now
+                </span>
+              </span>
+            </a>
+            <a href="#" class="bTiles__item">
+              <span class="bTiles__ico">
+                <img src="../dist/images/ico/ico-tmp-31.png"
+                     srcset="../dist/images/ico/ico-tmp-31-2x.png 2x">
+              </span>
+              <span class="bTiles__title">
+                Redistricting News
               </span>
               <span class="bTiles__btnWrap">
                 <span class="btn btn_s_g">
@@ -109,8 +125,19 @@
         </div>
 
         <h2>Timeline</h2>
-        <div class="bListLinks bListLinks_btnArr bListLinks_btnArr_inline">
+        <div class="bListLinks bListLinks_btnArr bListLinks_btnArr_inline bListLinks_gap_a">
           <a href="#" class="bListLinks__link">View PDF</a>
+        </div>
+
+        <h2>Get in Touch with Us</h2>
+
+        <div class="pageIn__info pageIn__info_c pageIn__info_gap_a pageIn__info_cent">
+          <h3>Keith Beall</h3>
+          <h4>Oklahoma Senate redistricting director</h4>
+          <p>
+            <strong>Phone: </strong> <a href="tel:(405) 524-0126">(405) 524-0126</a> <br>
+            <strong>Email: </strong> <a href="mailto:redistricting@oksenate.gov">redistricting@oksenate.gov</a>
+          </p>
         </div>
       </div>
     </section>
