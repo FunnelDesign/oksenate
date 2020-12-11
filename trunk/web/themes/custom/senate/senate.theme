@@ -856,6 +856,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_contacts_ada_info_file':
     case 'field_issue_files':
     case 'field_title_desc_file':
+    case 'field_district_maps_files':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
