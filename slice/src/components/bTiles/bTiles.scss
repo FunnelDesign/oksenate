@@ -379,8 +379,16 @@
         padding: 40px 20px 27px;
         justify-content: space-between;
 
-        max-width: calc(25% - 12px);
-        min-width: calc(25% - 12px);
+
+        @include sm {
+          max-width: calc(33.333333% - 12px);
+          min-width: calc(33.333333% - 12px);
+        }
+
+        @include md {
+          max-width: calc(25% - 12px);
+          min-width: calc(25% - 12px);
+        }
       }
 
       #{$this}__ico {
