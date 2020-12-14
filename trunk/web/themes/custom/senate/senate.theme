@@ -2467,6 +2467,7 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'senator_blog_post':
       case 'simple_page':
       case 'feedback':
+      case 'redistricting_news':
         $color = 'navy';
         break;
     }
