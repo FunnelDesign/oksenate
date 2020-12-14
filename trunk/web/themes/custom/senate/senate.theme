@@ -308,7 +308,7 @@ function senate_preprocess_node(array &$vars) {
         ];
         break;
       case 'press_release':
-
+      case 'redistricting_news':
         $vars['title'] = $node->getTitle();
         $vars['url_with_back_param'] = Url::fromRoute(
           'entity.node.canonical', ['node' => $node->id()],
@@ -334,9 +334,13 @@ function senate_preprocess_node(array &$vars) {
         ) {
           $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
         }
+        else if ($node->bundle() == 'redistricting_news') {
+          $vars['back_link']['#url'] = Url::fromUserInput('/redistricting-news');
+          $vars['back_link']['#title'] = t('back to redistricting news');
+        }
 
-      _senate_add_share_this($vars);
-      break;
+        _senate_add_share_this($vars);
+        break;
       case 'publications':
         if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
           $vars['leadersip'] = _senate_get_block('leadership');
