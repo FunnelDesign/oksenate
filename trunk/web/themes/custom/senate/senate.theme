@@ -370,6 +370,7 @@ function senate_preprocess_node(array &$vars) {
       case 'history':
       case 'meeting_notice':
       case 'contacts_ada':
+      case 'district_maps':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'contact':
