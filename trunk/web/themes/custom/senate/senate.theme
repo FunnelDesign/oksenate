@@ -1810,6 +1810,28 @@ function senate_preprocess_paragraph(array &$vars) {
         $vars["content"]["field_par_publications_page_link"]["#items"]->getValue() : '';
       $link_att = !empty($link) && !empty($link[0]["options"]) ? $link[0]["options"]["attributes"] : [];
       $link_att['class'] = ['bTiles__item'];
+
+      $link_url = !empty($link) && !empty($link[0]["uri"]) ? Url::fromUri($link[0]["uri"])->toString() : '';
+      $link_title = !empty($link) && !empty($link[0]["title"]) ? $link[0]["title"] : '';
+
+      $file = (!empty($vars["content"]["field_par_publications_page_file"]) &&
+        !empty($vars["content"]["field_par_publications_page_file"][0])) ?
+        $vars["content"]["field_par_publications_page_file"][0]['#file'] : '';
+      $file_desc = (!empty($vars["content"]["field_par_publications_page_file"]) &&
+        !empty($vars["content"]["field_par_publications_page_file"][0])) ?
+        $vars["content"]["field_par_publications_page_file"][0]['#description'] : '';
+
+      $file_url = !empty($file) ? file_create_url($file->getFileUri()) : '';
+
+      if (!empty($link_url) && !empty($link_title)) {
+        $vars['url'] = $link_url;
+        $vars['title'] = $link_title;
+      }
+      elseif (!empty($file_url) && !empty($file_desc)) {
+        $vars['url'] = $file_url;
+        $vars['title'] = $file_desc;
+        $link_att['target'] = '_blank';
+      }
       $vars['link_attr'] = new Attribute($link_att);
       break;
     case 'journals_files':
