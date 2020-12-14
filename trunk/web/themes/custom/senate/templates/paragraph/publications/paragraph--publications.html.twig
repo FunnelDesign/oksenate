@@ -38,15 +38,15 @@
  * @ingroup themeable
  */
 #}
-<a href="{{ content.field_par_publications_page_link[0]['#url'] }}" {{ link_attr }}>
-    <span class="bTiles__ico{{ icon_attributes }}">
-        {{ content.field_par_publications_page_icon }}
+<a href="{{ url }}" {{ link_attr }}>
+  <span class="bTiles__ico{{ icon_attributes }}">
+    {{ content.field_par_publications_page_icon }}
+  </span>
+  <span class="bTiles__btnWrap">
+    <span class="btn  btn_s_d">
+      {{ title }}
     </span>
-    <span class="bTiles__btnWrap">
-        <span class="btn  btn_s_d">
-            {{ content.field_par_publications_page_link[0]['#title'] }}
-        </span>
-    </span>
+  </span>
 </a>
 
 
