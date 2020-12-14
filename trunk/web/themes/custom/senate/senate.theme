@@ -335,7 +335,7 @@ function senate_preprocess_node(array &$vars) {
           $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
         }
         else if ($node->bundle() == 'redistricting_news') {
-          $vars['back_link']['#url'] = Url::fromUserInput('/redistricting-news');
+          $vars['back_link']['#url'] = Url::fromUserInput('/redistricting/news');
           $vars['back_link']['#title'] = t('back to redistricting news');
         }
 
