@@ -308,7 +308,7 @@ function senate_preprocess_node(array &$vars) {
         ];
         break;
       case 'press_release':
-
+      case 'redistricting_news':
         $vars['title'] = $node->getTitle();
         $vars['url_with_back_param'] = Url::fromRoute(
           'entity.node.canonical', ['node' => $node->id()],
@@ -334,9 +334,13 @@ function senate_preprocess_node(array &$vars) {
         ) {
           $vars['back_link']['#url'] = Url::fromUserInput(\Drupal::request()->get('back'));
         }
+        else if ($node->bundle() == 'redistricting_news') {
+          $vars['back_link']['#url'] = Url::fromUserInput('/redistricting/news');
+          $vars['back_link']['#title'] = t('back to redistricting news');
+        }
 
-      _senate_add_share_this($vars);
-      break;
+        _senate_add_share_this($vars);
+        break;
       case 'publications':
         if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
           $vars['leadersip'] = _senate_get_block('leadership');
@@ -366,6 +370,7 @@ function senate_preprocess_node(array &$vars) {
       case 'history':
       case 'meeting_notice':
       case 'contacts_ada':
+      case 'district_maps':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
       case 'contact':
@@ -409,6 +414,21 @@ function senate_preprocess_node(array &$vars) {
         break;
       case 'gallery' :
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
+      case 'redistricting' :
+        $vars['inner_menu'] = _senate_get_block('redistrictingmenu');
+        break;
+      case 'feedback' :
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+
+        $vars['back_link'] = [
+          '#type' => 'link',
+          '#title' => t('back'),
+          '#url' => Url::fromUserInput('/redistricting'),
+          '#attributes' => [
+            'class' => ['link', 'link_cl_b', 'link_back',],
+          ],
+        ];
         break;
     }
   }
@@ -602,6 +622,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_calendar_up_ddl_icon':
     case 'field_home_top_slider_icon':
     case 'field_contacts_ada_wheel_icon':
+    case 'field_icon_title_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -617,7 +638,6 @@ function senate_preprocess_field(array &$vars, $hook) {
         $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' alt="">';
         $vars['img_src'] = Markup::create($image_html); //prepared image for render
       }
-
       break;
     case 'field_contacts_paragraph_slider':
       $vars['elements'] = array();
@@ -840,7 +860,9 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_contacts_ada_wheel_files':
     case 'field_contacts_ada_info_file':
     case 'field_issue_files':
-    $items = !empty($vars['items']) ? $vars['items'] : [];
+    case 'field_title_desc_file':
+    case 'field_district_maps_files':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
         $title = !empty($title) ? $title : t('View file');
@@ -1007,6 +1029,18 @@ function senate_preprocess_field(array &$vars, $hook) {
       if ($items_amount < 2) {
         $vars["multiple"] = FALSE;
       }
+      break;
+    case 'field_block_menu_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' =>
+          ['bPageNav__link']
+        ];
+      }
+      break;
+    case 'field_redistricting_contact':
+      $vars['prefix'] = '<h2>';
+      $vars['suffix'] = '</h2>';
       break;
   }
 }
@@ -1201,6 +1235,14 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       $options = $form["elements"]["committees"]["#options"];
       $form["elements"]["committees"]["#options"] = ['all' => t('Receive notifications for all committees')] + $options;
       $form["#validate"][] = 'webform_sign_up_committee_meeting_validate';
+    }
+  }
+
+  if (strpos($form_id, 'webform_submission_feedback_node') !== FALSE) {
+    $node = \Drupal::routeMatch()->getParameter('node');
+
+    if (!empty($form["elements"]["markup"]) && !empty($node) && is_object($node)) {
+      $form["elements"]["markup"]["#markup"] = $node->body->value;
     }
   }
 }
@@ -1671,6 +1713,7 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'journals':
     case 'senate_staff':
+    case 'redistricting_news':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       break;
     case 'calendar_lt_st_journals':
@@ -1912,6 +1955,13 @@ function senate_preprocess_paragraph(array &$vars) {
         $url = Url::fromUri($author_link);
         $vars["author"] = Link::fromTextAndUrl($vars["author"], $url);
       }
+      break;
+    case 'icon_title':
+      $button = (!empty($vars["content"]["field_icon_title_button"]) &&
+        !empty($vars["content"]["field_icon_title_button"]['#items'])) ?
+        $vars["content"]["field_icon_title_button"]['#items']->getValue() : '';
+      $vars['url'] = !empty($button) && !empty($button[0]) ? Url::fromUri($button[0]["uri"])->toString() : '';
+      $vars['title'] = !empty($button) && !empty($button[0]) ? $button[0]["title"] : '';
       break;
   }
 }
@@ -2440,6 +2490,8 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'protem_podcast':
       case 'senator_blog_post':
       case 'simple_page':
+      case 'feedback':
+      case 'redistricting_news':
         $color = 'navy';
         break;
     }

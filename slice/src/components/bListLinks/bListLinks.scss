@@ -130,6 +130,15 @@
         background-size: contain;
       }
     }
+
+    &_inline {
+      text-align: center;
+
+      #{$this}__link {
+        display: inline-block;
+        margin: 0 8px 9px;
+      }
+    }
   }
 
   &_gap {

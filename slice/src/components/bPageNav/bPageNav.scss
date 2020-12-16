@@ -1,0 +1,31 @@
+.bPageNav {
+  line-height: 1.2;
+  padding: 28px 0;
+
+  &__group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: -5px;
+
+    & > * {
+      margin: 5px 8px 0;
+
+      @include sm {
+        margin: 5px 24px 0;
+      }
+    }
+  }
+
+  &__link {
+    font-family: $RobotoCondensed-Regular;
+    font-size: 14px;
+    color: $color-blue;
+    text-decoration: none;
+
+    &:hover {
+      color: $color-red;
+    }
+  }
+}
