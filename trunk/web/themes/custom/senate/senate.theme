@@ -339,6 +339,13 @@ function senate_preprocess_node(array &$vars) {
           $vars['back_link']['#title'] = t('back to redistricting news');
         }
 
+        $share = !empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"]) ?
+          $vars["content"]["sharethis"]["#content"] : 'field is empty';
+        \Drupal::logger('share_test')->notice('Share: @share.',
+        array(
+          '@share' => var_export($share, true),
+        ));
+
         _senate_add_share_this($vars);
         break;
       case 'publications':
