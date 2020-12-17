@@ -340,13 +340,6 @@ function senate_preprocess_node(array &$vars) {
         }
 
         _senate_add_share_this($vars);
-
-        $share = !empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"]) ?
-          $vars["content"]["sharethis"]["#content"] : 'field is empty';
-        \Drupal::logger('share_test')->notice('Share: @share.',
-        array(
-          '@share' => var_export($share, true),
-        ));
         break;
       case 'publications':
         if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
