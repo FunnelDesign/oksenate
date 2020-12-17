@@ -339,14 +339,16 @@ function senate_preprocess_node(array &$vars) {
           $vars['back_link']['#title'] = t('back to redistricting news');
         }
 
+        _senate_add_share_this($vars);
+
         $share = !empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"]) ?
           $vars["content"]["sharethis"]["#content"] : 'field is empty';
-        \Drupal::logger('share_test')->notice('Share: @share.',
+        $share_rend = render($vars["content"]["sharethis"]);
+        \Drupal::logger('share_test')->notice('Share: @share. Rend: @rend',
         array(
           '@share' => var_export($share, true),
+          '@rend' => var_export($share_rend, true),
         ));
-
-        _senate_add_share_this($vars);
         break;
       case 'publications':
         if ($node->id() == SENATE_CONTACTS_LANDING_NID) {
