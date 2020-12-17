@@ -461,11 +461,7 @@ function _senate_add_share_this(array &$vars) {
       '#title' => $vars["content"]["sharethis"]["#content"]["m_title"],
       '#current_path' => $path_to_theme,
     ];
-    $sharethis = render($sharethis);
-    if (is_object($sharethis)) {
-      $sharethis = $sharethis->__toString();
-    }
-    $vars["content"]["sharethis"]["#content"]["st_spans"] = $sharethis;
+    $vars["content"]["sharethis"]["#content"]["st_spans"] = render($sharethis);
   }
 }
 
