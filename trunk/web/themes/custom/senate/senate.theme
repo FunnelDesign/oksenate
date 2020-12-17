@@ -343,11 +343,9 @@ function senate_preprocess_node(array &$vars) {
 
         $share = !empty($vars["content"]["sharethis"]) && !empty($vars["content"]["sharethis"]["#content"]) ?
           $vars["content"]["sharethis"]["#content"] : 'field is empty';
-        $share_rend = render($vars["content"]["sharethis"]);
-        \Drupal::logger('share_test')->notice('Share: @share. Rend: @rend',
+        \Drupal::logger('share_test')->notice('Share: @share.',
         array(
           '@share' => var_export($share, true),
-          '@rend' => var_export($share_rend, true),
         ));
         break;
       case 'publications':
