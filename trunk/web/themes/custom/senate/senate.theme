@@ -143,7 +143,7 @@ function senate_preprocess_node(array &$vars) {
           }
           elseif ($display_id == 'block_2') {
             $first_day_obj = new DrupalDateTime("now");
-            $last_day_obj = new DrupalDateTime("now +14 days");
+            $last_day_obj = new DrupalDateTime("now +90 days");
             $params = [$first_day_obj->format('Y-m-d'), $last_day_obj->format('Y-m-d')];
           }
           $vars['committee_events'] = _senate_get_view('committee_events', $display_id, $params);
