@@ -218,7 +218,8 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
       }
     }
   }
-  if (($view->id() == 'home_committee_events') || ($view->id() == 'committee_events')) {
+  if (($view->id() == 'home_committee_events') || (($view->id() == 'committee_events') &&
+      ($view->getDisplay()->display['id'] == 'block_2'))) {
     $end_date = FALSE;
     foreach ($query->where as $key => &$condition_group) {
       foreach ($condition_group['conditions'] as &$condition) {
