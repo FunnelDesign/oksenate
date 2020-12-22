@@ -206,6 +206,8 @@ function senate_preprocess_node(array &$vars) {
           }
           else {
             $params[0] = $tid . ',' . $params[0];
+            $first_day_obj = new DrupalDateTime("now");
+            $params[1] = $first_day_obj->format('Y-m-d');
             $vars['committee_events_title'] = t('Subcommittee Events');
             $vars['committee_events'] = _senate_get_view('committee_events', 'block_1', $params);
           }
