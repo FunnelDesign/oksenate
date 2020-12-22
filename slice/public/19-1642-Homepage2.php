@@ -62,6 +62,9 @@
                     </div>
                     <div class="bTitle bTitle_b bTitle_line sSlider__bTitle">
                       <h1>Weather <span>Advisory</span></h1>
+                       <h1>
+             Oklahoma Senate statewide redistricting meeting dates 
+      </h1>
                     </div>
                     
                     <div class="sSlider__desc">
