@@ -110,7 +110,7 @@ function senate_preprocess_node(array &$vars) {
           $top_slider_enabled[0]["value"] : '';
 
         $first_day_obj = new DrupalDateTime("now");
-        $last_day_obj = new DrupalDateTime("now +14 days");
+        $last_day_obj = new DrupalDateTime("now +90 days");
         $params = [$first_day_obj->format('Y-m-d'), $last_day_obj->format('Y-m-d')];
         $vars['week_events'] = _senate_get_view('home_committee_events', 'block_1', $params);
         break;
