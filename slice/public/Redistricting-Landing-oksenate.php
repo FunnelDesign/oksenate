@@ -49,48 +49,60 @@
           <div class="bTiles__items">
             <a href="#" class="bTiles__item">
               <span class="bTiles__ico">
-                <img src="../dist/images/ico/ico-tmp-32.png"
-                     srcset="../dist/images/ico/ico-tmp-32-2x.png 2x">
+                <img src="../dist/images/ico/ico-tmp-28.png"
+                     srcset="../dist/images/ico/ico-tmp-28-2x.png 2x">
               </span>
               <span class="bTiles__title">
-                District Maps
+                District <br>
+                Maps
+              </span>
+              <span class="bTiles__btnWrap">
+                <span class="btn btn_s_g">
+                  view now
+                </span>
               </span>
             </a>
             <a href="#" class="bTiles__item">
               <span class="bTiles__ico">
-                <img src="../dist/images/ico/ico-tmp-33.png"
-                     srcset="../dist/images/ico/ico-tmp-33-2x.png 2x">
+                <img src="../dist/images/ico/ico-tmp-29.png"
+                     srcset="../dist/images/ico/ico-tmp-29-2x.png 2x">
               </span>
               <span class="bTiles__title">
-                Submit <br> Feedback
+                Submit Feedback
+              </span>
+              <span class="bTiles__btnWrap">
+                <span class="btn btn_s_g">
+                  give us your feedback
+                </span>
               </span>
             </a>
             <a href="#" class="bTiles__item">
               <span class="bTiles__ico">
-                <img src="../dist/images/ico/ico-tmp-34.png"
-                     srcset="../dist/images/ico/ico-tmp-34-2x.png 2x">
+                <img src="../dist/images/ico/ico-tmp-30.png"
+                     srcset="../dist/images/ico/ico-tmp-30-2x.png 2x">
               </span>
               <span class="bTiles__title">
                 Find My <br>
                 Senator
               </span>
-            </a>
-            <a href="#" class="bTiles__item">
-              <span class="bTiles__ico">
-                <img src="../dist/images/ico/ico-tmp-35.png"
-                     srcset="../dist/images/ico/ico-tmp-35-2x.png 2x">
-              </span>
-              <span class="bTiles__title">
-                Redistricting <br> News
+              <span class="bTiles__btnWrap">
+                <span class="btn btn_s_g">
+                  view now
+                </span>
               </span>
             </a>
             <a href="#" class="bTiles__item">
               <span class="bTiles__ico">
-                <img src="../dist/images/ico/ico-tmp-36.png"
-                     srcset="../dist/images/ico/ico-tmp-36-2x.png 2x">
+                <img src="../dist/images/ico/ico-tmp-31.png"
+                     srcset="../dist/images/ico/ico-tmp-31-2x.png 2x">
               </span>
               <span class="bTiles__title">
-                Frequently <br> Asked Questions
+                Redistricting News
+              </span>
+              <span class="bTiles__btnWrap">
+                <span class="btn btn_s_g">
+                  view now
+                </span>
               </span>
             </a>
           </div>
