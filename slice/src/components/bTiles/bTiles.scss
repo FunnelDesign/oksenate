@@ -370,15 +370,19 @@
     }
 
     &_g {
+      max-width: 896px;
+      margin-left: auto;
+      margin-right: auto;
 
       #{$this}__items {
         margin: 0 -6px -12px;
       }
 
       #{$this}__item {
-        padding: 40px 20px 27px;
-        justify-content: space-between;
-
+        padding: 28px 20px 40px;
+        //justify-content: space-between;
+        border: none;
+        background: $color-red;
 
         @include sm {
           max-width: calc(33.333333% - 12px);
@@ -386,21 +390,26 @@
         }
 
         @include md {
-          max-width: calc(25% - 12px);
-          min-width: calc(25% - 12px);
+          max-width: calc(20% - 12px);
+          min-width: calc(20% - 12px);
+        }
+
+        &:hover {
+          background: $color-blue;
         }
       }
 
       #{$this}__ico {
         height: 55px;
         max-width: 80px;
-        margin: 0 auto 30px;
+        margin: 0 auto 3px;
       }
 
       #{$this}__title {
         font-family: $RobotoCondensed-Light;
-        @include margin-bottom(20px, 25px, 32px);
-        @include font-size(20px, 26px, 32px);
+        @include font-size(16px, 18px);
+        color: $color-white;
+        margin: 0;
       }
 
       //#{$this}__btnWrap {
