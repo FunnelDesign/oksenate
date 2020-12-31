@@ -286,6 +286,7 @@ function senate_preprocess_node(array &$vars) {
         $vars['title_alias'] = str_replace(' ', '-', $title);
         break;
       case 'reports':
+      case 'faq':
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
         break;
 
@@ -732,6 +733,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_session_summary_file':
     case 'field_meeting_notice_files':
     case 'field_comt_evt_files':
+    case 'field_faq_presentation':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {
@@ -2499,6 +2501,7 @@ function senate_preprocess_senate_socials(&$vars) {
       case 'simple_page':
       case 'feedback':
       case 'redistricting_news':
+      case 'faq':
         $color = 'navy';
         break;
     }

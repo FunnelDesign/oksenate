@@ -187,6 +187,7 @@ class CustomBreadcrumbBlock extends BlockBase implements ContainerFactoryPluginI
         case 'protem_podcast':
         case 'feedback':
         case 'redistricting_news':
+        case 'faq':
           $color = 'navy';
           break;
       }
