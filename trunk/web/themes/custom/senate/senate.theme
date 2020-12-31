@@ -1041,6 +1041,14 @@ function senate_preprocess_field(array &$vars, $hook) {
       $vars['prefix'] = '<h2>';
       $vars['suffix'] = '</h2>';
       break;
+    case 'field_icon_title_title':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#context"]["value"]), ['br']);
+        $vars['items'][$key]["content"]["#context"]["value"] = $title;
+        $vars["items"][$key]["content"]["#template"] = '{{ value|raw }}';
+      }
+      break;
   }
 }
 
