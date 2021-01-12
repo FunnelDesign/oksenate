@@ -38,10 +38,6 @@ db_offline ? 'db-offline',
     <title>{{ head_title|safe_join(' | ') }}</title>
     <css-placeholder token="{{ placeholder_token }}">
     <js-placeholder token="{{ placeholder_token }}">
-
-    {% if is_front %}
-      <script src="https://content.govdelivery.com/overlay/js/9449.js"></script>
-    {% endif %}
 </head>
 <body{{ attributes.addClass(body_classes) }}>
 {#
@@ -54,6 +50,10 @@ db_offline ? 'db-offline',
 {{ page_top }}
 {{ page }}
 {{ page_bottom }}
+
+{% if is_front %}
+  <script src="https://content.govdelivery.com/overlay/js/9449.js"></script>
+{% endif %}
 <js-bottom-placeholder token="{{ placeholder_token }}">
 </body>
 </html>
