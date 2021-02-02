@@ -361,6 +361,10 @@ class EventsCustomHelper {
       '/419/' => ['url' => '/room-419', 'title' => 'room 419', 'room_nid' => 7414],
       '/511.*a/' => ['url' => '/room-511a', 'title' => 'room 511a', 'room_nid' => 10507],
       '/535/' => ['url' => '/room-535', 'title' => 'room 535', 'room_nid' => 10508],
+      '/4S.?7/' => ['url' => '/room-4s7', 'title' => 'room 4S7', 'room_nid' => 1521487],
+      '/4S.?8/' => ['url' => '/room-4s8', 'title' => 'room 4S8', 'room_nid' => 1521488],
+      '/4S.?9/' => ['url' => '/room-4s9', 'title' => 'room 4S9', 'room_nid' => 1521486],
+      '/5S.?3/' => ['url' => '/room-5s3', 'title' => 'room 5S3', 'room_nid' => 1521489],
     ];
     $ids = [];
     list($first_level, $second_level) = $this->getAllCommittees();
