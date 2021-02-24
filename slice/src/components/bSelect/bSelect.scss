@@ -149,6 +149,17 @@
         }
       }
     }
+
+    &._select {
+
+      .form-item-field-journals-files-date-value:after {
+        display: none;
+      }
+
+      .select2-container {
+        width: 100%;
+      }
+    }
   }
 
   &_size {
