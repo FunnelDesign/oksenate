@@ -1922,6 +1922,10 @@ function senate_preprocess_paragraph(array &$vars) {
           $vars['video_url'] = !empty($video_data['url']) ? $video_data['url'] : '';
         }
       }
+
+      $vars['thumb'] = (!empty($vars["content"]["field_video_thumbnail"]) &&
+        !empty($vars["content"]["field_video_thumbnail"]["0"])) ?
+        $vars["content"]["field_video_thumbnail"]["0"]['#item']->entity->url() : '';
       break;
     case 'gallery_image':
       if (!empty($vars['content']['field_gallery_par_image'][0]['#item'])){
@@ -2712,4 +2716,16 @@ function _senate_get_journals_month_options($year) {
   }
 
   return $month_option;
+}
+
+/**
+ * Implements hook_theme_suggestions_paragraph_alter().
+ */
+function senate_theme_suggestions_paragraph_alter(array &$suggestions, array $vars) {
+  $paragraph = !empty($vars["elements"]["#paragraph"]) && is_object($vars["elements"]["#paragraph"]) ?
+    $vars["elements"]["#paragraph"] : '';
+  $paragraph_type = !empty($paragraph) ? $paragraph->bundle() : '';
+  $parent = !empty($paragraph) ? $paragraph->getParentEntity() : '';
+  $parent_type = !empty($parent) ? $parent->bundle() : '';
+  $suggestions[] = 'paragraph__' . $paragraph_type . '__' . $parent_type;
 }
