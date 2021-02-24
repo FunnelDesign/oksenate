@@ -436,9 +436,14 @@ function custom_module_views_pre_view(\Drupal\views\ViewExecutable $view, $displ
     $data = _senate_get_journals_options();
     $options = $data['options'];
     if (!empty($options)) {
-      $date_options = array_keys($options);
-      $date_options = array_reverse($date_options);
-      $date_default = array_pop($date_options);
+      if (!empty($data["last_date"])) {
+        $date_default = $data["last_date"];
+      }
+      else {
+        $date_options = array_keys($options);
+        $date_options = array_reverse($date_options);
+        $date_default = array_pop($date_options);
+      }
 
       // set newest journal file date as default exposed filter value
       if (empty($view->getExposedInput())){

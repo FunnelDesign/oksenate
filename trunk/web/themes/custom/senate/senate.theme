@@ -2254,7 +2254,16 @@ function _senate_get_journals_options() {
     $date_key = $row->month_digits . '/01/' . $row->year;
     $options['options'][$date_key] = $row->month . ', ' . $row->year;
     $options['dates'][] = $row->month_digits . "/" . $row->day . "/" . $row->year;
+    $last_date = DateTime::createFromFormat('m/d/Y', $date_key);
+
+    if (empty($options['last_date'])) {
+      $options['last_date'] = $last_date;
+    }
+    if ($options['last_date'] < $last_date) {
+      $options['last_date'] = $last_date;
+    }
   }
+  $options['last_date'] = $options['last_date']->format('m/d/Y');
 
   return !empty($options) ? $options : [];
 }
