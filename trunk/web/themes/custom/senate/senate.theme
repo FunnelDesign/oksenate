@@ -1173,6 +1173,12 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         $data = _senate_get_journals_options();
         $form['#attached']['drupalSettings']['senate']['active_dates'] = $data['dates'];
 
+        $form['field_journals_files_date_value'] = [
+          '#type' => 'select',
+          '#title' => t('Date'),
+          '#options' => $data['options'],
+        ];
+
         $form['field_journals_files_date_value']['#attributes']['readonly'] = true;
         $form["#attributes"]["class"][] = 'form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date';
       }
@@ -2245,9 +2251,8 @@ function _senate_get_journals_options() {
 
   $options = [];
   foreach ($result as $row) {
-//    $options[$row->year][$row->month_digits] = $row->month;
-    $options['options'][$row->year][$row->month_digits]['month'] = $row->month;
-    $options['options'][$row->year][$row->month_digits]['days'][$row->day] = (int)$row->day;
+    $date_key = $row->month_digits . '/01/' . $row->year;
+    $options['options'][$date_key] = $row->month . ', ' . $row->year;
     $options['dates'][] = $row->month_digits . "/" . $row->day . "/" . $row->year;
   }
 

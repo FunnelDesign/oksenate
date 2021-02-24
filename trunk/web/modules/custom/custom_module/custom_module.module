@@ -127,15 +127,15 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
     $table_node['join']->field = 'nid';
     $table_node["join"]->configuration["field"] = 'nid';
 
-//    if (empty($day)) {
-//      foreach ($query->where as $key => &$condition_group) {
-//        foreach ($condition_group['conditions'] as &$condition) {
-//          if (strpos($condition['field'], 'DATE_FORMAT(paragraph__field_journals_files_date.field_journals_files_date_value') !== FALSE) {
-//            $condition['field'] = str_replace('%Y-%m-%d', '%Y-%m', $condition['field']);
-//          }
-//        }
-//      }
-//    }
+    if (empty($day)) {
+      foreach ($query->where as $key => &$condition_group) {
+        foreach ($condition_group['conditions'] as &$condition) {
+          if (strpos($condition['field'], 'DATE_FORMAT(paragraph__field_journals_files_date.field_journals_files_date_value') !== FALSE) {
+            $condition['field'] = str_replace('%Y-%m-%d', '%Y-%m', $condition['field']);
+          }
+        }
+      }
+    }
   }
   if ($view->id() == 'calendar_lt_st_journals' && $view->getDisplay()->display['id'] == 'block_1') {
     $table_files = $query->getTableInfo('node__field_journals_files');
@@ -436,20 +436,13 @@ function custom_module_views_pre_view(\Drupal\views\ViewExecutable $view, $displ
     $data = _senate_get_journals_options();
     $options = $data['options'];
     if (!empty($options)) {
-      $years = array_keys($options);
-      $year_reverse = array_reverse($years);
-      $year_default = array_pop($year_reverse);
-      $month_default = key($options[$year_default]);
-      $year_options = array_combine($years, $years);
-      $year = !empty($input["year"]) ? $input["year"] : $year_default;
-      $month = !empty($input["month"]) ? $input["month"] : $month_default;
-      $month_options = _senate_get_journals_month_options($options[$year]);
-      $day_default = array_pop($options[$year_default][$month_default]['days']);
+      $date_options = array_keys($options);
+      $date_options = array_reverse($date_options);
+      $date_default = array_pop($date_options);
 
       // set newest journal file date as default exposed filter value
       if (empty($view->getExposedInput())){
-        $date = $month_default . "/" . $day_default. "/" . $year_default;
-        $exposed_filters = ['field_journals_files_date_value' => $date];
+        $exposed_filters = ['field_journals_files_date_value' => $date_default];
         $view->setExposedInput($exposed_filters);
       }
     }
