@@ -1180,7 +1180,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         ];
 
         $form['field_journals_files_date_value']['#attributes']['readonly'] = true;
-        $form["#attributes"]["class"][] = 'form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date';
+        $form["#attributes"]["class"][] = 'form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date _select';
       }
       elseif ($view_name == 'search_statutes_constitutions') {
         if (!empty($form["constitutions"])) {
