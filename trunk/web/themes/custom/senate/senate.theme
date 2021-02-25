@@ -734,6 +734,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_meeting_notice_files':
     case 'field_comt_evt_files':
     case 'field_faq_presentation':
+    case 'field_gop_file':
       $items = !empty($vars["items"]) ? $vars["items"] : [];
       $vars['files'] = [];
       foreach ($items as $key => $item) {

@@ -37,10 +37,20 @@
  * @see template_preprocess_field()
  */
 #}
-<div class="b-agenda__group">
-  {% for item in items %}
-    <div class="b-agenda__item">
-      {{ item.content }}
-    </div>
+{% set classes = [
+'field',
+'field--name-' ~ field_name|clean_class,
+'field--type-' ~ field_type|clean_class,
+'field--label-' ~ label_display,
+] %}
+{% set title_classes = [
+'field__label',
+label_display == 'visually_hidden' ? 'visually-hidden',
+] %}
+<div class="b-agenda__btn-group">
+  {% for file in files %}
+    <a href="{{ file.url }}" class="btn" target="_blank">
+      {{ file.title }}
+    </a>
   {% endfor %}
 </div>
