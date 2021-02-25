@@ -1,0 +1,62 @@
+.b-agenda {
+
+  &__group {
+    max-width: 670px;
+    margin: 0 auto;
+  }
+
+  &__item {
+    @include margin-bottom(30px, 50px);
+    @include cr-last-item;
+    @include cr-last-child;
+  }
+
+  &__img {
+    @include margin-bottom(20px, 48px);
+  }
+
+  &__title {
+    @include cr-last-child;
+    @include margin-bottom(30px);
+    @include padding(0, 0 25px);
+
+    h3 {
+      margin: 0;
+      font-family: $FreightTextProBook-Regular;
+      @include font-size(18px, 20px, 24px);
+      color: $color-blue;
+    }
+  }
+
+  &__quote {
+    @include cr-last-child;
+    position: relative;
+    color: #888888;
+    @include font-size(13px, 14px);
+    font-family: $Roboto-Regular;
+    @include padding(0 0 0 5px, 0 0 0 60px);
+    @include margin-bottom(30px);
+
+    ul {
+      list-style: none;
+    }
+
+    li {
+      position: relative;
+      padding: 0 0 0 22px;
+      @include cr-last-item;
+
+      &:before {
+        @include pseudo-block($top: 8px, $left: 0);
+        width: 14px;
+        border-top: 2px solid currentColor;
+      }
+
+    }
+  }
+
+  &__btn-group {
+    @include margin-top(30px, 50px);
+    text-align: center;
+  }
+}
