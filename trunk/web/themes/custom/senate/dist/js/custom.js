@@ -5,15 +5,21 @@
       var datesArray = senateSettings.active_dates || [];
 
       $('input.bef-datepicker', context).once('bef-datepicker').each(function () {
+        var options = {
+          beforeShowDay: function(date) {
+            var dateString = jQuery.datepicker.formatDate('mm/dd/yy', date);
+            var checkEmptyDay = datesArray.indexOf(dateString) === -1 ? 'empty-day' : 'event-day';
+            return [ true, checkEmptyDay ]
+          },
+        };
+        var $altField = $('#edit-datepicker-alt-field');
+        if ($altField && $altField[0]) {
+          options['altField'] = '#edit-datepicker-alt-field';
+          options['altFormat'] = 'MM yy';
+        }
 
         if (typeof $.datepicker !== 'undefined') {
-          $(this, context).datepicker({
-            beforeShowDay: function(date){
-              var dateString = jQuery.datepicker.formatDate('mm/dd/yy', date);
-              var checkEmptyDay = datesArray.indexOf(dateString) === -1 ? 'empty-day' : 'event-day';
-              return [ true, checkEmptyDay ]
-            }
-          });
+          $(this, context).datepicker(options);
         }
       });
 

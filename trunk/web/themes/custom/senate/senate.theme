@@ -1171,9 +1171,25 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
       }
       elseif ($view_name == 'journals') {
         $data = _senate_get_journals_options();
+        $user_input = $form_state->getUserInput();
         $form['#attached']['drupalSettings']['senate']['active_dates'] = $data['dates'];
 
+        if (!empty($user_input["field_journals_files_date_value"])) {
+          $last_date = DateTime::createFromFormat('m/d/Y', $user_input["field_journals_files_date_value"]);
+          $data["last_date_alt"] = $last_date->format('F Y');
+        }
+
         $form['field_journals_files_date_value']['#attributes']['readonly'] = true;
+
+        $form['datepicker_alt_field'] = [
+          '#type' => 'textfield',
+          '#default_value' => !empty($data["last_date_alt"]) ? $data["last_date_alt"] : '',
+          '#attributes' => [
+            'class' => ['datepicker-alt-filed'],
+          ],
+          '#name' => '',
+        ];
+
         $form["#attributes"]["class"][] = 'form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date';
       }
       elseif ($view_name == 'search_statutes_constitutions') {
@@ -2257,6 +2273,7 @@ function _senate_get_journals_options() {
       $options['last_date'] = $last_date;
     }
   }
+  $options['last_date_alt'] = $options['last_date']->format('F Y');
   $options['last_date'] = $options['last_date']->format('m/d/Y');
 
   return !empty($options) ? $options : [];
