@@ -1173,14 +1173,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
         $data = _senate_get_journals_options();
         $form['#attached']['drupalSettings']['senate']['active_dates'] = $data['dates'];
 
-        $form['field_journals_files_date_value'] = [
-          '#type' => 'select',
-          '#title' => t('Date'),
-          '#options' => $data['options'],
-        ];
-
         $form['field_journals_files_date_value']['#attributes']['readonly'] = true;
-        $form["#attributes"]["class"][] = 'form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date _select';
+        $form["#attributes"]["class"][] = 'form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date';
       }
       elseif ($view_name == 'search_statutes_constitutions') {
         if (!empty($form["constitutions"])) {
