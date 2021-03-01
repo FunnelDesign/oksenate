@@ -95,8 +95,10 @@
   }
 
   &_date {
+    z-index: 1;
+    position: relative;
 
-    .form-item-date, .form-item-field-journals-files-date-value {
+    .form-item, .form-item-date, .form-item-field-journals-files-date-value {
       width: 303px;
       padding-left: 55px;
       position: relative;
@@ -149,20 +151,26 @@
         }
       }
 
-
-      .datepicker-alt-filed {
+      & + .form-item {
         position: absolute;
-        width: 238px!important;
-        left: 55px;
-        top: 0;
         z-index: -1;
 
-        & + input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
-
-          background: transparent;
-          color: transparent;
-          @include input-placeholder(transparent);
+        .datepicker-alt-file {
+          position: absolute;
+          width: 238px!important;
+          left: 55px;
+          top: 0;
         }
+      }
+    }
+
+    .form-item-field-journals-files-date-value {
+
+      input:not([type=submit]):not([type=checkbox]):not([type=radio]) {
+
+        background: transparent;
+        color: transparent;
+        @include input-placeholder(transparent);
       }
     }
 
