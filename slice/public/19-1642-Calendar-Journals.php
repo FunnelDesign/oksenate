@@ -64,6 +64,7 @@
         <div class="form bSelect bSelect_filter bSelect_a bSelect_gap_b bSelect_date">
           <div class="form-item form-type-text form-item-date">
 <!--            <label class="form-required"></label>-->
+            <input type="text" class="form-text datepicker-alt-filed" placeholder="AltField">
             <input type="text" class="form-text hasDatepicker" placeholder="Select Date">
           </div>
         </div>
