@@ -79,22 +79,27 @@ ul, ol {
 }
 
 ol {
-  counter-reset: myCounter;
+  //counter-reset: myCounter;
 
   li {
-    list-style: none;
+    //list-style: none;
     padding-left: 10px;
     position: relative;
 
-    &:before {
-      @include pseudo-block($top: -6px, $left: -14px);
-      counter-increment: myCounter;
-      content: counter(myCounter);
-      color: currentColor;
-      display: inline-block;
+    //&:before {
+    //  @include pseudo-block($top: -6px, $left: -14px);
+    //  counter-increment: myCounter;
+    //  content: counter(myCounter);
+    //  color: currentColor;
+    //  display: inline-block;
+    //  font-family: $FreightTextProBold-Regular;
+    //  font-size: 18px;
+    //  margin-right: 10px;
+    //}
+
+    &::marker {
       font-family: $FreightTextProBold-Regular;
       font-size: 18px;
-      margin-right: 10px;
     }
   }
 }
