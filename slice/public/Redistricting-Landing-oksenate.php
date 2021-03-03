@@ -105,6 +105,15 @@
                 </span>
               </span>
             </a>
+            <a href="#" class="bTiles__item">
+              <span class="bTiles__ico">
+                <img src="../dist/images/ico/ico-tmp-32.png"
+                     srcset="../dist/images/ico/ico-tmp-32-2x.png 2x">
+              </span>
+              <span class="bTiles__title">
+                Map Submissions
+              </span>
+            </a>
           </div>
         </div>
 
