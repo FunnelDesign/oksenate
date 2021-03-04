@@ -430,6 +430,9 @@ function senate_preprocess_node(array &$vars) {
           ],
         ];
         break;
+      case 'privacy_policy':
+        $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
+        break;
     }
   }
 }
@@ -2754,4 +2757,24 @@ function senate_theme_suggestions_paragraph_alter(array &$suggestions, array $va
   $parent = !empty($paragraph) ? $paragraph->getParentEntity() : '';
   $parent_type = !empty($parent) ? $parent->bundle() : '';
   $suggestions[] = 'paragraph__' . $paragraph_type . '__' . $parent_type;
+}
+
+/**
+ * Implements hook_theme_suggestions_node_alter().
+ */
+function senate_theme_suggestions_node_alter(array &$suggestions, array $vars) {
+  $node = !empty($vars["elements"]) && !empty($vars["elements"]["#node"]) ?
+    $vars["elements"]["#node"] : '';
+  $view_mode = !empty($vars["elements"]) && !empty($vars["elements"]["#view_mode"]) ?
+    $vars["elements"]["#view_mode"] : '';
+
+  if (!empty($node) && is_object($node)) {
+    switch ($node->bundle()) {
+      case 'privacy_policy':
+        $value = $node->hasField('field_privacy_policy_type') &&
+          !empty($node->field_privacy_policy_type) ? $node->field_privacy_policy_type->value : '';
+        $suggestions[] = 'node__privacy_policy__' . $value;
+        break;
+    }
+  }
 }
