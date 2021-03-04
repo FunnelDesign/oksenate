@@ -166,3 +166,15 @@ b, strong {
   max-width: 100%;
   @include margin(0, 0 4px 3px);
 }
+
+.public-map {
+
+  strong, b {
+    font-weight: 700;
+  }
+
+  ul {
+    list-style: none;
+    margin-left: 30px;
+  }
+}

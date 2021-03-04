@@ -27,7 +27,7 @@
         <div class="bTitle bTitle_wSub_a bTitle_gap_b">
           <h1>Public Map Submissions</h1>
         </div>
-        <div class="content-left">
+        <div class="public-map">
           The Oklahoma Legislature is excited to partner with Dave's Redistricting App (DRA) a free redistricting mapping resource that
           Oklahomans can utilize to engage in the redistricting process and try their hand at drawing state legislative districts.
           Dave's Redistricting App is free to use. Sign up and log in through the following link to create
