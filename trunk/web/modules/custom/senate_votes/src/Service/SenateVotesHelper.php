@@ -588,12 +588,8 @@ class SenateVotesHelper {
       $row_nays = !empty($row['nays']) ? $row['nays'] : '';
       $row_measure = !empty($row['measure']) ? $row['measure'] : '';
 
-      if ($add_rules && ($measure == $row_measure) && ($action == $row_action) &&
+      if (($measure == $row_measure) && ($action == $row_action) &&
         ($yeas == $row_yeas) && ($nays == $row_nays)) {
-        $result = TRUE;
-        $pid = !empty($row['pid']) ? $row['pid'] : '';
-      }
-      elseif (!$add_rules && ($measure == $row_measure) && ($action == $row_action)) {
         $result = TRUE;
         $pid = !empty($row['pid']) ? $row['pid'] : '';
       }
