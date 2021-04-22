@@ -593,7 +593,7 @@ class SenateVotesHelper {
         $result = TRUE;
         $pid = !empty($row['pid']) ? $row['pid'] : '';
       }
-      elseif (!$add_rules && ($measure == $row_measure)) {
+      elseif (!$add_rules && ($measure == $row_measure) && ($action == $row_action)) {
         $result = TRUE;
         $pid = !empty($row['pid']) ? $row['pid'] : '';
       }
