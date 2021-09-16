@@ -1182,7 +1182,13 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           $data["last_date_alt"] = $last_date->format('F Y');
         }
 
-        $form['field_journals_files_date_value']['#attributes']['readonly'] = true;
+        if (!empty($form['field_journals_files_date_value'])) {
+          $form['field_journals_files_date_value']['#attributes']['readonly'] = true;
+
+          if (!empty($form['field_journals_files_date_value']['#attributes']['autocomplete'])) {
+            unset($form['field_journals_files_date_value']['#attributes']['autocomplete']);
+          }
+        }
 
         $form['datepicker_alt_field'] = [
           '#type' => 'textfield',
