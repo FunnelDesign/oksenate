@@ -13,3 +13,7 @@ services:
     class: Drupal\custom_module\Plugin\views\CustomNidToAuthor
     tags:
       - { name: node_author }
+
+  custom_module.helper:
+    class: Drupal\custom_module\Service\CustomModuleHelper
+    arguments: ['@database', '@logger.factory']

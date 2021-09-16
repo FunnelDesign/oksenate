@@ -433,25 +433,28 @@ function custom_module_views_pre_view(\Drupal\views\ViewExecutable $view, $displ
   $view_name = !empty($view) ? $view->id() : '';
 
   if ($view_name == 'journals') {
-    $data = _senate_get_journals_options();
-    $options = $data['options'];
-    if (!empty($options)) {
-      if (!empty($data["last_date"])) {
-        $date_default = $data["last_date"];
-      }
-      else {
-        $date_options = array_keys($options);
-        $date_options = array_reverse($date_options);
-        $date_default = array_pop($date_options);
-      }
+    if (!empty(\Drupal::hasService('custom_module.helper'))) {
+      $custom_module_helper = \Drupal::service('custom_module.helper');
+      $data = $custom_module_helper->getJournalsOptions();
 
-      // set newest journal file date as default exposed filter value
-      if (empty($view->getExposedInput())){
-        $exposed_filters = ['field_journals_files_date_value' => $date_default];
-        $view->setExposedInput($exposed_filters);
+      $options = !empty($data['options']) ? $data['options'] : '';
+      if (!empty($options)) {
+        if (!empty($data["last_date"])) {
+          $date_default = $data["last_date"];
+        }
+        else {
+          $date_options = array_keys($options);
+          $date_options = array_reverse($date_options);
+          $date_default = array_pop($date_options);
+        }
+
+        // set newest journal file date as default exposed filter value
+        if (empty($view->getExposedInput())){
+          $exposed_filters = ['field_journals_files_date_value' => $date_default];
+          $view->setExposedInput($exposed_filters);
+        }
       }
     }
-
   }
 }
 
