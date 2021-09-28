@@ -11,6 +11,8 @@
             var checkEmptyDay = datesArray.indexOf(dateString) === -1 ? 'empty-day' : 'event-day';
             return [ true, checkEmptyDay ]
           },
+          changeMonth: 'true',
+          changeYear: 'true',
         };
         var $altField = $('#edit-datepicker-alt-field');
         if ($altField && $altField[0]) {
