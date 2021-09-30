@@ -5845,7 +5845,7 @@
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/pdf.git",
-                "reference": "1e33fbf7013df3998dd4f1375889a2df93156a0e"
+                "reference": "ec8d13d0d91678946e9e23ec71984e1979818585"
             },
             "require": {
                 "drupal/core": "^8 || ^9"
