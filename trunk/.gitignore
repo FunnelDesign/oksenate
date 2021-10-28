@@ -23,3 +23,14 @@
 
 # Ignore .env files as they are personal
 /.env
+/.csslintrc
+/.eslintignore
+/.eslintrc.json
+/.ht.router.php
+/INSTALL.txt
+/README.txt
+/autoload.php
+/example.gitignore
+/index.php
+/update.php
+/web.config

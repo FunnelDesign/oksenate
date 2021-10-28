@@ -2,12 +2,15 @@
 
 namespace Drupal\manage\Tests;
 
-use Drupal\simpletest\WebTestBase;
+use Drupal\Tests\BrowserTestBase;
+
 
 /**
  * Provides automated tests for the manage module.
  */
-class SenatorControllerTest extends WebTestBase {
+class SenatorControllerTest extends BrowserTestBase {
+
+  protected $defaultTheme = 'stark';
 
 
   /**

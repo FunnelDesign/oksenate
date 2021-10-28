@@ -51,7 +51,7 @@ function content_parser_help($route_name, RouteMatchInterface $route_match) {
  * {@inheritdoc}
  */
 function content_parser_get_entity_by_remote_id($remote_id) {
-  $remotes = Drupal::entityManager()
+  $remotes = Drupal::entityTypeManager()
     ->getStorage('remote_parser')
     ->loadByProperties([
       'remote_id' => $remote_id
@@ -68,7 +68,7 @@ function content_parser_get_entity_by_remote_id($remote_id) {
  * {@inheritdoc}
  */
 function content_parser_insert_remote_id($entity_type, $entity_id, $remote_id, $original_link, $parser_id) {
-  $entity = Drupal::entityManager()
+  $entity = Drupal::entityTypeManager()
     ->getStorage('remote_parser')
     ->create([
       'remote_id' => $remote_id,
@@ -84,7 +84,7 @@ function content_parser_insert_remote_id($entity_type, $entity_id, $remote_id, $
  * {@inheritdoc}
  */
 function content_parser_entity_delete(EntityInterface $entity) {
-  $remotes = Drupal::entityManager()
+  $remotes = Drupal::entityTypeManager()
     ->getStorage('remote_parser')
     ->loadByProperties([
       'entity_type' => $entity->getEntityTypeId(),
@@ -107,7 +107,7 @@ function _content_parser_match_path($path, $patterns) {
     if (!trim($pattern)) {
       continue;
     }
-    if (Unicode::substr($pattern, 0, 1) == '#') {
+    if (Unicode::mb_substr($pattern, 0, 1) == '#') {
       if (preg_match($pattern, $path)) {
         return TRUE;
       }
@@ -142,7 +142,7 @@ function _get_array_from_text_lines($string) {
 
 /**
  * Download remote url.
- */ 
+ */
 function _get_page_by_url($uri, $headers = [], $cookieJar, $charset = 'auto') {
   try {
     $body = (string) \Drupal::httpClient()
@@ -164,7 +164,7 @@ function _get_page_by_url($uri, $headers = [], $cookieJar, $charset = 'auto') {
   }
 
   // Convert charset
-  if (Unicode::strtolower($charset) != 'utf-8' && $charset != 'auto') {
+  if (Unicode::mb_strtolower($charset) != 'utf-8' && $charset != 'auto') {
     $body = iconv($charset, 'UTF-8//IGNORE', $body);
     $body = str_ireplace(
       ' content="text/html; charset=' . $charset . '"',
@@ -187,12 +187,12 @@ function _content_parser_create_phpquery($html, $charset_fix = FALSE) {
  * Return page links.
  */
 function _parser_get_page_links($doc) {
-  $links = array();  
+  $links = array();
   foreach ($doc->find('a') as $a) {
     $href = pq($a)->attr('href');
 
     // Continue if $href == '#content'
-    if (Unicode::substr($href, 0, 1) == '#') {
+    if (Unicode::mb_substr($href, 0, 1) == '#') {
       continue;
     }
     // Continue if $href == 'ftp://...'
@@ -258,7 +258,7 @@ function _parser_post_request($url, array $data, array $options = array()) {
  */
 function _reference_create($type, $data) {
   if (in_array($type, ['taxonomy_term'])) {
-    $entities = Drupal::entityManager()
+    $entities = Drupal::entityTypeManager()
       ->getStorage($type)
       ->loadByProperties($data);
 
@@ -267,7 +267,7 @@ function _reference_create($type, $data) {
     }
   }
 
-  $entity = Drupal::entityManager()
+  $entity = Drupal::entityTypeManager()
     ->getStorage($type)
     ->create($data);
 
@@ -322,10 +322,10 @@ function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'pub
 //    $local_file_name = ltrim($file_url_info['path'], '/');
 //    $local_file_name = str_replace('/', '-', $file_url_info);
     $file_patch = $path . '/' . $file_url_info;
-    $realpath = drupal_realpath($file_patch);
+    $realpath = Core\File\FileSystem::realpath($file_patch);
 //    $mini = basename($src);
 
-    if (!file_exists(drupal_realpath($file_patch))) {
+    if (!file_exists(Core\File\FileSystem::realpath($file_patch))) {
       try {
         \Drupal::httpClient()->get($file_url, [
           'save_to' => $realpath,
@@ -333,7 +333,7 @@ function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'pub
           'read_timeout' => 600,
           'timeout' => 600,
           'verify' => false
-        ]);       
+        ]);
       } catch (ClientException $e) {
         continue;
       } catch (ConnectException $e) {
@@ -347,7 +347,7 @@ function _parser_download_files(&$doc, $selector, $attr, $base_url, $path = 'pub
     $file_url = $file_url_info['path'];
     pq($element)->attr($attr, $file_url);
   }
-  
+
   return $doc;
 }
 
@@ -377,14 +377,14 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $b
     if(strpos($src, 'barnews') !== FALSE){
       continue;
     }
-    $base = file_create_url(file_default_scheme() . '://');
+    $base = file_create_url(Drupal::config('system.file')->get('default_scheme') . '://');
     $base_url_info = parse_url($base);
     $mini = basename($src);
-    $uri = file_default_scheme() . '://senator_release/' . str_replace($base_url_info['path'], '', $mini);
+    $uri = Drupal::config('system.file')->get('default_scheme') . '://senator_release/' . str_replace($base_url_info['path'], '', $mini);
     $file_url = parser_get_absolute_url($base_url, pq($element)->attr($attr));
-    $storage = Drupal::entityManager()
+    $storage = Drupal::entityTypeManager()
       ->getStorage('file');
-    if (!file_exists(drupal_realpath($uri))) {
+    if (!file_exists(Core\File\FileSystem::realpath($uri))) {
       try {
         $downloadedFile = \Drupal::httpClient()->get($file_url, [
           'connect_timeout' => 30,
@@ -427,7 +427,7 @@ function _content_parser_retrieve_images($doc, $query = 'img', $attr = 'src', $b
     if (isset($file) && $file) {
       $elements[] = [
        'target_id' => $file->id(),
-       'alt' => $element->attr('alt') ? substr($element->attr('alt'), 0,254) : null
+       'alt' => $element->attr('alt') ? mb_substr($element->attr('alt'), 0,254) : null
      ];
     }
   }

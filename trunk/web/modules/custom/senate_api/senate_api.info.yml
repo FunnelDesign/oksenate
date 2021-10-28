@@ -1,5 +1,5 @@
-name: 'custom_sucuri'
+name: 'Senate api'
 type: module
-description: 'Sucuri security integration'
+description: 'Senate api'
 core_version_requirement: ^8 || ^9
 package: 'Custom'

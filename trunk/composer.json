@@ -79,26 +79,26 @@
         "ckeditor-plugin/link": "^4.14",
         "composer/installers": "^1.2",
         "cweagans/composer-patches": "^1.6",
-        "drupal-composer/drupal-scaffold": "^2.5",
         "drupal/admin_toolbar": "^2.0",
         "drupal/adminimal_admin_toolbar": "^1.10",
         "drupal/amswap": "^3.0",
         "drupal/anchor_link": "^2.4",
         "drupal/audiofield": "^1.9",
-        "drupal/backup_migrate": "^4.0",
-        "drupal/better_exposed_filters": "^4.0@alpha",
+        "drupal/backup_migrate": "^5.0",
+        "drupal/better_exposed_filters": "^5.0",
         "drupal/block_content_permissions": "^1.8",
         "drupal/captcha": "^1.1",
         "drupal/ckeditor_font": "^1.0",
         "drupal/coffee": "^1.0@beta",
         "drupal/console": "^1.0.2",
-        "drupal/core": "^8.8.4",
-        "drupal/delete_all": "^1.2",
-        "drupal/devel": "^2.1",
+        "drupal/core": "^8",
+        "drupal/core-composer-scaffold": "^8.8.0",
+        "drupal/delete_all": "^2.0",
+        "drupal/devel": "^4.1",
         "drupal/devel_php": "^1.1",
         "drupal/diff": "^1.0",
         "drupal/domain_theme_switch": "^1.4",
-        "drupal/draggableviews": "^1.2",
+        "drupal/draggableviews": "^2.0",
         "drupal/easy_breadcrumb": "^1.13",
         "drupal/editor_advanced_link": "^1.6",
         "drupal/editor_file": "^1.4",
@@ -106,7 +106,7 @@
         "drupal/field_group": "~3.0",
         "drupal/field_permissions": "^1.0@RC",
         "drupal/filefield_sources": "^1.0@alpha",
-        "drupal/form_mode_manager": "^1.3",
+        "drupal/form_mode_manager": "^2.0@RC",
         "drupal/google_analytics": "^2.4",
         "drupal/hide_revision_field": "^2.1",
         "drupal/imagemagick": "^3.2",
@@ -128,7 +128,7 @@
         "drupal/recaptcha": "^3.0",
         "drupal/redirect": "^1.4",
         "drupal/redirect_after_login": "^2.5",
-        "drupal/reroute_email": "^1.2",
+        "drupal/reroute_email": "^2.0",
         "drupal/search_api_page": "^1.0@beta",
         "drupal/search_file_attachments": "^1.1",
         "drupal/select2": "^1.5",
@@ -141,14 +141,16 @@
         "drupal/token": "^1.5",
         "drupal/toolbar_menu": "^2.1",
         "drupal/toolbar_menu_clean": "^1.2",
+        "drupal/upgrade_status": "^3.11",
         "drupal/video_embed_field": "^2.2",
         "drupal/view_unpublished": "^1.0@alpha",
         "drupal/views_bulk_edit": "^2.4",
         "drupal/views_bulk_operations": "^3.3",
         "drupal/views_data_export": "^1.0@beta",
-        "drupal/webform": "^5.5",
+        "drupal/webform": "^6.0",
         "drupal/webform_mailchimp": "^5.8",
-        "drush/drush": "^9.0.0",
+        "drush/drush": "^9.7.1 | ^10.0.0",
+        "kint-php/kint": "^3.3",
         "mozilla/pdf.js": "^1.10",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^1.1",
@@ -162,7 +164,7 @@
         "zendframework/zend-filter": "^2.9"
     },
     "require-dev": {
-        "drupal/core-dev": "^8.8"
+        "drupal/core-dev": "^8"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -226,8 +228,8 @@
             "drupal/paragraphs_edit": {
                 "https://www.drupal.org/project/paragraphs_edit/issues/2944653": "https://www.drupal.org/files/issues/2019-03-22/error_on_missing_parent-2944653-13034993.patch"
             },
-            "drupal/better_exposed_filters": {
-                "https://www.drupal.org/project/better_exposed_filters/issues/3224329": "https://www.drupal.org/files/issues/2021-07-19/3224329-datepicker-autocomplete-5.patch"
+            "drupal/search_file_attachments": {
+                "https://www.drupal.org/project/search_file_attachments/issues/3239753": "https://www.drupal.org/files/issues/2021-10-21/3239753-drupal-9-requirement_1.patch"
             }
         }
     }

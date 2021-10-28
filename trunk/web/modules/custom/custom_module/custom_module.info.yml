@@ -1,7 +1,7 @@
 name: custom_module
 type: module
 description: 'Custom module for additional functional'
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: 'Custom'
 
 # Dependencies
