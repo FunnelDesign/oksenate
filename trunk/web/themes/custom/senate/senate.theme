@@ -277,12 +277,12 @@ function senate_preprocess_node(array &$vars) {
 
           $img_file_uri = $theme_path . '/dist/images/default-video-preview.jpg';
           if (!empty($vars['content']['field_video_preview_image'][0]['#item'])){
-            $img_file_uri = $vars['content']['field_video_preview_image'][0]['#item']->entity->url();
+            $img_file_uri = $vars['content']['field_video_preview_image'][0]['#item']->entity->createFileUrl();
           }
           $vars['preview_image'] = Markup::create("<span class=\"bMedia__preview\" style=\"background-image: url('$img_file_uri')\"></span>");
         }
         if (!empty($vars['content']['field_senator_photo'][0]['#item'])){
-          $senator_photo_uri = $vars['content']['field_senator_photo'][0]['#item']->entity->url();
+          $senator_photo_uri = $vars['content']['field_senator_photo'][0]['#item']->entity->createFileUrl();
         }
         $vars['senator_photo_download'] = !empty($senator_photo_uri) ? $senator_photo_uri : '';
         $photo_download_array = explode('/', $vars['senator_photo_download']);
@@ -431,7 +431,7 @@ function senate_preprocess_node(array &$vars) {
 
         $vars['bg_image'] = !empty($vars["content"]["field_senator_blog_post_image"]) &&
           !empty($vars["content"]["field_senator_blog_post_image"]["#items"]) ?
-          $vars["content"]["field_senator_blog_post_image"]["#items"]->entity->url() : '';
+          $vars["content"]["field_senator_blog_post_image"]["#items"]->entity->createFileUrl() : '';
         break;
       case 'gallery' :
         $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
@@ -518,7 +518,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars['image_url'] = ImageStyle::load($style)->buildUrl($img_file_uri);
       }
       else {
-        $vars['image_url'] = $vars['items'][0]['content']['#item']->entity->url();
+        $vars['image_url'] = $vars['items'][0]['content']['#item']->entity->createFileUrl();
       }
     }
   }
@@ -650,7 +650,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_sign_up_par_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
-        $image_url = $vars['items'][$key]['content']['#item']->entity->url();
+        $image_url = $vars['items'][$key]['content']['#item']->entity->createFileUrl();
         $vars['items'][$key]['content']['image_url'] = $image_url;
       }
 
@@ -778,7 +778,8 @@ function senate_preprocess_field(array &$vars, $hook) {
         $title = Markup::create('<span class="bTiles__title">' . $title . '</span><span class="bTiles__btnWrap"><span class="btn btn_a btn_s_c">view pdf</span></span>');
         $file = $item["content"]["#file"];
         if (!empty($file)) {
-          $url = $file->url();
+          $url = ($file->getFileUri());
+          $url = file_create_url($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['bTiles__item',]];
           $options['target'] = '_blank';
@@ -795,7 +796,8 @@ function senate_preprocess_field(array &$vars, $hook) {
         $title = !empty($title) ? $title : t('Download');
         $file = $item["content"]["#file"];
         if (!empty($file)) {
-          $url = $file->url();
+          $url = ($file->getFileUri());
+          $url = file_create_url($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['btn', 'btn_b', 'btn_s_a']];
           $options['target'] = '_blank';
@@ -812,7 +814,8 @@ function senate_preprocess_field(array &$vars, $hook) {
         $title = !empty($title) ? $title : t('Download');
         $file = $item["content"]["#file"];
         if (!empty($file)) {
-          $url = $file->url();
+          $url = ($file->getFileUri());
+          $url = file_create_url($url);
           $url = Url::fromUri($url);
           $options['target'] = '_blank';
           $options['download'] = $title;
@@ -857,8 +860,9 @@ function senate_preprocess_field(array &$vars, $hook) {
 				$title = !empty($title) ? $title : t('see historical members');
 				$file = $item["content"]["#file"];
 				if (!empty($file)) {
-					$url = $file->url();
-					$url = Url::fromUri($url);
+          $url = ($file->getFileUri());
+          $url = file_create_url($url);
+          $url = Url::fromUri($url);
 					$options = ['class' => ['btn', 'btn_a']];
 					$options['target'] = '_blank';
 					$url->setOption('attributes', $options);
@@ -892,7 +896,8 @@ function senate_preprocess_field(array &$vars, $hook) {
         $title = !empty($title) ? $title : t('Download');
         $file = $item["content"]["#file"];
         if (!empty($file)) {
-          $url = $file->url();
+          $url = ($file->getFileUri());
+          $url = file_create_url($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['bTb__text', 'bTb__text_a', 'pageIn_cl_c']];
           $options['target'] = '_blank';
@@ -915,7 +920,8 @@ function senate_preprocess_field(array &$vars, $hook) {
         $title = !empty($title) ? $title : t('View file');
         $file = $item["content"]["#file"];
         if (!empty($file)) {
-          $url = $file->url();
+          $url = ($file->getFileUri());
+          $url = file_create_url($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['bListLinks__link']];
           $options['target'] = '_blank';
@@ -1066,7 +1072,7 @@ function senate_preprocess_field(array &$vars, $hook) {
             $vars['bg_images'][$key] = ImageStyle::load($style)->buildUrl($img_file_uri);
           }
           else {
-            $vars['bg_images'][$key] = $item['content']['#item']->entity->url();
+            $vars['bg_images'][$key] = $item['content']['#item']->entity->createFileUrl();
           }
         }
       }
@@ -1392,7 +1398,7 @@ function _rows_from_paragraphs(&$vars, $field_array) {
               case 'image':
                 foreach ($field as $key => $item) {
                   if (!empty($item->entity)) {
-                    $img_url = $item->entity->url();
+                    $img_url = $item->entity->createFileUrl();
                     $row[$field_name][$key]['value'] = $img_url;
                     $row[$field_name][$key]['uri'] = $item->entity->getFileUri();
                   }
@@ -2023,11 +2029,11 @@ function senate_preprocess_paragraph(array &$vars) {
 
       $vars['thumb'] = (!empty($vars["content"]["field_video_thumbnail"]) &&
         !empty($vars["content"]["field_video_thumbnail"]["0"])) ?
-        $vars["content"]["field_video_thumbnail"]["0"]['#item']->entity->url() : '';
+        $vars["content"]["field_video_thumbnail"]["0"]['#item']->entity->createFileUrl() : '';
       break;
     case 'gallery_image':
       if (!empty($vars['content']['field_gallery_par_image'][0]['#item'])){
-        $gallery_img_uri = $vars['content']['field_gallery_par_image'][0]['#item']->entity->url();
+        $gallery_img_uri = $vars['content']['field_gallery_par_image'][0]['#item']->entity->createFileUrl();
       }
       $vars['gallery_img_uri'] = !empty($gallery_img_uri) ? $gallery_img_uri : '';
       $vars['gallery_img_download_target'] = !empty($vars['gallery_img_uri']) ? end(explode('/',$vars['gallery_img_uri'])) : '';
@@ -2416,7 +2422,8 @@ function senate_preprocess_views_view_field(&$vars) {
           $file = !empty($fid) ? \Drupal\file\Entity\File::load($fid) : '';
 
           if (!empty($file)) {
-            $url = $file->createFileUrl(FALSE);
+            $url = ($file->getFileUri());
+            $url = file_create_url($url);
             $url = Url::fromUri($url);
             $options = ['class' => ['bTb__text', 'bTb__text_a',]];
             $options['target'] = '_blank';

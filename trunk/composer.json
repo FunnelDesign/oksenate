@@ -91,7 +91,7 @@
         "drupal/ckeditor_font": "^1.0",
         "drupal/coffee": "^1.0@beta",
         "drupal/console": "^1.0.2",
-        "drupal/core": "^8",
+        "drupal/core": "^9",
         "drupal/core-composer-scaffold": "^8.8.0",
         "drupal/delete_all": "^2.0",
         "drupal/devel": "^4.1",
@@ -130,7 +130,6 @@
         "drupal/redirect_after_login": "^2.5",
         "drupal/reroute_email": "^2.0",
         "drupal/search_api_page": "^1.0@beta",
-        "drupal/search_file_attachments": "^1.1",
         "drupal/select2": "^1.5",
         "drupal/sharethis": "^2.0@beta",
         "drupal/simple_sitemap": "^3.5",
@@ -164,7 +163,7 @@
         "zendframework/zend-filter": "^2.9"
     },
     "require-dev": {
-        "drupal/core-dev": "^8"
+        "drupal/core-dev": "^9"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -227,9 +226,6 @@
             },
             "drupal/paragraphs_edit": {
                 "https://www.drupal.org/project/paragraphs_edit/issues/2944653": "https://www.drupal.org/files/issues/2019-03-22/error_on_missing_parent-2944653-13034993.patch"
-            },
-            "drupal/search_file_attachments": {
-                "https://www.drupal.org/project/search_file_attachments/issues/3239753": "https://www.drupal.org/files/issues/2021-10-21/3239753-drupal-9-requirement_1.patch"
             }
         }
     }
