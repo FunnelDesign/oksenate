@@ -41,7 +41,8 @@ function senate_votes_cron() {
 
     $queue = \Drupal::queue('senate_votes');
 
-    $items = _senate_get_files_data($directory, $prev_execution);
+//    $items = _senate_get_files_data($directory, $prev_execution);
+    $items = _senate_get_external_data();
 
     foreach ($items as $item) {
       $item = (object)$item;
@@ -50,6 +51,29 @@ function senate_votes_cron() {
   }
 }
 
+function _senate_get_external_data() {
+  $senate_votes_request_helper = \Drupal::hasService('senate_votes.request_helper') ?
+    \Drupal::service('senate_votes.request_helper') : '';
+  $items = [];
+  $limit = 50;
+
+  if (!empty($senate_votes_request_helper)) {
+    $data = $senate_votes_request_helper->sendXmlRequest('https://api.oksenate.gov/votes');
+    $rows = !empty($data["vote"]) ? $data["vote"] : [];
+
+    while (!empty($rows)) {
+      $rows_part = array_splice($rows, 0 , $limit);
+
+      if (!empty($rows_part)) {
+        $items[] = [
+          'rows' => $rows_part,
+        ];
+      }
+    }
+  }
+
+  return $items;
+}
 
 function _senate_get_files_data($directory, $prev_execution) {
   $prev_execution = !empty($prev_execution) ? $prev_execution : 0;

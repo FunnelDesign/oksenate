@@ -158,7 +158,7 @@ class SenateVotesHelper {
     }
 
     try {
-      $reader = $reader = IOFactory::createReaderForFile($absolute_path);
+      $reader = IOFactory::createReaderForFile($absolute_path);
       $spreadsheet = $reader->load($absolute_path);
       $sheets_amount = $spreadsheet->getSheetCount();
 
