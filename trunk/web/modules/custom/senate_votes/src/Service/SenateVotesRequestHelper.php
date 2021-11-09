@@ -249,4 +249,36 @@ class SenateVotesRequestHelper {
 
     return $new_data;
   }
+
+  public function getDbVotes() {
+    try {
+      $query = $this->database->select('node_field_data', 'n')
+        ->fields('n', ['nid', 'status', 'created'])
+        ->condition('n.type', 'senate_votes');
+
+      $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
+
+      $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes.field_senate_votes_target_id = votes_date.entity_id AND votes_date.deleted = 0');
+      $query->fields('votes_date', ['field_senate_votes_date_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_measure', 'votes_measure', 'votes.field_senate_votes_target_id = votes_measure.entity_id AND votes_measure.deleted = 0');
+      $query->fields('votes_measure', ['field_senate_votes_measure_value']);
+
+      $query->leftJoin('paragraph__field_senate_votes_author', 'votes_author', 'votes.field_senate_votes_target_id = votes_author.entity_id AND votes_author.deleted = 0');
+      $query->fields('votes_author', ['field_senate_votes_author_value']);
+
+      $query->orderBy('votes_date.field_senate_votes_date_value');
+
+      $a = $query->__toString();
+
+      $result = $query->execute()->fetchAll();
+
+      return !empty($result) ? $result : [];
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
+          '%message' => $e->getMessage(),
+        ]));
+    }
+  }
 }
