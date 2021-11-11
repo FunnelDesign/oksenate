@@ -2,6 +2,6 @@ services:
   senate_votes.helper:
     class: Drupal\senate_votes\Service\SenateVotesHelper
     arguments: ['@database', '@messenger', '@entity_type.manager']
-  senate_votes.request_helper:
-    class: Drupal\senate_votes\Service\SenateVotesRequestHelper
+  senate_votes.api_helper:
+    class: Drupal\senate_votes\Service\SenateVotesApiHelper
     arguments: ['@database', '@messenger', '@entity_type.manager']

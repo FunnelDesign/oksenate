@@ -642,6 +642,9 @@ class SenateVotesHelper {
       $node->set('field_senate_votes_year', $data["year"]);
       $node->set('field_senate_votes_title', $data["year"] . ' - 1st Session');
     }
+    if (!empty($data["type"])) {
+      $node->set('field_senate_votes_type', $data["type"]);
+    }
 
     $node->set('field_senate_votes_legislature', $legislature);
   }

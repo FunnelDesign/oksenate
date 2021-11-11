@@ -13,11 +13,12 @@ use Drupal\node\NodeStorageInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Drupal\Component\Utility\Html;
 
 /**
- * Class SenateVotesRequestHelper.
+ * Class SenateVotesApiHelper.
  */
-class SenateVotesRequestHelper {
+class SenateVotesApiHelper {
 
   use MessengerTrait;
 
@@ -250,6 +251,37 @@ class SenateVotesRequestHelper {
     return $new_data;
   }
 
+  public function getDbVotesInfo() {
+    $votes = $this->getDbVotes();
+    $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
+      \Drupal::service('senate_votes.helper') : '';
+    $sorted_votes = [];
+
+    foreach ($votes as $vote) {
+      $date = $vote->field_senate_votes_date_value ?? '';
+      $measure = $vote->field_senate_votes_measure_value ?? '';
+      $author = $vote->field_senate_votes_author_value ?? '';
+      $action = $vote->field_senate_votes_action_link_title ?? '';
+      $id = $this->getVoteId($date, $measure, $author, $action);
+      $year = $senate_votes_helper->getYear($date);
+
+      if (!empty($id)) {
+        $sorted_votes[$year][$id] = [
+          'nid' => $vote->nid,
+          'date' => $vote->field_senate_votes_date_value
+        ];
+      }
+    }
+
+    return $sorted_votes;
+  }
+
+  public function getVoteId($date, $measure, $author, $action) {
+    $id = $date . ' ' . $measure . ' ' . $author . ' ' . $action;
+    $id = trim($id);
+    return Html::getId($id);
+  }
+
   public function getDbVotes() {
     try {
       $query = $this->database->select('node_field_data', 'n')
@@ -257,6 +289,9 @@ class SenateVotesRequestHelper {
         ->condition('n.type', 'senate_votes');
 
       $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
+
+      $query->leftJoin('node__field_senate_votes_type', 'type', 'type.entity_id = n.nid AND type.deleted = 0');
+      $query->condition('type.field_senate_votes_type_value', 'api');
 
       $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes.field_senate_votes_target_id = votes_date.entity_id AND votes_date.deleted = 0');
       $query->fields('votes_date', ['field_senate_votes_date_value']);
@@ -267,9 +302,12 @@ class SenateVotesRequestHelper {
       $query->leftJoin('paragraph__field_senate_votes_author', 'votes_author', 'votes.field_senate_votes_target_id = votes_author.entity_id AND votes_author.deleted = 0');
       $query->fields('votes_author', ['field_senate_votes_author_value']);
 
+      $query->leftJoin('paragraph__field_senate_votes_action_link', 'votes_action', 'votes.field_senate_votes_target_id = votes_action.entity_id AND votes_action.deleted = 0');
+      $query->fields('votes_action', ['field_senate_votes_action_link_title']);
+
       $query->orderBy('votes_date.field_senate_votes_date_value');
 
-      $a = $query->__toString();
+//      $a = $query->__toString();
 
       $result = $query->execute()->fetchAll();
 
