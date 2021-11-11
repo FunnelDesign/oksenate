@@ -256,6 +256,7 @@ class SenateVotesApiHelper {
     $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
       \Drupal::service('senate_votes.helper') : '';
     $sorted_votes = [];
+    $pids = [];
 
     foreach ($votes as $vote) {
       $date = $vote->field_senate_votes_date_value ?? '';
@@ -264,6 +265,7 @@ class SenateVotesApiHelper {
       $action = $vote->field_senate_votes_action_link_title ?? '';
       $id = $this->getVoteId($date, $measure, $author, $action);
       $year = $senate_votes_helper->getYear($date);
+      $pid = $vote->field_senate_votes_target_id ?? '';
 
       if (!empty($id)) {
         $sorted_votes[$year][$id] = [
@@ -271,9 +273,15 @@ class SenateVotesApiHelper {
           'date' => $vote->field_senate_votes_date_value
         ];
       }
+      if (!empty($pid)) {
+        $pids[] = $pid;
+      }
     }
 
-    return $sorted_votes;
+    return [
+      'votes' => $sorted_votes,
+      'pids' => $pids,
+    ];
   }
 
   public function getVoteId($date, $measure, $author, $action) {
@@ -289,6 +297,7 @@ class SenateVotesApiHelper {
         ->condition('n.type', 'senate_votes');
 
       $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
+      $query->fields('votes', ['field_senate_votes_target_id']);
 
       $query->leftJoin('node__field_senate_votes_type', 'type', 'type.entity_id = n.nid AND type.deleted = 0');
       $query->condition('type.field_senate_votes_type_value', 'api');
@@ -317,6 +326,25 @@ class SenateVotesApiHelper {
       \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
           '%message' => $e->getMessage(),
         ]));
+    }
+  }
+
+  public function deleteParagraph($pids) {
+    $storage_handler = \Drupal::entityTypeManager()->getStorage('paragraph');
+    $entities = $storage_handler->loadMultiple($pids);
+    if (!empty($entities)) {
+      $storage_handler->delete($entities);
+
+      try {
+        $num_deleted = $this->database->delete('node__field_senate_votes')
+          ->condition('field_senate_votes_target_id', $pids, 'IN')
+          ->execute();
+      }
+      catch (\Exception $e) {
+        \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
+            '%message' => $e->getMessage(),
+          ]));
+      }
     }
   }
 }

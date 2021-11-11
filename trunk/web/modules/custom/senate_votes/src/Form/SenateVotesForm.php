@@ -143,16 +143,60 @@ class SenateVotesForm extends ConfigFormBase {
       ],
     ];
 
+    $form['source'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Source'),
+      '#default_value' => $config->get('source'),
+      '#options' => [
+        'api' => $this->t('Api'),
+        'files' => $this->t('Files'),
+      ],
+      '#attributes' => [
+        'name' => 'source',
+      ],
+    ];
+
     $form['files'] = [
       '#type' => 'details',
       '#title' => $this->t('Files'),
       '#open' => TRUE,
+      '#states' => [
+        'visible' => [
+          ':input[name="source"]' => ['value' => 'files'],
+        ],
+      ],
     ];
 
     $form['files']['directory'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Directory'),
       '#default_value' => $config->get('directory'),
+      '#size' => 60,
+      '#maxlength' => 128,
+      '#required' => TRUE,
+    ];
+
+    $form['api'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Api'),
+      '#open' => TRUE,
+      '#states' => [
+        'visible' => [
+          ':input[name="source"]' => ['value' => 'api'],
+        ],
+      ],
+    ];
+
+    $form['api']['api_update_all'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t("Update all votes."),
+      '#default_value' => $config->get('api_update_all'),
+    ];
+
+    $form['api']['api_url'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Url'),
+      '#default_value' => $config->get('api_url'),
       '#size' => 60,
       '#maxlength' => 128,
       '#required' => TRUE,
@@ -169,6 +213,9 @@ class SenateVotesForm extends ConfigFormBase {
     $cron_get_all = $form_state->getValue('cron_get_all');
     $cron_update_all = $form_state->getValue('cron_update_all');
     $directory = $form_state->getValue('directory');
+    $source = $form_state->getValue('source');
+    $api_update_all = $form_state->getValue('api_update_all');
+    $api_url = $form_state->getValue('api_url');
 
     if (!empty($cron_reset)) {
       $this->state->set('senate_votes.next_execution', 0);
@@ -182,6 +229,14 @@ class SenateVotesForm extends ConfigFormBase {
     if (!empty($directory)) {
       $this->state->set('senate_votes.directory', $directory);
     }
+    if (!empty($source)) {
+      $this->state->set('senate_votes.source', $source);
+    }
+    if (!empty($api_url)) {
+      $this->state->set('senate_votes.api_url', $api_url);
+    }
+
+    $this->state->set('senate_votes.api_update_all', $api_update_all);
 
     // Use a state variable to signal that cron was run manually from this form.
     $this->state->set('senate_votes_show_status_message', TRUE);
@@ -204,6 +259,18 @@ class SenateVotesForm extends ConfigFormBase {
 
     $this->configFactory->getEditable('senate_votes.settings')
       ->set('directory', $form_state->getValue('directory'))
+      ->save();
+
+    $this->configFactory->getEditable('senate_votes.settings')
+      ->set('source', $form_state->getValue('source'))
+      ->save();
+
+    $this->configFactory->getEditable('senate_votes.settings')
+      ->set('api_update_all', $form_state->getValue('api_update_all'))
+      ->save();
+
+    $this->configFactory->getEditable('senate_votes.settings')
+      ->set('api_url', $form_state->getValue('api_url'))
       ->save();
 
     parent::submitForm($form, $form_state);

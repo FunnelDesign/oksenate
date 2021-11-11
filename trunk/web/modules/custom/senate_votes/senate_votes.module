@@ -21,6 +21,9 @@ function senate_votes_cron() {
   $request_time = \Drupal::time()->getRequestTime();
 
   $next_execution = \Drupal::state()->get('senate_votes.next_execution', 0);
+  $source = \Drupal::state()->get('senate_votes.source', 'files');
+  $api_url = \Drupal::state()->get('senate_votes.api_url', '');
+  $api_update_all = \Drupal::state()->get('senate_votes.api_update_all', FALSE);
 
   if ($request_time >= $next_execution) {
     \Drupal::logger('senate_votes')->notice('senate_votes ran');
@@ -39,11 +42,14 @@ function senate_votes_cron() {
     \Drupal::state()->set('senate_votes.update_all', FALSE);
     $type = empty($prev_execution) ? 'all' : 'new';
 
-//    $queue = \Drupal::queue('senate_votes');
-//    $items = _senate_get_files_data($directory, $prev_execution);
-
-    $items = _senate_votes_api_get_external_data();
-    $queue = \Drupal::queue('senate_votes_api');
+    if ($source == 'files') {
+      $queue = \Drupal::queue('senate_votes');
+      $items = _senate_get_files_data($directory, $prev_execution);
+    }
+    else {
+      $items = _senate_votes_api_get_external_data($api_url, $api_update_all);
+      $queue = \Drupal::queue('senate_votes_api');
+    }
 
     foreach ($items as $item) {
       $item = (object) $item;
@@ -52,7 +58,7 @@ function senate_votes_cron() {
   }
 }
 
-function _senate_votes_api_get_external_data() {
+function _senate_votes_api_get_external_data($api_url, $api_update_all) {
   $senate_votes_api_helper = \Drupal::hasService('senate_votes.api_helper') ?
     \Drupal::service('senate_votes.api_helper') : '';
   $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
@@ -62,13 +68,16 @@ function _senate_votes_api_get_external_data() {
   $items = [];
   $votes_to_create = [];
   $limit = 50;
+  $pids = [];
 
   if (!empty($senate_votes_api_helper)) {
-    $data = $senate_votes_api_helper->sendXmlRequest('https://api.oksenate.gov/votes');
+    $data = $senate_votes_api_helper->sendXmlRequest($api_url);
     $votes = !empty($data["vote"]) ? $data["vote"] : [];
 
     if (!empty($votes)) {
-      $db_votes = $senate_votes_api_helper->getDbVotesInfo();
+      $db_votes_info = $senate_votes_api_helper->getDbVotesInfo();
+      $db_votes = $db_votes_info['votes'];
+      $pids = $db_votes_info['pids'];
 
       foreach ($votes as $vote) {
         $date = !empty($vote["@date"]) ?
@@ -79,7 +88,7 @@ function _senate_votes_api_get_external_data() {
         $id = $senate_votes_api_helper->getVoteId($date, $measure, $author, $action);
         $year = $senate_votes_helper->getYear($date);
 
-        if (!empty($db_votes[$year]) && empty($db_votes[$year][$id])) {
+        if (!empty($db_votes[$year]) && (empty($db_votes[$year][$id]) || !empty($api_update_all))) {
           reset($db_votes[$year]);
           $first_row_data = current($db_votes[$year]);
           $nid = $first_row_data['nid'] ?? '';
@@ -107,6 +116,8 @@ function _senate_votes_api_get_external_data() {
       if (!empty($rows_part)) {
         $items[] = [
           'rows' => $rows_part,
+          'pids' => $pids,
+          'update_all' => $api_update_all,
         ];
       }
     }

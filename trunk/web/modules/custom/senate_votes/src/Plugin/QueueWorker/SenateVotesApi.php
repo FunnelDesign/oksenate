@@ -20,13 +20,19 @@ class SenateVotesApi extends QueueWorkerBase {
    * {@inheritdoc}
    */
   public function processItem($data) {
-    $rows = !empty($data->rows) ? $data->rows : [];
+    $rows = $data->rows ?? [];
+    $pids = $data->pids ?? [];
+    $update_all = $data->update_all ?? FALSE;
     $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
       \Drupal::service('senate_votes.helper') : '';
     $senate_votes_api_helper = \Drupal::hasService('senate_votes.api_helper') ?
       \Drupal::service('senate_votes.api_helper') : '';
 
     if (!empty($rows) && !empty($senate_votes_helper) && !empty($senate_votes_api_helper)) {
+      if (!empty($update_all)) {
+        $senate_votes_api_helper->deleteParagraph($pids);
+      }
+
       foreach ($rows as $row) {
         $parent_node = \Drupal\node\Entity\Node::load($row['nid']);
         $paragraph = $senate_votes_api_helper->createParagraph($parent_node, 'field_senate_votes', $row["vote"]);
