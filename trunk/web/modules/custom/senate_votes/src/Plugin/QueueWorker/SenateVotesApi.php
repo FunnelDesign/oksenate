@@ -88,6 +88,6 @@ class SenateVotesApi extends QueueWorkerBase {
 //    $a = $query->__toString();
     $max = $query->execute()->fetchField();
 
-    return !empty($max) ? $max : -1;
+    return !empty($max) ? $max : 0;
   }
 }
