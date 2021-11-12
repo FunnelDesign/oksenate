@@ -61,10 +61,10 @@ function custom_module_form_alter(&$form, FormStateInterface &$form_state, $form
         $url = Url::fromUserInput('/manage/senate-votes/' . $nid);
         $url->setOption('attributes', $options);
         $manage_link = Link::fromTextAndUrl(t('Manage Senate Votes'), $url);
-        $form["field_senate_votes"] = [
-          '#theme' => 'markup',
-          '#markup' => $manage_link->toString(),
-        ];
+//        $form["field_senate_votes"] = [
+//          '#theme' => 'markup',
+//          '#markup' => $manage_link->toString(),
+//        ];
       }
       break;
   }
