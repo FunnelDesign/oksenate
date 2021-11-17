@@ -138,6 +138,7 @@ class SenateVotesForm extends ConfigFormBase {
       '#options' => [
         60 => $this->t('1 minute'),
         300 => $this->t('5 minutes'),
+        900 => $this->t('15 minutes'),
         3600 => $this->t('1 hour'),
         86400 => $this->t('1 day'),
       ],
