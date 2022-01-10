@@ -10,6 +10,11 @@
     p {
       display: contents;
     }
+
+    b, strong {
+      font-family: $RobotoCondensed-Bold;
+      font-weight: normal;
+    }
   }
 
   &__nav-item {
