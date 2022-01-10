@@ -6,6 +6,10 @@
     align-items: center;
     justify-content: center;
     gap: 20px;
+
+    p {
+      display: contents;
+    }
   }
 
   &__nav-item {
