@@ -1,0 +1,92 @@
+.b-district-maps {
+
+  &__nav {
+    @include margin-bottom(30px,50px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  &__nav-item {
+    width: 140px;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: $color-red;
+    border-radius: 5px;
+    @include font-size(14px, 16px, 18px);
+    font-family: $RobotoCondensed-Light;
+    text-align: center;
+    line-height: 1.2;
+    text-decoration: none;
+    color: $color-white;
+
+    @include sm {
+      width: 168px;
+      min-height: 168px;
+      display: flex;
+    }
+
+    b {
+      font-family: $RobotoCondensed-Bold;
+    }
+
+    &:hover {
+      opacity: .7;
+    }
+  }
+
+  &__item-title {
+    @include margin(0 0 30px, 0 0 40px);
+
+    & > *:last-child {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 2px;
+    }
+
+    h6 {
+      color: $color-blue;
+      text-align: center;
+      font-family: $RobotoCondensed-Light;
+      @include font-size(14px, 16px, 18px);
+      margin: 0;
+    }
+  }
+
+  &__item {
+    position: relative;
+    @include margin-bottom(30px, 35px, 45px);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__list {
+    position: relative;
+    @include padding-bottom(30px, 40px, 60px);
+    @include margin-bottom(30px, 40px, 60px);
+
+    &:after {
+      @include pseudo-block($left: 50%, $bottom: 0);
+      width: 280px;
+      border-top: 1px solid $color-blue;
+      transform: translate(-50%, 0);
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+}
