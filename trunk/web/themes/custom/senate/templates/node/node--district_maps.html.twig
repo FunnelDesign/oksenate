@@ -103,9 +103,28 @@
 
   <section class="section section_ind_c section_bg-color_c">
     <div class="bContainer">
-      {{ content.body }}
+      <div class="b-district-maps">
+        <div class="b-district-maps__nav">
+          {{ content.body }}
+        </div>
+      </div>
+      <div class="b-district-maps__group">
 
-      {{ content.field_district_maps_files }}
+        <div class="b-district-maps__item" id="current-senate">
+          <div class="b-district-maps__item-title">
+            {{ content.field_district_maps_title }}
+          </div>
+          {{ content.field_district_maps_files }}
+        </div>
+
+        <div class="b-district-maps__item" id="new-senate">
+          <div class="b-district-maps__item-title">
+            {{ content.field_district_maps_new_title }}
+          </div>
+          {{ content.field_district_maps_new_files }}
+        </div>
+      </div>
     </div>
+
   </section>
 </article>
