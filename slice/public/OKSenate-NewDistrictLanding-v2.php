@@ -16,8 +16,8 @@
         <div class="bContainer">
 
           <div class="pageIn__ico">
-            <img src="../dist/images/titleIco/title-ico-57.png"
-                 srcset="../dist/images/titleIco/title-ico-57-2x.png 2x"
+            <img src="../dist/images/ico/ico-tmp-37.png"
+                 srcset="../dist/images/ico/ico-tmp-37-2x.png 2x"
                  alt="">
           </div>
 
