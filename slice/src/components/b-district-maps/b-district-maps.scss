@@ -79,8 +79,8 @@
 
   &__list {
     position: relative;
-    @include padding-bottom(30px, 40px, 60px);
-    @include margin-bottom(30px, 40px, 60px);
+    @include padding-bottom(20px, 27px, 27px);
+    @include margin-bottom(30px, 35px, 35px);
 
     &:after {
       @include pseudo-block($left: 50%, $bottom: 0);
