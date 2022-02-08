@@ -57,114 +57,15 @@ class SenateVotesApiHelper {
   }
 
   /**
-   * Send Xml request.
-   * @param $url
+   * Create new paragraph.
    *
-   * @return array|mixed|\Psr\Http\Message\StreamInterface
-   */
-  public function sendXmlRequest($url) {
-    $client = \Drupal::httpClient();
-    $data = '';
-
-    try {
-      $response = $client->get($url);
-
-      if ($response->getStatusCode() == 200) {
-        $data = $response->getBody();
-        $xml_encode = new XmlEncoder();
-        $data = $xml_encode->decode($data, 'xml');
-      }
-      else {
-        \Drupal::logger('senate_votes')->error(t('Request of "@url" failed with error "@error" (HTTP code @code).', [
-          '@url' => $url,
-          '@error' => $response->getReasonPhrase(),
-          '@code' => $response->getStatusCode()
-        ]));
-      }
-
-      return $data;
-    }
-    catch (RequestException $e) {
-      watchdog_exception('senate_votes', $e);
-    }
-  }
-
-  /**
-   * Get node by first row data.
+   * @param $parent
+   * @param $parent_field
    * @param $data
    *
-   * @return string
+   * @return \Drupal\Core\Entity\EntityBase|\Drupal\Core\Entity\EntityInterface|\Drupal\paragraphs\Entity\Paragraph|string
+   * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  public function getNodeByRowData($data) {
-    if (empty($data)) {
-      return '';
-    }
-
-    $date = !empty($data["@date"]) ? $data["@date"] : '';
-    $measure = !empty($data["@measure"]) ? $data["@measure"] : '';
-    $author = !empty($data["@author"]) ? $data["@author"] : '';
-
-    $events_sync_helper = \Drupal::hasService('events_custom.helper') ?
-      \Drupal::service('events_custom.helper') : '';
-
-    try {
-      $query = $this->database->select('node_field_data', 'n')
-        ->fields('n', ['nid', 'status', 'created'])
-        ->condition('n.type', 'senate_votes');
-
-      $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
-
-      if (!empty($date) && !empty($events_sync_helper)) {
-        $date = $events_sync_helper->normalizeExternalDateData($date, DateTimeItemInterface::DATE_STORAGE_FORMAT);
-        $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes.field_senate_votes_target_id = votes_date.entity_id AND votes_date.deleted = 0');
-        $query->fields('votes_date', ['field_senate_votes_date_value']);
-        $query->condition('votes_date.field_senate_votes_date_value', $date);
-      }
-
-      if (!empty($measure)) {
-        $query->leftJoin('paragraph__field_senate_votes_measure', 'votes_measure', 'votes.field_senate_votes_target_id = votes_measure.entity_id AND votes_measure.deleted = 0');
-        $query->fields('votes_measure', ['field_senate_votes_measure_value']);
-        $query->condition('votes_measure.field_senate_votes_measure_value', $measure);
-      }
-
-      if (!empty($author)) {
-        $query->leftJoin('paragraph__field_senate_votes_author', 'votes_author', 'votes.field_senate_votes_target_id = votes_author.entity_id AND votes_author.deleted = 0');
-        $query->fields('votes_author', ['field_senate_votes_author_value']);
-        $query->condition('votes_author.field_senate_votes_author_value', $author);
-      }
-
-      $query->orderBy('n.created', 'ASC');
-
-      //      $a = $query->__toString();
-
-      $result = $query->execute()->fetchAll();
-      $result = !empty($result) ? $result : [];
-      $result_nid = '';
-
-      if (!empty($result[0]) && ($result[0]->status === '1')) {
-        $result_nid = $result[0]->nid;
-      }
-      else {
-        foreach ($result as $node) {
-          if (empty($result_nid) && ($node->status === '1')) {
-            $result_nid = $node->nid;
-          }
-        }
-
-        if (empty($result_nid) && !empty($result[0])) {
-          $result_nid = $result[0]->nid;
-        }
-      }
-
-      return $result_nid;
-    }
-    catch (\Exception $e) {
-      \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
-          '%message' => $e->getMessage(),
-        ]));
-    }
-  }
-
   public function createParagraph($parent, $parent_field, $data) {
     if (empty($parent) || !is_object($parent) || empty($parent_field) || empty($data)) {
       return '';
@@ -185,72 +86,91 @@ class SenateVotesApiHelper {
     return !empty($paragraph) ? $paragraph : '';
   }
 
-  public function updateParagraphFields(&$paragraph, $data, $op = 'update') {
-    $new_data = $this->prepareParagraphData($data);
-
-    if (!empty($new_data['date'])) {
-      $paragraph->set('field_senate_votes_date', $new_data["date"]);
+  /**
+   * Update paragraph's fields.
+   *
+   * @param $paragraph
+   * @param $data
+   *
+   * @return void
+   */
+  public function updateParagraphFields(&$paragraph, $data) {
+    if (!empty($data['date'])) {
+      $paragraph->set('field_senate_votes_date', $data["date"]);
     }
 
-    if (!empty($new_data['measure'])) {
-      $paragraph->set('field_senate_votes_measure', $new_data["measure"]);
+    if (!empty($data['measure'])) {
+      $paragraph->set('field_senate_votes_measure', $data["measure"]);
     }
-    if (!empty($new_data['measure_link']) && UrlHelper::isValid($new_data['measure_link'], TRUE)) {
-      $paragraph->set('field_senate_votes_measure_link', $new_data['measure_link']);
-    }
-
-    if (!empty($new_data['author'])) {
-      $paragraph->set('field_senate_votes_author', $new_data["author"]);
-    }
-    if (!empty($new_data['author_link']) && UrlHelper::isValid($new_data['author_link'], TRUE)) {
-      $paragraph->set('field_senate_votes_author_link', $new_data['author_link']);
+    if (!empty($data['measure_link']) && UrlHelper::isValid($data['measure_link'], TRUE)) {
+      $paragraph->set('field_senate_votes_measure_link', $data['measure_link']);
     }
 
-    if (!empty($new_data['fid'])) {
+    if (!empty($data['author'])) {
+      $paragraph->set('field_senate_votes_author', $data["author"]);
+    }
+    if (!empty($data['author_link']) && UrlHelper::isValid($data['author_link'], TRUE)) {
+      $paragraph->set('field_senate_votes_author_link', $data['author_link']);
+    }
+
+    if (!empty($data['fid'])) {
       $paragraph->set('field_senate_votes_action_file', [
-        'target_id' => $new_data['fid'],
-        'description' => $new_data['file_name'],
+        'target_id' => $data['fid'],
+        'description' => $data['file_name'],
       ]);
     }
-    if (isset($new_data['yeas']) && is_numeric($new_data["yeas"])) {
-      $paragraph->set('field_senate_votes_yeas', $new_data["yeas"]);
+    if (isset($data['yeas']) && is_numeric($data["yeas"])) {
+      $paragraph->set('field_senate_votes_yeas', $data["yeas"]);
     }
-    if (isset($new_data['nays']) && is_numeric($new_data["nays"])) {
-      $paragraph->set('field_senate_votes_nays', $new_data["nays"]);
+    if (isset($data['nays']) && is_numeric($data["nays"])) {
+      $paragraph->set('field_senate_votes_nays', $data["nays"]);
     }
 
-    if (!empty($new_data['action'])) {
-      $url = !empty($new_data['action_link']) ? $new_data['action_link'] : 'route:<nolink>';
+    if (!empty($data['action'])) {
+      $url = !empty($data['action_link']) ? $data['action_link'] : 'route:<nolink>';
       $paragraph->set('field_senate_votes_action_link',
         [
           'uri' => $url,
-          'title' => $new_data["action"],
+          'title' => $data["action"],
         ]
       );
     }
   }
 
-  public function prepareParagraphData($data) {
-    $new_data = [];
-    $events_sync_helper = \Drupal::hasService('events_custom.helper') ?
-      \Drupal::service('events_custom.helper') : '';
+  /**
+   * Delete paragraph.
+   *
+   * @param $pids
+   *
+   * @return void
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  public function deleteParagraph($pids) {
+    $storage_handler = \Drupal::entityTypeManager()->getStorage('paragraph');
+    $entities = $storage_handler->loadMultiple($pids);
+    if (!empty($entities)) {
+      $storage_handler->delete($entities);
 
-    $new_data['measure'] = !empty($data['@measure']) ? $data['@measure'] : '';
-    $new_data['measure_link'] = !empty($data['@measureLink']) ? $data['@measureLink'] : '';
-    $new_data['author'] = !empty($data['@author']) ? $data['@author'] : '';
-    $new_data['author_link'] = !empty($data['@authorLink']) ? $data['@authorLink'] : '';
-    $new_data['yeas'] = isset($data['@yeas']) && is_numeric($data['@yeas']) ? $data['@yeas'] : '';
-    $new_data['nays'] = isset($data['@nays']) && is_numeric($data['@nays']) ? $data['@nays'] : '';
-    $new_data['action'] = !empty($data['@action']) ? $data['@action'] : 'action';
-    $new_data['action_link'] = !empty($data['@actionLink']) ? $data['@actionLink'] : '';
-
-    if (!empty($events_sync_helper) && !empty($data['@date'])) {
-      $new_data['date'] = $events_sync_helper->normalizeExternalDateData($data['@date'], DateTimeItemInterface::DATE_STORAGE_FORMAT);
+      try {
+        $this->database->delete('node__field_senate_votes')
+          ->condition('field_senate_votes_target_id', $pids, 'IN')
+          ->execute();
+      }
+      catch (\Exception $e) {
+        \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
+            '%message' => $e->getMessage(),
+          ]));
+      }
     }
-
-    return $new_data;
   }
 
+  /**
+   * Get votes.
+   *
+   * @return array
+   */
   public function getDbVotesInfo() {
     $votes = $this->getDbVotes();
     $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
@@ -284,12 +204,27 @@ class SenateVotesApiHelper {
     ];
   }
 
+  /**
+   * Get vote's id.
+   *
+   * @param $date
+   * @param $measure
+   * @param $author
+   * @param $action
+   *
+   * @return string
+   */
   public function getVoteId($date, $measure, $author, $action) {
     $id = $date . ' ' . $measure . ' ' . $author . ' ' . $action;
     $id = trim($id);
     return Html::getId($id);
   }
 
+  /**
+   * Get votes from db.
+   *
+   * @return array|void
+   */
   public function getDbVotes() {
     try {
       $query = $this->database->select('node_field_data', 'n')
@@ -326,25 +261,6 @@ class SenateVotesApiHelper {
       \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
           '%message' => $e->getMessage(),
         ]));
-    }
-  }
-
-  public function deleteParagraph($pids) {
-    $storage_handler = \Drupal::entityTypeManager()->getStorage('paragraph');
-    $entities = $storage_handler->loadMultiple($pids);
-    if (!empty($entities)) {
-      $storage_handler->delete($entities);
-
-      try {
-        $num_deleted = $this->database->delete('node__field_senate_votes')
-          ->condition('field_senate_votes_target_id', $pids, 'IN')
-          ->execute();
-      }
-      catch (\Exception $e) {
-        \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = %message', [
-            '%message' => $e->getMessage(),
-          ]));
-      }
     }
   }
 }
