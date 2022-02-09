@@ -60,7 +60,7 @@ function _senate_votes_get_state_values() {
     'prev_execution' => \Drupal::state()->get('senate_votes.prev_execution', 0),
     'source' => \Drupal::state()->get('senate_votes.source', 'files'),
     'api_url' => \Drupal::state()->get('senate_votes.api_url', ''),
-    'api_update_all' => \Drupal::state()->get('senate_votes.update_all', FALSE),
+    'api_update_all' => \Drupal::state()->get('senate_votes.api_update_all', FALSE),
     'show_status_message' => \Drupal::state()->get('senate_votes_show_status_message', FALSE),
     'files_update_all' => \Drupal::state()->get('senate_votes.update_all', FALSE),
     'files_directory' => \Drupal::state()->get('senate_votes.directory', ''),
@@ -87,9 +87,12 @@ function _senate_votes_divide_job_items($votes, $update_all, $source) {
   $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
     \Drupal::service('senate_votes.helper') : '';
   $items = [];
+  $votes_to_create = [];
+  $limit = 50;
+  $pids = [];
 
   if (!empty($senate_votes_api_helper) && !empty($votes)) {
-    $db_votes_info = $senate_votes_api_helper->getDbVotesInfo();
+    $db_votes_info = $senate_votes_api_helper->getDbVotesInfo($source);
     $db_votes = $db_votes_info['votes'];
     $pids = $db_votes_info['pids'];
 
@@ -116,6 +119,18 @@ function _senate_votes_divide_job_items($votes, $update_all, $source) {
           $id => ['nid' => $nid],
         ];
       }
+    }
+  }
+
+  while (!empty($votes_to_create)) {
+    $rows_part = array_splice($votes_to_create, 0, $limit);
+
+    if (!empty($rows_part)) {
+      $items[] = [
+        'rows' => $rows_part,
+        'pids' => $pids,
+        'update_all' => $update_all,
+      ];
     }
   }
 
@@ -196,7 +211,7 @@ function _senate_votes_api_create_node($data, $source) {
     \Drupal::service('senate_votes.helper') : '';
 
   $node_data['description'] = $data["description"] ?? '';
-  $year = $data['@date'] ?? '';
+  $year = $data['date'] ?? '';
   $node_data['year'] = $senate_votes_helper->getYear($year);
   $node_data['title'] = $node_data['year'] . ' Votes';
   $node_data['type'] = $source;

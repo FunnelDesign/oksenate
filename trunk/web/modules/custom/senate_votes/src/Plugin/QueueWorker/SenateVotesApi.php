@@ -34,25 +34,27 @@ class SenateVotesApi extends QueueWorkerBase {
       }
 
       foreach ($rows as $row) {
-        $parent_node = \Drupal\node\Entity\Node::load($row['nid']);
-        $paragraph = $senate_votes_api_helper->createParagraph($parent_node, 'field_senate_votes', $row["vote"]);
+        if (!empty($row['nid'])) {
+          $parent_node = \Drupal\node\Entity\Node::load($row['nid']);
+          $paragraph = $senate_votes_api_helper->createParagraph($parent_node, 'field_senate_votes', $row["vote"]);
 
-        if (!empty($paragraph)) {
-          $last_delta = $this->getFieldDelta('node__field_senate_votes', 'senate_votes', $parent_node->id());
+          if (!empty($paragraph)) {
+            $last_delta = $this->getFieldDelta('node__field_senate_votes', 'senate_votes', $parent_node->id());
 
-          $row = [
-            'bundle' => 'senate_votes',
-            'entity_id' => $parent_node->id(),
-            'revision_id' => $parent_node->getRevisionId(),
-            'delta' => ++$last_delta,
-            'langcode' => 'en',
-            'field_senate_votes_target_id' => $paragraph->id(),
-            'field_senate_votes_target_revision_id' => $paragraph->getRevisionId(),
-          ];
+            $paragraph_row = [
+              'bundle' => 'senate_votes',
+              'entity_id' => $parent_node->id(),
+              'revision_id' => $parent_node->getRevisionId(),
+              'delta' => ++$last_delta,
+              'langcode' => 'en',
+              'field_senate_votes_target_id' => $paragraph->id(),
+              'field_senate_votes_target_revision_id' => $paragraph->getRevisionId(),
+            ];
 
-          \Drupal::database()->insert('node__field_senate_votes')->fields($row)->execute();
+            \Drupal::database()->insert('node__field_senate_votes')->fields($paragraph_row)->execute();
 
-          $this->log('create', $parent_node->id(), $paragraph->id());
+            $this->log('create', $parent_node->id(), $paragraph->id());
+          }
         }
       }
     }

@@ -171,8 +171,8 @@ class SenateVotesApiHelper {
    *
    * @return array
    */
-  public function getDbVotesInfo() {
-    $votes = $this->getDbVotes();
+  public function getDbVotesInfo($source) {
+    $votes = $this->getDbVotes($source);
     $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
       \Drupal::service('senate_votes.helper') : '';
     $sorted_votes = [];
@@ -225,7 +225,7 @@ class SenateVotesApiHelper {
    *
    * @return array|void
    */
-  public function getDbVotes() {
+  public function getDbVotes($source) {
     try {
       $query = $this->database->select('node_field_data', 'n')
         ->fields('n', ['nid', 'status', 'created'])
@@ -235,7 +235,7 @@ class SenateVotesApiHelper {
       $query->fields('votes', ['field_senate_votes_target_id']);
 
       $query->leftJoin('node__field_senate_votes_type', 'type', 'type.entity_id = n.nid AND type.deleted = 0');
-      $query->condition('type.field_senate_votes_type_value', 'api');
+      $query->condition('type.field_senate_votes_type_value', $source);
 
       $query->leftJoin('paragraph__field_senate_votes_date', 'votes_date', 'votes.field_senate_votes_target_id = votes_date.entity_id AND votes_date.deleted = 0');
       $query->fields('votes_date', ['field_senate_votes_date_value']);

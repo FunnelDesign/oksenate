@@ -24,6 +24,10 @@ class FetchClient implements SenateVotesClientInterface {
     $data = $xml_encode->decode($data, 'xml');
     $votes = !empty($data["vote"]) ? $data["vote"] : [];
 
+    if ($this->isAssoc($votes)) {
+      $votes = [$votes];
+    }
+
     return $this->normalize($votes);
 	}
 
@@ -101,5 +105,12 @@ class FetchClient implements SenateVotesClientInterface {
     catch (RequestException $e) {
       watchdog_exception('senate_votes', $e);
     }
+  }
+
+  public function isAssoc(array $arr) {
+    if (array() === $arr) {
+      return FALSE;
+    }
+    return array_keys($arr) !== range(0, count($arr) - 1);
   }
 }
