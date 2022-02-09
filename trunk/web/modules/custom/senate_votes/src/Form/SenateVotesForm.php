@@ -113,11 +113,7 @@ class SenateVotesForm extends ConfigFormBase {
       '#title' => $this->t("Get votes from files regardless of whether file has been updated."),
       '#default_value' => FALSE,
     ];
-//    $form['cron_run']['cron_update_all'] = [
-//      '#type' => 'checkbox',
-//      '#title' => $this->t("Update all votes paragraphs."),
-//      '#default_value' => FALSE,
-//    ];
+
     $form['cron_run']['cron_trigger']['actions'] = ['#type' => 'actions'];
     $form['cron_run']['cron_trigger']['actions']['sumbit'] = [
       '#type' => 'submit',
@@ -168,6 +164,12 @@ class SenateVotesForm extends ConfigFormBase {
       ],
     ];
 
+    $form['files']['files_update_all'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t("Update all votes."),
+      '#default_value' => $config->get('files_update_all'),
+    ];
+
     $form['files']['directory'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Directory'),
@@ -214,6 +216,7 @@ class SenateVotesForm extends ConfigFormBase {
     $cron_get_all = $form_state->getValue('cron_get_all');
     $cron_update_all = $form_state->getValue('cron_update_all');
     $directory = $form_state->getValue('directory');
+    $files_update_all = $form_state->getValue('files_update_all');
     $source = $form_state->getValue('source');
     $api_update_all = $form_state->getValue('api_update_all');
     $api_url = $form_state->getValue('api_url');
@@ -238,6 +241,7 @@ class SenateVotesForm extends ConfigFormBase {
     }
 
     $this->state->set('senate_votes.api_update_all', $api_update_all);
+    $this->state->set('senate_votes.files_update_all', $files_update_all);
 
     // Use a state variable to signal that cron was run manually from this form.
     $this->state->set('senate_votes_show_status_message', TRUE);
@@ -260,6 +264,10 @@ class SenateVotesForm extends ConfigFormBase {
 
     $this->configFactory->getEditable('senate_votes.settings')
       ->set('directory', $form_state->getValue('directory'))
+      ->save();
+
+    $this->configFactory->getEditable('senate_votes.settings')
+      ->set('files_update_all', $form_state->getValue('files_update_all'))
       ->save();
 
     $this->configFactory->getEditable('senate_votes.settings')

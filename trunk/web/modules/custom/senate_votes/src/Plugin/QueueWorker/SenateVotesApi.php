@@ -4,6 +4,7 @@ namespace Drupal\senate_votes\Plugin\QueueWorker;
 
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\node\Entity\Node;
+use Drupal\Core\Cache\Cache;
 
 /**
  * A events_custom worker.
@@ -57,6 +58,8 @@ class SenateVotesApi extends QueueWorkerBase {
           }
         }
       }
+
+      $this->clearCache();
     }
   }
 
@@ -97,5 +100,15 @@ class SenateVotesApi extends QueueWorkerBase {
     $max = $query->execute()->fetchField();
 
     return !empty($max) ? $max : 0;
+  }
+
+  protected function clearCache() {
+    $module_handler = \Drupal::moduleHandler();
+
+    $module_handler->invokeAll('cache_flush');
+    foreach (Cache::getBins() as $service_id => $cache_backend) {
+      $cache_backend->deleteAll();
+    }
+
   }
 }

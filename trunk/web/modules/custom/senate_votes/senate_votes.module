@@ -11,6 +11,7 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\File\FileSystem;
 use Drupal\senate_votes\Clients\FetchClient;
+use Drupal\senate_votes\Clients\XmlFileClient;
 
 /**
  * Implements hook_cron().
@@ -33,8 +34,10 @@ function senate_votes_cron() {
     _senate_votes_set_state_values($request_time, $interval);
 
     if ($state['source'] === 'files') {
-      $queue = \Drupal::queue('senate_votes');
-      $items = _senate_get_files_data($state['directory'], $state['prev_execution']);
+      $client = new XmlFileClient($state['files_directory'], $state['prev_execution']);
+      $votes = $client->getVotes();
+      $items = _senate_votes_divide_job_items($votes, $state['files_update_all'], $state['source']);
+      $queue = \Drupal::queue('senate_votes_api');
     }
     else {
       $client = new FetchClient($state['api_url']);
@@ -62,7 +65,7 @@ function _senate_votes_get_state_values() {
     'api_url' => \Drupal::state()->get('senate_votes.api_url', ''),
     'api_update_all' => \Drupal::state()->get('senate_votes.api_update_all', FALSE),
     'show_status_message' => \Drupal::state()->get('senate_votes_show_status_message', FALSE),
-    'files_update_all' => \Drupal::state()->get('senate_votes.update_all', FALSE),
+    'files_update_all' => \Drupal::state()->get('senate_votes.files_update_all', FALSE),
     'files_directory' => \Drupal::state()->get('senate_votes.directory', ''),
   ];
 }
@@ -137,75 +140,6 @@ function _senate_votes_divide_job_items($votes, $update_all, $source) {
   return $items;
 }
 
-
-function _senate_votes_api_get_external_data($api_url, $api_update_all) {
-  $senate_votes_api_helper = \Drupal::hasService('senate_votes.api_helper') ?
-    \Drupal::service('senate_votes.api_helper') : '';
-  $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
-    \Drupal::service('senate_votes.helper') : '';
-  $events_sync_helper = \Drupal::hasService('events_custom.helper') ?
-    \Drupal::service('events_custom.helper') : '';
-  $items = [];
-  $votes_to_create = [];
-  $limit = 50;
-  $pids = [];
-
-  if (!empty($senate_votes_api_helper)) {
-    $client = new FetchClient($api_url, $events_sync_helper);
-    $votes = $client->getVotes();
-
-    if (!empty($votes)) {
-      $db_votes_info = $senate_votes_api_helper->getDbVotesInfo();
-      $db_votes = $db_votes_info['votes'];
-      $pids = $db_votes_info['pids'];
-
-      foreach ($votes as $vote) {
-        $date = !empty($vote["@date"]) ?
-          $events_sync_helper->normalizeExternalDateData($vote["@date"], DateTimeItemInterface::DATE_STORAGE_FORMAT) : '';
-        $measure = $vote["@measure"] ?? '';
-        $author = $vote["@author"] ?? '';
-        $action = !empty($vote['@action']) ? $vote['@action'] : 'action';
-        $id = $senate_votes_api_helper->getVoteId($date, $measure, $author, $action);
-        $year = $senate_votes_helper->getYear($date);
-
-        if (!empty($db_votes[$year]) && (empty($db_votes[$year][$id]) || !empty($api_update_all))) {
-          reset($db_votes[$year]);
-          $first_row_data = current($db_votes[$year]);
-          $nid = $first_row_data['nid'] ?? '';
-          $votes_to_create[] = [
-            'nid' => $nid,
-            'vote' => $vote,
-          ];
-        }
-        elseif (empty($db_votes[$year])) {
-          $nid = _senate_votes_api_create_node($vote);
-          $votes_to_create[] = [
-            'nid' => $nid,
-            'vote' => $vote,
-          ];
-          $db_votes[$year] = [
-            $id => ['nid' => $nid],
-          ];
-        }
-      }
-    }
-
-    while (!empty($votes_to_create)) {
-      $rows_part = array_splice($votes_to_create, 0, $limit);
-
-      if (!empty($rows_part)) {
-        $items[] = [
-          'rows' => $rows_part,
-          'pids' => $pids,
-          'update_all' => $api_update_all,
-        ];
-      }
-    }
-  }
-
-  return $items;
-}
-
 function _senate_votes_api_create_node($data, $source) {
   $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
     \Drupal::service('senate_votes.helper') : '';
@@ -224,198 +158,3 @@ function _senate_votes_api_create_node($data, $source) {
 
   return $parent_node->id();
 }
-
-function _senate_get_files_data($directory, $prev_execution) {
-  $prev_execution = !empty($prev_execution) ? $prev_execution : 0;
-  $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
-    \Drupal::service('senate_votes.helper') : '';
-  $items = [];
-  $limit = 50;
-
-  if (!empty($directory) && !empty($senate_votes_helper)) {
-    $files_list = $senate_votes_helper->getListFiles($directory, $prev_execution);
-    $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list : [];
-    $files_content = [];
-
-    foreach ($files_list as $file) {
-      $files_content[$file] = $senate_votes_helper->getFileContentXls($file, $directory);
-
-      if (!empty($files_content[$file])) {
-        foreach ($files_content[$file] as $file_sheet) {
-          if (!empty($file_sheet)) {
-            $rows = !empty($file_sheet["rows"]) ? $file_sheet["rows"] : [];
-            reset($rows);
-            $first_row_data = current($rows);
-            $parent_nid = $senate_votes_helper->getNodeByFirstRowData($first_row_data);
-            $operation = '';
-            $parent_node = NULL;
-
-            if (!empty($parent_nid)) {
-              $parent_node = Node::load($parent_nid);
-              $operation = 'update';
-            }
-            elseif (!empty($rows)) {
-              $node_data['title'] = !empty($file_sheet["title"]) ? $file_sheet["title"] : '';
-              $node_data['description'] = !empty($file_sheet["description"]) ? $file_sheet["description"] : '';
-              $year = !empty($first_row_data['date']) ? $first_row_data['date'] : '';
-              $node_data['year'] = $senate_votes_helper->getYear($year);
-
-              if (!empty($year) && !empty($node_data['title'])) {
-                $parent_node = $senate_votes_helper->createNode($node_data);
-                $operation = 'create';
-
-                $paragraph = $senate_votes_helper->createParagraph($parent_node, 'field_senate_votes', $first_row_data);
-                if (!empty($paragraph)) {
-                  $parent_node->field_senate_votes[] = [
-                    'target_id' => $paragraph->id(),
-                    'target_revision_id' => $paragraph->getRevisionId(),
-                  ];
-                  $parent_node->save();
-                }
-
-                \Drupal::logger('senate_votes')
-                  ->notice(t('Node %nid has been created.', [
-                    '%nid' => $parent_node->id(),
-                  ]));
-              }
-            }
-
-            if (!empty($parent_node) && is_object($parent_node)) {
-              while (!empty($rows)) {
-                $rows_part = array_splice($rows, 0, $limit);
-
-                if (!empty($rows_part)) {
-                  $items[] = [
-                    'parent_node' => $parent_node,
-                    'operation' => $operation,
-                    'rows' => $rows_part,
-                    'directory' => $directory,
-                  ];
-                }
-              }
-            }
-            else {
-              \Drupal::logger('senate_votes')
-                ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.', [
-                    '%file' => $file,
-                  ]));
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return $items;
-}
-
-
-/**
- * Implements hook_preprocess_page() for page.html.twig.
- */
-/**
- * function senate_votes_preprocess_page(array &$vars) {
- * $a = 9;
- *
- * $data = (object)[
- * 'type' => 'all',
- * 'update_all' => FALSE,
- * 'directory' => '/Users/daniyar/www/senate/senatevotes/votes',
- * ];
- *
- * $type = !empty($data->type) ? $data->type : '';
- * $update_all = !empty($data->update_all) ? $data->update_all : FALSE;
- * $directory = !empty($data->directory) ? $data->directory : '';
- * $prev_execution = !empty($data->prev_execution) ? $data->prev_execution : 0;
- * $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
- * \Drupal::service('senate_votes.helper') : '';
- *
- * if (!empty($senate_votes_helper) && !empty($type) && !empty($directory)) {
- * //    $files_list = $senate_votes_helper->getListFiles($directory,
- * $prev_execution);
- * $files_list = (!empty($files_list) && is_array($files_list)) ? $files_list :
- * [];
- * $files_content = [];
- * $nodes = [];
- *
- * foreach ($files_list as $file) {
- * $files_content[$file] = $senate_votes_helper->getFileContentXls($file,
- * $directory);
- *
- * if (!empty($files_content[$file])) {
- * foreach ($files_content[$file] as $file_sheet) {
- * if (!empty($file_sheet)) {
- * $rows = !empty($file_sheet["rows"]) ? $file_sheet["rows"] : [];
- * reset($rows);
- * $first_row_data = current($rows);
- * $parent_nid = $senate_votes_helper->getNodeByFirstRowData($first_row_data);
- *
- * if (!empty($parent_nid)) {
- * $parent_node = Node::load($parent_nid);
- * }
- * else {
- * $node_data['title'] = !empty($file_sheet["title"]) ? $file_sheet["title"] :
- * '';
- * $node_data['description'] = !empty($file_sheet["description"]) ?
- * $file_sheet["description"] : '';
- * $year = !empty($first_row_data['date']) ? $first_row_data['date'] : '';
- * $node_data['year'] = $senate_votes_helper->getYear($year);
- * $parent_node = $senate_votes_helper->createNode($node_data);
- * }
- *
- * if (!empty($parent_node) && is_object($parent_node)) {
- * $existing_paragraph =
- * $senate_votes_helper->getVotesData($parent_node->id());
- *
- * foreach ($rows as $file_row) {
- * if (!empty($file_row['action']) && !empty($file_row['action']['link']) &&
- * (strpos($file_row['action']['link'], '.pdf') !== FALSE)) {
- * $file_row['fid'] =
- * $senate_votes_helper->createFile($file_row['action']['link'], $directory);
- * }
- *
- * if (!empty($file_row['date'])) {
- * $pid = $senate_votes_helper->checkParagraphExists($existing_paragraph,
- * $file_row);
- *
- * if (!$pid) {
- * $paragraph = $senate_votes_helper->createParagraph($parent_node,
- * 'field_senate_votes', $file_row);
- *
- * if (!empty($paragraph)) {
- * $parent_node->field_senate_votes[] = [
- * 'target_id' => $paragraph->id(),
- * 'target_revision_id' => $paragraph->getRevisionId(),
- * ];
- * $parent_node->save();
- * }
- * }
- * else {
- * $paragraph = $senate_votes_helper->updateParagraph($pid, $file_row);
- * }
- * }
- * }
- * }
- * else {
- * \Drupal::logger('senate_votes')
- * ->error(__METHOD__ . ' ' . t('failed. Message = Parent node problem %file.',
- * [
- * '%file' => $file,
- * ]));
- * }
- *
- *
- *
- *
- *
- *
- *
- * }
- * }
- * //          $senate_votes_helper->setFileStatus($file, $directory);
- * }
- *
- * }
- * }
- * }
- */
