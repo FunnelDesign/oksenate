@@ -44,12 +44,19 @@ class XmlFileClient extends FileClient implements SenateVotesClientInterface {
     $normalizedData = [];
 
     foreach ($data as $vote) {
+      $measure = $vote["@measure"] ?? '';
+      $measure_link = $vote['@measureLink'] ?? '';
+      $action = $vote['@action'] ?? '';
+      $action_link = $vote['@actionLink'] ?? '';
+      $author = $vote['@author'] ?? '';
+      $author_link = $vote['@authorLink'] ?? '';
+
       $normalizedData[] = [
         'date' => !empty($vote["@date"]) ?
           $this->normalizeExternalDateData($vote["@date"], DateTimeItemInterface::DATE_STORAGE_FORMAT) : '',
-        'measure' => $vote["@measure"] ?? '',
-        'author' => $vote["@author"] ?? '',
-        'action' => $vote['@action'] ?? '',
+        'measure' => !empty($measure_link) && empty($measure) ? 'LINK' : $measure,
+        'author' => !empty($author_link) && empty($author) ? 'LINK' : $author,
+        'action' => !empty($action_link) && empty($action) ? 'LINK' : $action,
         'yeas' => $vote['@yeas'] ?? '',
         'nays' => $vote['@nays'] ?? '',
         'measure_link' => $vote['@measureLink'] ?? '',
@@ -87,5 +94,13 @@ class XmlFileClient extends FileClient implements SenateVotesClientInterface {
       return FALSE;
     }
     return array_keys($arr) !== range(0, count($arr) - 1);
+  }
+
+  protected function getDefaultLinkTitle($title, $url) {
+    if (!empty($url) && empty($title)) {
+      return 'link';
+    }
+
+    return $title;
   }
 }
