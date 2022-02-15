@@ -225,6 +225,9 @@
             },
             "drupal/paragraphs_edit": {
                 "https://www.drupal.org/project/paragraphs_edit/issues/2944653": "https://www.drupal.org/files/issues/2019-03-22/error_on_missing_parent-2944653-13034993.patch"
+            },
+            "drupal/better_exposed_filters": {
+                "https://www.drupal.org/project/better_exposed_filters/issues/3224329": "https://www.drupal.org/files/issues/2021-07-19/3224329-datepicker-autocomplete-5.patch"
             }
         }
     }
