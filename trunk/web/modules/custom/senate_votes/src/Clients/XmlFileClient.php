@@ -59,9 +59,9 @@ class XmlFileClient extends FileClient implements SenateVotesClientInterface {
         'action' => !empty($action_link) && empty($action) ? 'LINK' : $action,
         'yeas' => $vote['@yeas'] ?? '',
         'nays' => $vote['@nays'] ?? '',
-        'measure_link' => $vote['@measureLink'] ?? '',
-        'author_link' => $vote['@authorLink'] ?? '',
-        'action_link' => $vote['@actionLink'] ?? '',
+        'measure_link' => str_replace('&', '&amp;', $measure_link),
+        'author_link' => $author_link,
+        'action_link' => $action_link,
       ];
     }
 
