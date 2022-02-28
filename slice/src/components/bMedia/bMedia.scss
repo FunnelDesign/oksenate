@@ -115,6 +115,10 @@
         margin: 0 auto;
       }
     }
+
+    &_c {
+      padding-bottom: 121.25%;
+    }
   }
 
   &__preview {
@@ -217,6 +221,10 @@
 
         border: none;
       }
+    }
+
+    &._style-a {
+      max-width: 914px;
     }
   }
 

@@ -15,9 +15,9 @@
 
 <!--      <div class="bContainer">-->
 
-        <div class="bMedia bMedia_web">
+        <div class="bMedia bMedia_web _style-a">
 
-          <div class="bMedia__wrap">
+          <div class="bMedia__wrap bMedia__wrap_c">
             <iframe name="left"
                     scrolling="yes"
                     src="http://sg001-harmony.sliq.net/00282/Harmony/en/PowerBrowser/RoomRouter?location=230&amp;viewMode=3"
