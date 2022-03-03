@@ -117,7 +117,7 @@
     }
 
     &_c {
-      padding-bottom: 128.25%;
+      padding-bottom: 110.25%;
     }
   }
 
@@ -224,7 +224,11 @@
     }
 
     &._style-a {
-      max-width: 916px;
+      max-width: 1030px;
+
+      @include mq-down(1005px) {
+        max-width: 900px;
+      }
     }
   }
 
