@@ -227,6 +227,10 @@
 
     &._style-a {
       max-width: 1205px;
+
+      @include mq-down(1005px) {
+        max-width: 900px;
+      }
     }
   }
 
