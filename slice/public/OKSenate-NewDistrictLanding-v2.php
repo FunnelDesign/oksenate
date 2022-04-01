@@ -48,6 +48,20 @@
                 <b>2022-2031</b>
               </span>
             </a>
+            <a href="#l-new-senate" class="b-district-maps__nav-item hashLink">
+              <span>
+                New Senate <br>
+                District maps <br>
+                <b>2022-2031</b>
+              </span>
+            </a>
+            <a href="#l-new-senate" class="b-district-maps__nav-item hashLink">
+              <span>
+                New Senate <br>
+                District maps <br>
+                <b>2022-2031</b>
+              </span>
+            </a>
           </div>
         </div>
         
