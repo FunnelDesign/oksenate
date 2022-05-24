@@ -800,6 +800,24 @@ function senate_preprocess_field(array &$vars, $hook) {
         }
       }
       break;
+    case 'field_par_statutes_constit_files':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $title = Xss::filter(html_entity_decode($item["content"]["#description"]));
+        $title = !empty($title) ? $title : t('Download');
+        $file = $item["content"]["#file"];
+        if (!empty($file)) {
+          $url = ($file->getFileUri());
+          $url = file_create_url($url);
+          $url = Url::fromUri($url);
+          $options['target'] = '_blank';
+          $options['class'] = ['bListLinks__link'];
+
+          $url->setOption('attributes', $options);
+          $vars['items'][$key]['content'] = Link::fromTextAndUrl($title, $url);
+        }
+      }
+      break;
     case 'field_menu_link':
     case 'field_edu_indiv_art_work_btn':
     case 'field_education_gallery_artwork':
@@ -2292,29 +2310,6 @@ function senate_preprocess_views_view_field(&$vars) {
   $display_id = $view->current_display;
 
   switch ($id) {
-    case 'search_statutes_constitutions':
-      $items = $vars['field']->getItems($vars["row"]);
-      if (!empty($items) && !empty($items[0])) {
-        $options = ['class' => ['bListLinks__link']];
-        $options['target'] = '_blank';
-        $items[0]["rendered"]["#url"]->setOption('attributes', $options);
-
-        $parent_node = !empty($vars["row"]->_relationship_entities) &&
-          !empty($vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"]) ?
-          $vars["row"]->_relationship_entities["reverse_field_statutes_constit_files_node"] : '';
-        $fid = !empty($vars["row"]->fid) ? $vars["row"]->fid : '';
-        $files = !empty($parent_node) ? $parent_node->field_statutes_constit_files->getValue() : [];
-        foreach ($files as $file) {
-          if (!empty($file["target_id"]) && ($file["target_id"] == $fid)) {
-            $file_name = !empty($items[0]["rendered"]["#title"]) ? pathinfo($items[0]["rendered"]["#title"]) : '';
-            $file_name = !empty($file_name['filename']) ? $file_name['filename'] : '';
-            $file_name = !empty($file["description"]) ? $file["description"] : $file_name;
-            $items[0]["rendered"]["#title"] = $file_name;
-          }
-        }
-        $vars["output"] = $items[0]["rendered"];
-      }
-      break;
     case 'senate_votes_inner':
       $field_name = !empty($vars['field']) ? $vars['field']->field : '';
       $paragraph = !empty($vars["row"]) && !empty($vars["row"]->_entity) ? $vars["row"]->_entity : '';
