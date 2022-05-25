@@ -181,6 +181,7 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
         $field_str = is_object($condition['field']) ? $condition['field']->conditions() : '';
         if (!empty($field_str) && strpos($field_str[0]['field'], 'file_managed') !== FALSE) {
           $condition['field']->condition('search.word', $field_str[0]["value"], $field_str[0]["operator"]);
+          $condition['field']->condition('paragraph__field_par_statutes_constit_files.field_par_statutes_constit_files_description', $field_str[0]["value"], $field_str[0]["operator"]);
         }
       }
     }
@@ -196,13 +197,13 @@ function custom_module_views_query_alter(\Drupal\views\ViewExecutable $view,
           'type'       => 'LEFT',
           'table'      => 'paragraph__field_par_statutes_constit_list',
           'field'      => 'entity_id',
-          'left_table' => 'paragraph__field_par_statutes_constit_files_file_managed',
-          'left_field' => 'nid',
+          'left_table' => 'field_par_statutes_constit_files_file_managed',
+          'left_field' => 'id',
           'operator'   => '=',
           'extra' => [
             0 => [
               'field' => 'bundle',
-              'value' => 'statutes_constit',
+              'value' => 'statutes_constit_files',
             ],
           ],
         ];
