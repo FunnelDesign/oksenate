@@ -16,9 +16,10 @@ interface SenateVotesClientInterface {
    * Normalize data.
    *
    * @param array $data
+   * @param array $additional
    *
    * @return mixed
    */
-  public function normalize(array $data);
+  public function normalize(array $data, array $additional = []);
 
 }

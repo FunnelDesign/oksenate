@@ -12,6 +12,8 @@ use Drupal\node\Entity\Node;
 use Drupal\Core\File\FileSystem;
 use Drupal\senate_votes\Clients\FetchClient;
 use Drupal\senate_votes\Clients\XmlFileClient;
+use Drupal\senate_votes\Clients\XmlFileDbClient;
+use Drupal\senate_votes\Clients\XmlFileJobDevider;
 
 /**
  * Implements hook_cron().
@@ -34,9 +36,10 @@ function senate_votes_cron() {
     _senate_votes_set_state_values($request_time, $interval);
 
     if ($state['source'] === 'files') {
-      $client = new XmlFileClient($state['files_directory'], $state['prev_execution']);
-      $votes = $client->getVotes();
-      $items = _senate_votes_divide_job_items($votes, $state['files_update_all'], $state['source']);
+      $xmlFileClient = new XmlFileClient($state['files_directory'], $state['prev_execution']);
+      $xmlFileDbClient = new XmlFileDbClient($state['source']);
+      $xmlFileJobDevider = new XmlFileJobDevider($xmlFileClient, $xmlFileDbClient, $state['files_update_all']);
+      $items = $xmlFileJobDevider->getCronJobs();
       $queue = \Drupal::queue('senate_votes_api');
     }
     else {
@@ -140,7 +143,7 @@ function _senate_votes_divide_job_items($votes, $update_all, $source) {
   return $items;
 }
 
-function _senate_votes_api_create_node($data, $source) {
+function _senate_votes_api_create_node($data, $source, $file = '') {
   $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
     \Drupal::service('senate_votes.helper') : '';
 
@@ -149,6 +152,7 @@ function _senate_votes_api_create_node($data, $source) {
   $node_data['year'] = $senate_votes_helper->getYear($year);
   $node_data['title'] = $node_data['year'] . ' Votes';
   $node_data['type'] = $source;
+  $node_data['file_name'] = $file;
   $parent_node = $senate_votes_helper->createNode($node_data);
 
   \Drupal::logger('senate_votes')

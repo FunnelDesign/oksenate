@@ -30,17 +30,18 @@ class XmlFileClient extends FileClient implements SenateVotesClientInterface {
         $file_votes = [$file_votes];
       }
 
+      $file_votes = $this->normalize($file_votes, ['file_name' => $file]);
       $temp_arr = array_merge($votes, $file_votes);
       $votes = $temp_arr;
     }
 
-    return $this->normalize($votes);
+    return $votes;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function normalize(array $data) {
+	public function normalize(array $data, array $additional = []) {
     $normalizedData = [];
 
     foreach ($data as $vote) {
@@ -62,6 +63,7 @@ class XmlFileClient extends FileClient implements SenateVotesClientInterface {
         'measure_link' => str_replace('&', '&amp;', $measure_link),
         'author_link' => $author_link,
         'action_link' => $action_link,
+        'file_name' => $additional['file_name'] ?? '',
       ];
     }
 

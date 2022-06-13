@@ -645,6 +645,9 @@ class SenateVotesHelper {
     if (!empty($data["type"])) {
       $node->set('field_senate_votes_type', $data["type"]);
     }
+    if (!empty($data["file_name"])) {
+      $node->set('field_senate_votes_file_name', $data["file_name"]);
+    }
 
     $node->set('field_senate_votes_legislature', $legislature);
   }
