@@ -235,6 +235,14 @@ function senate_preprocess_node(array &$vars) {
           !empty($vars["content"]["field_senator_district_taxonomy"]['#items'])) ?
           $vars["content"]["field_senator_district_taxonomy"]['#items']->getValue() : '';
 
+        $position = (!empty($vars["content"]["field_senator_position_taxonomy"]) &&
+          !empty($vars["content"]["field_senator_position_taxonomy"]['#items'])) ?
+          $vars["content"]["field_senator_position_taxonomy"]['#items']->getValue() : '';
+
+        if (!empty($position) && !empty($position[0])) {
+         $tid = !empty($position[0]["target_id"]) ? $position[0]["target_id"] : '';
+          $vars['position'] = Term::load($tid)->get('name')->value;
+        }
         if (!empty($district) && !empty($district[0])) {
           $tid = !empty($district[0]["target_id"]) ? $district[0]["target_id"] : '';
           $term_obj = Drupal::entityTypeManager()
@@ -2084,7 +2092,7 @@ function _senate_get_committee_options($committee_options) {
   if (!empty($committee_options["All"])) {
     $new_options['All'] = t('Select Committee');
   }
-
+//  $new_options['Joint Commities'] = [];
   $new_options['Standing Committees'] = [];
   $new_options['Subcommittees'] = [];
 
