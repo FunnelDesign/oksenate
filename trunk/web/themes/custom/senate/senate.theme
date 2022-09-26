@@ -17,6 +17,7 @@ use Drupal\image\Entity\ImageStyle;
 use Drupal\views\Views;
 use Drupal\custom_module\Plugin\views\argument\CustomNidToAuthor;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\custom_module\Controller\SenateChangeCaptchaDescription;
 
 define('SENATE_AGENCIES_DOC_BASE_PATH', '/committees/appropriations/education/agencies-documents');
 define('SENATE_CONTACTS_LANDING_NID', '2469'); //first stage NID
@@ -1172,7 +1173,7 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
   }
 
   if (!empty($form["elements"]) && !empty($form["elements"]["captcha"])) {
-    $form["elements"]["captcha"]["#pre_render"][] = 'senate_change_captcha_description';
+    $form["elements"]["captcha"]["#pre_render"][] = [SenateChangeCaptchaDescription::class, 'preRender'];
   }
 
   switch ($form_id) {
@@ -2559,43 +2560,6 @@ function senate_preprocess_senate_socials(&$vars) {
   else {
     $vars["title"] = strip_tags($vars["title"]);
   }
-}
-
-/**
- * Captcha pre_render.
- */
-function senate_change_captcha_description($element) {
-  $description = !empty($element["captcha_widgets"]) &&
-    !empty($element["captcha_widgets"]["captcha_response"]) &&
-    !empty($element["captcha_widgets"]["captcha_response"]["#description"]) ?
-    $element["captcha_widgets"]["captcha_response"]["#description"] : '';
-  $add_description = t('Math question not to test basic math skills.');
-  $title = !empty($element["captcha_widgets"]) && !empty($element["captcha_widgets"]["captcha_response"]) &&
-    !empty($element["captcha_widgets"]["captcha_response"]["#title"]) ?
-    $element["captcha_widgets"]["captcha_response"]["#title"] : '';
-  $add_title = t('CAPTCHA:');
-
-  if (!empty($description)) {
-    $desc = is_object($description) ? $description->__toString() : $description;
-    $add_desc = $add_description->__toString();
-
-    $has_add_desc = (strpos($desc, $add_desc) !== FALSE);
-    if (!$has_add_desc) {
-      $element["captcha_widgets"]["captcha_response"]["#description"] = $description . ' ' . $add_description;
-    }
-  }
-
-  if (!empty($title)) {
-    $title = is_object($title) ? $title->__toString() : $title;
-    $add_title = $add_title->__toString();
-
-    $has_add_title = (strpos($title, $add_title) !== FALSE);
-    if (!$has_add_title) {
-      $element["captcha_widgets"]["captcha_response"]["#title"] = $add_title . ' ' . $title;
-    }
-  }
-
-  return $element;
 }
 
 /**
