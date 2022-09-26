@@ -392,7 +392,19 @@ function senate_preprocess_node(array &$vars) {
         $year = !empty($vars["content"]["field_senate_studies_year"]) &&
           !empty($vars["content"]["field_senate_studies_year"]["#items"]) ?
           $vars["content"]["field_senate_studies_year"]["#items"]->get(0)->value : '';
-        $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', ['all']);
+
+        $type = !empty($vars["content"]["field_senate_studies_type_list"]) &&
+          !empty($vars["content"]["field_senate_studies_type_list"]["#items"]) ?
+          $vars["content"]["field_senate_studies_type_list"]["#items"]->get(0)->value : '';
+
+        switch ($type){
+          case 'interim_studies':
+            $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', ['all']);
+            break;
+          case 'arpa_projects':
+            $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_2', ['all']);
+            break;
+        }
 
         $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
