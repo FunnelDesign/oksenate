@@ -1582,7 +1582,7 @@ function senate_preprocess_views_view_unformatted(&$vars) {
       $arg_0 = !empty($path_args[1]) ? $path_args[1] : '';
       $arg_1 = !empty($path_args[2]) ? $path_args[2] : '';
       if (($arg_0 == 'node') && is_numeric($arg_1)) {
-        $alias = \Drupal::service('path_alias.manage')->getAliasByPath($current_path);
+        $alias = \Drupal::service('path_alias.manager')->getAliasByPath($current_path);
         $alias_args = explode('/', $alias);
         $last = array_pop($alias_args);
         if (!empty($last)) {
