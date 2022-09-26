@@ -400,13 +400,13 @@ function senate_preprocess_node(array &$vars) {
         switch ($type){
           case 'interim_studies':
             $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_1', ['all']);
+            $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
             break;
           case 'arpa_projects':
             $vars['interim_studies'] = _senate_get_view('senate_studies', 'block_2', ['all']);
             break;
         }
 
-        $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
         break;
       case 'tables_page':
         $vars['sub_menu'] = _senate_get_block('senatestudiessubmenu');
