@@ -38,19 +38,19 @@
  */
 #}
 {% set classes = [
-'field',
-'field--name-' ~ field_name|clean_class,
-'field--type-' ~ field_type|clean_class,
-'field--label-' ~ label_display,
+  'field',
+  'field--name-' ~ field_name|clean_class,
+  'field--type-' ~ field_type|clean_class,
+  'field--label-' ~ label_display,
 ] %}
 {% set title_classes = [
-'field__label',
-label_display == 'visually_hidden' ? 'visually-hidden',
+  'field__label',
+  label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
 {% for file in files %}
-  <div class="bListInline__item">
-           <span class="bListItems__title">
-           {{ file.title }}
+  <div class="bListItems__title">
+    <span class="bListItems__title">
+      <a href="{{ file.url }}" target="_blank">{{ file.title }}</a>
     </span>
     <a href="{{ file.url }}" class="bListItems__btn print-hide" target="_blank">
       {{ 'see documents'|t }}
