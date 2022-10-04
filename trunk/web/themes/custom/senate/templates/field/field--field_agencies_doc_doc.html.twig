@@ -48,12 +48,14 @@
   label_display == 'visually_hidden' ? 'visually-hidden',
 ] %}
 {% for file in files %}
-  <div class="bListItems__title">
-    <span class="bListItems__title">
-      <a href="{{ file.url }}" target="_blank">{{ file.title }}</a>
-    </span>
-    <a href="{{ file.url }}" class="bListItems__btn print-hide" target="_blank">
-      {{ 'see documents'|t }}
-    </a>
+  <div class="bListItems__item">
+    <div class="bListItems__title">
+      <span class="bListItems__title">
+        <a href="{{ file.url }}" target="_blank">{{ file.title }}</a>
+      </span>
+      <a href="{{ file.url }}" class="bListItems__btn print-hide" target="_blank">
+        {{ 'see documents'|t }}
+      </a>
+    </div>
   </div>
 {% endfor %}
