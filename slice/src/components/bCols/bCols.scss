@@ -24,8 +24,8 @@
           @include cr-last-item;
 
           @include sm {
-            max-width: (100% / $i);
-            min-width: (100% / $i);
+            max-width: calc(100%/#{$i});
+            min-width: calc(100%/#{$i});
             margin-bottom: 0;
           }
         }

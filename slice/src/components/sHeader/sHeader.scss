@@ -93,23 +93,23 @@
   }
 
   $fist-ul: "&__menu-wrap > ul.menu";
-  $fist-li: #{$fist-ul} > li;
+  $fist-li: #{$fist-ul} " > li";
   $fist-li--active: #{$fist-ul} " > li.menu-item--active-trail";
   $fist-li--hover: #{$fist-ul} " > li:hover";
-  $fist-a: #{$fist-li} > a;
-  $fist-span: #{$fist-li} > span;
+  $fist-a: #{$fist-li} " > a";
+  $fist-span: #{$fist-li} " > span";
 
-  $second-ul: #{$fist-li} > ul;
-  $second-li: #{$second-ul} > li;
+  $second-ul: #{$fist-li} " > ul";
+  $second-li: #{$second-ul} " > li";
   $second-li--active: #{$second-ul} " > li.menu-item--active-trail";
   $second-li--hover: #{$second-ul} " > li:hover";
-  $second-a: #{$second-li} > a;
+  $second-a: #{$second-li} " > a";
 
-  $third-ul: #{$second-li} > ul;
-  $third-li: #{$third-ul} > li;
+  $third-ul: #{$second-li} " > ul";
+  $third-li: #{$third-ul} " > li";
   $third-li--active: #{$third-ul} " > li.menu-item--active-trail";
   $third-li--hover: #{$third-ul} " > li:hover";
-  $third-a: #{$third-li} > a;
+  $third-a: #{$third-li} " > a";
 
   #{$fist-ul} {
     margin: 0;

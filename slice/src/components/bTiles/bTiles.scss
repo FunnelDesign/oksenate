@@ -422,6 +422,44 @@
       //  margin-top: auto;
       //}
     }
+
+    &_h {
+      max-width: 846px;
+      margin: 0 auto;
+
+      #{$this}__item {
+        background: none;
+        border: none;
+
+        @include sm {
+          min-height: 260px;
+          max-width: calc(50% - 12px);
+          min-width: calc(50% - 12px);
+          padding-top: 20px;
+        }
+
+        &:hover {
+          background: none;
+        }
+      }
+
+      #{$this}__title {
+        margin: 0 auto 25px;
+        font-family: $RobotoCondensed-Light;
+        @include font-size(16px, 24px, 32px);
+        max-width: none;
+      }
+
+      #{$this}__ico {
+        height: 70px;
+        max-width: 100px;
+        margin: 0 auto 13px;
+      }
+
+      .btn {
+        min-width: 90px;
+      }
+    }
   }
 
   &_nav {
