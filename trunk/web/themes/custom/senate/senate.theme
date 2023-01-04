@@ -647,6 +647,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_top_slider_icon':
     case 'field_contacts_ada_wheel_icon':
     case 'field_icon_title_icon':
+    case 'field_sign_up_par_icon':
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $image_url = $vars['items'][$key]['content']['#item']->entity->url();
@@ -1084,6 +1085,16 @@ function senate_preprocess_field(array &$vars, $hook) {
         ];
       }
       break;
+    case 'field_sign_up_par_link':
+      $items = !empty($vars['items']) ? $vars['items'] : [];
+      foreach ($items as $key => $item) {
+        $vars["items"][$key]["content"]["#options"]["attributes"]['target'] = '_blank';
+        $vars["items"][$key]["content"]["#options"]["attributes"]['class'] = [
+          'btn',
+          'btn_s_d',
+        ];
+      }
+      break;
     case 'field_redistricting_contact':
       $vars['prefix'] = '<h2>';
       $vars['suffix'] = '</h2>';
@@ -1153,6 +1164,7 @@ function senate_theme_suggestions_field_alter(array &$suggestions, array $vars) 
     case 'field_webform_block_icon':
     case 'field_contacts_ada_wheel_icon':
     case 'field_par_publications_page_icon':
+    case 'field_sign_up_par_icon':
       $suggestions[] = 'field__src_srcset_images';
       break;
     case 'field_cl_jnt_cnf_adop_opp_ch':
