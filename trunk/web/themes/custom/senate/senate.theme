@@ -997,6 +997,15 @@ function senate_preprocess_field(array &$vars, $hook) {
         $date_obj->setTimezone($site_timezone);
         $vars['time'] = $date_obj->format('g:ia');
       }
+
+      if ($vars['element']['#field_name'] == 'field_comt_evt_date') {
+        $node = !empty($vars["element"]["#object"]) ? $vars["element"]["#object"] : '';
+        if (!empty($node) && is_object($node)) {
+          $time_txt = $node->hasField('field_comt_evt_time') &&
+            !empty($node->field_comt_evt_time) ? $node->field_comt_evt_time->value : '';
+          $vars['time_txt'] = Xss::filter(html_entity_decode($time_txt));
+        }
+      }
       break;
     case 'field_senate_studies_links':
       $items = !empty($vars['items']) ? $vars['items'] : [];
