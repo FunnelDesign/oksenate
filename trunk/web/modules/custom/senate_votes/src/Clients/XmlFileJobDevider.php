@@ -20,44 +20,40 @@ class XmlFileJobDevider {
   }
 
   public function getCronJobs() {
-    $senate_votes_api_helper = \Drupal::hasService('senate_votes.api_helper') ?
-      \Drupal::service('senate_votes.api_helper') : '';
-    $senate_votes_helper = \Drupal::hasService('senate_votes.helper') ?
-      \Drupal::service('senate_votes.helper') : '';
-    $votes = $this->xmlFileClient->getVotes();
+    $senate_votes_api_helper = \Drupal::getContainer()->get('senate_votes.api_helper');
+    $senate_votes_helper = \Drupal::getContainer()->get('senate_votes.helper');
+    $file_votes = $this->xmlFileClient->getVotes();
     $votes_to_create = [];
     $items = [];
     $limit = 50;
     $pids = [];
 
-    if (!empty($senate_votes_api_helper) && !empty($votes)) {
+    if (!empty($senate_votes_api_helper) && !empty($file_votes)) {
       $db_votes = $this->xmlFileDbClient->getVotes();
+      $db_nodes = $this->xmlFileDbClient->getNodes();
       $pids = $this->xmlFileDbClient->getPids();
 
-      foreach ($votes as $vote) {
-        $id = $senate_votes_api_helper->getVoteId($vote['date'], $vote['measure'], $vote['author'], $vote['action']);
-        $year = $senate_votes_helper->getYear($vote['date']);
-        $key = Html::getId($vote['file_name'] . '__' . $year);
-        $is_new_node = $this->isNewNode($db_votes, $key);
+      foreach ($file_votes as $file_vote) {
+        $id = $senate_votes_api_helper->getVoteId($file_vote['date'], $file_vote['measure'], $file_vote['author'], $file_vote['action']);
+        $year = $senate_votes_helper->getYear($file_vote['date']);
+        $key = Html::getId($file_vote['file_name'] . '__' . $year);
+        $found_node_nid = $this->dbFindNode($db_votes, $db_nodes, $key);
         $is_new_vote = $this->isNewVote($db_votes, $key, $id);
 
-        if ($is_new_node) {
-          $nid = _senate_votes_api_create_node($vote, 'files', $vote['file_name']);
+        if (!$found_node_nid) {
+          $nid = _senate_votes_api_create_node($file_vote, 'files', $file_vote['file_name']);
           $votes_to_create[] = [
             'nid' => $nid,
-            'vote' => $vote,
+            'vote' => $file_vote,
           ];
           $db_votes[$key] = [
             $id => ['nid' => $nid],
           ];
         }
         elseif ($is_new_vote || !empty($this->updateAll)) {
-          reset($db_votes[$key]);
-          $first_row_data = current($db_votes[$key]);
-          $nid = $first_row_data['nid'] ?? '';
           $votes_to_create[] = [
-            'nid' => $nid,
-            'vote' => $vote,
+            'nid' => $found_node_nid,
+            'vote' => $file_vote,
           ];
         }
       }
@@ -82,7 +78,16 @@ class XmlFileJobDevider {
     return !(!empty($db_votes[$key]) && !empty($db_votes[$key][$id]));
   }
 
-  private function isNewNode($db_votes, $key) {
-    return empty($db_votes[$key]);
+  private function dbFindNode($db_votes, $db_nodes ,$key) {
+
+    reset($db_votes[$key]);
+    $first_row_data = current($db_votes[$key]);
+    $nid = $first_row_data['nid'] ?? NULL;
+
+    if(empty($nid)) {
+      $nid = $db_nodes[$key]['nid'] ?? NULL;
+    }
+
+    return $nid;
   }
 }

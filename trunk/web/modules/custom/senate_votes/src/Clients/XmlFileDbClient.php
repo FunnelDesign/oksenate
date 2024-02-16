@@ -10,6 +10,8 @@ class XmlFileDbClient implements SenateVotesClientInterface {
 
   protected $votes;
 
+  protected $nodes;
+
   protected $pids;
 
   public function __construct($source) {
@@ -21,16 +23,29 @@ class XmlFileDbClient implements SenateVotesClientInterface {
 	 */
 	public function getVotes() {
     if (empty($this->votes)) {
-      $votes = $this->getDbVotes($this->source);
-      $votes = $this->normalize($votes);
-      $this->votes = $votes['votes'];
-      $this->pids = $votes['pids'];
+      $this->getAllFromDb();
     }
 
     return $this->votes;
 	}
 
-	/**
+  public function getPids() {
+    if (empty($this->votes)) {
+      $this->getAllFromDb();
+    }
+
+    return $this->pids;
+  }
+
+  public function getNodes() {
+    if (empty($this->nodes)) {
+      $this->getAllFromDb();
+    }
+
+    return $this->nodes;
+  }
+
+  /**
 	 * @inheritDoc
 	 */
 	public function normalize(array $data, array $additional = []) {
@@ -40,6 +55,7 @@ class XmlFileDbClient implements SenateVotesClientInterface {
       \Drupal::service('senate_votes.api_helper') : '';
     $sorted_votes = [];
     $pids = [];
+    $nodes = [];
 
     foreach ($data as $vote) {
       $date = $vote->field_senate_votes_date_value ?? '';
@@ -58,6 +74,13 @@ class XmlFileDbClient implements SenateVotesClientInterface {
           'date' => $vote->field_senate_votes_date_value
         ];
       }
+
+      if(!empty($file_name) && !empty($vote->field_senate_votes_year_value)) {
+        $nodes_key = Html::getId($file_name . '__' . $vote->field_senate_votes_year_value);
+        $nodes[$nodes_key] = ['nid' => $vote->nid];
+      }
+
+
       if (!empty($pid)) {
         $pids[] = $pid;
       }
@@ -66,19 +89,9 @@ class XmlFileDbClient implements SenateVotesClientInterface {
     return [
       'votes' => $sorted_votes,
       'pids' => $pids,
+      'nodes' => $nodes,
     ];
 	}
-
-  public function getPids() {
-    if (empty($this->votes)) {
-      $votes = $this->getDbVotes($this->source);
-      $votes = $this->normalize($votes);
-      $this->votes = $votes['votes'];
-      $this->pids = $votes['pids'];
-    }
-
-    return $this->pids;
-  }
 
   /**
    * Get votes from db.
@@ -93,6 +106,10 @@ class XmlFileDbClient implements SenateVotesClientInterface {
 
       $query->leftJoin('node__field_senate_votes_file_name', 'file_name', 'file_name.entity_id = n.nid AND file_name.deleted = 0');
       $query->fields('file_name', ['field_senate_votes_file_name_value']);
+
+
+      $query->leftJoin('node__field_senate_votes_year', 'node_year', 'node_year.entity_id = n.nid AND node_year.deleted = 0');
+      $query->fields('node_year', ['field_senate_votes_year_value']);
 
       $query->innerJoin('node__field_senate_votes', 'votes', 'votes.entity_id = n.nid AND votes.deleted = 0');
       $query->fields('votes', ['field_senate_votes_target_id']);
@@ -125,6 +142,17 @@ class XmlFileDbClient implements SenateVotesClientInterface {
           '%message' => $e->getMessage(),
         ]));
     }
+  }
+
+  /**
+   * @return void
+   */
+  protected function getAllFromDb() {
+    $votes = $this->getDbVotes($this->source);
+    $votes = $this->normalize($votes);
+    $this->votes = $votes['votes'];
+    $this->pids = $votes['pids'];
+    $this->nodes = $votes['nodes'];
   }
 
 }
