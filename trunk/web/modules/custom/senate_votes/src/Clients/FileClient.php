@@ -72,7 +72,7 @@ class FileClient {
   public function logDebugs($file, $lastUpdated, $prevExecution, $is_time_to_update) {
     try {
 
-      if ($file = 'oks_fullvotesresults.xml') {
+      if ($file === 'oks_fullvotesresults.xml') {
 
         $data = [
           '$file' => $file,
