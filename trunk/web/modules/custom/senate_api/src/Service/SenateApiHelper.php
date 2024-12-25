@@ -85,7 +85,7 @@ class SenateApiHelper {
   public function getUrlByUri($uri) {
     $url = '';
     if (!empty($uri) && (strpos($uri, 'public:') !== FALSE)) {
-      $url = file_create_url($uri);
+      $url = \Drupal::service('file_url_generator')->generateAbsoluteString($uri);
     }
 
     return $url;

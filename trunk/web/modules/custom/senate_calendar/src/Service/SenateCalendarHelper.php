@@ -592,7 +592,7 @@ class SenateCalendarHelper {
       return '';
     }
 
-    $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($pid);
+    $paragraph = Paragraph::load($pid);
 
     if (!empty($paragraph)) {
       $this->updateParagraphFields($paragraph, $data, $type, 'update');

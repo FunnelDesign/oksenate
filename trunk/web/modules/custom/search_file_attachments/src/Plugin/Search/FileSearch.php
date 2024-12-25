@@ -2,7 +2,7 @@
 
 namespace Drupal\search_file_attachments\Plugin\Search;
 
-use Drupal\Component\Utility\SafeMarkup;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Database\Connection;
@@ -196,15 +196,15 @@ class FileSearch extends SearchPluginBase implements AccessibleInterface, Search
     $status = $query->getStatus();
 
     if ($status & SearchQuery::EXPRESSIONS_IGNORED) {
-      drupal_set_message($this->t('Your search used too many AND/OR expressions. Only the first @count terms were included in this search.', array('@count' => $this->searchSettings->get('and_or_limit'))), 'warning');
+      $this->messenger()->addWarning($this->t('Your search used too many AND/OR expressions. Only the first @count terms were included in this search.', array('@count' => $this->searchSettings->get('and_or_limit'))));
     }
 
     if ($status & SearchQuery::LOWER_CASE_OR) {
-      drupal_set_message($this->t('Search for either of the two terms with uppercase <strong>OR</strong>. For example, <strong>cats OR dogs</strong>.'), 'warning');
+      $this->messenger()->addWarning($this->t('Search for either of the two terms with uppercase <strong>OR</strong>. For example, <strong>cats OR dogs</strong>.'));
     }
 
     if ($status & SearchQuery::NO_POSITIVE_KEYWORDS) {
-      drupal_set_message($this->formatPlural($this->searchSettings->get('index.minimum_word_size'), 'You must include at least one positive keyword with 1 character or more.', 'You must include at least one positive keyword with @count characters or more.'), 'warning');
+      $this->messenger()->addWarning($this->formatPlural($this->searchSettings->get('index.minimum_word_size'), 'You must include at least one positive keyword with 1 character or more.', 'You must include at least one positive keyword with @count characters or more.'));
     }
 
     return $find;
@@ -229,8 +229,8 @@ class FileSearch extends SearchPluginBase implements AccessibleInterface, Search
       $file = $file_storage->load($item->sid)->getTranslation($item->langcode);
 
       $result = array(
-        'link' => file_create_url($file->getFileUri()),
-        'title' => SafeMarkup::checkPlain($file->getFilename()),
+        'link' => \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri()),
+        'title' => $file->getFilename(),
         'snippet' => search_excerpt($keys, $item->data, $item->langcode),
         'langcode' => $file->language()->getId(),
       );
@@ -306,7 +306,7 @@ class FileSearch extends SearchPluginBase implements AccessibleInterface, Search
       $content = $this->t('Filename', array(), $translation_options) . ': ' . $file->getFilename() . ' - ' . $this->t('Content', array(), $translation_options) . ': ';
 
       // Extract the file content and add it to the drupal search index.
-      $extracted_content = SafeMarkup::checkPlain($this->getFileContent($file));
+      $extracted_content = $this->getFileContent($file);
       $content .= $extracted_content;
 
       // Update index, using search index "type" equal to the plugin ID.
@@ -421,14 +421,14 @@ class FileSearch extends SearchPluginBase implements AccessibleInterface, Search
    * @return string
    *   The extracted text.
    *
-   * @throws \Drupal\search_file_attachments\Plugin\Search\Exception
+   * @throws \Exception
    */
   protected function extractContentTika(EntityInterface $file, $file_path) {
     $tika_path = realpath($this->moduleSettings->get('tika.path'));
     $tika = realpath($tika_path . '/' . $this->moduleSettings->get('tika.jar'));
 
     if (!$tika || !is_file($tika)) {
-      throw new Exception($this->t('Invalid path or filename for tika application jar.'));
+      throw new \Exception($this->t('Invalid path or filename for tika application jar.'));
     }
 
     // UTF-8 multibyte characters will be stripped by escapeshellargs().

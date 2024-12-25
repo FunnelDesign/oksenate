@@ -2,6 +2,7 @@
 
 namespace Drupal\senate_votes\Service;
 
+use Drupal\Core\File\Exception\FileException;
 use Drupal\Component\Serialization\Json;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -368,7 +369,7 @@ class SenateVotesHelper {
 
       if (!is_dir($dir_destination ) || !is_writable($dir_destination)) {
         if (!\Drupal::service('file_system')->prepareDirectory($dir_destination, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS)) {
-          throw new \Drupal\Core\File\Exception\FileException("Could not create or write to directory '$dir'");
+          throw new FileException("Could not create or write to directory '$dir'");
         }
       }
 
@@ -376,7 +377,7 @@ class SenateVotesHelper {
 
       return !empty($file_uri) ? $file_uri : '';
     }
-    catch (\Drupal\Core\File\Exception\FileException $e) {
+    catch (FileException $e) {
       \Drupal::logger('senate_votes')->error(__METHOD__ . ' ' . t('failed. Message = Error during copy file %error.', [
           '%error' => $e,
         ]));
@@ -658,7 +659,7 @@ class SenateVotesHelper {
       return '';
     }
 
-    $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($pid);
+    $paragraph = Paragraph::load($pid);
 
     if (!empty($paragraph)) {
       $this->updateParagraphFields($paragraph, $data);

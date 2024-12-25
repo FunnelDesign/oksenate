@@ -52,7 +52,7 @@ class JavaService {
   public function checkJava() {
     $path = $this->getJavaPath();
 
-    $temp = tempnam(file_directory_temp(), 'asa');
+    $temp = tempnam(\Drupal::service('file_system')->getTempDirectory(), 'asa');
     exec($path . ' -version > ' . $temp . ' 2>&1');
     $stderror = file_get_contents($temp);
     $found = preg_match('/Runtime Environment/', $stderror);
