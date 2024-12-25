@@ -4,7 +4,10 @@
  * @file
  * Functions to support theming in the senate theme.
  */
-
+use Drupal\block\Entity\Block;
+use Drupal\node\Entity\Node;
+use Drupal\file\Entity\File;
+use Drupal\Core\Routing\RouteObjectInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -48,7 +51,7 @@ function senate_preprocess_html(array &$vars) {
  */
 function senate_preprocess_page(array &$vars) {
   $node = !empty($vars["node"]) ? $vars["node"] : '';
-  $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+  $vars['path_to_theme'] = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
 
   $vars['subscribe_form_popup'] = [
     '#theme' => 'senate_subscribe_form',
@@ -215,13 +218,13 @@ function senate_preprocess_node(array &$vars) {
             if ($term_obj->hasField('field_comt_icon')) {
               $icon_field = $term_obj->get('field_comt_icon');
               if (!empty($icon_field->entity)) {
-                $vars['icon'] = file_create_url($icon_field->entity->getFileUri());
+                $vars['icon'] = \Drupal::service('file_url_generator')->generateAbsoluteString($icon_field->entity->getFileUri());
               }
             }
             if ($term_obj->hasField('field_comt_icon_2x')) {
               $icon_field = $term_obj->get('field_comt_icon_2x');
               if (!empty($icon_field->entity)) {
-                $vars['icon_2x'] = file_create_url($icon_field->entity->getFileUri());
+                $vars['icon_2x'] = \Drupal::service('file_url_generator')->generateAbsoluteString($icon_field->entity->getFileUri());
               }
             }
           }
@@ -254,7 +257,7 @@ function senate_preprocess_node(array &$vars) {
 
               $file = $term_obj->get('field_district_term_map_file');
               if (!empty($file->entity)) {
-                $file_url = file_create_url($file->entity->getFileUri());
+                $file_url = \Drupal::service('file_url_generator')->generateAbsoluteString($file->entity->getFileUri());
                 $vars['file'] = Markup::create("<a href='$file_url' target='_blank'><i class=\"ss-icon ss-glyphish-outined ss-map\"></i>see map</a>");
               }
             }
@@ -475,7 +478,7 @@ function senate_theme_suggestions_taxonomy_term_alter(array &$suggestions, array
  * @param array $vars
  */
 function _senate_add_share_this(array &$vars) {
-  $path_to_theme = base_path() . drupal_get_path('theme', 'senate');
+  $path_to_theme = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
   if (!empty($vars["content"]["sharethis"])
     && !empty($vars["content"]["sharethis"]["#content"])
   ) {
@@ -485,7 +488,7 @@ function _senate_add_share_this(array &$vars) {
       '#title' => $vars["content"]["sharethis"]["#content"]["m_title"],
       '#current_path' => $path_to_theme,
     ];
-    $vars["content"]["sharethis"]["#content"]["st_spans"] = render($sharethis);
+    $vars["content"]["sharethis"]["#content"]["st_spans"] = \Drupal::service('renderer')->render($sharethis);
   }
 }
 
@@ -764,7 +767,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $vars['files'] = [];
       foreach ($items as $key => $item) {
         if (!empty($item["content"]["#file"])) {
-          $vars['files'][$key]['url'] = file_create_url($item["content"]["#file"]->getFileUri());
+          $vars['files'][$key]['url'] = \Drupal::service('file_url_generator')->generateAbsoluteString($item["content"]["#file"]->getFileUri());
           $vars['files'][$key]['title'] = !empty($item["content"]["#description"]) ? $item["content"]["#description"] : '';
         }
       }
@@ -779,7 +782,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $file = $item["content"]["#file"];
         if (!empty($file)) {
           $url = ($file->getFileUri());
-          $url = file_create_url($url);
+          $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['bTiles__item',]];
           $options['target'] = '_blank';
@@ -797,7 +800,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $file = $item["content"]["#file"];
         if (!empty($file)) {
           $url = ($file->getFileUri());
-          $url = file_create_url($url);
+          $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['btn', 'btn_b', 'btn_s_a']];
           $options['target'] = '_blank';
@@ -815,7 +818,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $file = $item["content"]["#file"];
         if (!empty($file)) {
           $url = ($file->getFileUri());
-          $url = file_create_url($url);
+          $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
           $options['target'] = '_blank';
           $options['download'] = $title;
@@ -833,7 +836,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $file = $item["content"]["#file"];
         if (!empty($file)) {
           $url = ($file->getFileUri());
-          $url = file_create_url($url);
+          $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
           $options['target'] = '_blank';
           $options['class'] = ['bListLinks__link'];
@@ -861,7 +864,7 @@ function senate_preprocess_field(array &$vars, $hook) {
 				$file = $item["content"]["#file"];
 				if (!empty($file)) {
           $url = ($file->getFileUri());
-          $url = file_create_url($url);
+          $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
 					$options = ['class' => ['btn', 'btn_a']];
 					$options['target'] = '_blank';
@@ -897,7 +900,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $file = $item["content"]["#file"];
         if (!empty($file)) {
           $url = ($file->getFileUri());
-          $url = file_create_url($url);
+          $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['bTb__text', 'bTb__text_a', 'pageIn_cl_c']];
           $options['target'] = '_blank';
@@ -921,7 +924,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $file = $item["content"]["#file"];
         if (!empty($file)) {
           $url = ($file->getFileUri());
-          $url = file_create_url($url);
+          $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
           $options = ['class' => ['bListLinks__link']];
           $options['target'] = '_blank';
@@ -1425,7 +1428,7 @@ function _rows_from_paragraphs(&$vars, $field_array) {
  */
 function _senate_get_block($bid) {
   $render = '';
-  $block = \Drupal\block\Entity\Block::load($bid);
+  $block = Block::load($bid);
 
   if (!empty($block)) {
     $render = \Drupal::entityTypeManager()
@@ -1437,7 +1440,7 @@ function _senate_get_block($bid) {
 }
 
 function senate_preprocess(&$vars, $hook) {
-  $vars['theme_path'] = base_path() . drupal_get_path('theme', 'senate');
+  $vars['theme_path'] = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
 }
 
 /**
@@ -1592,7 +1595,7 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         !empty($row["content"]["#row"]->field_journals_files_paragraphs_item_field_data_nid)) ?
         $row["content"]["#row"]->field_journals_files_paragraphs_item_field_data_nid : '';
       if (!empty($nid)) {
-        $parent_node = \Drupal\node\Entity\Node::load($nid);
+        $parent_node = Node::load($nid);
 
         if ($parent_node->hasField('title')) {
           $title = $parent_node->get('title');
@@ -1630,7 +1633,7 @@ function senate_preprocess_views_view_unformatted(&$vars) {
         !empty($row["content"]["#row"]->nid)) ?
         $row["content"]["#row"]->nid : '';
       if (!empty($nid)) {
-        $node = \Drupal\node\Entity\Node::load($nid);
+        $node = Node::load($nid);
         if ($node->hasField('field_issue_page_type')) {
           $type = $node->get('field_issue_page_type');
           $type = $type->getValue();
@@ -1831,16 +1834,16 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'calendar_lt_st_journals':
     case 'calendar_lt_joint_app_bd':
-      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+      $vars['path_to_theme'] = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
       break;
     case 'terms_glossary':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
       $vars['top_text'] = _senate_get_block('glossarydescription');
-      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+      $vars['path_to_theme'] = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
       break;
     case 'senate_artwork':
       $vars['breadcrumbs'] = _senate_get_block('custombreadcrumbblock');
-      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+      $vars['path_to_theme'] = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
 
       $exp_input = $view->getExposedInput();
       $location = !empty($exp_input["location"]) ? $exp_input["location"] : '';
@@ -1871,7 +1874,7 @@ function senate_preprocess_views_view(&$vars) {
       break;
     case 'senate_votes':
     case 'committees':
-      $vars['path_to_theme'] = base_path() . drupal_get_path('theme', 'senate');
+      $vars['path_to_theme'] = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
       break;
     case 'search_statutes_constitutions':
       $exposed_input = $view->getExposedInput();
@@ -1977,7 +1980,7 @@ function senate_preprocess_paragraph(array &$vars) {
         !empty($vars["content"]["field_par_publications_page_file"][0])) ?
         $vars["content"]["field_par_publications_page_file"][0]['#description'] : '';
 
-      $file_url = !empty($file) ? file_create_url($file->getFileUri()) : '';
+      $file_url = !empty($file) ? \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri()) : '';
 
       if (!empty($link_url) && !empty($link_title)) {
         $vars['url'] = $link_url;
@@ -1999,7 +2002,7 @@ function senate_preprocess_paragraph(array &$vars) {
         $vars["content"]["field_journals_files_file"][0]['#file'] : '';
 
       $date = !empty($date) && !empty($date[0]) ? $date[0]["value"] : '';
-      $vars['file_url'] = !empty($file) ? file_create_url($file->getFileUri()) : '';
+      $vars['file_url'] = !empty($file) ? \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri()) : '';
       $date_obj = new DrupalDateTime($date);
       $vars['date'] = $date_obj->format('F j');
 
@@ -2166,7 +2169,7 @@ function _senate_get_committee_options($committee_options) {
  * Implements hook_theme().
  */
 function senate_theme($existing, $type, $theme, $path) {
-  $theme_path = base_path() . drupal_get_path('theme', 'senate');
+  $theme_path = base_path() . \Drupal::service('extension.list.theme')->getPath('senate');
   return [
     'senate_news_sidebar' => [
       'variables' => [
@@ -2419,11 +2422,11 @@ function senate_preprocess_views_view_field(&$vars) {
             $paragraph->get('field_senate_votes_action_file') : '';
           $description = !empty($file) && !empty($file->get(0)) ? $file->get(0)->description : '';
           $fid = !empty($file) && !empty($file->get(0)) ? $file->get(0)->target_id : '';
-          $file = !empty($fid) ? \Drupal\file\Entity\File::load($fid) : '';
+          $file = !empty($fid) ? File::load($fid) : '';
 
           if (!empty($file)) {
             $url = ($file->getFileUri());
-            $url = file_create_url($url);
+            $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
             $url = Url::fromUri($url);
             $options = ['class' => ['bTb__text', 'bTb__text_a',]];
             $options['target'] = '_blank';
@@ -2592,7 +2595,7 @@ function senate_preprocess_senate_socials(&$vars) {
   }
   if (empty($vars["title"])) {
     $request = \Drupal::request();
-    if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+    if ($route = $request->attributes->get(RouteObjectInterface::ROUTE_OBJECT)) {
       $vars["title"] = \Drupal::service('title_resolver')->getTitle($request, $route);
       $vars["title"] = strip_tags($vars["title"]);
     }

@@ -1,9 +1,9 @@
 <?php
 namespace Drupal\senate_login\EventSubscriber;
 
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -20,7 +20,7 @@ class RedirectLoginSubscriber implements EventSubscriberInterface {
     $this->account = \Drupal::currentUser();
   }
 
-  public function redirectLogin(GetResponseEvent $event) {
+  public function redirectLogin(RequestEvent $event) {
 
 //    if (\Drupal::service('path.current')->getPath() == '/user') {
 //

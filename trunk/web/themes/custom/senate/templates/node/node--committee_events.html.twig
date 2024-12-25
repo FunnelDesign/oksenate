@@ -111,9 +111,9 @@
         {{ content.field_comt_evt_date }}
 
         <div class="pageIn__infoIt">
-          {% spaceless %}
+          {% apply spaceless %}
             {{"Location"|t}} <strong>{{ room_link }}{{ loc_delimeter }}{{ content.field_comt_evt_loc }}</strong>
-          {% endspaceless %}
+          {% endapply %}
         </div>
       </div>
 

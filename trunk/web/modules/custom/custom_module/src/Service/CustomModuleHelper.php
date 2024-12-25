@@ -2,7 +2,7 @@
 
 namespace Drupal\custom_module\Service;
 
-use Drupal\Core\Database\Driver\mysql\Connection;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Logger\LoggerChannelFactory;
 
 /**
@@ -11,9 +11,9 @@ use Drupal\Core\Logger\LoggerChannelFactory;
 class CustomModuleHelper {
 
   /**
-   * Drupal\Core\Database\Driver\mysql\Connection definition.
+   * Drupal\Core\Database\Connection definition.
    *
-   * @var \Drupal\Core\Database\Driver\mysql\Connection
+   * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
@@ -28,7 +28,7 @@ class CustomModuleHelper {
   /**
    * SenateApiHelper constructor.
    *
-   * @param \Drupal\Core\Database\Driver\mysql\Connection $database
+   * @param \Drupal\Core\Database\Connection $database
    * @param \Drupal\Core\Logger\LoggerChannelFactory $logger
    */
   public function __construct(Connection $database, LoggerChannelFactory $logger) {

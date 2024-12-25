@@ -3,7 +3,7 @@
 namespace Drupal\senate_calendar\Service;
 
 use Drupal\Component\Serialization\Json;
-use Drupal\Core\Database\Driver\mysql\Connection;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\Messenger\MessengerInterface;
@@ -28,9 +28,9 @@ class SenateCalendarHelper {
   use MessengerTrait;
 
   /**
-   * Drupal\Core\Database\Driver\mysql\Connection definition.
+   * Drupal\Core\Database\Connection definition.
    *
-   * @var \Drupal\Core\Database\Driver\mysql\Connection
+   * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
@@ -47,7 +47,7 @@ class SenateCalendarHelper {
   /**
    * EventsCustomHelper constructor.
    *
-   * @param \Drupal\Core\Database\Driver\mysql\Connection $database
+   * @param \Drupal\Core\Database\Connection $database
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *

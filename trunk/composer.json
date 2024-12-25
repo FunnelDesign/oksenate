@@ -136,6 +136,7 @@
         "drupal/token": "^1.5",
         "drupal/toolbar_menu": "^2.1",
         "drupal/toolbar_menu_clean": "^1.2",
+        "drupal/upgrade_rector": "^2.0@alpha",
         "drupal/upgrade_status": "^3.11",
         "drupal/video_embed_field": "^2.2",
         "drupal/view_unpublished": "^1.0@alpha",
@@ -156,7 +157,9 @@
         "webmozart/path-util": "^2.3"
     },
     "require-dev": {
-        "drupal/core-dev": "9.5.11"
+        "drupal/core-dev": "9.5.11",
+        "mglaman/drupal-check": "^1.5",
+        "palantirnet/drupal-rector": "^0.20.3"
     },
     "conflict": {
         "drupal/drupal": "*"
