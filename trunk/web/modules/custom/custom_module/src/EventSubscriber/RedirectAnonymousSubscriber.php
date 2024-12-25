@@ -11,6 +11,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class RedirectAnonymousSubscriber implements EventSubscriberInterface {
 
+  /**
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $account;
+
   public function __construct() {
     $this->account = \Drupal::currentUser();
   }

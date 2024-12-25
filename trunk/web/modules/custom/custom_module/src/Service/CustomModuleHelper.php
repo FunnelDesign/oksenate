@@ -20,7 +20,7 @@ class CustomModuleHelper {
   /**
    * The logger service.
    *
-   * @var \Drupal\Core\Logger\LoggerChannelFactory
+   * @var \Drupal\Core\Logger\LoggerChannelInterface
    */
   protected $logger;
 
