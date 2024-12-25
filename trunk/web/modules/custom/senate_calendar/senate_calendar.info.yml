@@ -1,5 +1,5 @@
 name: 'Senate Calendar'
 type: module
 description: 'Import Senate Join Calendar from file.'
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: 'Custom'

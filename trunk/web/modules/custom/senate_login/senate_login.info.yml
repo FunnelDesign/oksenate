@@ -1,5 +1,5 @@
 name: Senate login Url
 type: module
 description: Senate login Url
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: senate login

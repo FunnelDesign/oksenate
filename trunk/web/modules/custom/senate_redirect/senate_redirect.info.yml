@@ -2,7 +2,7 @@ name: 'Senate Redirect'
 type: module
 description: 'Create redirects'
 package: 'Custom'
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 configure: senate_redirect.settings_form
 dependencies:
   - drupal:node

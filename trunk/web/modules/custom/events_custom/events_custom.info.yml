@@ -1,6 +1,6 @@
 name: 'events_custom'
 type: module
 description: 'Events from Harmony API'
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: 'Custom'
 configure: events_custom.settings_form

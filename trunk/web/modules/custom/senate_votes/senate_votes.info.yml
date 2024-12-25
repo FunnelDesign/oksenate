@@ -1,6 +1,6 @@
 name: 'Senate Votes'
 type: module
 description: 'Imports senate votes from file.'
-core_version_requirement: ^8 || ^9
+core_version_requirement: ^9 || ^10
 package: 'Custom'
 configure: senate_votes.settings_form
