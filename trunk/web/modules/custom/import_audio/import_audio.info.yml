@@ -1,5 +1,0 @@
-name: 'import_audio'
-type: module
-description: 'Import press releases audio, weeks in review, journals'
-core_version_requirement: ^9 || ^10
-package: 'Custom'
