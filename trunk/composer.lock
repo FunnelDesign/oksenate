@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "736ee5e60da0e1939a2a199b94cdfc9c",
+    "content-hash": "3269271ba840997872b6bbd089e9d2d8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7489,30 +7489,30 @@
             "type": "library",
             "extra": {
                 "installer-paths": {
-                  "sut/core": [
-                    "type:drupal-core"
-                  ],
-                  "sut/libraries/{$name}": [
-                    "type:drupal-library"
-                  ],
-                  "sut/themes/unish/{$name}": [
-                    "drupal/empty_theme"
-                  ],
-                  "sut/drush/contrib/{$name}": [
-                    "type:drupal-drush"
-                  ],
-                  "sut/modules/unish/{$name}": [
-                    "drupal/devel"
-                  ],
-                  "sut/themes/contrib/{$name}": [
-                    "type:drupal-theme"
-                  ],
-                  "sut/modules/contrib/{$name}": [
-                    "type:drupal-module"
-                  ],
-                  "sut/profiles/contrib/{$name}": [
-                    "type:drupal-profile"
-                  ]
+                    "sut/core": [
+                        "type:drupal-core"
+                    ],
+                    "sut/libraries/{$name}": [
+                        "type:drupal-library"
+                    ],
+                    "sut/themes/unish/{$name}": [
+                        "drupal/empty_theme"
+                    ],
+                    "sut/drush/contrib/{$name}": [
+                        "type:drupal-drush"
+                    ],
+                    "sut/modules/unish/{$name}": [
+                        "drupal/devel"
+                    ],
+                    "sut/themes/contrib/{$name}": [
+                        "type:drupal-theme"
+                    ],
+                    "sut/modules/contrib/{$name}": [
+                        "type:drupal-module"
+                    ],
+                    "sut/profiles/contrib/{$name}": [
+                        "type:drupal-profile"
+                    ]
                 }
             },
             "autoload": {
