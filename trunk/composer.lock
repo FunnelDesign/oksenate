@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf92af8e9d50843f3aefb7ce1e6886a0",
+    "content-hash": "f8e3808b8a318e39182ab86b95366379",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1017,6 +1017,10 @@
                 }
             ],
             "description": "A thin wrapper around the Symfony Process Component that allows applications to use the Site Alias library to specify the target for a remote call.",
+            "support": {
+                "issues": "https://github.com/consolidation/site-process/issues",
+                "source": "https://github.com/consolidation/site-process/tree/4.2.1"
+            },
             "time": "2022-01-03T18:57:42+00:00"
         },
         {
@@ -17584,7 +17588,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.0.8"
+        "php": ">=8.1"
     },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
