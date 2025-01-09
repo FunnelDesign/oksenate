@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95573bb14b449e127453267a49300ab4",
+    "content-hash": "dcd3e0a5b91b052e8bc5c1bfbcdcfcce",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -9516,34 +9516,6 @@
                 "source": "https://github.com/pear/PEAR_Exception"
             },
             "time": "2021-03-21T15:43:46+00:00"
-        },
-        {
-            "name": "pguardiario/phpuri",
-            "version": "1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/monkeysuffrage/phpuri.git",
-                "reference": "ad0a5ec033fe616cfef55578b9c7f2458be8fbfc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/monkeysuffrage/phpuri/zipball/ad0a5ec033fe616cfef55578b9c7f2458be8fbfc",
-                "reference": "ad0a5ec033fe616cfef55578b9c7f2458be8fbfc",
-                "shasum": ""
-            },
-            "type": "project",
-            "autoload": {
-                "files": [
-                    "phpuri.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "A php library for converting relative urls to absolute.",
-            "support": {
-                "issues": "https://github.com/monkeysuffrage/phpuri/issues",
-                "source": "https://github.com/monkeysuffrage/phpuri/tree/1.0.0"
-            },
-            "time": "2015-05-24T09:13:17+00:00"
         },
         {
             "name": "phootwork/collection",
