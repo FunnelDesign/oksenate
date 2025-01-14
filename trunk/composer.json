@@ -22,14 +22,14 @@
             "type": "package",
             "package": {
                 "name": "mozilla/pdf.js",
-                "version": "1.10.100",
+                "version": "2.4.456",
                 "type": "drupal-library",
                 "extra": {
                     "installer-name": "pdf.js"
                 },
                 "dist": {
                     "type": "zip",
-                    "url": "https://github.com/mozilla/pdf.js/releases/download/v1.10.100/pdfjs-1.10.100-dist.zip"
+                    "url": "https://github.com/mozilla/pdf.js/releases/download/v2.4.456/pdfjs-2.4.456-dist.zip"
                 }
             }
         },
@@ -151,7 +151,7 @@
         "drupal/webform_mailchimp": "^5.10",
         "drush/drush": "^12",
         "kint-php/kint": "^3.3",
-        "mozilla/pdf.js": "^1.10",
+        "mozilla/pdf.js": "^2.4.456",
         "npm-asset/select2": "^4.0",
         "oomphinc/composer-installers-extender": "^2.0",
         "phpoffice/phpspreadsheet": "^1.11",
