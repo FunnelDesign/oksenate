@@ -758,6 +758,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       break;
     case 'field_agencies_doc_doc':
     case 'field_reports_files':
+    case 'field_budget_files':
     case 'field_session_summary_file':
     case 'field_meeting_notice_files':
     case 'field_comt_evt_files':
@@ -988,6 +989,14 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $vars["items"][$key]["content"]["#options"]["attributes"] = ['class' => 'bListLinks__link'];
+      }
+      break;
+	case 'field_budget_external_link':
+	  $items = !empty($vars["items"]) ? $vars["items"] : [];
+      $vars['linksy'] = [];
+      foreach ($items as $key => $item) {
+        $vars['linksy'][$key]['url'] = $item["content"]["#url"];
+        $vars['linksy'][$key]['title'] = !empty($item["content"]["#title"]) ? $item["content"]["#title"] : '';
       }
       break;
     case 'field_basic_back_button_link':
