@@ -159,9 +159,16 @@
           <h2>{{ "Stay informed of all upcoming Meeting Notices"|t }}</h2>
         </div>
         <div class="pageIn__btnWr">
-          <a href="#" class="btn" data-toggle="modal" data-target="#meetingnotices">
-            {{ "sign up"|t }}
-          </a>
+          {% if content.field_subcomt_ext_subscribe_link[0]['#url'] is not empty %}
+            <a class="btn" href="{{ content.field_subcomt_ext_subscribe_link[0]['#url'] }}" target="_blank">
+              {{ content.field_subcomt_ext_subscribe_link[0]['#title'] }}
+            </a>
+          {% endif %}
+          {% else %}
+            <a href="#" class="btn" data-toggle="modal" data-target="#meetingnotices">
+              {{ "sign up"|t }}
+            </a>
+          {% endif %}
         </div>
         {#
         {% if content.field_subcomt_webform.0 %}
