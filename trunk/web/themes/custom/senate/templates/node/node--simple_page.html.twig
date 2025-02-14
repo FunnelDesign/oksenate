@@ -73,31 +73,41 @@
  */
 #}
 <article{{ attributes }}>
+  <section class="section section_bg-color_f section_inner-v-centered">
     <div class="section__sNav">
-        <div class="bContainer">
-            {{ socials }}
+      <div class="bContainer">
+        {{ socials }}
+      </div>
+    </div>
+    <div class="section__v-inner section__v-inner_d">
+      <div class="bContainer">
+        {{ content.field_basic_top_logo_image }}
+        <div class="bTitle bTitle_wSub_a">
+          {{ title_prefix }}
+          {% if label and not page %}
+            <h1{{ title_attributes }}>
+              {{ label }}
+            </h1>
+          {% endif %}
+          {{ title_suffix }}
         </div>
+      </div>
     </div>
+  </section>
 
-    {{ title_prefix }}
-    {% if label and not page %}
-        <h2{{ title_attributes }}>
-            <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-        </h2>
-    {% endif %}
-    {{ title_suffix }}
+  {% if content.field_show_iframe_table_bool['#items'].value == 1 %}
+    <section class="section section_ind_c section_bg-color_c">
+      <div class="bContainer">
+        <iframe
+          scrolling="yes"
+          src="http://www.oklegislature.gov/sgeneralorder.aspx"
+          marginwidth="1"
+          marginheight="0"
+          target="_self"
+          frameborder="0"
+          style="width: 100%;height: 4000px; border: none;"></iframe>
+      </div>
+    </section>
+  {% endif %}
 
-    {% if display_submitted %}
-        <footer>
-            {{ author_picture }}
-            <div{{ author_attributes }}>
-                {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
-                {{ metadata }}
-            </div>
-        </footer>
-    {% endif %}
-
-    <div{{ content_attributes }}>
-        {{ content }}
-    </div>
 </article>
