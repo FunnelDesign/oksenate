@@ -88,6 +88,11 @@
               {{ label }}
             </h1>
           {{ title_suffix }}
+          {% if content.body|render is not empty %}
+            <div class="bTitle__sub bTitle__sub_a bTitle__sub_cl_a">
+              {{ content.body }}
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
