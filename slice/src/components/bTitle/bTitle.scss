@@ -69,6 +69,11 @@
       font-family: $FreightTextProBook-Regular;
       font-size: 18px;
       color: $color-blue;
+
+      strong {
+        font-family: $RobotoCondensed-Bold;
+        //font-weight: bold;
+      }
     }
 
     &_b {
