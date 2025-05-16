@@ -696,6 +696,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       $elements = _rows_from_paragraphs($vars, array(
         'field_paragraph_tiles_image',
         'field_paragraph_tiles_link',
+        'field_paragraph_tiles_style_list',
       ));
 
       foreach ($elements as $key => $row) {
@@ -718,11 +719,15 @@ function senate_preprocess_field(array &$vars, $hook) {
 
         $markup = Markup::create($img_markup . $link_title); //prepared content for render
 
+        $tile_style = !empty($row["field_paragraph_tiles_style_list"]) &&
+        !empty($row["field_paragraph_tiles_style_list"]["#items"]) ?
+          $row["field_paragraph_tiles_style_list"]["#items"]->get(0)->value : '';
+
         $url = Url::fromUri($row['field_paragraph_tiles_link'][0]['uri']);
         $options = !empty($row["field_paragraph_tiles_link"][0]["options"]) &&
           !empty($row["field_paragraph_tiles_link"][0]["options"]["attributes"]) ?
           $row["field_paragraph_tiles_link"][0]["options"]["attributes"] : [];
-        $options['class'] = ['bTiles__item'];
+        $options['class'] = ['bTiles__item', $tile_style];
         $url->setOption('attributes', $options);
 
         $vars['elements'][$key]['element'] = Link::fromTextAndUrl($markup, $url);
