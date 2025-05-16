@@ -720,8 +720,8 @@ function senate_preprocess_field(array &$vars, $hook) {
         $markup = Markup::create($img_markup . $link_title); //prepared content for render
 
         $tile_style = !empty($row["field_paragraph_tiles_style_list"]) &&
-        !empty($row["field_paragraph_tiles_style_list"]["#items"]) ?
-          $row["field_paragraph_tiles_style_list"]["#items"]->get(0)->value : '';
+        !empty($row["field_paragraph_tiles_style_list"][0]['value']) ?
+          $row["field_paragraph_tiles_style_list"][0]['value'] : '';
 
         $url = Url::fromUri($row['field_paragraph_tiles_link'][0]['uri']);
         $options = !empty($row["field_paragraph_tiles_link"][0]["options"]) &&
