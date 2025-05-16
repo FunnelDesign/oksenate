@@ -29,6 +29,31 @@
     &:hover {
       background: $color-dark-blue;
     }
+
+    &._span-2 {
+
+      @include md {
+        width: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #{$this}__ico {
+
+        @include md {
+          margin-inline: 0;
+          margin-bottom: 0;
+        }
+      }
+
+      #{$this}__title {
+
+        @include md {
+          max-width: 200px;
+        }
+      }
+    }
   }
 
   &__ico {
