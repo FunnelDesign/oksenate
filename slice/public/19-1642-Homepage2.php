@@ -201,6 +201,26 @@
               </span>
             </a>
 
+            <a href="#" class="bTiles__item _span-2">
+              <span class="bTiles__ico">
+                 <img src="../dist/images/tmp/tiles-ico-img-7.png" srcset="../dist/images/tmp/tiles-ico-img-7-2x.png 2x" alt="">
+              </span>
+              <span class="bTiles__title">
+               Budget Transparency Dashboard
+              </span>
+            </a>
+
+
+            <a href="#" class="bTiles__item">
+              <span class="bTiles__ico">
+                <img src="../dist/images/titleIco/title-ico-55.png"
+                     srcset="../dist/images/titleIco/title-ico-55-2x.png 2x">
+              </span>
+              <span class="bTiles__title">
+                Floor Agenda
+              </span>
+            </a>
+
             <a href="#" class="bTiles__item">
               <span class="bTiles__ico">
                  <img src="../dist/images/tmp/tiles-ico-img-2.png" srcset="../dist/images/tmp/tiles-ico-img-2-2x.png 2x" alt="">
@@ -221,11 +241,10 @@
 
             <a href="#" class="bTiles__item">
               <span class="bTiles__ico">
-                <img src="../dist/images/titleIco/title-ico-55.png"
-                     srcset="../dist/images/titleIco/title-ico-55-2x.png 2x">
+                <img src="https://oksenate.gov/sites/default/files/styles/rockdevels_defaults_imagemagick/public/2022-07/title-ico-19.png?itok=uUox6eZr" srcset="https://oksenate.gov/sites/default/files/styles/rockdevels_defaults_imagemagick/public/2022-07/title-ico-19_0.png?itok=fesr8F5n 2x" alt="">
               </span>
               <span class="bTiles__title">
-                Floor Agenda
+                Senate Studies
               </span>
             </a>
           </div>
