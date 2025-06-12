@@ -1,6 +1,6 @@
 name: Senate pdf viewer
 description: 'Senate PDF viewer infinite scroll field formatter'
-core: 8.x
+core_version_requirement: ^9 || ^10
 dependencies:
   - drupal:file
   - drupal:pdf

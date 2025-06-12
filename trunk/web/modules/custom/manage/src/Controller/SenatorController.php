@@ -3,7 +3,7 @@
 namespace Drupal\manage\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Zend\Diactoros\Response\RedirectResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Class SenatorController.

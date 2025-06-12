@@ -20,7 +20,7 @@ class EventsController extends ControllerBase {
     $response = new AjaxResponse();
 
     $element  = ['#theme' => 'events_custom_upcoming'];
-    $response->addCommand(new HtmlCommand('.events-holder', render($element)));
+    $response->addCommand(new HtmlCommand('.events-holder', \Drupal::service('renderer')->render($element)));
 
     return $response;
   }
@@ -30,7 +30,7 @@ class EventsController extends ControllerBase {
     $response = new AjaxResponse();
 
     $element  = ['#theme' => 'events_custom_home'];
-    $response->addCommand(new HtmlCommand('.events-home-holder', render($element)));
+    $response->addCommand(new HtmlCommand('.events-home-holder', \Drupal::service('renderer')->render($element)));
     //$response->addCommand(new AlertCommand('test'));
 
     return $response;

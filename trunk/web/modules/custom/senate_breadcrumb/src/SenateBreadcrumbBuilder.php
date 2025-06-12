@@ -230,6 +230,7 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
     $this->currentUser = $current_user;
     $this->currentPath = $current_path;
     $this->menuLinkManager = $menu_link_manager;
+    $this->languageNegotiationConfig = $config_factory->get('language.negotiation');
     $this->languageManager = $language_manager;
     $this->entityTypeManager = $entity_type_manager;
     $this->entityRepository = $entity_repository;
@@ -329,7 +330,7 @@ class SenateBreadcrumbBuilder extends EasyBreadcrumbBuilder implements Breadcrum
   /**
    * Set request context from passed in $route_match if route is available.
    *
-   * @param Drupal\Core\Routing\RouteMatchInterface $route_match
+   * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
    *   The route match for the breadcrumb.
    */
   protected function setRouteContextFromRouteMatch(RouteMatchInterface $route_match) {

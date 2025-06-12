@@ -1,0 +1,13 @@
+<?php
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete() for file entities.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ */
+function search_file_attachments_file_predelete(EntityInterface $entity) {
+  // Ensure that all files deleted are removed from the search index.
+  \Drupal::service('search.index')->clear('file_search', $entity->id());
+}

@@ -70,7 +70,7 @@ function events_custom_test() {
 
 function _events_custom_get_events() {
   $date = date("Ymd", strtotime('monday this week'));
-//  $date = '20191213';
+
   //$response = \Drupal::state()->get('events_custom.cache');
   if(empty($response)) {
     //dsm('not from cache');

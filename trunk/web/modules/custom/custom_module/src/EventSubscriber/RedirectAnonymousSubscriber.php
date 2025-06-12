@@ -1,9 +1,9 @@
 <?php
 namespace Drupal\custom_module\EventSubscriber;
 
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -11,11 +11,16 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class RedirectAnonymousSubscriber implements EventSubscriberInterface {
 
+  /**
+   * @var \Drupal\Core\Session\AccountProxyInterface
+   */
+  protected $account;
+
   public function __construct() {
     $this->account = \Drupal::currentUser();
   }
 
-  public function checkAuthStatus(GetResponseEvent $event) {
+  public function checkAuthStatus(RequestEvent $event) {
 
     if ($this->account->isAnonymous() && \Drupal::routeMatch()
         ->getRouteName() != 'user.login'
@@ -40,7 +45,7 @@ class RedirectAnonymousSubscriber implements EventSubscriberInterface {
     return $events;
   }
 
-  public function checkNodeRedirection(GetResponseEvent $event) {
+  public function checkNodeRedirection(RequestEvent $event) {
     $baseUrl = $event->getRequest()->getBaseUrl();
     $attr = $event->getRequest()->attributes;
     $node = !empty($attr) && is_object($attr) ? $attr->get('node') : '';

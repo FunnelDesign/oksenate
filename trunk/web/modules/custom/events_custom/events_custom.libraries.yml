@@ -5,7 +5,7 @@ events:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    - core/jquery.once
+    - core/once
 events_timetable:
   js:
     js/lib/moment.min.js: {}
@@ -16,4 +16,4 @@ events_timetable:
     - core/jquery
     - core/drupal
     - core/drupalSettings
-    - core/jquery.once
+    - core/once

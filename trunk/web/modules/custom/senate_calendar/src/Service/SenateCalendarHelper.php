@@ -2,22 +2,14 @@
 
 namespace Drupal\senate_calendar\Service;
 
-use Drupal\Component\Serialization\Json;
-use Drupal\Core\Database\Driver\mysql\Connection;
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Datetime\DrupalDateTime;
-use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Messenger\MessengerTrait;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
-use Drupal\migrate\MigrateException;
-use Drupal\node\Entity\Node;
-use Drupal\paragraphs\Entity\Paragraph;
-use GuzzleHttp\Exception\RequestException;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\node\NodeStorageInterface;
-use Drupal\file\Entity\File;
-use Drupal\Component\Utility\UrlHelper;
-
+use Drupal\paragraphs\Entity\Paragraph;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
@@ -28,9 +20,9 @@ class SenateCalendarHelper {
   use MessengerTrait;
 
   /**
-   * Drupal\Core\Database\Driver\mysql\Connection definition.
+   * Drupal\Core\Database\Connection definition.
    *
-   * @var \Drupal\Core\Database\Driver\mysql\Connection
+   * @var \Drupal\Core\Database\Connection
    */
   protected $database;
 
@@ -47,7 +39,7 @@ class SenateCalendarHelper {
   /**
    * EventsCustomHelper constructor.
    *
-   * @param \Drupal\Core\Database\Driver\mysql\Connection $database
+   * @param \Drupal\Core\Database\Connection $database
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *
@@ -592,7 +584,7 @@ class SenateCalendarHelper {
       return '';
     }
 
-    $paragraph = \Drupal\paragraphs\Entity\Paragraph::load($pid);
+    $paragraph = Paragraph::load($pid);
 
     if (!empty($paragraph)) {
       $this->updateParagraphFields($paragraph, $data, $type, 'update');

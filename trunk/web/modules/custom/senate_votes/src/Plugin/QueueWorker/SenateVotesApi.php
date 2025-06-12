@@ -36,7 +36,7 @@ class SenateVotesApi extends QueueWorkerBase {
 
       foreach ($rows as $row) {
         if (!empty($row['nid'])) {
-          $parent_node = \Drupal\node\Entity\Node::load($row['nid']);
+          $parent_node = Node::load($row['nid']);
           $paragraph = $senate_votes_api_helper->createParagraph($parent_node, 'field_senate_votes', $row["vote"]);
 
           if (!empty($paragraph)) {

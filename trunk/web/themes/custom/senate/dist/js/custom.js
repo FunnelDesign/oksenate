@@ -4,7 +4,7 @@
       var senateSettings = settings.senate || {};
       var datesArray = senateSettings.active_dates || [];
 
-      $('input.bef-datepicker', context).once('bef-datepicker').each(function () {
+      $(once('bef-datepicker', 'input.bef-datepicker', context)).each(function () {
         var options = {
           beforeShowDay: function(date) {
             var dateString = jQuery.datepicker.formatDate('mm/dd/yy', date);
@@ -25,7 +25,7 @@
         }
       });
 
-    //   $('#views-exposed-form-journals-page-1', context).once('journals-options').each(function () {
+    //   $(once('journals-options','#views-exposed-form-journals-page-1', context)).each(function () {
     //     var yearElm = this.elements.item(0);
     //     var monthElm = this.elements.item(1);
     //     var daysElm = this.elements.item(2);
@@ -78,7 +78,7 @@
     //     });
     //   });
 
-      $('#views-exposed-form-search-statutes-constitutions-page-1', context).once('statutes').each(function () {
+      $(once('statutes','#views-exposed-form-search-statutes-constitutions-page-1', context)).each(function () {
         var constitutions = this.elements['edit-constitutions'];
         var statutes = this.elements['edit-statutes'];
 
@@ -91,7 +91,7 @@
         });
       });
 
-      $('#views-exposed-form-senators-page-1', context).once('senators').each(function () {
+      $(once('senators', '#views-exposed-form-senators-page-1', context)).each(function () {
         var formElements = this.elements;
         var formElementsLength = formElements.length;
         var zip = document.querySelector('input[id^="edit-zip"]');
@@ -118,7 +118,7 @@
         }, true);
       });
 
-      $('[data-drupal-selector="views-exposed-form-senate-votes-inner-block-1"]').once('votes').each(function () {
+      $(once('votes','[data-drupal-selector="views-exposed-form-senate-votes-inner-block-1"]')).each(function () {
         var formElements = this.elements;
         var formElementsLength = formElements.length;
 
@@ -148,7 +148,7 @@
 
     setBackButtonUrl: function (context) {
       var _this = this;
-      $('.page-node-type-press-release .section__btnBack', context).once('backButton').each(function () {
+      $(once('backButton','.page-node-type-press-release .section__btnBack', context)).each(function () {
         var backUrl = _this.getQueryParameterByName('back');
         if (backUrl) {
           this.setAttribute("href", backUrl);
@@ -172,7 +172,7 @@
       this.senateCustomCaptchaTextBox = document.getElementById('senateCustomCaptchaTextBox');
       this.senateCustomCaptchaWrapper = document.getElementById('senateCustomCaptchaWrapper');
 
-      $('.senate-custom-captcha', context).once('senateCustomCaptcha').each(function () {
+      $(once('senateCustomCaptcha','.senate-custom-captcha', context)).each(function () {
         _this.createCaptcha();
 
         this.addEventListener('submit', function (event) {

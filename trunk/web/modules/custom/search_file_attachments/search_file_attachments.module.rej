@@ -1,0 +1,9 @@
+--- search_file_attachments.module
++++ search_file_attachments.module
+@@ -7,5 +7,5 @@
+  */
+ function search_file_attachments_file_predelete(Drupal\Core\Entity\EntityInterface $entity) {
+   // Ensure that all files deleted are removed from the search index.
+-  search_index_clear('file_search', $entity->id());
++  \Drupal::service('search.index')->clear('file_search', $entity->id());
+ }

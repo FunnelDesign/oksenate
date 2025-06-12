@@ -1,7 +1,7 @@
 (function ($, Drupal) {
   Drupal.behaviors.eventsCustomTimetable = {
     attach: function (context, settings) {
-      $('body', context).once('eventsCustomTimetable').each(function () {
+      $(once('eventsCustomTimetable', 'body', context)).each(function () {
         controllerEvents.init();
       });
     }
