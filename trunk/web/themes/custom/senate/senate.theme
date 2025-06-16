@@ -1285,6 +1285,8 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           }
         }
 
+        $form['#attached']['library'][] = 'jquery_ui_datepicker/datepicker';
+
         $form['datepicker_alt_field'] = [
           '#type' => 'textfield',
           '#default_value' => !empty($data["last_date_alt"]) ? $data["last_date_alt"] : '',
