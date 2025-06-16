@@ -231,6 +231,9 @@
             }
         },
         "patches": {
+            "drupal/sharethis": {
+                "https://www.drupal.org/project/sharethis/issues/3324477": "https://www.drupal.org/files/issues/2022-12-06/sharethis-reference-error-stbutton-3324477-4.patch"
+            },
             "drupal/webform_mailchimp": {
                 "https://www.drupal.org/project/webform_mailchimp/issues/3036323": "https://www.drupal.org/files/issues/2019-10-05/3036323-interest-groups-predefined-options-15.patch"
             }
