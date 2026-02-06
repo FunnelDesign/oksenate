@@ -80,9 +80,11 @@ class XmlFileJobDevider {
 
   private function dbFindNode($db_votes, $db_nodes ,$key) {
 
-    reset($db_votes[$key]);
-    $first_row_data = current($db_votes[$key]);
-    $nid = $first_row_data['nid'] ?? NULL;
+    if(!empty($db_votes[$key])) {
+      reset($db_votes[$key]);
+      $first_row_data = current($db_votes[$key]);
+      $nid = $first_row_data['nid'] ?? NULL;
+    }
 
     if(empty($nid)) {
       $nid = $db_nodes[$key]['nid'] ?? NULL;
