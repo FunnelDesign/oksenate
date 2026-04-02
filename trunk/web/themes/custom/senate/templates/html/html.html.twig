@@ -32,28 +32,26 @@ db_offline ? 'db-offline',
 ]
 %}
 <!DOCTYPE html>
-<html{{ html_attributes }}>
-<head>
-  <head-placeholder token="{{ placeholder_token }}">
-    <title>{{ head_title|safe_join(' | ') }}</title>
-    <css-placeholder token="{{ placeholder_token }}">
-    <js-placeholder token="{{ placeholder_token }}">
-</head>
-<body{{ attributes.addClass(body_classes) }}>
-{#
-  Keyboard navigation/accessibility link to main content section in
-  page.html.twig.
-#}
-<a href="#main-content" class="visually-hidden focusable skip-link">
-  {{ 'Skip to main content'|t }}
-</a>
-{{ page_top }}
-{{ page }}
-{{ page_bottom }}
+<html{{html_attributes}}>
+	<head>
+		<head-placeholder token="{{ placeholder_token }}">
+			<title>{{ head_title|safe_join(' | ') }}</title>
+			<css-placeholder token="{{ placeholder_token }}">
+				<js-placeholder token="{{ placeholder_token }}"></head>
+				<body{{attributes.addClass(body_classes)}}>
+					{#
+																				  Keyboard navigation/accessibility link to main content section in
+																				  page.html.twig.
+																				#}
+					<a href="#block-senate-content" class="visually-hidden focusable skip-link" tabindex="-1" role="main">
+						{{ 'Skip to main content'|t }}
+					</a>
+					{{ page_top }}
+					{{ page }}
+					{{ page_bottom }}
 
-{% if is_front %}
-  <script src="https://content.govdelivery.com/overlay/js/9449.js"></script>
-{% endif %}
-<js-bottom-placeholder token="{{ placeholder_token }}">
-</body>
-</html>
+					{% if is_front %}
+						<script src="https://content.govdelivery.com/overlay/js/9449.js"></script>
+					{% endif %}
+					<js-bottom-placeholder token="{{ placeholder_token }}"></body>
+				</html>
