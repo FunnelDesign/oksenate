@@ -612,7 +612,7 @@ function senate_preprocess_field(array &$vars, $hook) {
       foreach ($items as $key => $item) {
 //        $vars['items'][$key]['content']['#options']['attributes']['class'] = array('bSoc__ico ss-icon ss-social-circle ss-twitter');
         $vars['items'][$key]['wrappers'] = 'bSoc__item bSoc__item_twitter';
-        $vars['items'][$key]['content']['#title'] = "X";
+        $vars['items'][$key]['content']['#title'] = "twitter";
 
       }
       break;

@@ -24,6 +24,9 @@
     top: 50%;
     width: 30px;
     height: 30px;
+    background-color: transparent;
+    border: 0;
+    color: transparent;
     transform: translate(0, -50%);
     transition: opacity .3s;
 

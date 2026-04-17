@@ -21,3 +21,9 @@ trunk/sites/default/files
 trunk_commerce/sites/default/files
 trunk/sites/default/settings.php
 trunk_commerce/sites/default/settings.php
+
+.docker/
+docker-compose.yml
+setup.sh
+trunk/web/sites/default/settings.php.bak
+
