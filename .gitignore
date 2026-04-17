@@ -26,4 +26,5 @@ trunk_commerce/sites/default/settings.php
 docker-compose.yml
 setup.sh
 trunk/web/sites/default/settings.php.bak
-
+trunk/web/themes/custom/senate/dist/images/tmp/seats-tmp-img-1-a-2x.png
+trunk/web/themes/custom/senate/dist/images/tmp/seats-tmp-img-1-a.png
