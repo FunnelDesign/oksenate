@@ -14,7 +14,8 @@
         <div class="form">
           <div class="pageIn__ico">
             <img src="{{ current_path }}/dist/images/titleIco/title-ico-11.png"
-                 srcset="{{ current_path }}/dist/images/titleIco/title-ico-11-2x.png 2x">
+                 srcset="{{ current_path }}/dist/images/titleIco/title-ico-11-2x.png 2x" 
+                 aria-hidden="true">
           </div>
 
           <h2>{{ "Sign up for our Newsletter"|t }}</h2>
@@ -59,7 +60,7 @@
                   <input type="text" name="email" id="email" class="long" />
                 </li>
               </ol>
-              <label style="text-align: center">
+              <label for="senateCustomCaptchaTextBox" style="text-align: center">
                 <img class="required" src="https://content.govdelivery.com/images/required.gif" alt="Required">
                 {{ "Enter the characters shown in the image."|t }}
               </label>
