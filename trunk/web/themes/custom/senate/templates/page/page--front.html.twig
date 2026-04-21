@@ -63,16 +63,19 @@
 
         <div class="sHeader__bottom">
             <div class="bContainer">
-                <a href="#"
-                   class="sHeader__btn-mobile">
+                <button type="button"
+                        class="sHeader__btn-mobile"
+                        aria-label="Toggle main menu"
+                        aria-controls="main-navigation"
+                        aria-expanded="false">
                     <span></span>
-                </a>
+                </button>
 
                 <div class="logo sHeader__logo mobile-only">
                     {{ page.logo }}
                 </div>
 
-                <div class="sHeader__navWrap">
+                <div class="sHeader__navWrap" id="main-navigation">
                     {{ page.main_menu }}
                 </div>
                 {{ page.search }}

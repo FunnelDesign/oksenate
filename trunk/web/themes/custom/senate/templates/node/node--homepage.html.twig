@@ -109,7 +109,7 @@
             <div class="sFinder__in">
                 <div class="sFinder__col">
 
-                    <div class="sFinder__ico">
+                    <div class="sFinder__ico" aria-hidden="true">
                         {{ content.field_home_finder_left_image }}
                     </div>
                     {{ content.field_home_finder_left_title }}
@@ -120,18 +120,18 @@
                 </div>
                 <div class="sFinder__col">
 
-                    <div class="sFinder__ico">
+                    <div class="sFinder__ico" aria-hidden="true">
                         {{ content.field_home_finder_right_image }}
                     </div>
                     {{ content.field_home_finder_right_title }}
 
-                    <div class="sFinder__desc">
+                    <div class="sFinder__desc" for="searchBillNumber">
                         {{ content.field_home_finder_right_text }}
                     </div>
 
                   <form class="form f-search f-search-redirect">
                     <div class="form-item">
-                      <input type="text" class="form-text" placeholder="Enter Bill Number">
+                      <input type="text" class="form-text" placeholder="Enter Bill Number" id="searchBillNumber">
                     </div>
                     <div class="form-actions">
                       <input type="submit" class="form-submit" value="search">
