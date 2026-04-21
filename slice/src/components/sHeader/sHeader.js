@@ -20,6 +20,10 @@ window.sHeader = class {
 			$('body').toggleClass(`mobileMenu-open`);
 
 			$elm.removeClass(`${this.name}_searchOpen`);
+
+			const isExpanded = $elm.hasClass(`${this.name}_mobileMenu`);
+			$(e.currentTarget).attr('aria-expanded', isExpanded ? 'true' : 'false');
+			//adding Aria attribute to reflect either menu expanded or collapsed
 		});
 
 		$elm.on('click touch', `.${this.name}__searchBtn`, (e) => {
