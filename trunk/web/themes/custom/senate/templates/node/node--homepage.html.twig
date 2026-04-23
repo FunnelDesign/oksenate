@@ -125,12 +125,13 @@
                     </div>
                     {{ content.field_home_finder_right_title }}
 
-                    <div class="sFinder__desc" for="searchBillNumber">
+                    <div class="sFinder__desc">
                         {{ content.field_home_finder_right_text }}
                     </div>
 
                   <form class="form f-search f-search-redirect">
                     <div class="form-item">
+                      <label for="searchBillNumber" class="visually-hidden">{{ 'Enter Bill Number'|t }}</label>
                       <input type="text" class="form-text" placeholder="Enter Bill Number" id="searchBillNumber">
                     </div>
                     <div class="form-actions">

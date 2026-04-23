@@ -39,3 +39,26 @@
     display: block!important;
   }
 }
+
+.skip-link {
+  z-index: 503;
+  left: 0;
+  padding: 1px 10px 2px;
+  border: 1px solid #222222;
+  border-top-width: 0;
+  border-radius: 0 0 10px 10px;
+  outline: 0;
+  color: #ffffff !important;
+  background: #222222 !important;
+}
+
+.skip-link.visually-hidden.focusable:focus {
+  position: absolute !important;
+  width: auto !important;
+  height: auto !important;
+  clip: auto !important;
+  clip-path: none !important;
+  overflow: visible !important;
+  white-space: normal !important;
+}
+

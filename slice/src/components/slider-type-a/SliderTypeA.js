@@ -23,6 +23,14 @@ window.SliderTypeA = class {
 			$currentWrap.addClass(this.name + '_slides');
 		}
 
+		$slider_bg.on('init', (event, slick) => {
+			$(event.currentTarget).find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
+		});
+
+		$slider_desc.on('init', (event, slick) => {
+			$(event.currentTarget).find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
+		});
+
 		$slider_bg.slick({
 			pauseOnHover: false,
 			pauseOnFocus: false,
