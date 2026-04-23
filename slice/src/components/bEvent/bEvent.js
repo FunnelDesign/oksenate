@@ -16,6 +16,10 @@ window.bEvent = class {
 		let $slider = $elm.find(`.${this.name}__slider-items`);
 		let $slider__slide_nav = $elm.find(`.${this.name}__slider-nav`);
 
+		$slider.on('init', (event, slick) => {
+			$(event.currentTarget).find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
+		});
+
 		$slider.slick({
 			pauseOnHover: false,
 			pauseOnFocus: false,

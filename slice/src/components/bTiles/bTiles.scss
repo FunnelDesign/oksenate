@@ -159,7 +159,7 @@
       flex-wrap: wrap;
       flex-direction: column;
       text-align: center;
-      color: #555555;
+      color: #404040;
       font-size: 12px;
       padding: 20px;
       transition: background .5s;
@@ -176,7 +176,7 @@
       #{$this}__date {
         margin-bottom: 10px;
         font-family: $RobotoCondensed-Regular;
-        color: #555555;
+        color: #404040;
         display: block;
 
         sup {
@@ -201,7 +201,7 @@
     #{$this}__date {
       margin-bottom: 10px;
       font-family: $RobotoCondensed-Regular;
-      color: #555555;
+      color: #404040;
       display: block;
     }
 
@@ -225,7 +225,7 @@
       font-family: $Roboto-Italic;
       margin-bottom: 15px;
       display: block;
-      color: #555555;
+      color: #404040;
     }
 
     #{$this}__btnWrap {
@@ -253,7 +253,7 @@
       flex-direction: column;
       text-align: center;
       justify-content: center;
-      color: #888888;
+      color: #404040;
       font-size: 12px;
       padding: 38px 25px 30px;
       transition: background .5s;
@@ -720,7 +720,7 @@
     #{$this}__caption {
       font-family: $FreightTextProBook-Regular;
       font-size: 18px;
-      color: #777777;
+      color: #404040;
       margin: 0 0 30px;
       @include cr-last-child;
     }

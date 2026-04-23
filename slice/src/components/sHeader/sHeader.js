@@ -33,6 +33,11 @@ window.sHeader = class {
 			$elm.removeClass(`${this.name}_mobileMenu`);
 			$('body').removeClass(`mobileMenu-open`);
 
+			const isExpanded = $elm.hasClass(`${this.name}_searchOpen`);
+			$(e.currentTarget).attr('aria-expanded', isExpanded ? 'true' : 'false');
+			//adding Aria attribute to reflect either Search button clicked or not
+			$elm.find(`.${this.name}__btn-mobile`).attr('aria-expanded', 'false');
+
 			$elm.find('.f-search input.form-search').focus();
 
 		});
