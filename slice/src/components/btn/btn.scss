@@ -16,6 +16,11 @@
   border-radius: 5px !important;
   text-transform: uppercase;
 
+  &:focus,
+  &:focus-visible,
+  &:focus-within{
+    background: $color-blue;
+  }
   &:hover {
     background: $color-blue;
   }

@@ -13,6 +13,7 @@ window.sHeader = class {
 	}
 
 	init($elm) {
+		const componentName = this.name;
 
 		$elm.on('click touch', `.${this.name}__btn-mobile`, (e) => {
 			e.preventDefault();
@@ -53,9 +54,127 @@ window.sHeader = class {
 			addPadding();
 		});
 
+		initKeyboardNavigation();
+
 		$(document).on('drupalViewportOffsetChange.toolbar', function (event, offsets) {
 			$elm.css('top', offsets.top);
 		});
+
+		function initKeyboardNavigation() {
+			const topLevelExpandedSelector = `.${componentName}__menu-wrap > ul.menu > li.menu-item--expanded`;
+			const keyboardOpenClass = `hover`;
+
+			$elm.find(topLevelExpandedSelector).each((_, listItemElement) => {
+				const $listItem = $(listItemElement);
+				const $submenu = $listItem.children(`ul.menu`).first();
+				const $trigger = $listItem.children(`a, span`).first();
+
+				if (!$submenu.length || !$trigger.length) return;
+
+				// Reason: Some menu items are rendered as <span>, so we make them focusable keyboard triggers.
+				if ($trigger.is(`span`)) {
+					$trigger.attr({
+						'tabindex': '0',
+						'role': 'button'
+					});
+				}
+
+				$trigger.attr({
+					'aria-haspopup': 'true',
+					'aria-expanded': 'false'
+				});
+
+				$listItem.on(`focusin`, () => {
+					openSubmenu($listItem, $trigger, keyboardOpenClass);
+				});
+
+				$listItem.on(`focusout`, (focusEvent) => {
+					const hasFocusedDescendant = listItemElement.contains(focusEvent.relatedTarget);
+					if (hasFocusedDescendant) return;
+					closeSubmenu($listItem, $trigger, keyboardOpenClass);
+				});
+
+				$trigger.on(`keydown`, (keyboardEvent) => {
+					const keyCode = keyboardEvent.key;
+					if ([` `, `Spacebar`, `Enter`, `ArrowDown`, `ArrowUp`, `Escape`].indexOf(keyCode) === -1) return;
+
+					keyboardEvent.preventDefault();
+
+					if (keyCode === `Escape`) {
+						closeSubmenu($listItem, $trigger, keyboardOpenClass);
+						$trigger.trigger(`focus`);
+						return;
+					}
+
+					openSubmenu($listItem, $trigger, keyboardOpenClass);
+
+					if (keyCode === `ArrowUp`) {
+						focusSubmenuLink($submenu, `last`);
+						return;
+					}
+
+					focusSubmenuLink($submenu, `first`);
+				});
+
+				$submenu.on(`keydown`, `a`, (keyboardEvent) => {
+					const keyCode = keyboardEvent.key;
+					if ([`ArrowDown`, `ArrowUp`, `Home`, `End`, `Escape`].indexOf(keyCode) === -1) return;
+
+					const $submenuLinks = $submenu.find(`a:visible`);
+					if (!$submenuLinks.length) return;
+
+					keyboardEvent.preventDefault();
+					const currentLinkIndex = $submenuLinks.index(keyboardEvent.currentTarget);
+					let targetLinkIndex = currentLinkIndex;
+
+					if (keyCode === `Escape`) {
+						closeSubmenu($listItem, $trigger, keyboardOpenClass);
+						$trigger.trigger(`focus`);
+						return;
+					}
+
+					if (keyCode === `ArrowDown`) {
+						targetLinkIndex = (currentLinkIndex + 1) % $submenuLinks.length;
+					}
+
+					if (keyCode === `ArrowUp`) {
+						targetLinkIndex = (currentLinkIndex - 1 + $submenuLinks.length) % $submenuLinks.length;
+					}
+
+					if (keyCode === `Home`) {
+						targetLinkIndex = 0;
+					}
+
+					if (keyCode === `End`) {
+						targetLinkIndex = $submenuLinks.length - 1;
+					}
+
+					$submenuLinks.eq(targetLinkIndex).trigger(`focus`);
+				});
+			});
+		}
+
+		function openSubmenu($listItem, $trigger, keyboardOpenClass) {
+			$listItem.addClass(keyboardOpenClass);
+			$trigger.attr('aria-expanded', 'true');
+		}
+
+		function closeSubmenu($listItem, $trigger, keyboardOpenClass) {
+			$listItem.removeClass(keyboardOpenClass);
+			$trigger.attr('aria-expanded', 'false');
+		}
+
+		function focusSubmenuLink($submenu, focusPosition) {
+			const $submenuLinks = $submenu.find(`a:visible`);
+			if (!$submenuLinks.length) return;
+
+			if (focusPosition === `last`) {
+				$submenuLinks.last().trigger(`focus`);
+				return;
+			}
+
+			$submenuLinks.first().trigger(`focus`);
+		}
 
 		function addAccessibilityCookie() {
 			let $accessibility = $('#accessibility');

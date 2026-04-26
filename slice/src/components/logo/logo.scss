@@ -1,9 +1,17 @@
 .logo {
   transition: opacity .3s;
   backface-visibility: hidden;
+  padding: 0px 22px 0px 0px;
 
-  &:hover {
+  &:hover{
     opacity: .5;
+  }
+
+  &:focus
+  &:focus-visible,
+  &:focus-within {
+  background: $color-dark-blue;
+  border-radius: 28px 5px 5px 28px;
   }
 
   a {
@@ -16,6 +24,12 @@
 
     @include mq-down(370px) {
       font-size: 14px;
+    }
+    &:focus
+    &:focus-visible,
+    &:focus-within {
+      //owerwrite unique of global :focus effect, here it's darker bg-color case
+      background-color: transparent;
     }
   }
 

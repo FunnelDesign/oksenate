@@ -2,7 +2,7 @@
   $self: &;
   display: flex;
   align-items: center;
-  font-size: 12px;
+  font-size: 14px;
   font-family: $RobotoCondensed-Regular;
   justify-content: center;
 
@@ -21,7 +21,7 @@
   }
 
   &__item {
-    margin-right: 7px;
+    padding: 6px 9px;
     transition: opacity .3s;
     white-space: nowrap;
 
@@ -31,6 +31,13 @@
 
     &:hover {
       opacity: .7;
+    }
+
+    &:focus
+      &:focus-visible,
+      &:focus-within {
+      background: #121e32;
+      border-radius: 5px;
     }
 
     &:last-child {

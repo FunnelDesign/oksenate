@@ -26,6 +26,9 @@
     text-align: center;
     text-decoration: none;
 
+    &:focus
+    &:focus-visible,
+    &:focus-within,
     &:hover {
       background: $color-dark-blue;
     }

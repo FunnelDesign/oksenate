@@ -284,9 +284,16 @@
   &__sLink {
     text-decoration: none;
     display: block;
+    padding-bottom: 10px;
 
     &:hover {
       opacity: .7;
+    }
+    &:focus,
+    &:focus-visible {
+      .sSen__sName {
+        color: $color-white;
+      }
     }
   }
 

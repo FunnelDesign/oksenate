@@ -710,7 +710,7 @@ function senate_preprocess_field(array &$vars, $hook) {
                 ->buildUrl($row['field_paragraph_tiles_image'][1]['uri']) . ' 2x"';
           }
 
-          $img_src = '<span class="bTiles__ico"><img src="' . $image_src . '"  ' . $image_srcset . ' alt=""></span>';
+          $img_src = '<span class="bTiles__ico" aria-hidden="true"><img src="' . $image_src . '"  ' . $image_srcset . ' alt=""></span>';
           $img_markup = Markup::create($img_src); //prepared image for render
         }
 
@@ -1024,8 +1024,9 @@ function senate_preprocess_field(array &$vars, $hook) {
       if ($vars['element']['#field_name'] == 'field_comt_evt_date') {
         $node = !empty($vars["element"]["#object"]) ? $vars["element"]["#object"] : '';
         if (!empty($node) && is_object($node)) {
-          $time_txt = $node->hasField('field_comt_evt_time') &&
-            !empty($node->field_comt_evt_time) ? $node->field_comt_evt_time->value : '';
+          // Reason: The field can exist but still carry NULL value on some nodes.
+          $time_txt = $node->hasField('field_comt_evt_time') ?
+            (string) ($node->field_comt_evt_time->value ?? '') : '';
           $vars['time_txt'] = Xss::filter(html_entity_decode($time_txt));
         }
       }
