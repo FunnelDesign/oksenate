@@ -22,6 +22,13 @@
     }
   }
 
+  &__logo a {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   &__top {
     background: $color-blue;
     border-bottom: 1px solid $border-color;
@@ -58,7 +65,7 @@
       }
 
       & > * {
-        @include margin(0 8px, 0 16px);
+        /*@include margin(0 8px, 0 16px);*/
 
         &:first-child {
           margin-left: 0;
@@ -75,6 +82,7 @@
     position: relative;
     background-color: transparent;
     border: 0;
+    border-radius: 5px;
     width: 40px;
     height: 40px;
     padding: 10px 4px;
@@ -91,6 +99,11 @@
       transition: background .3s;
       pointer-events: none;
     }
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-blue-1;
+    }
 
   }
 
@@ -98,6 +111,7 @@
   $fist-li: #{$fist-ul} " > li";
   $fist-li--active: #{$fist-ul} " > li.menu-item--active-trail";
   $fist-li--hover: #{$fist-ul} " > li:hover";
+  $fist-li--focus: #{$fist-ul} " > li:focus-within";
   $fist-a: #{$fist-li} " > a";
   $fist-span: #{$fist-li} " > span";
 
@@ -105,6 +119,7 @@
   $second-li: #{$second-ul} " > li";
   $second-li--active: #{$second-ul} " > li.menu-item--active-trail";
   $second-li--hover: #{$second-ul} " > li:hover";
+  $second-li--focus: #{$second-ul} " > li:focus-within";
   $second-a: #{$second-li} " > a";
 
   $third-ul: #{$second-li} " > ul";
@@ -182,10 +197,21 @@
     }
   }
 
-  #{$fist-li--active}, #{$fist-li--hover} {
+  #{$fist-li--focus} {
+
+    & > ul {
+
+      @media (min-width: $bp-small) {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  #{$fist-li--active}, #{$fist-li--hover}, #{$fist-li--focus} {
 
     & > a, & > span {
-      color: #ce5155;
+      color: $color-red;
       cursor: pointer;
 
       @media (min-width: $bp-small) {
@@ -203,6 +229,10 @@
   #{$fist-a}, #{$fist-span} {
     color: $color-white;
     text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     display: block;
     padding: 8px;
     font-size: 16px;
@@ -236,6 +266,14 @@
       opacity: 0;
       transition: opacity .3s;
     }
+/*
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      color: $color-white;
+      background: transparent;
+      outline-offset: -2px;
+    }*/
   }
 
   #{$second-ul} {
@@ -304,11 +342,24 @@
     }
   }
 
-  #{$second-li--active}, #{$second-li--hover} {
+  #{$second-li--focus} {
 
+    & > ul {
+
+      @media (min-width: $bp-small) {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  #{$second-li--active}, #{$second-li--hover}, #{$second-li--focus} {
+    // Mobile menu lsit
     & > a {
-      color: #ce5155;
-
+      color: $color-white;
+      border-radius: 6px;
+      background-color: $color-red;
+      
       @media (min-width: $bp-small) {
         color: $color-white;
         background: #304566;
@@ -333,6 +384,17 @@
       color: $color-white;
       background: $color-dark-blue;
     }
+/*
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      //color: #ce5155;
+
+      @media (min-width: $bp-small) {
+        color: $color-white;
+        background: #304566;//$color-blue-1
+      }
+    }*/
   }
 
   #{$third-ul} {
@@ -362,7 +424,7 @@
   }
 
   #{$third-li--active}, #{$third-li--hover} {
-
+    //color link where?
     & > a {
       color: #ce5155;
 
@@ -393,7 +455,7 @@
 
   &__navWrap {
 
-    @media (max-width: $bp-small - 1) {
+    @media (max-width: #{$bp-small - 1px}) {
       opacity: 0;
       visibility: hidden;
       transition: opacity .3s;
@@ -423,7 +485,7 @@
 
     #{$this}__navWrap {
 
-      @media (max-width: $bp-small - 1) {
+      @media (max-width: #{$bp-small - 1px}) {
         opacity: 1;
         visibility: visible;
       }
@@ -457,15 +519,26 @@
   }
 
   &__searchBtn {
-    width: 20px;
-    height: 20px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin-top: 6px;
+    margin-left: 24px;
     border: 0;
+    border-radius: 5px;
     display: inline-block;
     background: url('search-btn-img.png') no-repeat;
-    background-size: contain;
+    background-position: calc(50% + 1px) calc(50% + 1px);
+    background-size: 20px 20px;
 
     &:hover {
       opacity: .5;
+    }
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-blue-1;
     }
   }
 
@@ -473,7 +546,7 @@
     position: absolute;
     top: 100%;
     right: 0;
-    transform: translate(0, -100%);
+    transform: translate(0, calc(-100% - 1px));
     transition: transform .3s;
     z-index: -1;
     width: 292px;

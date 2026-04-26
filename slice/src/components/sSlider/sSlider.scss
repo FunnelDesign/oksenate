@@ -34,4 +34,12 @@
   //&__bTitle {
   //  width: 100%;
   //}
+  a {
+    &:focus,
+    &:focus-visible,
+    &:focus-within{
+      //owerwrite unique of global :focus effect, here it's higher contrast over blue bg
+      background-color: $color-red;
+    }
+  }
 }

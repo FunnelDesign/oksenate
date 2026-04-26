@@ -11,6 +11,10 @@
 
   &__link {
     text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     @include padding(15px 10px, 15px 22px);
     display: inline-block;
     color: $color-white;
@@ -35,6 +39,11 @@
     }
 
     &:hover {
+      background: $color-dark-blue;
+    }
+
+    &:focus,
+    &:focus-visible {
       background: $color-dark-blue;
     }
 

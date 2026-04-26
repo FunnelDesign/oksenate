@@ -110,6 +110,14 @@ a {
   text-decoration: underline;
   transition: all .3s;
 
+  &:focus,
+  &:focus-visible,
+  &:focus-within{
+    background-color: $color-dark-blue;
+    border-radius: 5px;
+    color: $color-white;
+  }
+
   &:hover {
     text-decoration: none;
   }
