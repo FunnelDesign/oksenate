@@ -227,3 +227,19 @@
     }
   };
 })(jQuery, Drupal, drupalSettings);
+
+// Remove redundant title attributes from Select2 elements (accessibility fix)
+(function($) {
+  $(document).on('select2:open select2:close', function() {
+    $('.select2-selection__rendered[title]').removeAttr('title');
+    $('.select2-selection__choice[title]').removeAttr('title');
+  });
+  
+  // Clean up on load as well
+  $(window).on('load', function() {
+    setTimeout(function() {
+      $('.select2-selection__rendered[title]').removeAttr('title');
+      $('.select2-selection__choice[title]').removeAttr('title');
+    }, 500);
+  });
+})(jQuery);
