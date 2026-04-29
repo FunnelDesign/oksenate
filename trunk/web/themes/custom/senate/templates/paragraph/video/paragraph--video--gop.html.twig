@@ -47,16 +47,16 @@
 {% block paragraph %}
   {% block content %}
     <div class="bEvents__item" data-videoId="{{ video_id }}">
-      <a href="#" class="bEvents__imgWrap">
+      <button type="button" class="bEvents__imgWrap" aria-label="Play video: {{ content.field_video_caption|striptags }}">
         {% if thumb %}
           <span class="bEvents__img" style="background-image: url('{{ thumb }}')">
           </span>
         {% endif %}
-      </a>
+      </button>
       <span class="bEvents__body">
-        <a href="#" class="bEvents__title bEvents__link">
+        <button type="button" class="bEvents__title bEvents__link" aria-label="Play video: {{ content.field_video_caption|striptags }}">
           {{ content.field_video_caption }}
-        </a>
+        </button>
       </span>
     </div>
   {% endblock %}
