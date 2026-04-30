@@ -309,6 +309,11 @@
     padding: 0;
     position: relative;
 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
     &:first-child {
 
       & > a {
@@ -424,7 +429,6 @@
   }
 
   #{$third-li--active}, #{$third-li--hover} {
-    //color link where?
     & > a {
       color: #ce5155;
 

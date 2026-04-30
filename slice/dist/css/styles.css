@@ -9697,7 +9697,7 @@ textarea {
   opacity: 0.7
 }
 .bSoc a {
-  color: #121e32;
+  color: #ff00aa;
   display: inline-block;
   vertical-align: middle;
   padding: 6px 14px 6px 5px;
@@ -9792,22 +9792,22 @@ textarea {
   opacity: 0.7
 }
 .bSoc_cl_a a,
-.bSoc_cl_a span {
+.bSoc_cl_a button {
   color: #fff;
   cursor: pointer
 }
 .bSoc_cl_a a:hover,
-.bSoc_cl_a span:hover {
+.bSoc_cl_a button:hover {
   color: #fff;
   opacity: 0.7
 }
 .bSoc_cl_b a,
-.bSoc_cl_b span {
+.bSoc_cl_b button {
   color: #253857;
   cursor: pointer
 }
 .bSoc_cl_b a:hover,
-.bSoc_cl_b span:hover {
+.bSoc_cl_b button:hover {
   color: #253857;
   opacity: 0.7
 }

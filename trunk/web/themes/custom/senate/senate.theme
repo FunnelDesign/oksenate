@@ -663,7 +663,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         if (!empty($vars['items'][1])) {
           $image_srcset = 'srcset="' . $vars['items'][1]['content']['image_url'] . ' 2x"';
         }
-        $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' alt="">';
+        $image_html = '<img src="' . $image_src . '"  ' . $image_srcset . ' aria-hidden="true">';
         $vars['img_src'] = Markup::create($image_html); //prepared image for render
       }
       break;
@@ -710,7 +710,7 @@ function senate_preprocess_field(array &$vars, $hook) {
                 ->buildUrl($row['field_paragraph_tiles_image'][1]['uri']) . ' 2x"';
           }
 
-          $img_src = '<span class="bTiles__ico" aria-hidden="true"><img src="' . $image_src . '"  ' . $image_srcset . ' alt=""></span>';
+          $img_src = '<span class="bTiles__ico not-selectable" aria-hidden="true"><img src="' . $image_src . '"  ' . $image_srcset . ' ></span>';
           $img_markup = Markup::create($img_src); //prepared image for render
         }
 
@@ -1125,6 +1125,7 @@ function senate_preprocess_field(array &$vars, $hook) {
         $vars["items"][$key]["content"]["#options"]["attributes"]['class'] = [
           'btn',
           'btn_s_d',
+          'not-selectable'
         ];
       }
       break;
@@ -1986,7 +1987,7 @@ function senate_preprocess_paragraph(array &$vars) {
     case 'publications':
       $node = \Drupal::routeMatch()->getParameter('node');
       if (!empty($node) && is_object($node) && $node->id() == SENATE_CONTACTS_LANDING_NID) {
-        $vars['icon_attributes'] = ' bTiles__ico_a';
+        $vars['icon_attributes'] = ' bTiles__ico_a not-selectable';
       }
 
       $link = !empty($vars["content"]["field_par_publications_page_link"]) &&
