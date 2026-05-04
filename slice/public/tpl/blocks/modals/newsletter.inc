@@ -5,7 +5,7 @@
       <div class="modal__body">
 
         <div class="form">
-          <div class="pageIn__ico">
+          <div class="pageIn__ico not-selectable">
             <img src="../dist/images/titleIco/title-ico-11.png"
                  srcset="../dist/images/titleIco/title-ico-11-2x.png 2x">
           </div>

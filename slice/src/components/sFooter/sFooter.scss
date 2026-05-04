@@ -21,6 +21,11 @@
   }
 
   a.btn{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    
     &:focus,
     &:focus-visible,
     &:focus-within {
@@ -30,6 +35,13 @@
 
   &__logo {
     margin-right: auto;
+
+    a {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
   }
 
   &__top {

@@ -33,7 +33,11 @@
             aria-label="Open search"
             aria-controls="header-search-form"
             aria-expanded="false"></button>
-    <div class="sHeader__searchForm" id="header-search-form">
+    <div class="sHeader__searchForm"
+         id="header-search-form"
+         aria-live="polite"
+         aria-hidden="true"
+         inert>
         <div class="form f-search">
             {{ content }}
         </div>

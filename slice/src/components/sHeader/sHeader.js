@@ -14,6 +14,22 @@ window.sHeader = class {
 
 	init($elm) {
 		const componentName = this.name;
+		const $searchToggleButton = $elm.find(`.${this.name}__searchBtn`);
+		const $searchFormWrapper = $elm.find(`.${this.name}__searchForm`);
+		const isSearchInitiallyExpanded = $elm.hasClass(`${this.name}_searchOpen`);
+
+		// Reason: Keep ARIA and focusability in sync without breaking CSS transform animation.
+		const syncSearchAccessibilityState = ($targetSearchFormWrapper, isExpanded) => {
+			$searchToggleButton.attr('aria-expanded', isExpanded ? 'true' : 'false');
+			$targetSearchFormWrapper.attr('aria-hidden', isExpanded ? 'false' : 'true');
+			if (isExpanded) {
+				$targetSearchFormWrapper.removeAttr('inert');
+				return;
+			}
+			$targetSearchFormWrapper.attr('inert', 'inert');
+		};
+
+		syncSearchAccessibilityState($searchFormWrapper, isSearchInitiallyExpanded);
 
 		$elm.on('click touch', `.${this.name}__btn-mobile`, (e) => {
 			e.preventDefault();
@@ -21,6 +37,7 @@ window.sHeader = class {
 			$('body').toggleClass(`mobileMenu-open`);
 
 			$elm.removeClass(`${this.name}_searchOpen`);
+			syncSearchAccessibilityState($searchFormWrapper, false);
 
 			const isExpanded = $elm.hasClass(`${this.name}_mobileMenu`);
 			$(e.currentTarget).attr('aria-expanded', isExpanded ? 'true' : 'false');
@@ -35,11 +52,19 @@ window.sHeader = class {
 			$('body').removeClass(`mobileMenu-open`);
 
 			const isExpanded = $elm.hasClass(`${this.name}_searchOpen`);
-			$(e.currentTarget).attr('aria-expanded', isExpanded ? 'true' : 'false');
-			//adding Aria attribute to reflect either Search button clicked or not
+			const $clickedSearchFormWrapper = $(e.currentTarget).siblings(`.${this.name}__searchForm`).first();
+			const $targetSearchFormWrapper = $clickedSearchFormWrapper.length ? $clickedSearchFormWrapper : $searchFormWrapper;
+			syncSearchAccessibilityState($targetSearchFormWrapper, isExpanded);
+			window.requestAnimationFrame(() => {
+				const isExpandedAfterAllHandlers = $elm.hasClass(`${this.name}_searchOpen`);
+				syncSearchAccessibilityState($targetSearchFormWrapper, isExpandedAfterAllHandlers);
+			});
+			//adding Aria attribute to reflect whether the Search form is expanded or collapsed
 			$elm.find(`.${this.name}__btn-mobile`).attr('aria-expanded', 'false');
 
-			$elm.find('.f-search input.form-search').focus();
+			if (isExpanded) {
+				$elm.find('.f-search input.form-search').focus();
+			}
 
 		});
 

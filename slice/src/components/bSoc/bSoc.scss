@@ -21,7 +21,7 @@
   }
 
   &__item {
-    padding: 6px 9px;
+    //padding: 7px 10px;
     transition: opacity .3s;
     white-space: nowrap;
 
@@ -31,13 +31,6 @@
 
     &:hover {
       opacity: .7;
-    }
-
-    &:focus
-      &:focus-visible,
-      &:focus-within {
-      background: #121e32;
-      border-radius: 5px;
     }
 
     &:last-child {
@@ -99,7 +92,7 @@
   }
 
   a {
-    color: $color-dark-blue;
+    //color: $color-dark-blue;
     display: inline-block;
     vertical-align: middle;
     padding: 6px 14px 6px 5px;
@@ -122,10 +115,20 @@
   }
 
   &__ico {
-    font-size: 25px;
+    border: 0px;
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
     display: inline-block;
     vertical-align: middle;
     color: $color-dark-blue;
+
+    &:focus
+    &:focus-visible,
+    &:focus-within {
+      background: #121e32;
+      border-radius: 5px;
+    }
 
     &:hover {
       color: $color-dark-blue;
@@ -135,7 +138,7 @@
   &_min {
 
     #{$self}__item {
-      margin-right: 9px;
+      //margin-right: 9px;
 
       a {
         border: none;
@@ -169,7 +172,7 @@
     &_share {
 
       #{$self}__item {
-        margin-right: 9px;
+        //margin-right: 9px;
         margin-bottom: 0 !important;
 
         @include sm {
@@ -240,7 +243,7 @@
 
     &_white {
 
-      a, span {
+      a, button {
         color: #fff;
         cursor: pointer;
 
@@ -256,7 +259,7 @@
 
     &_a {
 
-      a, span {
+      a, button {
         color: #fff;
         cursor: pointer;
 
@@ -269,7 +272,7 @@
 
     &_b {
 
-      a, span  {
+      a, button  {
         color: #253857;
         cursor: pointer;
 

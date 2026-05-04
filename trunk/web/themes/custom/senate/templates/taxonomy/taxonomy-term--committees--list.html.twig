@@ -30,7 +30,7 @@
     <div{{ attributes }}>
       {{ title_prefix }}
     {% if content.field_icon_blue|render|trim is not empty and content.field_icon_blue_2x|render|trim is not empty%}
-      <span class="bTiles__ico">
+      <span class="bTiles__ico not-selectable">
         <img src="{{ content.field_icon_blue }}"
            srcset="{{ content.field_icon_blue_2x }} 2x"
            alt="">

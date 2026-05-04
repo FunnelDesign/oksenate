@@ -8,7 +8,7 @@
 <div class="bShare section__bShare {{ wrapper_class }}">
   {% if socials %}
     <div class="bShare__bSoc">
-      <div class="bShare__title">
+      <div class="bShare__title not-selectable">
         {{ 'Share'|t }}
       </div>
       <div class="bSoc bSoc_min bSoc_min_share {{ icons_class }}">
@@ -16,7 +16,7 @@
         <div class="bSoc__items sharethis-wrapper">
           {% for social in socials %}
             <div class="bSoc__item">
-              <span st_url="{{ url }}" st_title="{{ title }}" class="bSoc__ico ss-icon ss-social-circle ss-facebook {{ social }}"></span>
+              <button st_url="{{ url }}" st_title="{{ title }}" class="bSoc__ico ss-icon ss-social-circle {{ social }}"></button>
             </div>
           {% endfor %}
         </div>
@@ -26,7 +26,7 @@
   {% endif %}
 
   {% if printer %}
-    <div class="bShare__print">
+    <div class="bShare__print not-selectable">
       <a href="javascript:window.print()">
         <i class="ss-icon ss-glyphish-outlined ss-print"></i>
         {{ "Printer Friendly"|t }}
