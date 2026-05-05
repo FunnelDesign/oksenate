@@ -33,6 +33,11 @@
     font-family: $RobotoCondensed-Bold;
     padding: 7px 10px;
 
+    &:focus,
+    &:focus-visible,
+    &:focus-within{
+      background: $color-red;
+    }
     &:hover {
       background: $color-red;
       color: $color-white;

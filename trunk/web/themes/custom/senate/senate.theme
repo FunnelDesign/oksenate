@@ -1513,7 +1513,7 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
       ->getPath();
 
   if (!empty($form['zip'])){
-    $form['zip']['#prefix'] = "<div class=\"sSen__filIco\">
+    $form['zip']['#prefix'] = "<div class=\"sSen__filIco not-selectable\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-1.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-1-2x.png 2x\"  alt=\"\">
         </div><div class=\"sSen__opt form f-search f-search_min\">";
     $form['zip']['#suffix'] = "</div>";
@@ -1523,7 +1523,7 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
 
   if (!empty($form['county'])){
     $form['county']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
+        <div class=\"sSen__filIco not-selectable\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-2.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-2-2x.png 2x\"  alt=\"\">
         </div>";
     $form['county']['#suffix'] = "</div>";
@@ -1531,7 +1531,7 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
 
   if (!empty($form['district'])){
     $form['district']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
+        <div class=\"sSen__filIco not-selectable\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-3.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-3-2x.png 2x\"  alt=\"\">
         </div>";
     $form['district']['#suffix'] = "<div class=\"sSen__filLink\">
@@ -1541,7 +1541,7 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
 
   if (!empty($form['committee'])){
     $form['committee']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
+        <div class=\"sSen__filIco not-selectable\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-4.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-4-2x.png 2x\"  alt=\"\">
         </div>";
     $form['committee']['#suffix'] = "</div>";
@@ -1549,7 +1549,7 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
 
   if (!empty($form['party'])){
     $form['party']['#prefix'] = " <div class=\"sSen__filCol\">
-        <div class=\"sSen__filIco\">
+        <div class=\"sSen__filIco not-selectable\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-5.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-5-2x.png 2x\"  alt=\"\">
         </div>";
     $form['party']['#suffix'] = "</div>";

@@ -1,7 +1,8 @@
 .pager {
   
   a {
-    color: #bababa;
+    font-weight: bold;
+    color: $color-gray-2;
   }
 
   &__items {
@@ -15,9 +16,9 @@
 
   &__item {
     font-family: $Roboto-Italic;
-    margin: 0 4px;
     padding: 0;
     list-style: none;
+    margin: 0;
 
     &.is-active, &:hover {
 
@@ -42,7 +43,7 @@
           display: block;
           width: 9px;
           height: 9px;
-          border: 2px solid #bababa;
+          border: 2px solid $color-gray-2;
           border-top: none;
           border-right: none;
           transform: rotate(45deg);
@@ -51,6 +52,14 @@
 
         &:after {
           margin-left: -2px;
+        }
+
+        &:focus,
+        &:focus-visible,
+        &:focus-within {
+          &:before, &:after {
+            border-color: $color-white;
+          }
         }
 
         &:hover {
@@ -73,11 +82,17 @@
         display: none;
       }
     }
+    
+    &--first, &--previous{
+      a {
+        padding-left: 4px;
+      }
+    }
 
     &--next, &--last {
 
       a {
-
+        padding-right: 4px;
         &:before, &:after {
           transform: rotate(225deg);
         }
@@ -90,8 +105,17 @@
       align-items: center;
       justify-content: center;
 
+      height: 24px;
+      width: 24px;
+
       span {
         transition: all .3s;
+      }
+
+      &focus,
+      &:focus-visible,
+      &:focus-within {
+        color: $color-white;
       }
     }
   }

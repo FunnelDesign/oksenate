@@ -3,6 +3,7 @@
   font-size: 12px;
   font-family: $Roboto-Regular;
   line-height: 1.5;
+  padding-bottom: 0;
 
   @include md {
     line-height: 1.2;
@@ -15,6 +16,7 @@
     font-family: $Roboto-Regular;
     padding-right: 9px;
     position: relative;
+    padding: 8px;
     margin: 5px 8px 5px 0;
     //display: inline-block;
     display: inline;
@@ -45,8 +47,16 @@
     color: $color-blue-3;
 
     a {
+      font-weight: bold;
       color: $color-blue-3;
 
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        color: $color-white;
+        background-color: $color-blue-3;
+      }
+      
       &:hover {
         color: $color-red;
       }
