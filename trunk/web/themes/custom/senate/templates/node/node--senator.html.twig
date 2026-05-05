@@ -83,7 +83,7 @@
     <div class="bContainer">
         <a href="/senators" class="btn btn_a section__btnBack section__btnBack_a">
             back to senators
-        </button>
+        </a>
 
         <div class="bWrap bWrap_size_a">
 
@@ -129,11 +129,11 @@
                         <img alt="" src="{{ theme_path }}/dist/images/ico/download-ico.png" srcset="{{ theme_path }}/dist/images/ico/download-ico-2x.png 2x">
                     </span>
                                 Download Senator Photo
-                            </button>
+                            </a>
 
                             <a href="/senator-press-releases/{{ title_alias }}" class="bSenBio__mediaBtn">
                                 {{ "Press Releases & Media"|t }}
-                            </button>
+                            </a>
                         </div>
 
                     </div>
@@ -144,7 +144,9 @@
                                 {{ content.field_senator_telephone }}
                                 <div class="bSenBio__mail">
                                         <i class="ss-icon ss-glyphish-filled ss-mail"></i>
-                                        <a href="/contact-senator?sid={{ nid }}" target="_blank">Email Senator</button>
+                                        <a href="/contact-senator?sid={{ nid }}" target="_blank">
+                                            {{ "Email Senator"|t }}
+                                        </a>
                                 </div>
                             </div>
                             {{ content.field_senator_assistent_text	 }}
@@ -169,9 +171,9 @@
                         <a href="{{ '#' ~ video_id }}" class="bMedia__play-btn bMedia-tile__play-btn">
                             {{ preview_image }}
                             <span class="bMedia__previewText">play video</span>
-                        </button>
+                        </a>
                         <div class="bMedia__wrap">
-                            <iframe title="Embedded video" id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0"
+                            <iframe title="{{ 'Embedded video'|t }}" id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0"
                                     allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                     </div>
@@ -184,10 +186,10 @@
                                 {{ content.body }}
                             </div>
                             <div class="bHide__moreWr">
-                                <button type="button" class="bHide__more" data-ev="toggleClass:bHide:open" aria-label="Toggle show more content">
+                                <a class="bHide__more" data-ev="toggleClass:bHide:open" aria-label="Toggle show more content">
                                     <span class="bHide__moreOpen">show more</span>
                                     <span class="bHide__moreClose">show less</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

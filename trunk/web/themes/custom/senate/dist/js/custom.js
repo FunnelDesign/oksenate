@@ -227,7 +227,7 @@
     }
   };
 })(jQuery, Drupal, drupalSettings);
-
+/*
 // Remove redundant title attributes from Select2 elements (accessibility fix)
 (function($) {
   $(document).on('select2:open select2:close', function() {
@@ -243,3 +243,4 @@
     }, 500);
   });
 })(jQuery);
+*/ 
