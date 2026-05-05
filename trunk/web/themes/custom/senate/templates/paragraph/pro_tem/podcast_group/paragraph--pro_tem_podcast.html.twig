@@ -39,9 +39,9 @@
  */
 #}
 <div class="bEvents__item" data-videoId="{{ content.field_pro_tem_par_video }}">
-    <a href="#" class="bEvents__imgWrap">
+    <a class="bEvents__imgWrap" aria-label="{{"Play video:"|t}} {{ content.field_pro_tem_par_title|striptags }}">
         {{ content.field_pro_tem_par_video_preview }}
-        <span class="bEvents__play"></span>
+        <span class="bEvents__play" aria-hidden="true"></span>
     </a>
     <span class="bEvents__body">
         {% if content.field_pro_tem_par_title|render is not empty %}
@@ -62,7 +62,9 @@
         {{ content.field_pro_tem_additional_image }}
 
     <span class="bEvents__readMoreWr">
-       <a href="#" class="btn btn_a bEvents__readMore">watch video</a>
+        <a class="btn btn_a bEvents__readMore" aria-label="{{"Watch video:"|t}} {{ content.field_pro_tem_par_title|striptags }}">
+            {{"watch video"|t}} 
+        </a>
     </span>
   </span>
 </div>

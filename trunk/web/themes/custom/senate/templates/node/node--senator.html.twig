@@ -126,7 +126,7 @@
                         <div class="bSenBio__media-btn-wrap">
                             <a href="{{ senator_photo_download }}" class="bSenBio__media-btn" download="{{ senator_photo_download_target }}">
                     <span class="bSenBio__media-btn-ico">
-                        <img src="{{ theme_path }}/dist/images/ico/download-ico.png" srcset="{{ theme_path }}/dist/images/ico/download-ico-2x.png 2x">
+                        <img alt="" src="{{ theme_path }}/dist/images/ico/download-ico.png" srcset="{{ theme_path }}/dist/images/ico/download-ico-2x.png 2x">
                     </span>
                                 Download Senator Photo
                             </a>
@@ -144,7 +144,9 @@
                                 {{ content.field_senator_telephone }}
                                 <div class="bSenBio__mail">
                                         <i class="ss-icon ss-glyphish-filled ss-mail"></i>
-                                        <a href="/contact-senator?sid={{ nid }}" target="_blank">Email Senator</a>
+                                        <a href="/contact-senator?sid={{ nid }}" target="_blank">
+                                            {{ "Email Senator"|t }}
+                                        </a>
                                 </div>
                             </div>
                             {{ content.field_senator_assistent_text	 }}
@@ -171,7 +173,7 @@
                             <span class="bMedia__previewText">play video</span>
                         </a>
                         <div class="bMedia__wrap">
-                            <iframe id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0"
+                            <iframe title="{{ 'Embedded video'|t }}" id="{{ video_id }}" width="560" height="315" src="{{ video_url }}" frameborder="0"
                                     allow="autoplay; encrypted-media" allowfullscreen></iframe>
                         </div>
                     </div>
@@ -184,7 +186,7 @@
                                 {{ content.body }}
                             </div>
                             <div class="bHide__moreWr">
-                                <a class="bHide__more" data-ev="toggleClass:bHide:open" href="#">
+                                <a class="bHide__more" data-ev="toggleClass:bHide:open" aria-label="Toggle show more content">
                                     <span class="bHide__moreOpen">show more</span>
                                     <span class="bHide__moreClose">show less</span>
                                 </a>
