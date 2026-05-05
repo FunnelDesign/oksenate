@@ -338,6 +338,7 @@
 
   #{$second-li--hover}, #{$second-li}.hover {
 
+    text-decoration: underline;
     & > ul {
 
       @media (min-width: $bp-small) {
@@ -369,6 +370,7 @@
         color: $color-white;
         background: #304566;
       }
+  
     }
   }
 

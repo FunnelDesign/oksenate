@@ -186,14 +186,14 @@
         align-items: center;
       }
 
-      & > * {
+      /*& > * {
         margin: 0 0 10px;
 
         @include sm {
           padding: 0 28px 0 0;
           margin: 0;
         }
-      }
+      }*/
     }
 
     #{$this}__bShare {

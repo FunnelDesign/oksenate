@@ -28,6 +28,10 @@ window.sHeader = class {
 			}
 			$targetSearchFormWrapper.attr('inert', 'inert');
 		};
+		const collapseSearchForm = ($targetSearchFormWrapper = $searchFormWrapper) => {
+			$elm.removeClass(`${this.name}_searchOpen`);
+			syncSearchAccessibilityState($targetSearchFormWrapper, false);
+		};
 
 		syncSearchAccessibilityState($searchFormWrapper, isSearchInitiallyExpanded);
 
@@ -36,8 +40,7 @@ window.sHeader = class {
 			$elm.toggleClass(`${this.name}_mobileMenu`);
 			$('body').toggleClass(`mobileMenu-open`);
 
-			$elm.removeClass(`${this.name}_searchOpen`);
-			syncSearchAccessibilityState($searchFormWrapper, false);
+			collapseSearchForm($searchFormWrapper);
 
 			const isExpanded = $elm.hasClass(`${this.name}_mobileMenu`);
 			$(e.currentTarget).attr('aria-expanded', isExpanded ? 'true' : 'false');
@@ -66,6 +69,11 @@ window.sHeader = class {
 				$elm.find('.f-search input.form-search').focus();
 			}
 
+		});
+		$(document).on('focusin', `.bShare.section__bShare button, .bShare.section__bShare a, .bShare.section__bShare [role="button"]`, () => {
+			if (!$elm.hasClass(`${this.name}_searchOpen`)) return;
+			// Reason: Keep focused share buttons visible when keyboard users move behind the search overlay.
+			collapseSearchForm($searchFormWrapper);
 		});
 
 		addPadding();

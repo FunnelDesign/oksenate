@@ -203,7 +203,14 @@
       color: $color-red;
       text-transform: uppercase;
       text-decoration: none;
+      padding: 10px;
+      border-radius: 5px;
 
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        color: $color-white;
+      }
       &:hover {
         opacity: .5;
       }
@@ -298,6 +305,8 @@
   }
 
   &__sImgWrap {
+    background-color: $color-gray-1;
+    border-radius: 5px;
     padding-bottom: 141%;
     position: relative;
     display: block;

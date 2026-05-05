@@ -276,6 +276,12 @@
         color: #253857;
         cursor: pointer;
 
+        &:focus
+        &:focus-visible,
+        &:focus-within {
+          background: $color-blue-3;
+          color: $color-white;
+        }
         &:hover {
           color: #253857;
           opacity: .7;
