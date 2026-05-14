@@ -97,7 +97,7 @@
 
   &__bBody {
     @include cr-last-child;
-    color: #404040;
+    color: $color-gray-4;
     font-family: $FreightTextProMedium-Regular;
     font-size: 14px;
     padding: 0 0 0 35px;

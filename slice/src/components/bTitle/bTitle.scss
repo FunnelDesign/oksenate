@@ -63,7 +63,7 @@
     font-size: 14px;
     text-align: center;
     @include cr-last-child;
-    //color: #404040;
+    //color: $color-gray-4;
 
     &_a {
       font-family: $FreightTextProBook-Regular;
@@ -77,13 +77,13 @@
     }
 
     &_b {
-      color: #404040;
+      color: $color-gray-4;
     }
 
     &_c {
       font-family: $FreightTextProBook-Regular;
       font-size: 18px;
-      color: #404040;
+      color: $color-gray-4;
 
       br {
         @include display(none, block);

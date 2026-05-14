@@ -31,7 +31,7 @@
   &__quote {
     @include cr-last-child;
     position: relative;
-    color: #404040;
+    color: $color-gray-4;
     @include font-size(13px, 14px);
     font-family: $Roboto-Regular;
     @include padding(0 0 0 5px, 0 0 0 60px);

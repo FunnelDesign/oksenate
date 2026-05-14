@@ -82,7 +82,7 @@
   }
 
   &__text {
-    color: #404040;
+    color: $color-gray-4;
     font-family: $FreightTextProBook-Regular;
     font-size: 14px;
     line-height: 1.9;
@@ -186,7 +186,7 @@
       text-transform: uppercase;
       margin: 0 0 20px;
       font-size: 18px;
-      color: #404040;
+      color: $color-gray-4;
       font-family: $FreightTextProBold-Regular;
     }
 
@@ -272,7 +272,7 @@
 
     #{$this}__imgCap {
       text-align: left;
-      color: #404040;
+      color: $color-gray-4;
       line-height: 2;
     }
 
@@ -318,7 +318,7 @@
 
     #{$this}__imgCap {
       text-align: left;
-      color: #404040;
+      color: $color-gray-4;
       line-height: 2;
     }
 

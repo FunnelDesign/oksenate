@@ -188,10 +188,14 @@
     border-radius: 5px;
     border: 1px solid #cbcbcb;
     font-family: $FreightTextProMedium-Regular;
-    color: #404040;
+    color: $color-gray-4;
     @include cr-last-child;
     @include cr-last-item;
 
+    a {
+      padding: 8px;
+    }
+    
     a[href^="tel"] {
       text-decoration: none;
     }
@@ -203,7 +207,7 @@
     h3 {
       font-family: $FreightTextProMedium-Regular;
       font-size: 24px;
-      color: #404040;
+      color: $color-gray-4;
       margin: 0 0 1px;
     }
 
@@ -211,7 +215,7 @@
       font-family: $FreightTextProMedium-Regular;
       font-size: 14px;
       text-transform: uppercase;
-      color: #404040;
+      color: $color-gray-4;
       margin: 0 0 1px;
     }
 
