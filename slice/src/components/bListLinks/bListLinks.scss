@@ -120,12 +120,16 @@
       &:hover {
         opacity: .7;
       }
-      
+
       &:focus,
       &:focus-visible,
       &:focus-within {
         background-color: $color-dark-blue;
         color: $color-white;
+
+        &:after {
+          filter: brightness(0) invert(1);
+        }
       }
 
       &:after {

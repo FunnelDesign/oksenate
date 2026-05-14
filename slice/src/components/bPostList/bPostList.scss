@@ -53,7 +53,7 @@
   &__text {
     font-family: $Roboto-Regular;
     font-size: 12px;
-    color: #404040;
+    color: $color-gray-4;
     margin-bottom: 28px;
     @include cr-last-child;
 

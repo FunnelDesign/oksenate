@@ -14,7 +14,7 @@
   a[href^="mailto"] {
     text-decoration: underline;
     font-family: $FreightTextProLight-Regular;
-
+    padding: 8px;
     &:hover {
       text-decoration: none;
     }
@@ -147,6 +147,7 @@
 
       a {
         text-decoration: none;
+        padding: 8px;
 
         &:hover {
           text-decoration: underline;
