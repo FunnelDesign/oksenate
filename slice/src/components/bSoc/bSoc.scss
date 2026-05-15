@@ -104,14 +104,13 @@
     min-width: 94px;
     position: relative;
 
-    //&:before {
-    //  content: '';
-    //  display: inline-block;
-    //  vertical-align: middle;
-    //  width: 24px;
-    //  height: 24px;
-    //  margin-right: 4px;
-    //}
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      &:before {
+        filter: brightness(0) invert(1);
+      }
+    }
   }
 
   &__ico {
@@ -123,7 +122,7 @@
     vertical-align: middle;
     color: $color-dark-blue;
 
-    &:focus
+    &:focus,
     &:focus-visible,
     &:focus-within {
       background: #121e32;
@@ -276,11 +275,15 @@
         color: #253857;
         cursor: pointer;
 
-        &:focus
+        &:focus,
         &:focus-visible,
         &:focus-within {
           background: $color-blue-3;
           color: $color-white;
+
+          &:before {
+            filter: brightness(0) invert(1);
+          }
         }
         &:hover {
           color: #253857;
