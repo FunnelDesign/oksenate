@@ -286,6 +286,12 @@
 
     a {
       text-decoration: none;
+      
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        color: $color-white;
+      }
     }
   }
 
@@ -297,6 +303,11 @@
 
       &:hover {
         text-decoration: none;
+      }
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        color: $color-white;
       }
     }
   }

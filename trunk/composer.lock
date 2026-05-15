@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fafa76a025c4843c8e8dcd0dd54b0f11",
+    "content-hash": "c39189d907e923643f06abf1361eb1af",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1765,6 +1765,50 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/adminimal_admin_toolbar",
                 "issues": "https://www.drupal.org/project/issues/adminimal_admin_toolbar"
+            }
+        },
+        {
+            "name": "drupal/all_in_one_accessibility",
+            "version": "1.5.17",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/all_in_one_accessibility.git",
+                "reference": "1.5.17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/all_in_one_accessibility-1.5.17.zip",
+                "reference": "1.5.17",
+                "shasum": "254e6db64b4fbf746d28ba4b2f8196343938aaf3"
+            },
+            "require": {
+                "drupal/core": "^8 || ^9 || ^10 || ^11"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "drupal": {
+                    "version": "1.5.17",
+                    "datestamp": "1763818377",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "rajesh bhimani",
+                    "homepage": "https://www.drupal.org/user/3479403"
+                }
+            ],
+            "description": "All in One Accessibility widget improves Drupal website ADA compliance and browser experience for ADA, WCAG 2.1, Section 508, Australian DDA, European EAA EN 301 549, UK Equality Act (EA), Israeli Standard 5568, California Unruh, Ontario AODA, Canada ACA, German BITV, and France RGAA Standards.",
+            "homepage": "https://www.drupal.org/project/all_in_one_accessibility",
+            "support": {
+                "source": "https://git.drupalcode.org/project/all_in_one_accessibility"
             }
         },
         {
@@ -14016,5 +14060,5 @@
         "php": ">=8.1"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
