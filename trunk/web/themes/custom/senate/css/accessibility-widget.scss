@@ -1,0 +1,75 @@
+/**
+ * All in One Accessibility widget — senate corporate red ($color-red).
+ * Admin color picker may require a paid license; theme overrides apply regardless.
+ * Build: npm run build:accessibility-widget (from oksenate/slice).
+ */
+@import "settings";
+
+// Keep in sync with SENATE_AIOA_* constants in senate.theme.
+$aioa-primary-rgb: #{red($color-red)}, #{green($color-red)}, #{blue($color-red)};
+
+// CSS filter chain tuned to $color-red (#b3292e) for Skynet footer SVG marks.
+// Recalculate if $color-red changes: https://isotropic.co/tool/hex-color-to-css-filter/
+$aioa-credit-logo-red-filter: brightness(0) saturate(100%) invert(19%) sepia(93%) saturate(1879%) hue-rotate(333deg) brightness(86%) contrast(95%);
+
+// Override widget default (#155091). :root and html are the same element; both for clarity.
+// !important beats the widget when its injected rule has no !important.
+// Rebuild: npm run build:accessibility-widget (from oksenate/slice).
+html,
+:root,
+body .accessibility-modal,
+body .accessibility-modal-wrapper {
+  --accessibility-widget-primary-color: #{$color-red} !important;
+  --accessibility-widget-primary-color-darken: #{$color-blue-1} !important;
+  --accessibility-widget-primary-color-rgb: #{$aioa-primary-rgb} !important;
+  --accessibility-widget-text-color: #{$color-white} !important;
+}
+
+/* Floating trigger — primary surfaces use $color-red */
+body .accessibility-modal-button-group button,
+body .accessibility-modal-button-group a,
+body .accessibility-modal-header,
+body .accessibility-trigger button#accessibility_settings_toggle {
+  background: $color-red !important;
+  background-color: $color-red !important;
+}
+
+// Tooltip reads var(--accessibility-widget-primary-color-darken) — scope red on the button.
+body .accessibility-trigger button {
+  --accessibility-widget-primary-color-darken: #{$color-red} !important;
+}
+
+/* Expanded panel — footer CTA and other primary-colored controls */
+body .accessibility-modal-footer .accessibility-footer-report-link {
+  background-color: $color-red !important;
+  color: $color-white !important;
+}
+
+body .accessibility-modal .accessibility-footer-report-link:hover,
+body .accessibility-modal .accessibility-footer-report-link:focus {
+  background-color: $color-red !important;
+  color: $color-white !important;
+}
+
+/* Undo global.scss link padding (8px 0) inside the AIOA dialog only */
+body .accessibility-modal a,
+body .accessibility-modal-wrapper a,
+[id^="accessibility_modal"] a,
+#accessibility_modal a,
+#accessibility_modal_footer a {
+  padding: 0 !important;
+}
+
+/* Skynet “Powered by” footer link — tint SVG logos to $color-red */
+body .accessibility-modal-footer a[href*="skynettechnologies.com"] {
+  .accessibility-credit-text img,
+  .accessibility-credit-logo img {
+    filter: $aioa-credit-logo-red-filter !important;
+  }
+}
+
+// Explicit tooltip background (beats widget var() fallback when our CSS loads after :root).
+html body .accessibility-trigger button .aioa-trigger-button-tooltip,
+html body .accessibility-trigger button span.aioa-trigger-button-tooltip {
+  background-color: $color-red !important;
+}
