@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/**
+ * All in One Accessibility widget — senate corporate red ($color-red).
+ * Admin color picker may require a paid license; theme overrides apply regardless.
+ * Build: npm run build:accessibility-widget (from oksenate/slice).
+ */
+html,
+:root,
+body .accessibility-modal,
+body .accessibility-modal-wrapper {
+  --accessibility-widget-primary-color: #b3292e !important;
+  --accessibility-widget-primary-color-darken: #344b71 !important;
+  --accessibility-widget-primary-color-rgb: 179, 41, 46 !important;
+  --accessibility-widget-text-color: #fff !important;
+}
+
+/* Floating trigger — primary surfaces use $color-red */
+body .accessibility-modal-button-group button,
+body .accessibility-modal-button-group a,
+body .accessibility-modal-header,
+body .accessibility-trigger button#accessibility_settings_toggle {
+  background: #b3292e !important;
+  background-color: #b3292e !important;
+}
+
+body .accessibility-trigger button {
+  --accessibility-widget-primary-color-darken: #b3292e !important;
+}
+
+/* Expanded panel — footer CTA and other primary-colored controls */
+body .accessibility-modal-footer .accessibility-footer-report-link {
+  background-color: #b3292e !important;
+  color: #fff !important;
+}
+
+body .accessibility-modal .accessibility-footer-report-link:hover,
+body .accessibility-modal .accessibility-footer-report-link:focus {
+  background-color: #b3292e !important;
+  color: #fff !important;
+}
+
+/* Undo global.scss link padding (8px 0) inside the AIOA dialog only */
+body .accessibility-modal a,
+body .accessibility-modal-wrapper a,
+[id^=accessibility_modal] a,
+#accessibility_modal a,
+#accessibility_modal_footer a {
+  padding: 0 !important;
+}
+
+/* Skynet “Powered by” footer link — tint SVG logos to $color-red */
+body .accessibility-modal-footer a[href*="skynettechnologies.com"] .accessibility-credit-text img,
+body .accessibility-modal-footer a[href*="skynettechnologies.com"] .accessibility-credit-logo img {
+  filter: brightness(0) saturate(100%) invert(19%) sepia(93%) saturate(1879%) hue-rotate(333deg) brightness(86%) contrast(95%) !important;
+}
+
+html body .accessibility-trigger button .aioa-trigger-button-tooltip,
+html body .accessibility-trigger button span.aioa-trigger-button-tooltip {
+  background-color: #b3292e !important;
+}
+
+/*# sourceMappingURL=accessibility-widget.css.map */
