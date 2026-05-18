@@ -1,5 +1,5 @@
 global-styling:
-  version: 0.0.1
+  version: 0.0.3
   css:
     theme:
       dist/vendor/jquery.scrollbar/jquery.scrollbar.css: {}
@@ -24,3 +24,12 @@ global-styling:
     - core/drupal
     - core/drupalSettings
     - core/once
+
+accessibility-widget:
+  version: 1.0.7
+  css:
+    theme:
+      css/accessibility-widget.css:
+        weight: 1000
+  dependencies:
+    - all_in_one_accessibility/ada_lib
