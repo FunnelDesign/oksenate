@@ -11,7 +11,7 @@
   background: $color-red;
   cursor: pointer;
   display: inline-block;
-  @include font-size(12px, 14px);
+  @include font-size(14px, 14px);
   @include padding(10px 15px, 11px 26px);
   border-radius: 5px !important;
   text-transform: uppercase;
@@ -29,7 +29,7 @@
     border: 1px solid $color-red;
     background: transparent;
     color: $color-red;
-    font-size: 10px;
+    font-size: 14px;
     font-family: $RobotoCondensed-Bold;
     padding: 7px 10px;
 

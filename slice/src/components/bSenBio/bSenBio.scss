@@ -140,7 +140,7 @@
     border-radius: 5px;
     background: $color-blue;
     font-family: $RobotoCondensed-Regular;
-    @include font-size(12px, 14px);
+    @include font-size(14px, 14px);
     color: $color-white;
     text-decoration: none;
     position: relative;
@@ -179,7 +179,7 @@
     border-radius: 5px;
     background: $color-blue;
     font-family: $RobotoCondensed-Regular;
-    @include font-size(12px, 14px);
+    @include font-size(14px, 14px);
     color: $color-white;
     text-decoration: none;
     position: relative;
@@ -205,7 +205,7 @@
     border-radius: 5px;
     padding: 10px 18px;
     font-family: $FreightTextProMedium-Regular;
-    font-size: 12px;
+    font-size: 14px;
     color: #414141;
     line-height: 1.8;
 
@@ -231,7 +231,7 @@
 
     .ss-icon {
       color: $color-red;
-      font-size: 12px;
+      font-size: 14px;
       display: inline-block;
       vertical-align: middle;
       margin-right: 5px;
