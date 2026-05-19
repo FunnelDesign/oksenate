@@ -163,7 +163,7 @@
       flex-direction: column;
       text-align: center;
       color: $color-gray-4;
-      font-size: 12px;
+      font-size: 14px;
       padding: 20px;
       transition: background .5s;
 
@@ -257,7 +257,7 @@
       text-align: center;
       justify-content: center;
       color: $color-gray-4;
-      font-size: 12px;
+      font-size: 14px;
       padding: 38px 25px 30px;
       transition: background .5s;
 
@@ -590,7 +590,7 @@
     #{$this}__title {
       display: block;
       font-family: $RobotoCondensed-Regular;
-      @include font-size(13px, 14px);
+      @include font-size(14px, 14px);
       color: #253857;
       text-transform: uppercase;
       margin: 0 0 12px;

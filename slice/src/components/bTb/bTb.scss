@@ -50,14 +50,14 @@
   &__th {
     font-family: $RobotoCondensed-Regular;
     color: $color-gray-4;
-    font-size: 11px;
+    font-size: 14px;
     text-transform: uppercase;
     display: table-cell;
     padding: 2px;
 
     @include sm {
       padding: 10px 10px;
-      font-size: 12px;
+      font-size: 14px;
     }
   }
 
@@ -68,7 +68,7 @@
     border-bottom: 1px solid #cbcbcb;
     font-family: $Roboto-Regular;
     color: $color-blue;
-    font-size: 11px;
+    font-size: 14px;
     line-height: 1.27;
 
     @include sm {
@@ -196,7 +196,7 @@
         vertical-align: middle;
         //text-align: center;
         padding: 5px 3px;
-        font-size: 9px;
+        font-size: 14px;
         line-height: 1.27;
 
         @include sm {
@@ -264,7 +264,7 @@
           span {
             color: #8f8f8f;
             font-family: $Roboto-Regular;
-            font-size: 12px;
+            font-size: 14px;
           }
         }
 

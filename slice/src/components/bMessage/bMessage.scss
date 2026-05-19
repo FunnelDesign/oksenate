@@ -2,7 +2,7 @@
   background: $color-red;
   color: $color-white;
   font-family: $Roboto-Regular;
-  @include font-size(10px, 12px);
+  @include font-size(14px, 14px);
   @include display(none, $sm: block);
   text-align: center;
   position: relative;

@@ -178,7 +178,7 @@
   &__filTitle, label {
     display: block;
     font-family: $RobotoCondensed-Regular;
-    @include font-size(13px, 13px, 14px);
+    @include font-size(14px, 14px, 14px);
     color: $color-blue;
     text-transform: uppercase;
     margin: 0 0 12px;
@@ -199,7 +199,7 @@
 
     a {
       font-family: $RobotoCondensed-Bold;
-      font-size: 10px;
+      font-size: 14px;
       color: $color-red;
       text-transform: uppercase;
       text-decoration: none;

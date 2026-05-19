@@ -243,7 +243,7 @@
     @media (min-width: $bp-small) {
       color: $color-white;
       display: inline-block;
-      font-size: 13px;
+      font-size: 14px;
      // padding: 4px 0 4px;
      // border-bottom: 4px solid transparent;
       z-index: 1;
@@ -447,13 +447,13 @@
     padding: 5px;
     text-align: left;
     border: none;
-    font-size: 10px;
+    font-size: 14px;
     color: $color-white;
 
     @media (min-width: $bp-small) {
       text-align: center;
       padding: 10px 5px;
-      font-size: 12px;
+      font-size: 14px;
       color: $color-white;
       background: $color-dark-blue;
     }
