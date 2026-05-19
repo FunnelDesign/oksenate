@@ -22,6 +22,17 @@
       opacity: .7;
     }
 
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-dark-blue;
+      color: $color-white;
+
+      &:after {
+        filter: brightness(0) invert(1);
+      }
+    }
+
     &:after {
       @include pseudo-block($right: 20px, $top: 50%);
       transform: translate(0, -50%);
