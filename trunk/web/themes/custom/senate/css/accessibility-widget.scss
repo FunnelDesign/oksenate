@@ -32,6 +32,13 @@ body .accessibility-modal-header,
 body .accessibility-trigger button#accessibility_settings_toggle {
   background: $color-red !important;
   background-color: $color-red !important;
+
+  .accessibility_settings_toggle_icon{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
 
 // Tooltip reads var(--accessibility-widget-primary-color-darken) — scope red on the button.

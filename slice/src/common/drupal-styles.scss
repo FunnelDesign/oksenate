@@ -86,6 +86,25 @@
 //  height: 100%;
 //}
 //
+.maintenance-page .layout-container header,
+.maintenance-page .layout-container main{
+  text-align: center;
+}
+
+.maintenance-page .dialog-off-canvas-main-canvas a:not(:is(.name-and-slogan *)) {
+  padding: 0px;
+  
+  &:focus,
+  &:focus-visible,
+  &:focus-within {
+  background-color: transparent;
+  color: inherit;
+  }
+}
+
+.maintenance-page .dialog-off-canvas-main-canvas img{
+  max-width: 640px !important;
+}
 
 #drupal-live-announce {
   display: none;

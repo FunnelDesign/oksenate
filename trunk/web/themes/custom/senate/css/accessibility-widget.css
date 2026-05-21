@@ -22,6 +22,15 @@ body .accessibility-trigger button#accessibility_settings_toggle {
   background: #b3292e !important;
   background-color: #b3292e !important;
 }
+body .accessibility-modal-button-group button .accessibility_settings_toggle_icon,
+body .accessibility-modal-button-group a .accessibility_settings_toggle_icon,
+body .accessibility-modal-header .accessibility_settings_toggle_icon,
+body .accessibility-trigger button#accessibility_settings_toggle .accessibility_settings_toggle_icon {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 
 body .accessibility-trigger button {
   --accessibility-widget-primary-color-darken: #b3292e !important;
