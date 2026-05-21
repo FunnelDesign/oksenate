@@ -94,13 +94,13 @@
     line-height: 1.2;
     background: $color-red;
     color: $color-white;
-    @include font-size(18px, 24px, 32px);
+    @include font-size(14px, 16px, 18px);
     font-family: $RobotoCondensed-Light;
     border: 1px solid #3e5376;
     border-radius: 5px;
     text-transform: capitalize;
     text-decoration: none;
-    @include padding(10px 20px, 21px 32px);
+    @include padding(8px 12px, 12px 16px);
     transition: background-color .3s;
 
     &:hover {
@@ -111,8 +111,8 @@
       content: '';
       display: inline-block;
       vertical-align: middle;
-      @include width(30px, 40px);
-      @include height(44px, 55px);
+      @include width(16px, 20px);
+      @include height(22px, 28px);
       background: url('by-address-img-tmp-a.png') no-repeat;
       background-size: contain;
       margin-right: 18px;
