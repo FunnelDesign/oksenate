@@ -61,9 +61,10 @@ $govdelivery-overlay: '[id^="scopedByScopedPolyfill"]';
 
 #{$govdelivery-overlay} {
 
-  border: 1px solid $border-color-1;
+  #prefix-overlay-outer{
+   border: 1px solid $border-color-1;
   border-radius: 5px;
-
+  }
   #prefix-emailInput {
 
     // Standard placeholder pseudo-element (evergreen browsers).
