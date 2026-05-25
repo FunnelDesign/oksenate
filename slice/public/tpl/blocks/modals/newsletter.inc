@@ -1,7 +1,7 @@
 <div class="modal fade modal_newsletter" id="newsletter" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal__dialog modal__dialog_v-centered">
     <div class="modal__content">
-      <span class="modal__close" data-dismiss="modal" aria-hidden="true">&times;</span>
+      <button type="button" class="modal__close" data-dismiss="modal" aria-label="Close subscription dialog">&times;</button>
       <div class="modal__body">
 
         <div class="form">
@@ -32,7 +32,7 @@
 
                 </li>
                 <li class='wireless_fields' style='display: none'>
-                  <label for="phone"><img class="required" src="https://content.govdelivery.com/images/required.gif" alt="Required" />Wireless Number</label>
+                  <label for="phone" class="form-required form-required-prefix">Wireless Number</label>
                   <div class='input_group'>
                     <select name="country_code_display" id="country_code_display" disabled="disabled" aria-label="Country code"><option value="1 (US)">1 (US)</option>
                       <option value="1">1</option></select>
@@ -43,21 +43,19 @@
 
                 </li>
                 <li class='email_fields' style='display: block'>
-                  <label for="email"><img class="required" src="https://content.govdelivery.com/images/required.gif" alt="Required" />Email Address</label>
+                  <label for="email" class="form-required form-required-prefix">Email Address</label>
                   <input type="text" name="email" id="email" class="long" />
 
                 </li>
               </ol>
               <div class='button_panel'>
-                <input type="submit" name="commit" value="Submit" class="sr-button reverse" />
+                <button type="submit" name="commit" value="Submit" class="sr-button reverse">Submit</button>
               </div>
             </fieldset>
           </form>
 
           <div class="form-required-note">
-            <span>
-              <img class="required" src="https://content.govdelivery.com/images/required.gif" alt="Required">
-            </span> Required
+            <span aria-hidden="true">*</span> Required
           </div>
         </div>
 

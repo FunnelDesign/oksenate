@@ -12,8 +12,17 @@
     right: 23px;
     top: 22px;
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+
+    border-radius: 5px;
+    transition: background-color .3s;
+
     @include text-hide();
 
     &:hover {
@@ -23,6 +32,12 @@
       }
     }
 
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-blue-1;
+    }
+
     &:before, &:after {
       @include pseudo-block($left: 50%, $top: 50%);
       width: 20px;
@@ -30,7 +45,7 @@
       background: #fff;
       top: calc(50% - 1px);
       transition: background .3s;
-      margin-left: -7px;
+      margin-left: -10px;
     }
 
     &:before {
@@ -95,7 +110,7 @@
         color: #fff;
 
         span {
-          font-size: 16px;
+          @include required-asterisk-style;
         }
       }
     }
@@ -104,8 +119,21 @@
       width: 100%;
     }
 
-    .select2-container--default .select2-selection--single {
-      background: $color-dark-blue;
+    .select2-container--default {
+
+      .select2-selection--single {
+        background: $color-dark-blue;
+      }
+
+      &:not(.select2-container--open) {
+        &:hover .select2-selection--single,
+        &.select2-container--focus .select2-selection--single,
+        &:focus .select2-selection--single,
+        &:focus-visible .select2-selection--single,
+        &:focus-within .select2-selection--single {
+          background: $color-blue-1;
+        }
+      }
     }
 
     .button_panel {

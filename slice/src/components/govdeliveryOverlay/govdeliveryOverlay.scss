@@ -1,0 +1,147 @@
+// =================================================================
+// GovDelivery Promo Overlay — host-side style overrides
+// =================================================================
+//
+// The GovDelivery overlay is a third-party subscription widget loaded
+// only on the front page via:
+//   trunk/web/themes/custom/senate/templates/html/html.html.twig:51
+//   <script src="https://content.govdelivery.com/overlay/js/9449.js">
+//
+// At runtime the script injects (confirmed against the live DOM):
+//
+//   <div id="scopedByScopedPolyfill_{N}" class="prefix-slide prefix-current">
+//     <style scoped> normalize.css + widget styles </style>
+//     <div id="prefix-webfonts">…</div>
+//     <div id="prefix-overlay-outer" role="dialog" aria-modal="true">
+//       <div class="prefix-overlay-inner">
+//         <div id="prefix-overlay-header">
+//           <img …>
+//           <button class="prefix-overlay-close prefix-overlay-action-later">…</button>
+//         </div>
+//         <div id="prefix-overlay-step1">
+//           <p id="prefix-overlay-label">Sign up for news from the Senate</p>
+//           <div id="prefix-overlay-form-div">
+//             <form>
+//               <input id="prefix-emailInput" type="email" placeholder="…">
+//               <input id="prefix-submitButton" type="submit" value="Subscribe">
+//             </form>
+//           </div>
+//           <div class="prefix-overlay-button-panel">
+//             <button id="prefix-dismissButton"
+//                     class="prefix-overlay-action-dismiss">No Thanks</button>
+//             <button id="prefix-laterButton"
+//                     class="prefix-overlay-action-later">Remind Me Later</button>
+//           </div>
+//         </div>
+//         <div id="prefix-overlay-step2">…</div>
+//         <div id="prefix-overlay-footer"></div>
+//       </div>
+//     </div>
+//   </div>
+//
+// All of the widget's internal selectors are auto-prefixed by samthor's
+// Scoped Polyfill (https://github.com/samthor/scoped) to the volatile
+// wrapper id (`scopedByScopedPolyfill_1`, `_2`, ...). To override them
+// from the host stylesheet we:
+//   1. Use a [id^="..."] attribute selector so the rules survive whichever
+//      numeric suffix the polyfill assigns at runtime.
+//   2. Flag declarations with !important — the polyfill emits its rules
+//      with id-level specificity (#scopedByScopedPolyfill_N #target),
+//      which outranks our attribute selector. !important is the smallest,
+//      most predictable hammer here.
+//
+// The widget's CONTENT and BEHAVIOUR (fields, copy, audience, timing) is
+// configured in the GovDelivery admin portal under Overlay ID 9449,
+// not here. Only purely cosmetic alignment with the host theme belongs
+// in this partial.
+// =================================================================
+
+// Stable wrapper selector — survives the volatile polyfill suffix.
+$govdelivery-overlay: '[id^="scopedByScopedPolyfill"]';
+
+#{$govdelivery-overlay} {
+
+  border: 1px solid $border-color-1;
+  border-radius: 5px;
+
+  #prefix-emailInput {
+
+    // Standard placeholder pseudo-element (evergreen browsers).
+    &::placeholder {
+      font-family: $FreightTextProBook-Regular !important;
+      font-size: 14px !important;
+      color: $color-gray-2 !important;
+    }
+
+    // Legacy vendor prefixes — kept for IE 10/11 and older Safari which
+    // government audiences still occasionally use.
+    &::-webkit-input-placeholder {
+      font-family: $FreightTextProBook-Regular !important;
+      font-size: 14px !important;
+    }
+
+    &::-moz-placeholder {
+      font-family: $FreightTextProBook-Regular !important;
+      font-size: 14px !important;
+    }
+
+    &:-ms-input-placeholder {
+      font-family: $FreightTextProBook-Regular !important;
+      font-size: 14px !important;
+    }
+  }
+
+  #prefix-submitButton#prefix-submitButton {
+
+    border-radius: 5px;
+    font-family: $RobotoCondensed-Regular !important;
+    font-size: 14px !important;
+    min-height: 40px !important;
+
+    // Smooth the colour change to feel native to the rest of the app
+    // (matches the 0.3s transition used on .btn).
+    transition: background-color .3s !important;
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-dark-blue !important;
+      color: $color-white !important;
+    }
+  }
+
+  .prefix-overlay-close.prefix-overlay-close {
+    font-size: 12px !important;
+    line-height: 1 !important;
+
+    text-indent: 100% !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+
+    &::before,
+    &::after {
+      text-indent: 0 !important;
+    }
+  }
+
+  #prefix-dismissButton,
+  #prefix-laterButton {
+
+    padding: 8px;
+    border-radius: 5px;
+    font-family: $RobotoCondensed-Regular !important;
+    font-size: 14px !important;
+
+    transition: background-color .3s !important;
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-red !important;
+      // Reason: the widget does not guarantee a particular default text
+      // colour for these "link-look" buttons, so we lock the text to
+      // white to keep WCAG-level contrast against the red focus fill.
+      color: $color-white !important;
+    }
+  }
+}
