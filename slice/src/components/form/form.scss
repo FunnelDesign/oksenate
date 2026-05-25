@@ -265,6 +265,94 @@ textarea {
     }
   }
 
+  // -------------------------------------------------------------------------
+  // Required-field marker — GovDelivery subscription snippet
+  // -------------------------------------------------------------------------
+  // The project-wide `.form-required:not([for='edit-captcha-response'])` rule
+  // above is tuned for Drupal Form API output: it absolute-positions the
+  // marker over the input wrapper and hides the label text. The GovDelivery
+  // snippet (#GD-snippet-form) is hand-rolled HTML with a different DOM
+  // (<ol class="form"><li><label>...</label><input></li>), so the visible
+  // label text must stay AND the asterisk must sit inline next to it.
+  //
+  // Reason: a higher-specificity selector (ID + class beats class + class)
+  // neutralises the absolute positioning and re-renders the asterisk inline
+  // via :after for any <label class="form-required"> inside the snippet.
+  //
+  // Placement variants:
+  //   <label class="form-required">Email</label>
+  //       → asterisk SUFFIX (after the label text)   — default
+  //   <label class="form-required form-required-prefix">Email</label>
+  //       → asterisk PREFIX (before the label text)  — matches the legacy
+  //         GovDelivery GIF placement.
+  // -------------------------------------------------------------------------
+  #GD-snippet-form .form-required {
+    position: static;
+    font-size: inherit;
+    font-family: inherit;
+    color: inherit;
+    line-height: inherit;
+    clip: auto;
+    overflow: visible;
+
+    // Shared visual + layout reset for whichever pseudo-element renders the
+    // asterisk. Whether `:after` (default) or `:before` (prefix modifier) is
+    // active, the marker always looks identical — only its margin flips.
+    &:after,
+    &.form-required-prefix:before {
+      content: '*';
+      display: inline-block;
+      position: static;
+      transform: none;
+      width: auto;
+      height: auto;
+      vertical-align: middle;
+      @include required-asterisk-style;
+    }
+
+    // Default placement: 4px gap to the LEFT of the asterisk (text … * ).
+    &:after {
+      margin: 0 0 0 4px;
+    }
+
+    // Opt-in modifier: 4px gap to the RIGHT of the asterisk ( * … text).
+    &.form-required-prefix {
+      // Reason: suppress the default suffix marker so we never render twice.
+      &:after {
+        content: none;
+      }
+
+      &:before {
+        margin: 0 4px 0 0;
+      }
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Submit button — GovDelivery subscription snippet
+  // -------------------------------------------------------------------------
+  // The base `.sr-button:focus` rule (btn.scss) lights up to `$color-blue`
+  // (#253857). Inside the newsletter snippet we want the deeper link-style
+  // focus visual that `<a>` elements use across the site (global.scss): the
+  // darker `$color-dark-blue` (#121e32) on the same white-on-rounded chip.
+  //
+  // Reason: ID + class selector (1,1,1) outranks the base `.sr-button` rule
+  // (0,1,0), so the override applies cleanly without `!important`. Only the
+  // focus background is actually new — `border-radius: 5px` and
+  // `color: $color-white` already come from the `.sr-button` base, but we
+  // re-declare them here so the focus contract is self-documenting.
+  // -------------------------------------------------------------------------
+  #GD-snippet-form .sr-button {
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-dark-blue;
+      border-radius: 5px;
+      color: $color-white;
+    }
+  }
+
   .g-recaptcha > div {
     margin: 0 auto;
   }

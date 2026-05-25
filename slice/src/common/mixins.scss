@@ -189,6 +189,26 @@
   }
 }
 
+// ---------------------------------------------------------------------------
+// Required-field asterisk — visual style only
+// ---------------------------------------------------------------------------
+// Single source of truth for the look of the red "*" marker shown next to
+// required form fields. Used in two places today:
+//   - `.form-required:after` inside the GovDelivery snippet (form.scss)
+//   - `.form-required-note span` inside the newsletter modal (modal.scss)
+//
+// Reason: keeping the visual properties in a mixin (and not the layout
+// properties like position/margin/vertical-align) lets each consumer apply
+// the same brand look while still controlling its own placement.
+// ---------------------------------------------------------------------------
+@mixin required-asterisk-style {
+  font-family: $FreightTextProBook-Regular;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1;
+  color: $color-red;
+}
+
 @mixin input-placeholder($color, $opacity: 1) {
   &::-webkit-input-placeholder {
     color: $color;

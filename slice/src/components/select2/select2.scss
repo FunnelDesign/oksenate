@@ -197,6 +197,8 @@
   &:not(.select2-container--open) {
     &:hover .select2-selection--single,
     &.select2-container--focus .select2-selection--single,
+    &:focus .select2-selection--single,
+    &:focus-visible .select2-selection--single,
     &:focus-within .select2-selection--single {
       background: $color-dark-blue;
     }

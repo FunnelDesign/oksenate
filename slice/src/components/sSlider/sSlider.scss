@@ -25,6 +25,12 @@
     line-height: 1.6;
     text-align: center;
 
+    h2 {
+      //*amke the headings h2 to look thesame as h3, to avoid "A heading level is skipped." error 
+      font-size: 1.17em;
+      font-family: $FreightTextProMedium-Regular;
+    }
+    
     h2, h3, h4, h5, h6 {
       color: #fff;
       margin-bottom: 10px;

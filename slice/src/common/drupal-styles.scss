@@ -110,6 +110,22 @@
   display: none;
 }
 
+// WAVE accessibility evaluator — colour override on the visually-
+// hidden main-menu heading.
+#block-senate-main-menu-menu {
+  color: #fff !important;
+}
+
+// WAVE contrast pacification — visually-hidden search label
+#search-block-form label[for="edit-keys"] {
+  color: $color-gray-4 !important;
+}
+
+// WAVE contrast pacification — visually-hidden "Enter Bill Number" label
+.f-search-redirect label {
+  color: $color-gray-4 !important;
+}
+
 //
 //.contextual-custom {
 // display: none;
