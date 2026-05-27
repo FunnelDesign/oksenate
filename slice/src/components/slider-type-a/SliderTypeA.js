@@ -23,13 +23,16 @@ window.SliderTypeA = class {
 			$currentWrap.addClass(this.name + '_slides');
 		}
 
-		$slider_bg.on('init', (event, slick) => {
-			$(event.currentTarget).find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
-		});
+		// Slick runs initADA *after* init/afterChange, which re-adds aria-describedby.
+		const removeSlideAriaDescribedBy = (event) => {
+			const $slider = $(event.currentTarget);
+			setTimeout(() => {
+				$slider.find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
+			}, 0);
+		};
 
-		$slider_desc.on('init', (event, slick) => {
-			$(event.currentTarget).find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
-		});
+		$slider_bg.on('init afterChange', removeSlideAriaDescribedBy);
+		$slider_desc.on('init afterChange', removeSlideAriaDescribedBy);
 
 		$slider_bg.slick({
 			pauseOnHover: false,
@@ -87,6 +90,4 @@ window.SliderTypeA = class {
 };
 
 export default SliderTypeA;
-
-
 
