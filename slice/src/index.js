@@ -12,6 +12,7 @@ import bStaff from "./components/bStaff/bStaff";
 import lightSlider from "./components/bLightSlider/lightSlider";
 import Modal from "./components/modal/modal";
 import bEvents from "./components/bEvents/bEvents";
+import initAccessibilityWidgetA11y from "./components/accessibility/initAccessibilityWidgetA11y";
 
 const $ = jQuery;
 
@@ -52,6 +53,7 @@ $(window).on('load', function () {
 });
 
 function init() {
+	initAccessibilityWidgetA11y();
 	new Modal();
 	new bEvent();
 	new bSort();
