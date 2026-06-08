@@ -2141,7 +2141,7 @@ window.SliderTypeA = /*#__PURE__*/function () {
       $slider_desc.slick({
         pauseOnHover: false,
         pauseOnFocus: false,
-        accessibility: false,
+        accessibility: true,
         dots: true,
         appendDots: $slider__slide_nav,
         arrows: false,
