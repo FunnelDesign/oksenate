@@ -5,7 +5,7 @@
  *
  */
 #}
-<div class="modal fade modal_newsletter" id="newsletter" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal_newsletter" id="newsletter" tabindex="-1" role="dialog" aria-labelledby="newsletter-title" aria-hidden="true">
   <div class="modal__dialog modal__dialog_v-centered">
     <div class="modal__content">
       <button type="button" class="modal__close" data-dismiss="modal" aria-label="{{ "Close subscription dialog"|t }}">&times;</button>
@@ -19,7 +19,7 @@
                  aria-hidden="true">
           </div>
 
-          <h2>{{ "Sign up for our Newsletter"|t }}</h2>
+          <h2 id="newsletter-title">{{ "Sign up for our Newsletter"|t }}</h2>
 
           <form id="GD-snippet-form" action="https://public.govdelivery.com/accounts/OKSENATE/subscribers/qualify" accept-charset="UTF-8" method="post" target="_blank" class="senate-custom-captcha">
             <input name="utf8" type="hidden" value="&#x2713;" />

@@ -2115,16 +2115,10 @@ window.SliderTypeA = /*#__PURE__*/function () {
       if ($currentWrap.find('.' + this.name + '__desc-item').length > 1) {
         $currentWrap.addClass(this.name + '_slides');
       }
-      $slider_bg.on('init', function (event, slick) {
-        $(event.currentTarget).find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
-      });
-      $slider_desc.on('init', function (event, slick) {
-        $(event.currentTarget).find('.slick-slide[aria-describedby]').removeAttr('aria-describedby');
-      });
       $slider_bg.slick({
         pauseOnHover: false,
         pauseOnFocus: false,
-        accessibility: true,
+        accessibility: false,
         dots: false,
         arrows: false,
         infinite: true,
@@ -2147,7 +2141,7 @@ window.SliderTypeA = /*#__PURE__*/function () {
       $slider_desc.slick({
         pauseOnHover: false,
         pauseOnFocus: false,
-        accessibility: true,
+        accessibility: false,
         dots: true,
         appendDots: $slider__slide_nav,
         arrows: false,
