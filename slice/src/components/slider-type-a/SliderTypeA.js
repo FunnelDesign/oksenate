@@ -26,7 +26,7 @@ window.SliderTypeA = class {
 		$slider_bg.slick({
 			pauseOnHover: false,
 			pauseOnFocus: false,
-			accessibility: false,
+			accessibility: true,
 			dots: false,
 			arrows: false,
 			infinite: true,
