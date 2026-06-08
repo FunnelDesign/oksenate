@@ -33,3 +33,4 @@ export default function initAccessibilityWidgetA11y() {
 		document.body.dataset.senateAccessibilityObserver = 'true';
 	}
 }
+Hello.
