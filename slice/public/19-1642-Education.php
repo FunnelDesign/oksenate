@@ -92,7 +92,7 @@
             <span class="btn__ico">
               <img src="../dist/images/link/link-ico-tmp-1.png"
                    srcset="../dist/images/link/link-ico-tmp-1-2x.png 2x"
-                   alt="">
+                   alt="Roll Old Paper Quill Pen">
             </span>
 
               Learn About Senate History
@@ -145,9 +145,11 @@
         <div class="pageIn__btnWr">
           <a href="#" class="btn btn_c btn_s_j">
             <span class="btn__ico">
-              <img src="../dist/images/link/link-ico-tmp-2.png"
+              <img class="not-selectable"
+                   src="../dist/images/link/link-ico-tmp-2.png"
                    srcset="../dist/images/link/link-ico-tmp-2-2x.png 2x"
-                   alt="">
+                   alt=""
+                   aria-hidden="true">
             </span>
 
             See Our Glossary of Legislative Terms
