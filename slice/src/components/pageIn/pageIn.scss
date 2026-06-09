@@ -62,6 +62,12 @@
     margin-bottom: 12px;
     @include cr-last-child;
 
+    article[about="/publications/fast-facts"] & {
+      img {
+        filter: brightness(0) invert(1);
+      }
+    }
+
     &_a {
       margin-bottom: 20px;
     }
