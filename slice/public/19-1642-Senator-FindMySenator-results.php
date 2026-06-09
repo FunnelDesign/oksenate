@@ -33,7 +33,7 @@
         <div class="bContainer">
 
           <div class="sSen__senShow">
-            <h4>Showing 4 Senators</h4>
+            <p class="sSen__senShow-count">Showing 4 Senators</p>
           </div>
 
           <div class="sSen__items">

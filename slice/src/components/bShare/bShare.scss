@@ -30,6 +30,7 @@
     a {
       white-space: nowrap;
       padding: 6px 15px 4px 15px;
+      border-radius: 5px;
 
       &:hover {
         opacity: .7;
@@ -45,12 +46,13 @@
 
     &.bSoc_cl_b {
       a {
-        &:focus
+        &:hover,
+        &:focus,
         &:focus-visible,
         &:focus-within {
           background: $color-dark-blue;
           color: $color-white;
-          border-radius: 5px;
+          opacity: 1;
         }
       }
     }

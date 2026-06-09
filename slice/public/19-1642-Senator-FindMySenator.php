@@ -204,7 +204,7 @@
         <div class="bContainer">
 
           <div class="sSen__senShow">
-            <h4>Showing All 48 Senators</h4>
+            <p class="sSen__senShow-count">Showing All 48 Senators</p>
           </div>
           
           <div class="sSen__noRes">

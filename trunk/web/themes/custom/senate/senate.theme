@@ -1777,7 +1777,7 @@ function senate_preprocess_views_view(&$vars) {
 
   switch ($id) {
     case 'senators':
-      $vars['total_rows'] = Markup::create("<h4>Showing " . $view->total_rows ." Senators</h4>");
+      $vars['total_rows'] = Markup::create("<p class=\"sSen__senShow-count\">Showing " . $view->total_rows ." Senators</p>");
       $exp_input = $view->getExposedInput();
       $zip_exp_input = !empty($exp_input["zip"]) ? $exp_input["zip"] : '';
       $vars['show_search_address_txt'] = !empty($zip_exp_input) && ($view->total_rows > 1) ? TRUE : FALSE;
@@ -2575,10 +2575,19 @@ function senate_preprocess_senate_socials(&$vars) {
   $entity = !empty($vars["entity"]) ? $vars["entity"] : '';
   $entity_type = !empty($vars["entity_type"]) ? $vars["entity_type"] : '';
 
-  $social_class = [
-    'fb' => 'ss-facebook st_facebook_custom',
-    'tw' => 'ss-twitter st_twitter_custom',
-    'email' => 'ss-mail st_email_custom',
+  $socials = [
+    'fb' => [
+      'class' => 'ss-facebook st_facebook_custom',
+      'label' => t('Share on Facebook'),
+    ],
+    'tw' => [
+      'class' => 'ss-twitter st_twitter_custom',
+      'label' => t('Share on X'),
+    ],
+    'email' => [
+      'class' => 'ss-mail st_email_custom',
+      'label' => t('Share by email'),
+    ],
   ];
 
   $color = !empty($color) ? $color : 'white';
@@ -2613,7 +2622,7 @@ function senate_preprocess_senate_socials(&$vars) {
     }
   }
 
-  $vars['socials'] = $social_class;
+  $vars['socials'] = $socials;
   $vars['color'] = $color;
   if ($color == 'white') {
     $vars['wrapper_class'] = '';

@@ -121,12 +121,13 @@
     display: inline-block;
     vertical-align: middle;
     color: $color-dark-blue;
+    border-radius: 5px;
+    overflow: hidden;
 
     &:focus,
     &:focus-visible,
     &:focus-within {
       background: #121e32;
-      border-radius: 5px;
     }
 
     &:hover {
@@ -259,12 +260,29 @@
     &_a {
 
       a, button {
+        border-radius: 5px;
         color: #fff;
         cursor: pointer;
 
         &:hover {
           color: #fff;
           opacity: .7;
+        }
+      }
+
+      #{$self}__ico.ss-twitter {
+
+        &:before {
+          content: '';
+        }
+
+        &:after {
+          background: url('/themes/custom/senate/dist/images/x-twitter--white.svg') no-repeat;
+          background-size: contain;
+          content: '';
+          display: inline-block;
+          height: 1em;
+          width: 1em;
         }
       }
     }
@@ -277,17 +295,44 @@
 
         &:focus,
         &:focus-visible,
-        &:focus-within {
+        &:focus-within,
+        &:hover {
           background: $color-blue-3;
           color: $color-white;
 
           &:before {
             filter: brightness(0) invert(1);
           }
+
+          &:after {
+            filter: brightness(0) invert(1);
+          }
         }
+      }
+
+      #{$self}__ico.ss-twitter {
+
+        &:before {
+          content: '';
+        }
+
+        &:after {
+          background: url('/themes/custom/senate/dist/images/x-twitter.svg') no-repeat;
+          background-size: contain;
+          content: '';
+          display: inline-block;
+          height: 1em;
+          width: 1em;
+        }
+
+        &:focus,
+        &:focus-visible,
+        &:focus-within,
         &:hover {
-          color: #253857;
-          opacity: .7;
+
+          &:after {
+            filter: brightness(0) invert(1);
+          }
         }
       }
     }
