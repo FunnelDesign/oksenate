@@ -30,7 +30,12 @@ window.bTerms = class {
 			});
 
 			if (!$target.length) {
-				$(item).addClass(`${this.name}__let_disabled`)
+				$(item)
+					.addClass(`${this.name}__let_disabled`)
+					.attr({
+						'aria-disabled': 'true',
+						'tabindex': '-1'
+					});
 			}
 		});
 
@@ -75,6 +80,5 @@ window.bTerms = class {
 };
 
 export default bTerms;
-
 
 

@@ -35,26 +35,37 @@
       font-size: 14px;
       color: $color-blue;
       text-transform: uppercase;
-      margin: 0 -6px;
+      margin: 0;
 
       & > * {
-        margin: 0 6px 12px;
+        margin: 0;
 
         @include sm {
-          margin: 0 6px;
+          margin: 0;
         }
       }
 
       a {
+        align-items: center;
+        border-radius: 5px;
+        display: flex;
+        height: 32px;
+        justify-content: center;
         text-decoration: none;
+        width: 32px;
 
-        &:hover, &#{$this}__let_active {
-          color: $color-red;
+        &:hover,
+        &:focus,
+        &:focus-visible,
+        &:focus-within,
+        &#{$this}__let_active {
+          background: $color-blue;
+          color: $color-white;
         }
 
         &#{$this}__let_disabled {
           opacity: .4;
-          color: gray;
+          color: $color-gray-3;
           pointer-events: none;
         }
       }
