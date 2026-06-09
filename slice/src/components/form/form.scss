@@ -343,12 +343,12 @@ textarea {
   // re-declare them here so the focus contract is self-documenting.
   // -------------------------------------------------------------------------
   #GD-snippet-form .sr-button {
+    border-radius: 5px;
 
     &:focus,
     &:focus-visible,
     &:focus-within {
       background-color: $color-dark-blue;
-      border-radius: 5px;
       color: $color-white;
     }
   }

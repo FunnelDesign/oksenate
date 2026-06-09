@@ -144,6 +144,53 @@
 
       this.setBackButtonUrl(context);
       this.setSenateCustomCaptcha(context);
+      this.setRuntimeDialogNames(context);
+    },
+
+    setRuntimeDialogNames: function (context) {
+      var root = context && context.querySelectorAll ? context : document;
+
+      function hasAccessibleName(element) {
+        return element.hasAttribute('aria-label') || element.hasAttribute('aria-labelledby');
+      }
+
+      function setLabelledBy(element, id, fallbackLabel) {
+        if (hasAccessibleName(element)) {
+          return;
+        }
+
+        if (document.getElementById(id)) {
+          element.setAttribute('aria-labelledby', id);
+        }
+        else {
+          element.setAttribute('aria-label', fallbackLabel);
+        }
+      }
+
+      function updateDialogs(scope) {
+        var currentRoot = scope && scope.querySelectorAll ? scope : document;
+
+        $(currentRoot).find('#prefix-overlay-outer[role="dialog"]').addBack('#prefix-overlay-outer[role="dialog"]').each(function () {
+          setLabelledBy(this, 'prefix-overlay-label', 'Sign up for news from the Senate');
+        });
+      }
+
+      updateDialogs(root);
+
+      if (!document.body.dataset.senateRuntimeDialogNamesObserver) {
+        var observer = new MutationObserver(function (mutations) {
+          mutations.forEach(function (mutation) {
+            Array.prototype.forEach.call(mutation.addedNodes, function (node) {
+              if (node.nodeType === 1) {
+                updateDialogs(node);
+              }
+            });
+          });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+        document.body.dataset.senateRuntimeDialogNamesObserver = 'true';
+      }
     },
 
     setBackButtonUrl: function (context) {
@@ -243,4 +290,4 @@
     }, 500);
   });
 })(jQuery);
-*/ 
+*/

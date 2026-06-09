@@ -16,7 +16,7 @@
         <div class="bSoc__items sharethis-wrapper">
           {% for social in socials %}
             <div class="bSoc__item">
-              <button st_url="{{ url }}" st_title="{{ title }}" class="bSoc__ico ss-icon ss-social-circle {{ social }}"></button>
+              <button type="button" st_url="{{ url }}" st_title="{{ title }}" class="bSoc__ico ss-icon ss-social-circle {{ social.class }}" aria-label="{{ social.label }}"></button>
             </div>
           {% endfor %}
         </div>
