@@ -28,7 +28,8 @@
     height: 30px;
     background-color: transparent;
     border: 0;
-    color: transparent;
+    color: $color-white;
+    cursor: pointer;
     transform: translate(0, -50%);
     transition: opacity .3s;
 

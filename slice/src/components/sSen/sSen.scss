@@ -334,7 +334,7 @@
     text-transform: uppercase;
     color: $color-white;
     display: block;
-    padding: 1px 8px;
+    padding: 1px 7px;
     text-align: right;
     width: 34px;
     height: 34px;
@@ -350,6 +350,22 @@
       background: url('s-senators-img-mask-d.png') no-repeat;
       background-size: contain;
     }
+  }
+
+  &__sMaskText {
+    border-radius: 8px;
+    display: inline-block;
+    line-height: 1;
+    min-width: 12px;
+    text-align: center;
+  }
+
+  &__sMask_r &__sMaskText {
+    background: $color-red;
+  }
+
+  &__sMask_d &__sMaskText {
+    background: #32548b;
   }
 
   &__sDis {

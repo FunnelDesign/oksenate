@@ -180,11 +180,14 @@
 }
 
 .select2-hidden-accessible {
+  background-color: $color-blue !important;
   border: 0 !important;
   clip: rect(0 0 0 0) !important;
   -webkit-clip-path: inset(50%) !important;
   clip-path: inset(50%) !important;
+  color: $color-white !important;
   height: 1px !important;
+  opacity: 1 !important;
   overflow: hidden !important;
   padding: 0 !important;
   position: absolute !important;

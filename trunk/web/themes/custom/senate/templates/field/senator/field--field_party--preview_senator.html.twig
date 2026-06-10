@@ -41,9 +41,12 @@
 
   {% for item in items %}
     {% if item.content['#plain_text'] == "Democratic" %}
-      <span class="sSen__sMask sSen__sMask_d">d</span>
+      <span class="sSen__sMask sSen__sMask_d">
+        <span class="sSen__sMaskText">d</span>
+      </span>
     {% else %}
-      <span class="sSen__sMask sSen__sMask_r">r</span>
+      <span class="sSen__sMask sSen__sMask_r">
+        <span class="sSen__sMaskText">r</span>
+      </span>
     {% endif %}
   {% endfor %}
-
