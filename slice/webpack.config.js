@@ -23,6 +23,7 @@ const config = {
 
 module.exports = (env, argv) => {
 	const isDevelopment = argv.mode === 'development';
+	const skipImages = Boolean(env && (env.noImages || env.skipImages));
 
 	const plugins = [
 		new MiniCssExtractPlugin({
@@ -33,12 +34,12 @@ module.exports = (env, argv) => {
 			}
 		}),
 		new CopyPlugin([
-			{from: './src/images', to: './images'},
+			...(!skipImages ? [{from: './src/images', to: './images'}] : []),
 			{from: './src/vendor', to: './vendor'}
 		])
 	];
 
-	if (!isDevelopment) {
+	if (!isDevelopment && !skipImages) {
 		plugins.push(
 			// new CleanWebpackPlugin(),
 			new ImageminPlugin({
@@ -137,6 +138,7 @@ module.exports = (env, argv) => {
 						{
 							loader: 'css-loader',
 							options: {
+								url: !skipImages,
 								sourceMap: isDevelopment
 							}
 						},
