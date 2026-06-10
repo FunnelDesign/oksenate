@@ -615,14 +615,21 @@
       border-radius: 0;
 
       @include sm {
-        margin: 0 8px 60px;
+        margin: 0 8px 50px;
         padding: 0;
         max-width: calc(33.333333% - 16px);
         min-width: calc(33.333333% - 16px);
       }
 
+      &:focus,
+      &:focus-visible,
+      &:focus-within{
+        background-color: $color-white;
+        text-decoration: underline;
+      }
       &:hover {
         opacity: .7;
+        text-decoration: underline;
       }
     }
 
@@ -652,6 +659,7 @@
       color: $color-blue-3;
       text-align: left;
       display: block;
+      margin: 0px 0px 10px 10px;
     }
   }
 

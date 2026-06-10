@@ -138,7 +138,6 @@ module.exports = (env, argv) => {
 						{
 							loader: 'css-loader',
 							options: {
-								url: !skipImages,
 								sourceMap: isDevelopment
 							}
 						},
@@ -199,7 +198,8 @@ module.exports = (env, argv) => {
 						options: {
 							name: '[name].[ext]',
 							publicPath: '../images/',
-							outputPath: './images/'
+							outputPath: './images/',
+							emitFile: !skipImages
 						}
 					}
 				},

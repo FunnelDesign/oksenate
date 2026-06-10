@@ -13165,6 +13165,10 @@ a.ui-button:active {
   display: block
 }
 .bTerms__more {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: #fff;
   display: inline-block;
   padding: 10px 22px;
   border: 1px solid #b3292e;
@@ -13174,7 +13178,19 @@ a.ui-button:active {
   font-size: 14px;
   text-transform: uppercase;
   color: #b3292e;
+  cursor: pointer;
   text-decoration: none
+}
+.bTerms__more:focus,
+.bTerms__more:focus-visible,
+.bTerms__more:focus-within {
+  background: #fff;
+  box-shadow: 0 0 0 2px #253857;
+  color: #b3292e
+}
+.bTerms__more:hover {
+  background: #fff;
+  color: #b3292e
 }
 .bTerms__more:after,
 .bTerms__more:before {
@@ -13199,15 +13215,19 @@ a.ui-button:active {
   content: "";
   display: inline-block;
   vertical-align: middle;
-  width: 13px;
-  height: 7px;
+  width: 9px;
+  height: 9px;
   margin-left: 10px;
-  background: url(../images/arrow-png-shore-more.png) no-repeat;
-  background-size: contain;
-  margin-top: -1px
+  border: 2px solid currentColor;
+  border-top: none;
+  border-right: none;
+  margin-top: -5px;
+  transform: rotate(-45deg);
+  transition: 0.3s
 }
 .bTerms__moreOpen:after {
-  transform: rotate(179deg)
+  margin-top: 2px;
+  transform: rotate(135deg)
 }
 .bTerms__moreClose {
   display: none

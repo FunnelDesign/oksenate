@@ -52,7 +52,7 @@
         <div class="pageIn__ico not-selectable" aria-hidden="true" >
           <img src="{{ path_to_theme }}/dist/images/titleIco/title-ico-45.png"
                srcset="{{ path_to_theme }}/dist/images/titleIco/title-ico-45-2x.png 2x"
-               alt="">
+               alt="{{ "Dictionary Book With Letters A to Z"|t }}">
         </div>
 
         <div class="bTitle bTitle_wSub_a bTitle_gap_a">
@@ -124,10 +124,10 @@
             </div>
 
             <div class="bTerms__moreWr">
-              <a class="bTerms__more" aria-label="Toggle show more terms">
+              <button type="button" class="bTerms__more" aria-label="{{ 'Toggle show more terms'|t }}">
                 <span class="bTerms__moreOpen">{{ "show more"|t }}</span>
                 <span class="bTerms__moreClose">{{ "show less"|t }}</span>
-              </a>
+              </button>
             </div>
           </div>
         {% elseif empty -%}
