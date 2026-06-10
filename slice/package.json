@@ -2,8 +2,10 @@
   "scripts": {
     "start": "webpack --mode=development --progress",
     "build": "webpack --mode=production --progress",
+    "build:no-images": "webpack --mode=production --env.noImages --progress",
     "build:accessibility-widget": "sass --load-path=src/common ../trunk/web/themes/custom/senate/css/accessibility-widget.scss ../trunk/web/themes/custom/senate/css/accessibility-widget.css",
-    "build trunk": "webpack --mode=production --trunk --progress && npm run build:accessibility-widget"
+    "build trunk": "webpack --mode=production --trunk --progress && npm run build:accessibility-widget",
+    "build trunk:no-images": "webpack --mode=production --trunk --env.noImages --progress && npm run build:accessibility-widget"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",

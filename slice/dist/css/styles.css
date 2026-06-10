@@ -6803,8 +6803,14 @@ textarea {
 .sHeader__menu-wrap > ul.menu > li > ul > li:focus-within > a,
 .sHeader__menu-wrap > ul.menu > li > ul > li:hover > a {
   color: #fff;
-  border-radius: 6px;
   background-color: #b3292e
+}
+@media (max-width: 767px) {
+  .sHeader__menu-wrap > ul.menu > li > ul > li.menu-item--active-trail > a,
+  .sHeader__menu-wrap > ul.menu > li > ul > li:focus-within > a,
+  .sHeader__menu-wrap > ul.menu > li > ul > li:hover > a {
+    border-radius: 6px
+  }
 }
 .sHeader__menu-wrap > ul.menu > li > ul > li > a {
   text-decoration: none;

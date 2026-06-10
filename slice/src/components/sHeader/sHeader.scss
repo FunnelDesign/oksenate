@@ -363,9 +363,12 @@
     // Mobile menu lsit
     & > a {
       color: $color-white;
-      border-radius: 6px;
       background-color: $color-red;
       
+      @media (max-width: $bp-small - 1px) {
+        border-radius: 6px;
+      }
+
       @media (min-width: $bp-small) {
         color: $color-white;
         background: #304566;
