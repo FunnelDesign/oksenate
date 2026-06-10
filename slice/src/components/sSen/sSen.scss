@@ -292,12 +292,14 @@
     text-decoration: none;
     display: block;
     padding-bottom: 10px;
+    border-radius: 5px;
 
     &:hover {
       opacity: .7;
     }
     &:focus,
-    &:focus-visible {
+    &:focus-visible,
+    &:focus-within {
       .sSen__sName {
         color: $color-white;
       }
