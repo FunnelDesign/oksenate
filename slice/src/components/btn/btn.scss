@@ -87,6 +87,9 @@
     background: #253857;
     text-transform: none;
 
+    &:focus,
+    &:focus-visible,
+    &:focus-within,
     &:hover {
       background: #fff;
       background: $color-red;
