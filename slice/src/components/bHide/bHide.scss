@@ -21,6 +21,10 @@
   }
 
   &__more {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /*background: $color-white; */
     display: inline-block;
     padding: 10px 22px;
     border: 1px solid $color-red;
@@ -30,7 +34,16 @@
     font-size: 14px;
     text-transform: uppercase;
     color: $color-red;
+    cursor: pointer;
     text-decoration: none;
+
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background: $color-red;
+      color: $color-white;
+    }
 
     &:before, &:after {
       @include pseudo-block($top: 50%, $left: 100%);
@@ -57,19 +70,23 @@
       content: '';
       display: inline-block;
       vertical-align: middle;
-      width: 13px;
-      height: 7px;
+      width: 9px;
+      height: 9px;
       margin-left: 10px;
-      background: url('arrow-png-shore-more.png') no-repeat;
-      background-size: contain;
-      margin-top: -1px;
+      border: 2px solid currentColor;
+      border-top: none;
+      border-right: none;
+      margin-top: -5px;
+      transform: rotate(-45deg);
+      transition: .3s;
     }
   }
 
   &__moreOpen {
 
     &:after {
-      transform: rotate(179deg);
+      margin-top: 2px;
+      transform: rotate(135deg);
     }
   }
 

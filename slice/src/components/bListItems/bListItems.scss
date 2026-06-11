@@ -48,21 +48,28 @@
 
   &__title {
     flex: 1;
-    padding: 0 10px;
+    /*padding: 0 10px;*/
     min-width: 30%;
 
     a {
       font-family: $Roboto-Bold;
       color: $color-blue-3;
       text-decoration: none;
+      padding: 0 10px;
 
+      &:focus,
+      &:focus-visible,
+      &:focus-within,
       &:hover {
         text-decoration: underline;
+        color: $color-white;
+        background-color: $color-blue-3;
       }
     }
   }
 
   &__sub {
+    padding: 0 10px;
     font-family: $Roboto-Regular;
     font-size: 14px;
     color: $color-blue;

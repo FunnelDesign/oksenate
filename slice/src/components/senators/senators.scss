@@ -27,6 +27,11 @@
     transition: opacity .3s;
     text-decoration: none;
 
+    &:focus,
+    &:focus-visible,
+    &:focus-within{
+      color: $color-white;
+    }
     &:hover {
 
       #{$this}__name,
