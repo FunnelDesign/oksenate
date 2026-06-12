@@ -291,7 +291,7 @@
   &__sLink {
     text-decoration: none;
     display: block;
-    padding-bottom: 10px;
+    /*padding-bottom: 10px;*/
     border-radius: 5px;
 
     &:hover {
@@ -300,6 +300,7 @@
     &:focus,
     &:focus-visible,
     &:focus-within {
+      .senators__name,
       .sSen__sName {
         color: $color-white;
       }
@@ -390,6 +391,7 @@
     font-family: $RobotoCondensed-Regular;
     font-size: 15px;
     color: #1f2f4b;
+    /*padding-bottom: 10px;*/
   }
 
   &__filRes {
