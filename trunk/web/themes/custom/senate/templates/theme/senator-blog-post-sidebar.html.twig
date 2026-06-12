@@ -14,14 +14,14 @@
         {% if archive %}
           {% for year, months in archive %}
             <div class="bSort__item">
-              <div class="bSort__title">
+              <button type="button" class="bSort__title">
                 {{ year }}
-              </div>
+              </button>
               <div class="bSort__body">
                 {% for month_name, data in months %}
                   {% set url = base_path ~ '/' ~ year ~ '-' ~ data.month_digits %}
                   {% set month_class = (current_path == url) ? 'bef-link-active' : '' %}
-                  <a href="{{ url }}" class="{{ month_class }}">{{ month_name }}</button>
+                  <a href="{{ url }}" class="{{ month_class }}">{{ month_name }}</a>
                 {% endfor %}
               </div>
             </div>

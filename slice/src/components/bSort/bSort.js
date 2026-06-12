@@ -29,6 +29,3 @@ window.bSort = class {
 };
 
 export default bSort;
-
-
-
