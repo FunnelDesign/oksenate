@@ -80,6 +80,12 @@
       border-left: 1px solid #cbcbcb;
     }
 
+    &:nth-child(2) {
+      span {
+        color: $color-gray-3;
+      }
+    }
+
     &:last-child {
       border-right: 1px solid #cbcbcb;
     }
@@ -105,7 +111,7 @@
   &_a {
 
     #{$this}__td, #{$this}__th {
-      color: $color-gray-3;
+      color: $color-gray-4;
 
       &:first-child {
         padding-left: 5px;
@@ -262,7 +268,7 @@
         &:nth-child(2) {
 
           span {
-            color: #8f8f8f;
+            color: $color-gray-3;
             font-family: $Roboto-Regular;
             font-size: 14px;
           }
