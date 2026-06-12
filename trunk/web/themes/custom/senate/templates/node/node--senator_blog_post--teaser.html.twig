@@ -84,7 +84,7 @@
   </div>
   <div class="bPostList__text">
     {{ content.body }}
-    <a href="{{ url }}" class="bPostList__readMore">{{ 'read more.'|t }}</a>
+    <a href="{{ url }}" class="bPostList__readMore" tabindex="-1" aria-hidden="true">{{ 'read more.'|t }}</a>
   </div>
   {{ content.sharethis }}
 </article>
