@@ -49,7 +49,7 @@
 {% block paragraph %}
   {% block content %}
     <a href="{{ content.field_audio_video_par_link[0]['#url'] }}" class="bTiles__item">
-      <span class="bTiles__ico">
+      <span class="bTiles__ico not-selectable">
               {{ content.field_par_publications_page_icon }}
 
               </span>
@@ -57,7 +57,7 @@
         {{ content.field_pro_tem_par_title }}
               </span>
       <span class="bTiles__btnWrap">
-                <span class="btn">
+                <span class="btn not-selectable">
                    {{ content.field_audio_video_par_link[0]['#title'] }}
                 </span>
               </span>

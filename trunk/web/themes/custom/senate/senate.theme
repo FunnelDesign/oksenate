@@ -668,7 +668,8 @@ function senate_preprocess_field(array &$vars, $hook) {
           $image_alt = Html::escape(trim($vars['items'][0]['content']['#item']->alt ?? ''));
         }
         $aria_hidden = $image_alt === '' ? ' aria-hidden="true"' : '';
-        $image_html = '<img src="' . $image_src . '" alt="' . $image_alt . '" ' . $image_srcset . $aria_hidden . '>';
+        $image_class = $vars['element']['#field_name'] === 'field_par_publications_page_icon' ? ' class="not-selectable"' : '';
+        $image_html = '<img src="' . $image_src . '" alt="' . $image_alt . '"' . $image_class . ' ' . $image_srcset . $aria_hidden . '>';
         $vars['img_src'] = Markup::create($image_html); //prepared image for render
       }
       break;
@@ -815,7 +816,7 @@ function senate_preprocess_field(array &$vars, $hook) {
           $url = ($file->getFileUri());
           $url = \Drupal::service('file_url_generator')->generateAbsoluteString($url);
           $url = Url::fromUri($url);
-          $options = ['class' => ['btn', 'btn_b', 'btn_s_a']];
+          $options = ['class' => ['btn', 'btn_b', 'btn_s_a', 'not-selectable']];
           $options['target'] = '_blank';
 
           $url->setOption('attributes', $options);
@@ -865,7 +866,7 @@ function senate_preprocess_field(array &$vars, $hook) {
     case 'field_home_top_slider_link':
       if (!empty($vars["items"]) && !empty($vars["items"][0])) {
         $vars["items"][0]["content"]["#options"]["attributes"] = [
-          'class' => ['btn']
+          'class' => ['btn', 'not-selectable']
         ];
       }
       break;

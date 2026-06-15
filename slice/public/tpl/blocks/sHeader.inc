@@ -37,8 +37,9 @@
 
     <div class="sHeader__bottom">
       <div class="bContainer">
-        <a href="#" class="sHeader__btn-mobile">
-          <span></span>
+        <a href="#" class="sHeader__btn-mobile" aria-label="Toggle main menu">
+          <span class="sHeader__btn-mobile-bars" aria-hidden="true"></span>
+          <span class="sHeader__btn-mobile-close" aria-hidden="true"></span>
         </a>
 
         <div class="logo sHeader__logo mobile-only">
