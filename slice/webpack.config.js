@@ -35,6 +35,10 @@ module.exports = (env, argv) => {
 		}),
 		new CopyPlugin([
 			...(!skipImages ? [{from: './src/images', to: './images'}] : []),
+			...(skipImages ? [
+				{from: './src/images/header-menu.svg', to: './images/header-menu.svg'},
+				{from: './src/images/header-menu-close.svg', to: './images/header-menu-close.svg'}
+			] : []),
 			{from: './src/vendor', to: './vendor'}
 		])
 	];
