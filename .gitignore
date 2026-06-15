@@ -7,6 +7,7 @@ trunk/web/slice
 trunk/web/stats
 trunk/web/sites/default/private
 temp/
+slice/image-cache/
 
 *.css.map
 npm-debug.log
