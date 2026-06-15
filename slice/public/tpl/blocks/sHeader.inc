@@ -38,12 +38,8 @@
     <div class="sHeader__bottom">
       <div class="bContainer">
         <a href="#" class="sHeader__btn-mobile" aria-label="Toggle main menu">
-          <svg class="sHeader__btn-mobile-icon sHeader__btn-mobile-bars" viewBox="0 0 32 32" aria-hidden="true" focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <use href="../dist/images/header-menu.svg#header-menu" xlink:href="../dist/images/header-menu.svg#header-menu"></use>
-          </svg>
-          <svg class="sHeader__btn-mobile-icon sHeader__btn-mobile-close" viewBox="0 0 32 32" aria-hidden="true" focusable="false" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <use href="../dist/images/header-menu-close.svg#header-menu-close" xlink:href="../dist/images/header-menu-close.svg#header-menu-close"></use>
-          </svg>
+          <span class="sHeader__btn-mobile-bars" aria-hidden="true"></span>
+          <span class="sHeader__btn-mobile-close" aria-hidden="true"></span>
         </a>
 
         <div class="logo sHeader__logo mobile-only">
