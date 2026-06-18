@@ -236,8 +236,10 @@
   #{$fist-li--active}, #{$fist-li--hover}, #{$fist-li--focus} {
 
     & > a, & > span {
-      color: $color-red;
+      color: $color-white;
       cursor: pointer;
+      background-color: $color-blue-1;
+      border-radius: 5px;
 
       @media (min-width: $bp-small) {
         color: $color-white;
@@ -388,7 +390,7 @@
     // Mobile menu lsit
     & > a {
       color: $color-white;
-      background-color: $color-red;
+      background-color: $color-blue-1;
       
       @media (max-width: $bp-small - 1px) {
         border-radius: 6px;

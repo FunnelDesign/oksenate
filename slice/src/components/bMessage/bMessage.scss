@@ -24,17 +24,25 @@
     position: absolute;
     @include right(10px, 20px, 30px);
     top: 50%;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     background-color: transparent;
     border: 0;
     color: $color-white;
     cursor: pointer;
     transform: translate(0, -50%);
     transition: opacity .3s;
+    border-radius: 5px;
 
     &:hover {
      opacity: .5;
+    }
+
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      background-color: $color-dark-blue;
+      opacity: 1;
     }
 
     &:before, &:after {
@@ -44,7 +52,7 @@
       background: #FFFFFF;
       top: calc(50% - 1px);
       transition: background .3s;
-      margin-left: -7px;
+      margin-left: -5px;
     }
 
     &:before {

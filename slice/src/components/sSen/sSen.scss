@@ -144,8 +144,9 @@
     min-width: 150px;
 
     @include sm {
-      max-width: none;
-      min-width: 0;
+      max-width: 180px;
+      min-width: 180px;
+  
       flex: 1;
       min-height: 250px;
       border-right: 1px solid #cecece;
@@ -158,6 +159,49 @@
       @include sm {
         padding-bottom: 10px;
       }
+    }
+  }
+
+  &__zip_actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    column-gap: 6px;
+
+    @include sm {
+      max-width: 300px;
+      width: 300px;
+    }
+
+    .sSen__filIco {
+      flex: 0 0 100%;
+    }
+
+    .f-search {
+      flex: 1 1 0;
+      min-width: 0;
+      width: auto;
+      margin: 0 0 10px;
+
+      .form-item {
+        margin: 0;
+      }
+    }
+
+    .form-actions {
+      flex: 0 0 auto;
+      height: 42.8px;
+      margin: 0 0 10px;
+      display: flex;
+      align-items: center;
+    }
+
+    .form-submit {
+      height: 42.8px;
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
     }
   }
 
