@@ -1,7 +1,9 @@
 <header class="sHeader">
 
    <div class="bMessage bMessage_hide" id="accessibility">
-     <a href="#" data-ev="hide:bMessage" class="bMessage__close"></a>
+     <button type="button" data-ev="hide:bMessage" class="bMessage__close" aria-label="Don't show this accessibility reminder again">
+       <span class="visually-hidden">Don't show again</span>
+     </button>
      <div class="bContainer">
         <p>In order to provide equal access and equal opportunity to people with diverse abilities, this site has been
           designed with full accessibility in mind. <a href="#">Click here to view.</a>

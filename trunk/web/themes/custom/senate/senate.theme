@@ -1524,8 +1524,9 @@ function senate_form_views_exposed_form_alter(&$form, FormStateInterface $form_s
   if (!empty($form['zip'])){
     $form['zip']['#prefix'] = "<div class=\"sSen__filIco not-selectable\">
             <img src=\"$theme_path/dist/images/filterIco/senator-filter-icons-1.png\" srcset=\"$theme_path/dist/images/filterIco/senator-filter-icons-1-2x.png 2x\"  alt=\"Direct mail\">
-        </div><div class=\"sSen__opt form f-search f-search_min\">";
+        </div><span class=\"sSen__zipTitle\">search by zip code</span><div class=\"sSen__opt form f-search f-search_min\">";
     $form['zip']['#suffix'] = "</div>";
+    $form['zip']['#title_display'] = 'invisible';
     $form['zip']['#attributes']['data-bef-auto-submit-exclude'] = '1';
     $form['zip']['#attributes']['autocomplete'] = 'new-password';
   }
