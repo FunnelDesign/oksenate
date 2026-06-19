@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	new sHeader();
 	addPadding();
 	hashScroll();
-	initFocusedElementViewportScroll();
 });
 
 $(window).on('load', function () {
@@ -340,65 +339,6 @@ function initAccessibility() {
 	}
 }
 
-function initFocusedElementViewportScroll() {
-	const bodyElement = document.body;
-
-	if (!bodyElement || bodyElement.classList.contains('focus-scroll-processed')) {
-		return;
-	}
-
-	bodyElement.classList.add('focus-scroll-processed');
-
-	document.addEventListener('focusin', function (focusEvent) {
-		const focusTarget = focusEvent.target;
-
-		if (!(focusTarget instanceof HTMLElement)) {
-			return;
-		}
-
-		// Reason: Some focus targets are tiny or hidden wrappers, so we skip zero-size elements.
-		const targetRect = focusTarget.getBoundingClientRect();
-		if (!targetRect.width && !targetRect.height) {
-			return;
-		}
-
-		window.requestAnimationFrame(function () {
-			scrollElementIntoViewport(focusTarget);
-		});
-	});
-}
-
-function scrollElementIntoViewport(element) {
-	const viewportMargin = 12;
-	const headerElement = document.querySelector('.sHeader');
-	const headerHeight = headerElement ? headerElement.offsetHeight : 0;
-	const adminOffset = parseInt(window.getComputedStyle(document.body).paddingTop, 10) || 0;
-	const topSafeArea = headerHeight + adminOffset + viewportMargin;
-	const bottomSafeArea = window.innerHeight - viewportMargin;
-	const elementRect = element.getBoundingClientRect();
-	const elementHeight = elementRect.height;
-	let targetScrollY = window.scrollY;
-
-	// Reason: Tall tiles cannot fully fit in viewport, so we align their top edge under sticky chrome.
-	if ((elementHeight + topSafeArea + viewportMargin) > window.innerHeight) {
-		targetScrollY += elementRect.top - topSafeArea;
-	} else if (elementRect.top < topSafeArea) {
-		targetScrollY += elementRect.top - topSafeArea;
-	} else if (elementRect.bottom > bottomSafeArea) {
-		targetScrollY += elementRect.bottom - bottomSafeArea;
-	} else {
-		return;
-	}
-
-	const maxScrollY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-	const clampedScrollY = Math.max(0, Math.min(targetScrollY, maxScrollY));
-
-	window.scrollTo({
-		top: clampedScrollY,
-		behavior: 'smooth'
-	});
-}
-
 function initHeaderHover() {
 	var $wrapper = $('.sHeader__menu-wrap');
 	var $listDesktopWrap = $wrapper.find(' > ul.menu');
@@ -446,4 +386,3 @@ function initHeaderHover() {
 		getMenuWrap(elm.parentNode);
 	}
 }
-
