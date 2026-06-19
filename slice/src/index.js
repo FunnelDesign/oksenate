@@ -303,12 +303,12 @@ function initSelect() {
 	}
 
 	$('select:not(#edit-permanent-state):not(#edit-local-state)').select2({
-		width: 'full',
+		width: '100%',
 		minimumResultsForSearch: Infinity
 	});
 
 	$('select#edit-permanent-state, select#edit-local-state').select2({
-		width: 'full',
+		width: '100%',
 		minimumResultsForSearch: 0,
 		matcher: matchCustom
 	});
