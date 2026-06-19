@@ -108,19 +108,37 @@ ol {
 a {
   color: currentColor;
   text-decoration: underline;
-  transition: all .3s;
+  transition: background-color .3s, color .3s;
   padding: 8px 0px;
-  border-radius: 5px; 
+  border-radius: 5px;
 
-  &:focus,
-  &:focus-visible,
-  &:focus-within{
+  // Keyboard focus remains visible on every device, including mobile devices
+  // used with an external keyboard.
+  &:focus-visible {
     background-color: $color-dark-blue;
     color: $color-white;
   }
 
-  &:hover {
-    text-decoration: none;
+  // Only mouse-like pointers should receive persistent hover/focus styles.
+  // Touch browsers can otherwise consume the first tap to enter :hover.
+  @media (hover: hover) and (pointer: fine) {
+    &:focus,
+    &:focus-within {
+      background-color: $color-dark-blue;
+      color: $color-white;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  // Give touch users brief feedback without leaving a sticky hover state.
+  @media (hover: none), (pointer: coarse) {
+    &:active {
+      background-color: $color-dark-blue;
+      color: $color-white;
+    }
   }
 
   & > svg {
