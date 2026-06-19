@@ -94,25 +94,25 @@
       $(once('senators', '#views-exposed-form-senators-page-1', context)).each(function () {
         var formElements = this.elements;
         var formElementsLength = formElements.length;
-        var zip = document.querySelector('input[id^="edit-zip"]');
-        var zipSubmit = document.querySelector('input[id^="edit-submit-senators"]');
+        var zip = this.querySelector('input[id^="edit-zip"]');
+        var zipSubmit = this.querySelector('input[id^="edit-submit-senators"]');
 
         this.addEventListener('focus', function (event) {
-          for (var i = 0; i < formElementsLength; i++) {
-            $zip_rule = (zipSubmit === event.target) && (formElements[i] === zip);
+          var isZipSearch = event.target === zip || event.target === zipSubmit;
 
-            if (formElements[i] !== event.target && formElements[i].type !== "submit" && !$zip_rule) {
-              switch (formElements[i].type) {
-                case 'text':
+          for (var i = 0; i < formElementsLength; i++) {
+            switch (formElements[i].type) {
+              case 'text':
+                if (formElements[i] === zip && !isZipSearch) {
                   formElements[i].value = '';
-                  break;
-                case 'select-one':
-                  if (formElements[i].value !== 'All') {
-                    formElements[i].value = 'All';
-                    $(formElements[i]).trigger('change.select2');
-                  }
-                  break;
-              }
+                }
+                break;
+              case 'select-one':
+                if (isZipSearch && formElements[i].value !== 'All') {
+                  formElements[i].value = 'All';
+                  $(formElements[i]).trigger('change.select2');
+                }
+                break;
             }
           }
         }, true);
