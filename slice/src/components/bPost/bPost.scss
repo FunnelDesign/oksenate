@@ -80,7 +80,7 @@
       font-weight: normal;
     }
   }
-
+  
   &__text {
     color: $color-gray-4;
     font-family: $FreightTextProBook-Regular;
@@ -102,6 +102,10 @@
     a[href^="tel"] {
       text-decoration: none;
       color: currentColor;
+    }
+
+    [id] {//smooth scroll including the fixed height
+      scroll-margin-top: 160px;
     }
 
     table {
