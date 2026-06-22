@@ -148,12 +148,15 @@
 #views-exposed-form-senate-studies-block-1 {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   flex-wrap: nowrap;
   gap: 10px;
   margin-bottom: 16px;
 
   .form-item {
-    flex: 1 1 auto;
+    flex: 0 1 110px;
+    width: 110px;
+    max-width: 110px;
     min-width: 0;
     float: none;
     margin: 0;
@@ -170,6 +173,25 @@
 
   .select2-container {
     width: 100% !important;
+  }
+
+  // The label owns the required marker. The base form styles also place a
+  // required.png background on Select2, which otherwise creates a duplicate.
+  .js-form-item-year {
+    label.js-form-required:before,
+    .select2-container:after,
+    .select2-selection:after {
+      content: none !important;
+      display: none !important;
+    }
+
+    label.js-form-required:after {
+      display: inline-block;
+    }
+
+    .select2-selection--single {
+      background-image: none !important;
+    }
   }
 }
 
