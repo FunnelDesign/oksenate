@@ -1344,6 +1344,10 @@ function senate_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
           ];
         }
       }
+      elseif ($view_name == 'senate_studies') {
+        // Match the compact exposed-filter layout used by Senate Votes.
+        $form["#attributes"]["class"][] = 'form-inline';
+      }
       elseif ($view_name == 'senate_votes_inner') {
         $nid = !empty($view->args) ? $view->args : '';
         $nid = !empty($nid[0]) ? $nid[0] : '';
