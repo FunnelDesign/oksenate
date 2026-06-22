@@ -13,6 +13,7 @@ import lightSlider from "./components/bLightSlider/lightSlider";
 import Modal from "./components/modal/modal";
 import bEvents from "./components/bEvents/bEvents";
 import initAccessibilityWidgetA11y from "./components/accessibility/initAccessibilityWidgetA11y";
+import bTbScrollHint from "./components/bTb/bTbScrollHint";
 
 const $ = jQuery;
 
@@ -53,6 +54,7 @@ $(window).on('load', function () {
 
 function init() {
 	initAccessibilityWidgetA11y();
+	new bTbScrollHint();
 	new Modal();
 	new bEvent();
 	new bSort();

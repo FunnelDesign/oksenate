@@ -127,6 +127,52 @@
   color: $color-gray-4 !important;
 }
 
+// Keep Drupal's required marker attached to its label text.
+.js-form-required {
+  white-space: nowrap;
+
+  &:after {
+    display: inline-block;
+  }
+}
+
+// The filters must remain outside the table formatting context. Otherwise a
+// table-header-group is visually promoted ahead of the form regardless of DOM order.
+.senateStudies,
+.senateStudies__filters {
+  display: block;
+}
+
+// Interim Studies exposed filter: keep the year selector and submit action on
+// one row, with breathing room before the results table.
+#views-exposed-form-senate-studies-block-1 {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  .form-item {
+    flex: 1 1 auto;
+    min-width: 0;
+    float: none;
+    margin: 0;
+  }
+
+  .form-actions {
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+    height: 51px;
+    float: none;
+    margin: 0;
+  }
+
+  .select2-container {
+    width: 100% !important;
+  }
+}
+
 //
 //.contextual-custom {
 // display: none;

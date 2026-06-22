@@ -133,7 +133,7 @@
       } */
 
       a {
-        padding: 9px 8px;
+        padding: 5px 0px;
       }
     }
 
@@ -303,6 +303,90 @@
 
     &_a {
       margin-bottom: 57px;
+    }
+  }
+}
+
+// Keep wide vote-table columns readable on narrow screens without allowing the
+// table to increase the width of the whole page.
+.bTbScroll {
+  width: 100%;
+  max-width: 636px;
+  margin: 0 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+
+  @include xs-only {
+    --scroll-edge-space: max(19px, 5%);
+    display: flex;
+    padding-bottom: 16px;
+
+    &:before,
+    &:after {
+      content: "";
+      flex: 0 0 var(--scroll-edge-space);
+    }
+  }
+
+  &__table {
+    min-width: 461px;
+    margin: 0;
+
+    @include xs-only {
+      // Keep an equal, scrollable inset at both ends. On wider phones it is
+      // exactly 5% of the viewport; on narrow screens it never drops below 19px.
+      width: calc(100% - var(--scroll-edge-space) - var(--scroll-edge-space));
+      flex: 0 0 calc(100% - var(--scroll-edge-space) - var(--scroll-edge-space));
+    }
+
+    @include sm {
+      min-width: 100%;
+    }
+  }
+}
+
+.bTbScrollHint {
+  position: relative;
+  max-width: 636px;
+  margin: 0 auto;
+
+  @include xs-only {
+    // The page container is 90% wide. Reclaim its 5vw gutters for this scroll
+    // viewport without changing the shared container itself.
+    width: calc(100% + 10vw);
+    max-width: none;
+    margin-left: -5vw;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      width: 36px;
+      height: 100%;
+      opacity: 0;
+      transition: opacity .2s ease;
+      pointer-events: none;
+    }
+
+    &:before {
+      left: 0;
+      background: linear-gradient(to right, rgba(255, 255, 255, .92), rgba(255, 255, 255, 0));
+    }
+
+    &:after {
+      right: 0;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, .92));
+    }
+
+    &_overflow-left:before {
+      opacity: 1;
+    }
+
+    &_overflow-right:after {
+      opacity: 1;
     }
   }
 }

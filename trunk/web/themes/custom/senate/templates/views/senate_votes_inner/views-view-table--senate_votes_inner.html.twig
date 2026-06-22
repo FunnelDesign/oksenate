@@ -39,8 +39,10 @@
     sticky ? 'sticky-enabled',
   ]
 %}
-<div class="bTb bTb_a bTb_a_vo">
-  <div class="bTb__tHead">
+<div class="bTbScrollHint">
+  <div class="bTbScroll" role="region" aria-label="Senate votes table" tabindex="0">
+    <div class="bTb bTb_a bTb_a_vo bTbScroll__table">
+    <div class="bTb__tHead">
     <div class="bTb__tr attachment">
       {% for key, column in header %}
         <div{{ column.attributes.addClass('bTb__th views-summary').setAttribute('scope', 'col') }}>
@@ -73,5 +75,7 @@
       {% endfor %}
       </div>
   {% endfor %}
+    </div>
+    </div>
   </div>
 </div>

@@ -119,25 +119,42 @@
       });
 
       $(once('votes','[data-drupal-selector="views-exposed-form-senate-votes-inner-block-1"]')).each(function () {
-        var formElements = this.elements;
-        var formElementsLength = formElements.length;
+        var $dateFilter = $(this).find('input[name="date"]');
+        var $selectFilters = $(this).find('select[name="measure"], select[name="author"]');
+        var $filters = $dateFilter.add($selectFilters);
 
-        this.addEventListener('focus', function (event) {
-          for (var i = 0; i < formElementsLength; i++) {
+        function clearOtherFilters(selectedFilter) {
+          $filters.each(function () {
+            if (this !== selectedFilter && this.value) {
+              this.value = '';
 
-            if (formElements[i] !== event.target && formElements[i].type !== "submit") {
-              switch (formElements[i].type) {
-                case 'text':
-                  formElements[i].value = '';
-                  break;
-                case 'select-one':
-                  if (formElements[i].value) {
-                    formElements[i].value = '';
-                    $(formElements[i]).trigger('change.select2');
-                  }
-                  break;
+              if (this.type === 'select-one') {
+                $(this).trigger('change.select2');
               }
             }
+          });
+        }
+
+        $selectFilters.on('select2:selecting.votesExclusiveFilter', function (event) {
+          var selectedData = event.params && event.params.args ? event.params.args.data : null;
+
+          // "Showing All" is an empty value and should not reset another filter.
+          if (!selectedData || !selectedData.id) {
+            return;
+          }
+
+          clearOtherFilters(this);
+        });
+
+        // Date, measure, and author are mutually exclusive Views filters.
+        $dateFilter.on('focus.votesExclusiveFilter', function () {
+          clearOtherFilters(this);
+        });
+
+        // Preserve the same rule for native and accessibility-mode controls.
+        this.addEventListener('change', function (event) {
+          if ($filters.is(event.target) && event.target.value) {
+            clearOtherFilters(event.target);
           }
         }, true);
       });
