@@ -35,7 +35,7 @@
 {%
   set classes = [
     dom_id ? 'js-view-dom-id-' ~ dom_id,
-    'bTb bTb_a bTb_a_v1 bTb_gap_a'
+    'senateStudies',
   ]
 %}
 <div{{ attributes.addClass(classes) }}>
@@ -43,17 +43,21 @@
   {{ title }}
   {{ title_suffix }}
 
+  <div class="senateStudies__filters">
+    {{ exposed }}
+  </div>
+
   {% if header %}
     <header>
       {{ header }}
     </header>
   {% endif %}
 
-  {{ exposed }}
   {{ attachment_before }}
 
-  <div class="bTb__tHead">
-    <div class="bTb__tr">
+  <div class="senateStudies__table bTb bTb_a bTb_a_v1 bTb_gap_a">
+    <div class="bTb__tHead">
+      <div class="bTb__tr">
 
       <div class="bTb__th">
         {{"number"|t}} #
@@ -67,16 +71,18 @@
         {{"date & time**"|t}}
       </div>
 
+      </div>
     </div>
+
+    {% if rows -%}
+      <div class="bTb__tBody">
+        {{ rows }}
+      </div>
+    {% elseif empty -%}
+      {{ empty }}
+    {% endif %}
   </div>
 
-  {% if rows -%}
-    <div class="bTb__tBody">
-      {{ rows }}
-    </div>
-  {% elseif empty -%}
-    {{ empty }}
-  {% endif %}
   {{ pager }}
 
   {{ attachment_after }}
