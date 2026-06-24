@@ -58,6 +58,9 @@
 
       @include xs-only {
         max-width: none;
+        // Let the mobile navigation use the complete header (including the
+        // optional accessibility message) as its positioning container.
+        position: static;
       }
 
       @include md {
@@ -511,10 +514,14 @@
 
     @include xs-only {
       overflow-y: auto;
-      height: calc(100vh - 84px);
+      // `top` follows the header's live height. The negative bottom offset
+      // places the other edge at the viewport bottom, with or without the message.
+      height: auto;
+      bottom: calc(100% - 100vh);
+      bottom: calc(100% - 100dvh);
       z-index: 1;
       background: #121e32;
-      padding-bottom: 50px;
+      padding-bottom: 0px;
     }
   }
 
