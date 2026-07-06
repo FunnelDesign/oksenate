@@ -2,4 +2,4 @@ name: 'Senate Access'
 type: module
 description: 'Senate Access module.'
 package: 'Custom'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11

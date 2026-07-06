@@ -2,7 +2,7 @@ name: senate accessible
 type: theme
 description: 'Senate Accessible theme'
 package: custom
-core_version_requirement: ^8 || ^9 || ^10
+core_version_requirement: ^10 || ^11
 
 base theme: senate
 
