@@ -1,0 +1,11 @@
+{
+    "date": "02/03/2020",
+    "measure": "Test measure",
+    "author" : "Test author",
+    "action": {
+        "link": "00012.pdf",
+        "name": "Test file name 3"
+    },
+    "yeas":"1",
+    "noes":"2"
+}
