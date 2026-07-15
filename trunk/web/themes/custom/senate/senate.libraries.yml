@@ -8,6 +8,7 @@ global-styling:
       dist/css/styles.min.css: {}
   js:
       dist/vendor/device/device.js: {}
+      js/jquery4-compat.js: { weight: -20 }
       dist/vendor/jquery.cookie/jquery.cookie.js: {}
       dist/vendor/select2/select2.full.min.js: {}
       dist/vendor/slick/slick.min.js: {}
