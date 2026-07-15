@@ -1,0 +1,205 @@
+                  Oklahoma State Senate										
+2020 Votes										
+"The information shown on this page is provided for the benefit of the public and shows the results of roll call votes taken on the Senate floor with the use of the electronic voting machine.  It may not reflect other actions relating to roll call votes for which the voting machine is not used, such as a member taking his or her constitutional privilege not to vote on a measure, a member shown as a “no” vote if in the chamber and not voting, a member shown as “excused”, or the Lieutenant Governor exercising a casting vote.  Please consult the Senate Journal for official information on roll call votes and other actions taken by the Senate."										
+Date		Measure		Author		Action		Yeas		Nays
+
+2/12/2020     		SB106		Kirt		THIRD READING		41		 2
+										
+2/19/2020     		SB177		Sharp		THIRD READING		39		 5
+										
+2/17/2020     		SB266		Ikley-Freeman		THIRD READING		46		 0
+										
+2/12/2020     		SB414		Paxton		THIRD READING		44		 0
+										
+2/19/2020     		SB623		Ikley-Freeman		THIRD READING		17		27
+2/25/2020     		SB623		Ikley-Freeman		Reconsider		35		11
+2/25/2020     		SB623		Ikley-Freeman		THIRD READING		30		16
+										
+2/17/2020     		SB801		Rosino		THIRD READING		44		 0
+										
+3/02/2020     		SB930		Rosino		THIRD READING		41		 0
+										
+2/26/2020     		SB959		Dahm		THIRD READING		42		 0
+										
+2/27/2020     		SB1094		Bergstrom		THIRD READING		46		 0
+										
+2/26/2020     		SB1098		Stanislawski		THIRD READING		42		 0
+										
+2/24/2020     		SB1103		Standridge		THIRD READING		42		 5
+										
+2/24/2020     		SB1104		Standridge		THIRD READING		46		 0
+										
+3/03/2020     		SB1110		Bergstrom		THIRD READING		42		 0
+										
+2/25/2020     		SB1114		Bullard		THIRD READING		46		 1
+										
+2/19/2020     		SB1118		Shaw		THIRD READING		42		 2
+										
+2/24/2020     		SB1120		Pemberton		THIRD READING		35		10
+										
+2/25/2020     		SB1128		Simpson		THIRD READING		46		 0
+										
+2/25/2020     		SB1134		Simpson		THIRD READING		47		 0
+										
+2/26/2020     		SB1138		Stanislawski		THIRD READING		40		 3
+										
+2/19/2020     		SB1144		Paxton		THIRD READING		44		 0
+										
+2/26/2020     		SB1147		Dugger		THIRD READING		44		 0
+										
+2/26/2020     		SB1149		Dugger		THIRD READING		35		 9
+										
+2/27/2020     		SB1152		Bergstrom		THIRD READING		46		 0
+										
+2/26/2020     		SB1157		Rosino		THIRD READING		42		 2
+										
+3/03/2020     		SB1163		Allen		THIRD READING		42		 0
+										
+3/02/2020     		SB1164		Jech		THIRD READING		43		 0
+										
+2/26/2020     		SB1168		Stanislawski		THIRD READING		43		 0
+										
+2/26/2020     		SB1181		Stanislawski		THIRD READING		43		 1
+										
+2/25/2020     		SB1185		Simpson		THIRD READING		47		 0
+										
+3/02/2020     		SB1195		Coleman		THIRD READING		44		 0
+										
+2/27/2020     		SB1196		Thompson		THIRD READING		46		 0
+										
+3/02/2020     		SB1200		Thompson		THIRD READING		33		11
+										
+3/03/2020     		SB1204		Bice		THIRD READING		46		 0
+										
+3/03/2020     		SB1205		Bullard		THIRD READING		11		31
+										
+3/03/2020     		SB1208		Bergstrom		THIRD READING		42		 0
+										
+3/02/2020     		SB1210		Allen		THIRD READING		44		 1
+										
+2/27/2020     		SB1217		Stanley		THIRD READING		46		 0
+										
+3/03/2020     		SB1225		Allen		THIRD READING		41		 0
+										
+3/02/2020     		SB1226		Allen		THIRD READING		46		 0
+										
+2/27/2020     		SB1262		Thompson		THIRD READING		46		 0
+										
+3/02/2020     		SB1270		Bullard		THIRD READING		46		 0
+										
+2/17/2020     		SB1274		Hall		THIRD READING		46		 0
+										
+3/02/2020     		SB1276		Thompson		THIRD READING		44		 1
+										
+2/24/2020     		SB1277		Rader		THIRD READING		46		 1
+										
+2/17/2020     		SB1278		Rader		THIRD READING		45		 0
+										
+3/02/2020     		SB1280		Kirt		THIRD READING		42		 4
+										
+3/02/2020     		SB1284		Stanislawski		THIRD READING		44		 0
+										
+3/02/2020     		SB1296		Paxton		THIRD READING		41		 5
+										
+3/02/2020     		SB1297		Paxton		THIRD READING		37		 9
+										
+3/02/2020     		SB1298		Coleman		THIRD READING		44		 0
+										
+2/27/2020     		SB1299		Montgomery		THIRD READING		46		 0
+										
+2/24/2020     		SB1303		Pederson		THIRD READING		25		22
+										
+2/24/2020     		SB1304		Pederson		THIRD READING		37		10
+										
+2/24/2020     		SB1307		Pemberton		THIRD READING		45		 0
+										
+3/02/2020     		SB1313		Pemberton		THIRD READING		46		 0
+										
+3/02/2020     		SB1317		Sharp		THIRD READING		44		 2
+										
+2/18/2020     		SB1321		Daniels		THIRD READING		41		 0
+										
+3/02/2020     		SB1322		Thompson		THIRD READING		44		 1
+										
+2/25/2020     		SB1327		Simpson		THIRD READING		47		 0
+										
+3/03/2020     		SB1332		Allen		THIRD READING		36		 5
+										
+3/02/2020     		SB1350		Haste		THIRD READING		46		 0
+										
+3/02/2020     		SB1351		Montgomery		THIRD READING		45		 1
+										
+3/02/2020     		SB1366		Coleman		THIRD READING		44		 0
+										
+3/02/2020     		SB1369		Allen		THIRD READING		46		 0
+										
+2/19/2020     		SB1374		Floyd		THIRD READING		44		 0
+										
+3/02/2020     		SB1382		Jech		THIRD READING		45		 0
+										
+2/19/2020     		SB1385		Daniels		THIRD READING		38		 6
+										
+3/02/2020     		SB1390		Stanley		THIRD READING		45		 1
+										
+3/02/2020     		SB1393		Floyd		THIRD READING		46		 0
+										
+3/02/2020     		SB1415		Dahm		THIRD READING		44		 0
+										
+3/02/2020     		SB1416		Dahm		THIRD READING		43		 0
+										
+3/02/2020     		SB1417		Dahm		THIRD READING		32		11
+										
+3/02/2020     		SB1418		Dahm		THIRD READING		35		 8
+										
+3/03/2020     		SB1419		Dahm		THIRD READING		37		 8
+										
+2/24/2020     		SB1466		Daniels		THIRD READING		19		25
+										
+3/03/2020     		SB1491		Daniels		THIRD READING		45		 0
+										
+3/03/2020     		SB1496		Floyd		THIRD READING		44		 0
+										
+3/03/2020     		SB1507		Bice		THIRD READING		41		 0
+										
+3/03/2020     		SB1509		Dugger		THIRD READING		41		 2
+										
+2/18/2020     		SB1517		Coleman		THIRD READING		16		25
+										
+2/18/2020     		SB1518		Coleman		THIRD READING		33		 8
+										
+3/03/2020     		SB1532		Bullard		THIRD READING		41		 0
+										
+3/03/2020     		SB1545		Bice		THIRD READING		47		 0
+										
+3/03/2020     		SB1549		Bice		THIRD READING		20		23
+										
+2/26/2020     		SB1606		Bullard		THIRD READING		42		 0
+										
+3/03/2020     		SB1611		Floyd		THIRD READING		44		 0
+										
+3/03/2020     		SB1628		Daniels		THIRD READING		34		 9
+										
+3/03/2020     		SB1636		Daniels		THIRD READING		36		 8
+										
+2/17/2020     		SB1642		Montgomery		THIRD READING		44		 0
+										
+3/03/2020     		SB1647		Brooks		THIRD READING		42		 1
+										
+2/24/2020     		SB1685		Rader		THIRD READING		47		 0
+										
+3/03/2020     		SB1697		Bice		THIRD READING		36		 7
+										
+3/03/2020     		SB1711		Brooks		THIRD READING		34		 9
+										
+2/24/2020     		SB1843		Hall		THIRD READING		47		 0
+										
+2/24/2020     		SB1857		Hall		THIRD READING		29		17
+										
+2/12/2020     		HB1048		Daniels		THIRD READING		43		 0
+										
+2/24/2020     		HB1349		Coleman		THIRD READING		41		 4
+										
+2/26/2020     		HB1423		Shaw		THIRD READING		42		 0
+										
+2/12/2020     		HB2336		Bullard		THIRD READING		37		 7
+										
