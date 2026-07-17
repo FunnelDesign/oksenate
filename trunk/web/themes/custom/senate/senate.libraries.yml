@@ -1,5 +1,5 @@
 global-styling:
-  version: 0.0.5
+  version: 0.0.7
   css:
     theme:
       dist/vendor/jquery.scrollbar/jquery.scrollbar.css: {}
@@ -8,13 +8,12 @@ global-styling:
       dist/css/styles.min.css: {}
   js:
       dist/vendor/device/device.js: {}
-      js/jquery4-compat.js: { weight: -20 }
-      dist/vendor/jquery.cookie/jquery.cookie.js: {}
+      js/native-cookie.js: { weight: -20 }
       dist/vendor/select2/select2.full.min.js: {}
       dist/vendor/slick/slick.min.js: {}
       dist/vendor/lightSlider/lightslider.min.js: {}
       dist/vendor/jquery.scrollbar/jquery.scrollbar.min.js: {}
-      dist/vendor/bootstrap-modal/bootstrap-modal.min.js: {}
+      js/modal.js: {}
       dist/vendor/countUp/countUp.min.js: {}
       dist/js/index.min.js: {}
       dist/js/custom.js: {}
