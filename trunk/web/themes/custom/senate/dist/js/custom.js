@@ -92,28 +92,41 @@
       });
 
       $(once('senators', '#views-exposed-form-senators-page-1', context)).each(function () {
-        var formElements = this.elements;
-        var formElementsLength = formElements.length;
-        var zip = this.querySelector('input[id^="edit-zip"]');
-        var zipSubmit = this.querySelector('input[id^="edit-submit-senators"]');
+        var $zip = $(this).find('input[name="zip"]');
+        var $selectFilters = $(this).find('select[name="county"], select[name="district"], select[name="committee"], select[name="party"]');
 
-        this.addEventListener('focus', function (event) {
-          var isZipSearch = event.target === zip || event.target === zipSubmit;
+        function clearOtherFilters(selectedFilter) {
+          if (selectedFilter !== $zip[0] && $zip.val()) {
+            $zip.val('');
+          }
 
-          for (var i = 0; i < formElementsLength; i++) {
-            switch (formElements[i].type) {
-              case 'text':
-                if (formElements[i] === zip && !isZipSearch) {
-                  formElements[i].value = '';
-                }
-                break;
-              case 'select-one':
-                if (isZipSearch && formElements[i].value !== 'All') {
-                  formElements[i].value = 'All';
-                  $(formElements[i]).trigger('change.select2');
-                }
-                break;
+          $selectFilters.each(function () {
+            if (this !== selectedFilter && this.value !== 'All') {
+              this.value = 'All';
+              $(this).trigger('change.select2');
             }
+          });
+        }
+
+        $selectFilters.on('select2:selecting.senatorsExclusiveFilter', function (event) {
+          var selectedData = event.params && event.params.args ? event.params.args.data : null;
+
+          // Selecting the placeholder does not reset the currently active filter.
+          if (!selectedData || selectedData.id === 'All') {
+            return;
+          }
+
+          clearOtherFilters(this);
+        });
+
+        $zip.on('focus.senatorsExclusiveFilter', function () {
+          clearOtherFilters(this);
+        });
+
+        // Preserve the rule for native selects and accessibility mode.
+        this.addEventListener('change', function (event) {
+          if ($selectFilters.is(event.target) && event.target.value !== 'All') {
+            clearOtherFilters(event.target);
           }
         }, true);
       });

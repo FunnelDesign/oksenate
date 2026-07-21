@@ -1,5 +1,5 @@
 global-styling:
-  version: 0.0.7
+  version: 0.0.9
   css:
     theme:
       dist/vendor/jquery.scrollbar/jquery.scrollbar.css: {}
