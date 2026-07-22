@@ -230,6 +230,13 @@
         }
       }
 
+      // Align plain first-column content with links (6px cell + 10px link padding).
+      #{$this}__td:first-child:not(:has(a)) {
+        @include sm {
+          padding-left: 16px;
+        }
+      }
+
       #{$this}__text {
 
         &_a {
