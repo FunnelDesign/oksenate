@@ -53,6 +53,11 @@
     &:hover {
       color: $color-red;
     }
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      color: $color-white;
+    }
   }
 
   &__text {
