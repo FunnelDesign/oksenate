@@ -104,7 +104,8 @@
       color: currentColor;
     }
 
-    [id] {//smooth scroll including the fixed height
+    [id],
+    a[name] { // Keep fragment targets below the fixed header.
       scroll-margin-top: 160px;
     }
 

@@ -387,15 +387,20 @@
   &_cl {
 
     &_a {
-      color: #296401; //#639e3b; increased contrast to AAA, against #white background 
+      color: #296401 !important; //#639e3b; increased contrast to AAA, against #white background 
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        color: $color-white !important;
+      }
     }
 
     &_b {
-      color: #912f2f;
+      color: #912f2f !important; // $color-red
     }
 
     &_c {
-      color: $color-red;
+      color: $color-red !important;
     }
   }
 }
