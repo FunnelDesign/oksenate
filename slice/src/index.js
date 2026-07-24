@@ -274,7 +274,7 @@ function initFormRedirect() {
 function initSelect() {
 	function matchCustom(params, data) {
 		// If there are no search terms, return all of the data
-		if ($.trim(params.term) === '') {
+		if (String(params.term || '').trim() === '') {
 			return data;
 		}
 
