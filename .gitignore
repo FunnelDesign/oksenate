@@ -29,3 +29,7 @@ setup.sh
 trunk/web/sites/default/settings.php.bak
 trunk/web/themes/custom/senate/dist/images/tmp/seats-tmp-img-1-a-2x.png
 trunk/web/themes/custom/senate/dist/images/tmp/seats-tmp-img-1-a.png
+
+/trunk/web/feed/
+/trunk/web/senatevotes/
+trunk/backups/
