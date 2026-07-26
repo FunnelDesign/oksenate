@@ -32,4 +32,5 @@ trunk/web/themes/custom/senate/dist/images/tmp/seats-tmp-img-1-a.png
 
 /trunk/web/feed/
 /trunk/web/senatevotes/
-trunk/backups/
+/trunk/composer.phar
+/trunk/web/sucuri-b5455d932c8455116f7cf302376cf2ef.php
