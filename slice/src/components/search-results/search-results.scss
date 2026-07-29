@@ -45,6 +45,11 @@
         color: $color-red;
         //text-decoration: underline;
       }
+      &:focus,
+      &:focus-visible,
+      &:focus-within {
+        color: $color-white !important;
+      }
     }
   }
 

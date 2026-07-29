@@ -1064,6 +1064,21 @@ function senate_preprocess_field(array &$vars, $hook) {
       $items = !empty($vars['items']) ? $vars['items'] : [];
       foreach ($items as $key => $item) {
         $iframe = Xss::filter(html_entity_decode($item["content"]["#context"]["value"]), ['iframe']);
+        $document = Html::load($iframe);
+        foreach ($document->getElementsByTagName('iframe') as $iframe_element) {
+          $permissions = array_filter(array_map(
+            'trim',
+            explode(';', $iframe_element->getAttribute('allow'))
+          ));
+          if (!in_array('web-share', $permissions, TRUE)) {
+            $permissions[] = 'web-share';
+          }
+          $iframe_element->setAttribute('allow', implode('; ', $permissions));
+          $iframe_element->setAttribute('allowfullscreen', 'true');
+          $iframe_element->setAttribute('webkitallowfullscreen', 'true');
+          $iframe_element->setAttribute('mozallowfullscreen', 'true');
+        }
+        $iframe = Html::serialize($document);
         $vars["items"][$key]["content"]["#context"]["value"] = $iframe;
         $vars["items"][$key]["content"]["#template"] = '{{ value|raw }}';
       }
