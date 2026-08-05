@@ -4,14 +4,16 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-top: 83px;
+  // The header height is maintained once on the root element by sHeader.
+  // Drupal already displaces the page itself for its admin toolbar.
+  padding-top: var(--senate-header-height, 83px);
 
   @include sm {
-    padding-top: 152px;
+    padding-top: var(--senate-header-height, 152px);
   }
 
   @include md {
-    padding-top: 152px;
+    padding-top: var(--senate-header-height, 152px);
   }
 
   .page-authorization.path-user &,

@@ -76,22 +76,26 @@ window.sHeader = class {
 			collapseSearchForm($searchFormWrapper);
 		});
 
-		addPadding();
+		syncPageOffset();
 		addAccessibilityCookie();
 
 		$(window).on('resize', () => {
-			addPadding();
+			syncPageOffset();
 		});
 
 		$elm.on('click touch', `.bMessage__close`, () => {
-			addPadding();
+			window.requestAnimationFrame(syncPageOffset);
 		});
 
 		initKeyboardNavigation();
 
 		$(document).on('drupalViewportOffsetChange.toolbar', function (event, offsets) {
-			$elm.css('top', offsets.top);
+			syncPageOffset();
 		});
+
+		if (window.ResizeObserver) {
+			new ResizeObserver(syncPageOffset).observe($elm[0]);
+		}
 
 		function initKeyboardNavigation() {
 			const topLevelExpandedSelector = `.${componentName}__menu-wrap > ul.menu > li.menu-item--expanded`;
@@ -217,7 +221,7 @@ window.sHeader = class {
 
 			if ($.cookie(cookeName)) {
 				$accessibility.hide();
-				addPadding();
+				syncPageOffset();
 			} else {
 				$accessibility.show();
 				$accessibility.removeClass(`bMessage_hide`);
@@ -228,20 +232,22 @@ window.sHeader = class {
 						path: '/'
 					});
 
-					addPadding();
+					window.requestAnimationFrame(syncPageOffset);
 				});
 			}
 		}
 
-		function addPadding() {
-			let $pageWr = $(`.pageWr`);
-			if (!$pageWr.length) return;
-			$pageWr.css(`padding-top`, $elm.outerHeight());
+		function syncPageOffset() {
+			// Keep layout in CSS: a single root variable tracks the fixed header,
+			// including the optional accessibility reminder when it is visible.
+			document.documentElement.style.setProperty(
+				'--senate-header-height',
+				`${Math.ceil($elm.outerHeight())}px`,
+			);
 		}
 	}
 };
 
 export default sHeader;
-
 
 

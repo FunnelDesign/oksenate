@@ -44,12 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		prefixContent: 'id-',
 	});
 	new sHeader();
-	addPadding();
 	hashScroll();
-});
-
-$(window).on('load', function () {
-	addPadding();
 });
 
 function init() {
@@ -118,16 +113,6 @@ function initDate() {
 	$wrap.on('focusout', function() {
 		$parent.removeClass('open');
 	});
-}
-
-function addPadding() {
-
-	let $header = $(`.sHeader`);
-	if (!$header.length) return;
-
-	let $pageWr = $(`.pageWr`);
-	if (!$pageWr.length) return;
-	$pageWr.css(`padding-top`, $header.outerHeight());
 }
 
 function hashScroll() {

@@ -30,5 +30,3 @@ accessibility-widget:
     theme:
       css/accessibility-widget.css:
         weight: 1000
-  dependencies:
-    - all_in_one_accessibility/ada_lib
