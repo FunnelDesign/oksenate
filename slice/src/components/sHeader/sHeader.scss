@@ -5,7 +5,8 @@
   z-index: 101;
 
   position: fixed;
-  top: 0;
+  // Drupal maintains this variable for the admin toolbar and its open tray.
+  top: var(--drupal-displace-offset-top, 0px);
   right: 0;
   left: 0;
 
