@@ -91,7 +91,7 @@
         "drupal/core-project-message": "^11",
         "drupal/core-recommended": "^11",
         "drupal/devel": "^5.3",
-        "drupal/diff": "^2.0",
+        "drupal/diff": "^2.1.1",
         "drupal/domain_theme_switch": "^2.1",
         "drupal/draggableviews": "^2.1",
         "drupal/easy_breadcrumb": "^2.0",
