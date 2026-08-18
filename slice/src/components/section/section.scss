@@ -161,7 +161,8 @@
     padding: 10px;
     margin-bottom: 20px;
     z-index: 1;
-
+    pointer-events: none; /* Let clicks pass through empty space */
+  
     @include sm {
       position: absolute;
       left: 0;
@@ -195,14 +196,19 @@
         }
       }*/
     }
+    .bShare,
+    button,
+    a {
+        pointer-events: auto; /* Re-enable clicking for actual interactive children */ 
+    }
 
     #{$this}__bShare {
+      pointer-events: auto;
       margin-left: auto;
       padding: 0;
     }
 
     &_a {
-
       @include sm {
         top: 10px;
       }
